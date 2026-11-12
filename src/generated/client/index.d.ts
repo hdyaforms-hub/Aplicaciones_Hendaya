@@ -254,6 +254,26 @@ export type Multas_Elementos_Esenciales_Cab = $Result.DefaultSelection<Prisma.$M
  */
 export type Multas_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma.$Multas_Elementos_Esenciales_DetPayload>
 /**
+ * Model Multas_Privilegio_EE
+ * 
+ */
+export type Multas_Privilegio_EE = $Result.DefaultSelection<Prisma.$Multas_Privilegio_EEPayload>
+/**
+ * Model Multas_IT_Elementos_Esenciales_Cab
+ * 
+ */
+export type Multas_IT_Elementos_Esenciales_Cab = $Result.DefaultSelection<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+/**
+ * Model Multas_IT_Elementos_Esenciales_Det
+ * 
+ */
+export type Multas_IT_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+/**
+ * Model Multas_Aspecto_EE_Restriccion
+ * 
+ */
+export type Multas_Aspecto_EE_Restriccion = $Result.DefaultSelection<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1291,6 +1311,46 @@ export class PrismaClient<
     * ```
     */
   get multas_Elementos_Esenciales_Det(): Prisma.Multas_Elementos_Esenciales_DetDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Privilegio_EE`: Exposes CRUD operations for the **Multas_Privilegio_EE** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Privilegio_EES
+    * const multas_Privilegio_EES = await prisma.multas_Privilegio_EE.findMany()
+    * ```
+    */
+  get multas_Privilegio_EE(): Prisma.Multas_Privilegio_EEDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_IT_Elementos_Esenciales_Cab`: Exposes CRUD operations for the **Multas_IT_Elementos_Esenciales_Cab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_IT_Elementos_Esenciales_Cabs
+    * const multas_IT_Elementos_Esenciales_Cabs = await prisma.multas_IT_Elementos_Esenciales_Cab.findMany()
+    * ```
+    */
+  get multas_IT_Elementos_Esenciales_Cab(): Prisma.Multas_IT_Elementos_Esenciales_CabDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_IT_Elementos_Esenciales_Det`: Exposes CRUD operations for the **Multas_IT_Elementos_Esenciales_Det** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_IT_Elementos_Esenciales_Dets
+    * const multas_IT_Elementos_Esenciales_Dets = await prisma.multas_IT_Elementos_Esenciales_Det.findMany()
+    * ```
+    */
+  get multas_IT_Elementos_Esenciales_Det(): Prisma.Multas_IT_Elementos_Esenciales_DetDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Aspecto_EE_Restriccion`: Exposes CRUD operations for the **Multas_Aspecto_EE_Restriccion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Aspecto_EE_Restriccions
+    * const multas_Aspecto_EE_Restriccions = await prisma.multas_Aspecto_EE_Restriccion.findMany()
+    * ```
+    */
+  get multas_Aspecto_EE_Restriccion(): Prisma.Multas_Aspecto_EE_RestriccionDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2650,6 +2710,10 @@ export namespace Prisma {
     UTM: 'UTM',
     Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
     Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+    Multas_Privilegio_EE: 'Multas_Privilegio_EE',
+    Multas_IT_Elementos_Esenciales_Cab: 'Multas_IT_Elementos_Esenciales_Cab',
+    Multas_IT_Elementos_Esenciales_Det: 'Multas_IT_Elementos_Esenciales_Det',
+    Multas_Aspecto_EE_Restriccion: 'Multas_Aspecto_EE_Restriccion',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2752,7 +2816,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6113,6 +6177,286 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Elementos_Esenciales_DetCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Elementos_Esenciales_DetCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Privilegio_EE: {
+        payload: Prisma.$Multas_Privilegio_EEPayload<ExtArgs>
+        fields: Prisma.Multas_Privilegio_EEFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Privilegio_EEFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Privilegio_EEFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Privilegio_EEFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Privilegio_EEFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Privilegio_EEFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Privilegio_EECreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Privilegio_EECreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Privilegio_EECreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Privilegio_EEDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          update: {
+            args: Prisma.Multas_Privilegio_EEUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Privilegio_EEDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Privilegio_EEUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Privilegio_EEUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Privilegio_EEPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Privilegio_EEAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Privilegio_EE>
+          }
+          groupBy: {
+            args: Prisma.Multas_Privilegio_EEGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Privilegio_EEGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Privilegio_EECountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Privilegio_EECountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_IT_Elementos_Esenciales_Cab: {
+        payload: Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>
+        fields: Prisma.Multas_IT_Elementos_Esenciales_CabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          update: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_IT_Elementos_Esenciales_Cab>
+          }
+          groupBy: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_IT_Elementos_Esenciales_CabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_CabCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_IT_Elementos_Esenciales_CabCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_IT_Elementos_Esenciales_Det: {
+        payload: Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>
+        fields: Prisma.Multas_IT_Elementos_Esenciales_DetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          update: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_IT_Elementos_Esenciales_Det>
+          }
+          groupBy: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_IT_Elementos_Esenciales_DetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_IT_Elementos_Esenciales_DetCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_IT_Elementos_Esenciales_DetCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Aspecto_EE_Restriccion: {
+        payload: Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>
+        fields: Prisma.Multas_Aspecto_EE_RestriccionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          update: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Aspecto_EE_Restriccion>
+          }
+          groupBy: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Aspecto_EE_RestriccionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Aspecto_EE_RestriccionCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Aspecto_EE_RestriccionCountAggregateOutputType> | number
           }
         }
       }
@@ -13009,6 +13353,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type Multas_IT_Elementos_Esenciales_CabCountOutputType
+   */
+
+  export type Multas_IT_Elementos_Esenciales_CabCountOutputType = {
+    detalles: number
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Multas_IT_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Multas_IT_Elementos_Esenciales_CabCountOutputType without action
+   */
+  export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_CabCountOutputType
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_CabCountOutputType without action
+   */
+  export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+  }
+
+
+  /**
    * Count Type Descargos_CabCountOutputType
    */
 
@@ -15586,6 +15961,7 @@ export namespace Prisma {
     areas?: boolean | User$areasArgs<ExtArgs>
     licitaciones?: boolean | User$licitacionesArgs<ExtArgs>
     delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
+    privilegioEE?: boolean | User$privilegioEEArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -15629,6 +16005,7 @@ export namespace Prisma {
     areas?: boolean | User$areasArgs<ExtArgs>
     licitaciones?: boolean | User$licitacionesArgs<ExtArgs>
     delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
+    privilegioEE?: boolean | User$privilegioEEArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15644,6 +16021,7 @@ export namespace Prisma {
       areas: Prisma.$AreaPayload<ExtArgs>[]
       licitaciones: Prisma.$LicitacionPayload<ExtArgs>[]
       delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
+      privilegioEE: Prisma.$Multas_Privilegio_EEPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16029,6 +16407,7 @@ export namespace Prisma {
     areas<T extends User$areasArgs<ExtArgs> = {}>(args?: Subset<T, User$areasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findMany"> | Null>
     licitaciones<T extends User$licitacionesArgs<ExtArgs> = {}>(args?: Subset<T, User$licitacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findMany"> | Null>
     delegaciones<T extends User$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, User$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
+    privilegioEE<T extends User$privilegioEEArgs<ExtArgs> = {}>(args?: Subset<T, User$privilegioEEArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16486,6 +16865,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
+   * User.privilegioEE
+   */
+  export type User$privilegioEEArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    where?: Multas_Privilegio_EEWhereInput
   }
 
   /**
@@ -26483,6 +26877,7 @@ export namespace Prisma {
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
     users?: boolean | Licitacion$usersArgs<ExtArgs>
+    itElementosEsenciales?: boolean | Licitacion$itElementosEsencialesArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["licitacion"]>
 
@@ -26510,6 +26905,7 @@ export namespace Prisma {
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
     users?: boolean | Licitacion$usersArgs<ExtArgs>
+    itElementosEsenciales?: boolean | Licitacion$itElementosEsencialesArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LicitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -26524,6 +26920,7 @@ export namespace Prisma {
       matrices: Prisma.$MatrizT_CabeceraPayload<ExtArgs>[]
       actasPlantillas: Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>[]
       users: Prisma.$UserPayload<ExtArgs>[]
+      itElementosEsenciales: Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       licId: number
@@ -26902,6 +27299,7 @@ export namespace Prisma {
     matrices<T extends Licitacion$matricesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$matricesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findMany"> | Null>
     actasPlantillas<T extends Licitacion$actasPlantillasArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$actasPlantillasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findMany"> | Null>
     users<T extends Licitacion$usersArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
+    itElementosEsenciales<T extends Licitacion$itElementosEsencialesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$itElementosEsencialesArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27387,6 +27785,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Licitacion.itElementosEsenciales
+   */
+  export type Licitacion$itElementosEsencialesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
   }
 
   /**
@@ -63961,6 +64374,4263 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Privilegio_EE
+   */
+
+  export type AggregateMultas_Privilegio_EE = {
+    _count: Multas_Privilegio_EECountAggregateOutputType | null
+    _min: Multas_Privilegio_EEMinAggregateOutputType | null
+    _max: Multas_Privilegio_EEMaxAggregateOutputType | null
+  }
+
+  export type Multas_Privilegio_EEMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    puedeEliminarIndividual: boolean | null
+    puedeEliminarMasivo: boolean | null
+    otorgadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Privilegio_EEMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    puedeEliminarIndividual: boolean | null
+    puedeEliminarMasivo: boolean | null
+    otorgadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Privilegio_EECountAggregateOutputType = {
+    id: number
+    userId: number
+    puedeEliminarIndividual: number
+    puedeEliminarMasivo: number
+    otorgadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Privilegio_EEMinAggregateInputType = {
+    id?: true
+    userId?: true
+    puedeEliminarIndividual?: true
+    puedeEliminarMasivo?: true
+    otorgadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Privilegio_EEMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    puedeEliminarIndividual?: true
+    puedeEliminarMasivo?: true
+    otorgadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Privilegio_EECountAggregateInputType = {
+    id?: true
+    userId?: true
+    puedeEliminarIndividual?: true
+    puedeEliminarMasivo?: true
+    otorgadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Privilegio_EEAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Privilegio_EE to aggregate.
+     */
+    where?: Multas_Privilegio_EEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Privilegio_EES to fetch.
+     */
+    orderBy?: Multas_Privilegio_EEOrderByWithRelationInput | Multas_Privilegio_EEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Privilegio_EEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Privilegio_EES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Privilegio_EES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Privilegio_EES
+    **/
+    _count?: true | Multas_Privilegio_EECountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Privilegio_EEMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Privilegio_EEMaxAggregateInputType
+  }
+
+  export type GetMultas_Privilegio_EEAggregateType<T extends Multas_Privilegio_EEAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Privilegio_EE]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Privilegio_EE[P]>
+      : GetScalarType<T[P], AggregateMultas_Privilegio_EE[P]>
+  }
+
+
+
+
+  export type Multas_Privilegio_EEGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Privilegio_EEWhereInput
+    orderBy?: Multas_Privilegio_EEOrderByWithAggregationInput | Multas_Privilegio_EEOrderByWithAggregationInput[]
+    by: Multas_Privilegio_EEScalarFieldEnum[] | Multas_Privilegio_EEScalarFieldEnum
+    having?: Multas_Privilegio_EEScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Privilegio_EECountAggregateInputType | true
+    _min?: Multas_Privilegio_EEMinAggregateInputType
+    _max?: Multas_Privilegio_EEMaxAggregateInputType
+  }
+
+  export type Multas_Privilegio_EEGroupByOutputType = {
+    id: string
+    userId: string
+    puedeEliminarIndividual: boolean
+    puedeEliminarMasivo: boolean
+    otorgadoPor: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Privilegio_EECountAggregateOutputType | null
+    _min: Multas_Privilegio_EEMinAggregateOutputType | null
+    _max: Multas_Privilegio_EEMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Privilegio_EEGroupByPayload<T extends Multas_Privilegio_EEGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Privilegio_EEGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Privilegio_EEGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Privilegio_EEGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Privilegio_EEGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Privilegio_EESelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Privilegio_EE"]>
+
+  export type Multas_Privilegio_EESelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Privilegio_EE"]>
+
+  export type Multas_Privilegio_EESelectScalar = {
+    id?: boolean
+    userId?: boolean
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Privilegio_EEInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type Multas_Privilegio_EEIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Privilegio_EEPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Privilegio_EE"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      puedeEliminarIndividual: boolean
+      puedeEliminarMasivo: boolean
+      otorgadoPor: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Privilegio_EE"]>
+    composites: {}
+  }
+
+  type Multas_Privilegio_EEGetPayload<S extends boolean | null | undefined | Multas_Privilegio_EEDefaultArgs> = $Result.GetResult<Prisma.$Multas_Privilegio_EEPayload, S>
+
+  type Multas_Privilegio_EECountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Privilegio_EEFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Privilegio_EECountAggregateInputType | true
+    }
+
+  export interface Multas_Privilegio_EEDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Privilegio_EE'], meta: { name: 'Multas_Privilegio_EE' } }
+    /**
+     * Find zero or one Multas_Privilegio_EE that matches the filter.
+     * @param {Multas_Privilegio_EEFindUniqueArgs} args - Arguments to find a Multas_Privilegio_EE
+     * @example
+     * // Get one Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Privilegio_EEFindUniqueArgs>(args: SelectSubset<T, Multas_Privilegio_EEFindUniqueArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Privilegio_EE that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Privilegio_EEFindUniqueOrThrowArgs} args - Arguments to find a Multas_Privilegio_EE
+     * @example
+     * // Get one Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Privilegio_EEFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Privilegio_EEFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Privilegio_EE that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEFindFirstArgs} args - Arguments to find a Multas_Privilegio_EE
+     * @example
+     * // Get one Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Privilegio_EEFindFirstArgs>(args?: SelectSubset<T, Multas_Privilegio_EEFindFirstArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Privilegio_EE that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEFindFirstOrThrowArgs} args - Arguments to find a Multas_Privilegio_EE
+     * @example
+     * // Get one Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Privilegio_EEFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Privilegio_EEFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Privilegio_EES that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Privilegio_EES
+     * const multas_Privilegio_EES = await prisma.multas_Privilegio_EE.findMany()
+     * 
+     * // Get first 10 Multas_Privilegio_EES
+     * const multas_Privilegio_EES = await prisma.multas_Privilegio_EE.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Privilegio_EEWithIdOnly = await prisma.multas_Privilegio_EE.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Privilegio_EEFindManyArgs>(args?: SelectSubset<T, Multas_Privilegio_EEFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Privilegio_EE.
+     * @param {Multas_Privilegio_EECreateArgs} args - Arguments to create a Multas_Privilegio_EE.
+     * @example
+     * // Create one Multas_Privilegio_EE
+     * const Multas_Privilegio_EE = await prisma.multas_Privilegio_EE.create({
+     *   data: {
+     *     // ... data to create a Multas_Privilegio_EE
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Privilegio_EECreateArgs>(args: SelectSubset<T, Multas_Privilegio_EECreateArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Privilegio_EES.
+     * @param {Multas_Privilegio_EECreateManyArgs} args - Arguments to create many Multas_Privilegio_EES.
+     * @example
+     * // Create many Multas_Privilegio_EES
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Privilegio_EECreateManyArgs>(args?: SelectSubset<T, Multas_Privilegio_EECreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Privilegio_EES and returns the data saved in the database.
+     * @param {Multas_Privilegio_EECreateManyAndReturnArgs} args - Arguments to create many Multas_Privilegio_EES.
+     * @example
+     * // Create many Multas_Privilegio_EES
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Privilegio_EES and only return the `id`
+     * const multas_Privilegio_EEWithIdOnly = await prisma.multas_Privilegio_EE.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Privilegio_EECreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Privilegio_EECreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Privilegio_EE.
+     * @param {Multas_Privilegio_EEDeleteArgs} args - Arguments to delete one Multas_Privilegio_EE.
+     * @example
+     * // Delete one Multas_Privilegio_EE
+     * const Multas_Privilegio_EE = await prisma.multas_Privilegio_EE.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Privilegio_EE
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Privilegio_EEDeleteArgs>(args: SelectSubset<T, Multas_Privilegio_EEDeleteArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Privilegio_EE.
+     * @param {Multas_Privilegio_EEUpdateArgs} args - Arguments to update one Multas_Privilegio_EE.
+     * @example
+     * // Update one Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Privilegio_EEUpdateArgs>(args: SelectSubset<T, Multas_Privilegio_EEUpdateArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Privilegio_EES.
+     * @param {Multas_Privilegio_EEDeleteManyArgs} args - Arguments to filter Multas_Privilegio_EES to delete.
+     * @example
+     * // Delete a few Multas_Privilegio_EES
+     * const { count } = await prisma.multas_Privilegio_EE.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Privilegio_EEDeleteManyArgs>(args?: SelectSubset<T, Multas_Privilegio_EEDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Privilegio_EES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Privilegio_EES
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Privilegio_EEUpdateManyArgs>(args: SelectSubset<T, Multas_Privilegio_EEUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Privilegio_EE.
+     * @param {Multas_Privilegio_EEUpsertArgs} args - Arguments to update or create a Multas_Privilegio_EE.
+     * @example
+     * // Update or create a Multas_Privilegio_EE
+     * const multas_Privilegio_EE = await prisma.multas_Privilegio_EE.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Privilegio_EE
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Privilegio_EE we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Privilegio_EEUpsertArgs>(args: SelectSubset<T, Multas_Privilegio_EEUpsertArgs<ExtArgs>>): Prisma__Multas_Privilegio_EEClient<$Result.GetResult<Prisma.$Multas_Privilegio_EEPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Privilegio_EES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EECountArgs} args - Arguments to filter Multas_Privilegio_EES to count.
+     * @example
+     * // Count the number of Multas_Privilegio_EES
+     * const count = await prisma.multas_Privilegio_EE.count({
+     *   where: {
+     *     // ... the filter for the Multas_Privilegio_EES we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Privilegio_EECountArgs>(
+      args?: Subset<T, Multas_Privilegio_EECountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Privilegio_EECountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Privilegio_EE.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Privilegio_EEAggregateArgs>(args: Subset<T, Multas_Privilegio_EEAggregateArgs>): Prisma.PrismaPromise<GetMultas_Privilegio_EEAggregateType<T>>
+
+    /**
+     * Group by Multas_Privilegio_EE.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Privilegio_EEGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Privilegio_EEGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Privilegio_EEGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Privilegio_EEGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Privilegio_EEGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Privilegio_EEGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Privilegio_EE model
+   */
+  readonly fields: Multas_Privilegio_EEFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Privilegio_EE.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Privilegio_EEClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Privilegio_EE model
+   */ 
+  interface Multas_Privilegio_EEFieldRefs {
+    readonly id: FieldRef<"Multas_Privilegio_EE", 'String'>
+    readonly userId: FieldRef<"Multas_Privilegio_EE", 'String'>
+    readonly puedeEliminarIndividual: FieldRef<"Multas_Privilegio_EE", 'Boolean'>
+    readonly puedeEliminarMasivo: FieldRef<"Multas_Privilegio_EE", 'Boolean'>
+    readonly otorgadoPor: FieldRef<"Multas_Privilegio_EE", 'String'>
+    readonly createdAt: FieldRef<"Multas_Privilegio_EE", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Privilegio_EE", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Privilegio_EE findUnique
+   */
+  export type Multas_Privilegio_EEFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Privilegio_EE to fetch.
+     */
+    where: Multas_Privilegio_EEWhereUniqueInput
+  }
+
+  /**
+   * Multas_Privilegio_EE findUniqueOrThrow
+   */
+  export type Multas_Privilegio_EEFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Privilegio_EE to fetch.
+     */
+    where: Multas_Privilegio_EEWhereUniqueInput
+  }
+
+  /**
+   * Multas_Privilegio_EE findFirst
+   */
+  export type Multas_Privilegio_EEFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Privilegio_EE to fetch.
+     */
+    where?: Multas_Privilegio_EEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Privilegio_EES to fetch.
+     */
+    orderBy?: Multas_Privilegio_EEOrderByWithRelationInput | Multas_Privilegio_EEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Privilegio_EES.
+     */
+    cursor?: Multas_Privilegio_EEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Privilegio_EES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Privilegio_EES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Privilegio_EES.
+     */
+    distinct?: Multas_Privilegio_EEScalarFieldEnum | Multas_Privilegio_EEScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Privilegio_EE findFirstOrThrow
+   */
+  export type Multas_Privilegio_EEFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Privilegio_EE to fetch.
+     */
+    where?: Multas_Privilegio_EEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Privilegio_EES to fetch.
+     */
+    orderBy?: Multas_Privilegio_EEOrderByWithRelationInput | Multas_Privilegio_EEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Privilegio_EES.
+     */
+    cursor?: Multas_Privilegio_EEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Privilegio_EES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Privilegio_EES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Privilegio_EES.
+     */
+    distinct?: Multas_Privilegio_EEScalarFieldEnum | Multas_Privilegio_EEScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Privilegio_EE findMany
+   */
+  export type Multas_Privilegio_EEFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Privilegio_EES to fetch.
+     */
+    where?: Multas_Privilegio_EEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Privilegio_EES to fetch.
+     */
+    orderBy?: Multas_Privilegio_EEOrderByWithRelationInput | Multas_Privilegio_EEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Privilegio_EES.
+     */
+    cursor?: Multas_Privilegio_EEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Privilegio_EES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Privilegio_EES.
+     */
+    skip?: number
+    distinct?: Multas_Privilegio_EEScalarFieldEnum | Multas_Privilegio_EEScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Privilegio_EE create
+   */
+  export type Multas_Privilegio_EECreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Privilegio_EE.
+     */
+    data: XOR<Multas_Privilegio_EECreateInput, Multas_Privilegio_EEUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Privilegio_EE createMany
+   */
+  export type Multas_Privilegio_EECreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Privilegio_EES.
+     */
+    data: Multas_Privilegio_EECreateManyInput | Multas_Privilegio_EECreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Privilegio_EE createManyAndReturn
+   */
+  export type Multas_Privilegio_EECreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Privilegio_EES.
+     */
+    data: Multas_Privilegio_EECreateManyInput | Multas_Privilegio_EECreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Privilegio_EE update
+   */
+  export type Multas_Privilegio_EEUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Privilegio_EE.
+     */
+    data: XOR<Multas_Privilegio_EEUpdateInput, Multas_Privilegio_EEUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Privilegio_EE to update.
+     */
+    where: Multas_Privilegio_EEWhereUniqueInput
+  }
+
+  /**
+   * Multas_Privilegio_EE updateMany
+   */
+  export type Multas_Privilegio_EEUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Privilegio_EES.
+     */
+    data: XOR<Multas_Privilegio_EEUpdateManyMutationInput, Multas_Privilegio_EEUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Privilegio_EES to update
+     */
+    where?: Multas_Privilegio_EEWhereInput
+  }
+
+  /**
+   * Multas_Privilegio_EE upsert
+   */
+  export type Multas_Privilegio_EEUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Privilegio_EE to update in case it exists.
+     */
+    where: Multas_Privilegio_EEWhereUniqueInput
+    /**
+     * In case the Multas_Privilegio_EE found by the `where` argument doesn't exist, create a new Multas_Privilegio_EE with this data.
+     */
+    create: XOR<Multas_Privilegio_EECreateInput, Multas_Privilegio_EEUncheckedCreateInput>
+    /**
+     * In case the Multas_Privilegio_EE was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Privilegio_EEUpdateInput, Multas_Privilegio_EEUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Privilegio_EE delete
+   */
+  export type Multas_Privilegio_EEDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Privilegio_EE to delete.
+     */
+    where: Multas_Privilegio_EEWhereUniqueInput
+  }
+
+  /**
+   * Multas_Privilegio_EE deleteMany
+   */
+  export type Multas_Privilegio_EEDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Privilegio_EES to delete
+     */
+    where?: Multas_Privilegio_EEWhereInput
+  }
+
+  /**
+   * Multas_Privilegio_EE without action
+   */
+  export type Multas_Privilegio_EEDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Privilegio_EE
+     */
+    select?: Multas_Privilegio_EESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Privilegio_EEInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_IT_Elementos_Esenciales_Cab
+   */
+
+  export type AggregateMultas_IT_Elementos_Esenciales_Cab = {
+    _count: Multas_IT_Elementos_Esenciales_CabCountAggregateOutputType | null
+    _avg: Multas_IT_Elementos_Esenciales_CabAvgAggregateOutputType | null
+    _sum: Multas_IT_Elementos_Esenciales_CabSumAggregateOutputType | null
+    _min: Multas_IT_Elementos_Esenciales_CabMinAggregateOutputType | null
+    _max: Multas_IT_Elementos_Esenciales_CabMaxAggregateOutputType | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabAvgAggregateOutputType = {
+    licId: number | null
+    totalPaginas: number | null
+    plazoNotificacionHoras: number | null
+    plazoCorreccionDias: number | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabSumAggregateOutputType = {
+    licId: number | null
+    totalPaginas: number | null
+    plazoNotificacionHoras: number | null
+    plazoCorreccionDias: number | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    licitacionCodigoPdf: string | null
+    licitacionHomologada: string | null
+    codigoDocumento: string | null
+    tituloDocumento: string | null
+    numeroRevision: string | null
+    fechaRevision: string | null
+    totalPaginas: number | null
+    objetivo: string | null
+    alcance: string | null
+    plazoNotificacionHoras: number | null
+    plazoCorreccionDias: number | null
+    aspectosModalidadesJson: string | null
+    causasImputabilidadJson: string | null
+    anexoPesajeJson: string | null
+    anexoFrutasVerdurasJson: string | null
+    nombreArchivo: string | null
+    archivoBase64: string | null
+    cargadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    licitacionCodigoPdf: string | null
+    licitacionHomologada: string | null
+    codigoDocumento: string | null
+    tituloDocumento: string | null
+    numeroRevision: string | null
+    fechaRevision: string | null
+    totalPaginas: number | null
+    objetivo: string | null
+    alcance: string | null
+    plazoNotificacionHoras: number | null
+    plazoCorreccionDias: number | null
+    aspectosModalidadesJson: string | null
+    causasImputabilidadJson: string | null
+    anexoPesajeJson: string | null
+    anexoFrutasVerdurasJson: string | null
+    nombreArchivo: string | null
+    archivoBase64: string | null
+    cargadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCountAggregateOutputType = {
+    id: number
+    licId: number
+    licitacionCodigoPdf: number
+    licitacionHomologada: number
+    codigoDocumento: number
+    tituloDocumento: number
+    numeroRevision: number
+    fechaRevision: number
+    totalPaginas: number
+    objetivo: number
+    alcance: number
+    plazoNotificacionHoras: number
+    plazoCorreccionDias: number
+    aspectosModalidadesJson: number
+    causasImputabilidadJson: number
+    anexoPesajeJson: number
+    anexoFrutasVerdurasJson: number
+    nombreArchivo: number
+    archivoBase64: number
+    cargadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_IT_Elementos_Esenciales_CabAvgAggregateInputType = {
+    licId?: true
+    totalPaginas?: true
+    plazoNotificacionHoras?: true
+    plazoCorreccionDias?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabSumAggregateInputType = {
+    licId?: true
+    totalPaginas?: true
+    plazoNotificacionHoras?: true
+    plazoCorreccionDias?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMinAggregateInputType = {
+    id?: true
+    licId?: true
+    licitacionCodigoPdf?: true
+    licitacionHomologada?: true
+    codigoDocumento?: true
+    tituloDocumento?: true
+    numeroRevision?: true
+    fechaRevision?: true
+    totalPaginas?: true
+    objetivo?: true
+    alcance?: true
+    plazoNotificacionHoras?: true
+    plazoCorreccionDias?: true
+    aspectosModalidadesJson?: true
+    causasImputabilidadJson?: true
+    anexoPesajeJson?: true
+    anexoFrutasVerdurasJson?: true
+    nombreArchivo?: true
+    archivoBase64?: true
+    cargadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    licitacionCodigoPdf?: true
+    licitacionHomologada?: true
+    codigoDocumento?: true
+    tituloDocumento?: true
+    numeroRevision?: true
+    fechaRevision?: true
+    totalPaginas?: true
+    objetivo?: true
+    alcance?: true
+    plazoNotificacionHoras?: true
+    plazoCorreccionDias?: true
+    aspectosModalidadesJson?: true
+    causasImputabilidadJson?: true
+    anexoPesajeJson?: true
+    anexoFrutasVerdurasJson?: true
+    nombreArchivo?: true
+    archivoBase64?: true
+    cargadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCountAggregateInputType = {
+    id?: true
+    licId?: true
+    licitacionCodigoPdf?: true
+    licitacionHomologada?: true
+    codigoDocumento?: true
+    tituloDocumento?: true
+    numeroRevision?: true
+    fechaRevision?: true
+    totalPaginas?: true
+    objetivo?: true
+    alcance?: true
+    plazoNotificacionHoras?: true
+    plazoCorreccionDias?: true
+    aspectosModalidadesJson?: true
+    causasImputabilidadJson?: true
+    anexoPesajeJson?: true
+    anexoFrutasVerdurasJson?: true
+    nombreArchivo?: true
+    archivoBase64?: true
+    cargadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Cab to aggregate.
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_IT_Elementos_Esenciales_Cabs
+    **/
+    _count?: true | Multas_IT_Elementos_Esenciales_CabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_IT_Elementos_Esenciales_CabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_IT_Elementos_Esenciales_CabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_IT_Elementos_Esenciales_CabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_IT_Elementos_Esenciales_CabMaxAggregateInputType
+  }
+
+  export type GetMultas_IT_Elementos_Esenciales_CabAggregateType<T extends Multas_IT_Elementos_Esenciales_CabAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_IT_Elementos_Esenciales_Cab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_IT_Elementos_Esenciales_Cab[P]>
+      : GetScalarType<T[P], AggregateMultas_IT_Elementos_Esenciales_Cab[P]>
+  }
+
+
+
+
+  export type Multas_IT_Elementos_Esenciales_CabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    orderBy?: Multas_IT_Elementos_Esenciales_CabOrderByWithAggregationInput | Multas_IT_Elementos_Esenciales_CabOrderByWithAggregationInput[]
+    by: Multas_IT_Elementos_Esenciales_CabScalarFieldEnum[] | Multas_IT_Elementos_Esenciales_CabScalarFieldEnum
+    having?: Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_IT_Elementos_Esenciales_CabCountAggregateInputType | true
+    _avg?: Multas_IT_Elementos_Esenciales_CabAvgAggregateInputType
+    _sum?: Multas_IT_Elementos_Esenciales_CabSumAggregateInputType
+    _min?: Multas_IT_Elementos_Esenciales_CabMinAggregateInputType
+    _max?: Multas_IT_Elementos_Esenciales_CabMaxAggregateInputType
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabGroupByOutputType = {
+    id: string
+    licId: number
+    licitacionCodigoPdf: string | null
+    licitacionHomologada: string | null
+    codigoDocumento: string | null
+    tituloDocumento: string | null
+    numeroRevision: string | null
+    fechaRevision: string | null
+    totalPaginas: number | null
+    objetivo: string | null
+    alcance: string | null
+    plazoNotificacionHoras: number | null
+    plazoCorreccionDias: number | null
+    aspectosModalidadesJson: string | null
+    causasImputabilidadJson: string | null
+    anexoPesajeJson: string | null
+    anexoFrutasVerdurasJson: string | null
+    nombreArchivo: string | null
+    archivoBase64: string | null
+    cargadoPor: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_IT_Elementos_Esenciales_CabCountAggregateOutputType | null
+    _avg: Multas_IT_Elementos_Esenciales_CabAvgAggregateOutputType | null
+    _sum: Multas_IT_Elementos_Esenciales_CabSumAggregateOutputType | null
+    _min: Multas_IT_Elementos_Esenciales_CabMinAggregateOutputType | null
+    _max: Multas_IT_Elementos_Esenciales_CabMaxAggregateOutputType | null
+  }
+
+  type GetMultas_IT_Elementos_Esenciales_CabGroupByPayload<T extends Multas_IT_Elementos_Esenciales_CabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_IT_Elementos_Esenciales_CabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_IT_Elementos_Esenciales_CabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_IT_Elementos_Esenciales_CabGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_IT_Elementos_Esenciales_CabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    licitacionCodigoPdf?: boolean
+    licitacionHomologada?: boolean
+    codigoDocumento?: boolean
+    tituloDocumento?: boolean
+    numeroRevision?: boolean
+    fechaRevision?: boolean
+    totalPaginas?: boolean
+    objetivo?: boolean
+    alcance?: boolean
+    plazoNotificacionHoras?: boolean
+    plazoCorreccionDias?: boolean
+    aspectosModalidadesJson?: boolean
+    causasImputabilidadJson?: boolean
+    anexoPesajeJson?: boolean
+    anexoFrutasVerdurasJson?: boolean
+    nombreArchivo?: boolean
+    archivoBase64?: boolean
+    cargadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+    detalles?: boolean | Multas_IT_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Cab"]>
+
+  export type Multas_IT_Elementos_Esenciales_CabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    licitacionCodigoPdf?: boolean
+    licitacionHomologada?: boolean
+    codigoDocumento?: boolean
+    tituloDocumento?: boolean
+    numeroRevision?: boolean
+    fechaRevision?: boolean
+    totalPaginas?: boolean
+    objetivo?: boolean
+    alcance?: boolean
+    plazoNotificacionHoras?: boolean
+    plazoCorreccionDias?: boolean
+    aspectosModalidadesJson?: boolean
+    causasImputabilidadJson?: boolean
+    anexoPesajeJson?: boolean
+    anexoFrutasVerdurasJson?: boolean
+    nombreArchivo?: boolean
+    archivoBase64?: boolean
+    cargadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Cab"]>
+
+  export type Multas_IT_Elementos_Esenciales_CabSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    licitacionCodigoPdf?: boolean
+    licitacionHomologada?: boolean
+    codigoDocumento?: boolean
+    tituloDocumento?: boolean
+    numeroRevision?: boolean
+    fechaRevision?: boolean
+    totalPaginas?: boolean
+    objetivo?: boolean
+    alcance?: boolean
+    plazoNotificacionHoras?: boolean
+    plazoCorreccionDias?: boolean
+    aspectosModalidadesJson?: boolean
+    causasImputabilidadJson?: boolean
+    anexoPesajeJson?: boolean
+    anexoFrutasVerdurasJson?: boolean
+    nombreArchivo?: boolean
+    archivoBase64?: boolean
+    cargadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+    detalles?: boolean | Multas_IT_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Multas_IT_Elementos_Esenciales_CabIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_IT_Elementos_Esenciales_Cab"
+    objects: {
+      licitacion: Prisma.$LicitacionPayload<ExtArgs>
+      detalles: Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      licitacionCodigoPdf: string | null
+      licitacionHomologada: string | null
+      codigoDocumento: string | null
+      tituloDocumento: string | null
+      numeroRevision: string | null
+      fechaRevision: string | null
+      totalPaginas: number | null
+      objetivo: string | null
+      alcance: string | null
+      plazoNotificacionHoras: number | null
+      plazoCorreccionDias: number | null
+      aspectosModalidadesJson: string | null
+      causasImputabilidadJson: string | null
+      anexoPesajeJson: string | null
+      anexoFrutasVerdurasJson: string | null
+      nombreArchivo: string | null
+      archivoBase64: string | null
+      cargadoPor: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Cab"]>
+    composites: {}
+  }
+
+  type Multas_IT_Elementos_Esenciales_CabGetPayload<S extends boolean | null | undefined | Multas_IT_Elementos_Esenciales_CabDefaultArgs> = $Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload, S>
+
+  type Multas_IT_Elementos_Esenciales_CabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_IT_Elementos_Esenciales_CabFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_IT_Elementos_Esenciales_CabCountAggregateInputType | true
+    }
+
+  export interface Multas_IT_Elementos_Esenciales_CabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_IT_Elementos_Esenciales_Cab'], meta: { name: 'Multas_IT_Elementos_Esenciales_Cab' } }
+    /**
+     * Find zero or one Multas_IT_Elementos_Esenciales_Cab that matches the filter.
+     * @param {Multas_IT_Elementos_Esenciales_CabFindUniqueArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_IT_Elementos_Esenciales_CabFindUniqueArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_IT_Elementos_Esenciales_Cab that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_IT_Elementos_Esenciales_CabFindUniqueOrThrowArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_IT_Elementos_Esenciales_CabFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_IT_Elementos_Esenciales_Cab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabFindFirstArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_IT_Elementos_Esenciales_CabFindFirstArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabFindFirstArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_IT_Elementos_Esenciales_Cab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabFindFirstOrThrowArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_IT_Elementos_Esenciales_CabFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_IT_Elementos_Esenciales_Cabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_IT_Elementos_Esenciales_Cabs
+     * const multas_IT_Elementos_Esenciales_Cabs = await prisma.multas_IT_Elementos_Esenciales_Cab.findMany()
+     * 
+     * // Get first 10 Multas_IT_Elementos_Esenciales_Cabs
+     * const multas_IT_Elementos_Esenciales_Cabs = await prisma.multas_IT_Elementos_Esenciales_Cab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_IT_Elementos_Esenciales_CabWithIdOnly = await prisma.multas_IT_Elementos_Esenciales_Cab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_IT_Elementos_Esenciales_CabFindManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_IT_Elementos_Esenciales_Cab.
+     * @param {Multas_IT_Elementos_Esenciales_CabCreateArgs} args - Arguments to create a Multas_IT_Elementos_Esenciales_Cab.
+     * @example
+     * // Create one Multas_IT_Elementos_Esenciales_Cab
+     * const Multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.create({
+     *   data: {
+     *     // ... data to create a Multas_IT_Elementos_Esenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_IT_Elementos_Esenciales_CabCreateArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabCreateArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_IT_Elementos_Esenciales_Cabs.
+     * @param {Multas_IT_Elementos_Esenciales_CabCreateManyArgs} args - Arguments to create many Multas_IT_Elementos_Esenciales_Cabs.
+     * @example
+     * // Create many Multas_IT_Elementos_Esenciales_Cabs
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_IT_Elementos_Esenciales_CabCreateManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_IT_Elementos_Esenciales_Cabs and returns the data saved in the database.
+     * @param {Multas_IT_Elementos_Esenciales_CabCreateManyAndReturnArgs} args - Arguments to create many Multas_IT_Elementos_Esenciales_Cabs.
+     * @example
+     * // Create many Multas_IT_Elementos_Esenciales_Cabs
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_IT_Elementos_Esenciales_Cabs and only return the `id`
+     * const multas_IT_Elementos_Esenciales_CabWithIdOnly = await prisma.multas_IT_Elementos_Esenciales_Cab.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_IT_Elementos_Esenciales_CabCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_IT_Elementos_Esenciales_Cab.
+     * @param {Multas_IT_Elementos_Esenciales_CabDeleteArgs} args - Arguments to delete one Multas_IT_Elementos_Esenciales_Cab.
+     * @example
+     * // Delete one Multas_IT_Elementos_Esenciales_Cab
+     * const Multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_IT_Elementos_Esenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_IT_Elementos_Esenciales_CabDeleteArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabDeleteArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_IT_Elementos_Esenciales_Cab.
+     * @param {Multas_IT_Elementos_Esenciales_CabUpdateArgs} args - Arguments to update one Multas_IT_Elementos_Esenciales_Cab.
+     * @example
+     * // Update one Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_IT_Elementos_Esenciales_CabUpdateArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabUpdateArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_IT_Elementos_Esenciales_Cabs.
+     * @param {Multas_IT_Elementos_Esenciales_CabDeleteManyArgs} args - Arguments to filter Multas_IT_Elementos_Esenciales_Cabs to delete.
+     * @example
+     * // Delete a few Multas_IT_Elementos_Esenciales_Cabs
+     * const { count } = await prisma.multas_IT_Elementos_Esenciales_Cab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_IT_Elementos_Esenciales_CabDeleteManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_IT_Elementos_Esenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_IT_Elementos_Esenciales_Cabs
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_IT_Elementos_Esenciales_CabUpdateManyArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_IT_Elementos_Esenciales_Cab.
+     * @param {Multas_IT_Elementos_Esenciales_CabUpsertArgs} args - Arguments to update or create a Multas_IT_Elementos_Esenciales_Cab.
+     * @example
+     * // Update or create a Multas_IT_Elementos_Esenciales_Cab
+     * const multas_IT_Elementos_Esenciales_Cab = await prisma.multas_IT_Elementos_Esenciales_Cab.upsert({
+     *   create: {
+     *     // ... data to create a Multas_IT_Elementos_Esenciales_Cab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_IT_Elementos_Esenciales_Cab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_IT_Elementos_Esenciales_CabUpsertArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_CabUpsertArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_IT_Elementos_Esenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabCountArgs} args - Arguments to filter Multas_IT_Elementos_Esenciales_Cabs to count.
+     * @example
+     * // Count the number of Multas_IT_Elementos_Esenciales_Cabs
+     * const count = await prisma.multas_IT_Elementos_Esenciales_Cab.count({
+     *   where: {
+     *     // ... the filter for the Multas_IT_Elementos_Esenciales_Cabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_IT_Elementos_Esenciales_CabCountArgs>(
+      args?: Subset<T, Multas_IT_Elementos_Esenciales_CabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_IT_Elementos_Esenciales_CabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_IT_Elementos_Esenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_IT_Elementos_Esenciales_CabAggregateArgs>(args: Subset<T, Multas_IT_Elementos_Esenciales_CabAggregateArgs>): Prisma.PrismaPromise<GetMultas_IT_Elementos_Esenciales_CabAggregateType<T>>
+
+    /**
+     * Group by Multas_IT_Elementos_Esenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_CabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_IT_Elementos_Esenciales_CabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_IT_Elementos_Esenciales_CabGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_IT_Elementos_Esenciales_CabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_IT_Elementos_Esenciales_CabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_IT_Elementos_Esenciales_CabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_IT_Elementos_Esenciales_Cab model
+   */
+  readonly fields: Multas_IT_Elementos_Esenciales_CabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_IT_Elementos_Esenciales_Cab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_IT_Elementos_Esenciales_CabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    licitacion<T extends LicitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LicitacionDefaultArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    detalles<T extends Multas_IT_Elementos_Esenciales_Cab$detallesArgs<ExtArgs> = {}>(args?: Subset<T, Multas_IT_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_IT_Elementos_Esenciales_Cab model
+   */ 
+  interface Multas_IT_Elementos_Esenciales_CabFieldRefs {
+    readonly id: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly licId: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'Int'>
+    readonly licitacionCodigoPdf: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly licitacionHomologada: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly codigoDocumento: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly tituloDocumento: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly numeroRevision: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly fechaRevision: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly totalPaginas: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'Int'>
+    readonly objetivo: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly alcance: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly plazoNotificacionHoras: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'Int'>
+    readonly plazoCorreccionDias: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'Int'>
+    readonly aspectosModalidadesJson: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly causasImputabilidadJson: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly anexoPesajeJson: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly anexoFrutasVerdurasJson: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly nombreArchivo: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly archivoBase64: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly cargadoPor: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'String'>
+    readonly createdAt: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_IT_Elementos_Esenciales_Cab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab findUnique
+   */
+  export type Multas_IT_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Cab to fetch.
+     */
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab findUniqueOrThrow
+   */
+  export type Multas_IT_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Cab to fetch.
+     */
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab findFirst
+   */
+  export type Multas_IT_Elementos_Esenciales_CabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Cab to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    distinct?: Multas_IT_Elementos_Esenciales_CabScalarFieldEnum | Multas_IT_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab findFirstOrThrow
+   */
+  export type Multas_IT_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Cab to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    distinct?: Multas_IT_Elementos_Esenciales_CabScalarFieldEnum | Multas_IT_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab findMany
+   */
+  export type Multas_IT_Elementos_Esenciales_CabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Cabs to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    distinct?: Multas_IT_Elementos_Esenciales_CabScalarFieldEnum | Multas_IT_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab create
+   */
+  export type Multas_IT_Elementos_Esenciales_CabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_IT_Elementos_Esenciales_Cab.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_CabCreateInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab createMany
+   */
+  export type Multas_IT_Elementos_Esenciales_CabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    data: Multas_IT_Elementos_Esenciales_CabCreateManyInput | Multas_IT_Elementos_Esenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab createManyAndReturn
+   */
+  export type Multas_IT_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    data: Multas_IT_Elementos_Esenciales_CabCreateManyInput | Multas_IT_Elementos_Esenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab update
+   */
+  export type Multas_IT_Elementos_Esenciales_CabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_IT_Elementos_Esenciales_Cab.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_CabUpdateInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_IT_Elementos_Esenciales_Cab to update.
+     */
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab updateMany
+   */
+  export type Multas_IT_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_IT_Elementos_Esenciales_Cabs.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_CabUpdateManyMutationInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Cabs to update
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab upsert
+   */
+  export type Multas_IT_Elementos_Esenciales_CabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_IT_Elementos_Esenciales_Cab to update in case it exists.
+     */
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * In case the Multas_IT_Elementos_Esenciales_Cab found by the `where` argument doesn't exist, create a new Multas_IT_Elementos_Esenciales_Cab with this data.
+     */
+    create: XOR<Multas_IT_Elementos_Esenciales_CabCreateInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateInput>
+    /**
+     * In case the Multas_IT_Elementos_Esenciales_Cab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_IT_Elementos_Esenciales_CabUpdateInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab delete
+   */
+  export type Multas_IT_Elementos_Esenciales_CabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Cab to delete.
+     */
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab deleteMany
+   */
+  export type Multas_IT_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Cabs to delete
+     */
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab.detalles
+   */
+  export type Multas_IT_Elementos_Esenciales_Cab$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    cursor?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_IT_Elementos_Esenciales_DetScalarFieldEnum | Multas_IT_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Cab without action
+   */
+  export type Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Cab
+     */
+    select?: Multas_IT_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_CabInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_IT_Elementos_Esenciales_Det
+   */
+
+  export type AggregateMultas_IT_Elementos_Esenciales_Det = {
+    _count: Multas_IT_Elementos_Esenciales_DetCountAggregateOutputType | null
+    _avg: Multas_IT_Elementos_Esenciales_DetAvgAggregateOutputType | null
+    _sum: Multas_IT_Elementos_Esenciales_DetSumAggregateOutputType | null
+    _min: Multas_IT_Elementos_Esenciales_DetMinAggregateOutputType | null
+    _max: Multas_IT_Elementos_Esenciales_DetMaxAggregateOutputType | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMinAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    orden: number | null
+    letra: string | null
+    aspecto: string | null
+    formaEvaluar: string | null
+    periodoCorreccion: string | null
+    tienePeriodoCorreccion: boolean | null
+    medioVerificacion: string | null
+    consideracionesEspecificas: string | null
+    pautaSolucionAnexo3: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMaxAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    orden: number | null
+    letra: string | null
+    aspecto: string | null
+    formaEvaluar: string | null
+    periodoCorreccion: string | null
+    tienePeriodoCorreccion: boolean | null
+    medioVerificacion: string | null
+    consideracionesEspecificas: string | null
+    pautaSolucionAnexo3: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCountAggregateOutputType = {
+    id: number
+    cabId: number
+    orden: number
+    letra: number
+    aspecto: number
+    formaEvaluar: number
+    periodoCorreccion: number
+    tienePeriodoCorreccion: number
+    medioVerificacion: number
+    consideracionesEspecificas: number
+    pautaSolucionAnexo3: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_IT_Elementos_Esenciales_DetAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMinAggregateInputType = {
+    id?: true
+    cabId?: true
+    orden?: true
+    letra?: true
+    aspecto?: true
+    formaEvaluar?: true
+    periodoCorreccion?: true
+    tienePeriodoCorreccion?: true
+    medioVerificacion?: true
+    consideracionesEspecificas?: true
+    pautaSolucionAnexo3?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMaxAggregateInputType = {
+    id?: true
+    cabId?: true
+    orden?: true
+    letra?: true
+    aspecto?: true
+    formaEvaluar?: true
+    periodoCorreccion?: true
+    tienePeriodoCorreccion?: true
+    medioVerificacion?: true
+    consideracionesEspecificas?: true
+    pautaSolucionAnexo3?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCountAggregateInputType = {
+    id?: true
+    cabId?: true
+    orden?: true
+    letra?: true
+    aspecto?: true
+    formaEvaluar?: true
+    periodoCorreccion?: true
+    tienePeriodoCorreccion?: true
+    medioVerificacion?: true
+    consideracionesEspecificas?: true
+    pautaSolucionAnexo3?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Det to aggregate.
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_IT_Elementos_Esenciales_Dets
+    **/
+    _count?: true | Multas_IT_Elementos_Esenciales_DetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_IT_Elementos_Esenciales_DetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_IT_Elementos_Esenciales_DetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_IT_Elementos_Esenciales_DetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_IT_Elementos_Esenciales_DetMaxAggregateInputType
+  }
+
+  export type GetMultas_IT_Elementos_Esenciales_DetAggregateType<T extends Multas_IT_Elementos_Esenciales_DetAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_IT_Elementos_Esenciales_Det]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_IT_Elementos_Esenciales_Det[P]>
+      : GetScalarType<T[P], AggregateMultas_IT_Elementos_Esenciales_Det[P]>
+  }
+
+
+
+
+  export type Multas_IT_Elementos_Esenciales_DetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithAggregationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithAggregationInput[]
+    by: Multas_IT_Elementos_Esenciales_DetScalarFieldEnum[] | Multas_IT_Elementos_Esenciales_DetScalarFieldEnum
+    having?: Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_IT_Elementos_Esenciales_DetCountAggregateInputType | true
+    _avg?: Multas_IT_Elementos_Esenciales_DetAvgAggregateInputType
+    _sum?: Multas_IT_Elementos_Esenciales_DetSumAggregateInputType
+    _min?: Multas_IT_Elementos_Esenciales_DetMinAggregateInputType
+    _max?: Multas_IT_Elementos_Esenciales_DetMaxAggregateInputType
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetGroupByOutputType = {
+    id: string
+    cabId: string
+    orden: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion: string
+    tienePeriodoCorreccion: boolean
+    medioVerificacion: string
+    consideracionesEspecificas: string | null
+    pautaSolucionAnexo3: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_IT_Elementos_Esenciales_DetCountAggregateOutputType | null
+    _avg: Multas_IT_Elementos_Esenciales_DetAvgAggregateOutputType | null
+    _sum: Multas_IT_Elementos_Esenciales_DetSumAggregateOutputType | null
+    _min: Multas_IT_Elementos_Esenciales_DetMinAggregateOutputType | null
+    _max: Multas_IT_Elementos_Esenciales_DetMaxAggregateOutputType | null
+  }
+
+  type GetMultas_IT_Elementos_Esenciales_DetGroupByPayload<T extends Multas_IT_Elementos_Esenciales_DetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_IT_Elementos_Esenciales_DetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_IT_Elementos_Esenciales_DetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_IT_Elementos_Esenciales_DetGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_IT_Elementos_Esenciales_DetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    orden?: boolean
+    letra?: boolean
+    aspecto?: boolean
+    formaEvaluar?: boolean
+    periodoCorreccion?: boolean
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion?: boolean
+    consideracionesEspecificas?: boolean
+    pautaSolucionAnexo3?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cab?: boolean | Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Det"]>
+
+  export type Multas_IT_Elementos_Esenciales_DetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    orden?: boolean
+    letra?: boolean
+    aspecto?: boolean
+    formaEvaluar?: boolean
+    periodoCorreccion?: boolean
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion?: boolean
+    consideracionesEspecificas?: boolean
+    pautaSolucionAnexo3?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cab?: boolean | Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Det"]>
+
+  export type Multas_IT_Elementos_Esenciales_DetSelectScalar = {
+    id?: boolean
+    cabId?: boolean
+    orden?: boolean
+    letra?: boolean
+    aspecto?: boolean
+    formaEvaluar?: boolean
+    periodoCorreccion?: boolean
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion?: boolean
+    consideracionesEspecificas?: boolean
+    pautaSolucionAnexo3?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }
+  export type Multas_IT_Elementos_Esenciales_DetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_IT_Elementos_Esenciales_Det"
+    objects: {
+      cab: Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabId: string
+      orden: number
+      letra: string
+      aspecto: string
+      formaEvaluar: string
+      periodoCorreccion: string
+      tienePeriodoCorreccion: boolean
+      medioVerificacion: string
+      consideracionesEspecificas: string | null
+      pautaSolucionAnexo3: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_IT_Elementos_Esenciales_Det"]>
+    composites: {}
+  }
+
+  type Multas_IT_Elementos_Esenciales_DetGetPayload<S extends boolean | null | undefined | Multas_IT_Elementos_Esenciales_DetDefaultArgs> = $Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload, S>
+
+  type Multas_IT_Elementos_Esenciales_DetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_IT_Elementos_Esenciales_DetFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_IT_Elementos_Esenciales_DetCountAggregateInputType | true
+    }
+
+  export interface Multas_IT_Elementos_Esenciales_DetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_IT_Elementos_Esenciales_Det'], meta: { name: 'Multas_IT_Elementos_Esenciales_Det' } }
+    /**
+     * Find zero or one Multas_IT_Elementos_Esenciales_Det that matches the filter.
+     * @param {Multas_IT_Elementos_Esenciales_DetFindUniqueArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_IT_Elementos_Esenciales_DetFindUniqueArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_IT_Elementos_Esenciales_Det that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_IT_Elementos_Esenciales_DetFindUniqueOrThrowArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_IT_Elementos_Esenciales_DetFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_IT_Elementos_Esenciales_Det that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetFindFirstArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_IT_Elementos_Esenciales_DetFindFirstArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetFindFirstArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_IT_Elementos_Esenciales_Det that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetFindFirstOrThrowArgs} args - Arguments to find a Multas_IT_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_IT_Elementos_Esenciales_DetFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_IT_Elementos_Esenciales_Dets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_IT_Elementos_Esenciales_Dets
+     * const multas_IT_Elementos_Esenciales_Dets = await prisma.multas_IT_Elementos_Esenciales_Det.findMany()
+     * 
+     * // Get first 10 Multas_IT_Elementos_Esenciales_Dets
+     * const multas_IT_Elementos_Esenciales_Dets = await prisma.multas_IT_Elementos_Esenciales_Det.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_IT_Elementos_Esenciales_DetWithIdOnly = await prisma.multas_IT_Elementos_Esenciales_Det.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_IT_Elementos_Esenciales_DetFindManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_IT_Elementos_Esenciales_Det.
+     * @param {Multas_IT_Elementos_Esenciales_DetCreateArgs} args - Arguments to create a Multas_IT_Elementos_Esenciales_Det.
+     * @example
+     * // Create one Multas_IT_Elementos_Esenciales_Det
+     * const Multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.create({
+     *   data: {
+     *     // ... data to create a Multas_IT_Elementos_Esenciales_Det
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_IT_Elementos_Esenciales_DetCreateArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetCreateArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_IT_Elementos_Esenciales_Dets.
+     * @param {Multas_IT_Elementos_Esenciales_DetCreateManyArgs} args - Arguments to create many Multas_IT_Elementos_Esenciales_Dets.
+     * @example
+     * // Create many Multas_IT_Elementos_Esenciales_Dets
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_IT_Elementos_Esenciales_DetCreateManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_IT_Elementos_Esenciales_Dets and returns the data saved in the database.
+     * @param {Multas_IT_Elementos_Esenciales_DetCreateManyAndReturnArgs} args - Arguments to create many Multas_IT_Elementos_Esenciales_Dets.
+     * @example
+     * // Create many Multas_IT_Elementos_Esenciales_Dets
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_IT_Elementos_Esenciales_Dets and only return the `id`
+     * const multas_IT_Elementos_Esenciales_DetWithIdOnly = await prisma.multas_IT_Elementos_Esenciales_Det.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_IT_Elementos_Esenciales_DetCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_IT_Elementos_Esenciales_Det.
+     * @param {Multas_IT_Elementos_Esenciales_DetDeleteArgs} args - Arguments to delete one Multas_IT_Elementos_Esenciales_Det.
+     * @example
+     * // Delete one Multas_IT_Elementos_Esenciales_Det
+     * const Multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_IT_Elementos_Esenciales_Det
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_IT_Elementos_Esenciales_DetDeleteArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetDeleteArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_IT_Elementos_Esenciales_Det.
+     * @param {Multas_IT_Elementos_Esenciales_DetUpdateArgs} args - Arguments to update one Multas_IT_Elementos_Esenciales_Det.
+     * @example
+     * // Update one Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_IT_Elementos_Esenciales_DetUpdateArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetUpdateArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_IT_Elementos_Esenciales_Dets.
+     * @param {Multas_IT_Elementos_Esenciales_DetDeleteManyArgs} args - Arguments to filter Multas_IT_Elementos_Esenciales_Dets to delete.
+     * @example
+     * // Delete a few Multas_IT_Elementos_Esenciales_Dets
+     * const { count } = await prisma.multas_IT_Elementos_Esenciales_Det.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_IT_Elementos_Esenciales_DetDeleteManyArgs>(args?: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_IT_Elementos_Esenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_IT_Elementos_Esenciales_Dets
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_IT_Elementos_Esenciales_DetUpdateManyArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_IT_Elementos_Esenciales_Det.
+     * @param {Multas_IT_Elementos_Esenciales_DetUpsertArgs} args - Arguments to update or create a Multas_IT_Elementos_Esenciales_Det.
+     * @example
+     * // Update or create a Multas_IT_Elementos_Esenciales_Det
+     * const multas_IT_Elementos_Esenciales_Det = await prisma.multas_IT_Elementos_Esenciales_Det.upsert({
+     *   create: {
+     *     // ... data to create a Multas_IT_Elementos_Esenciales_Det
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_IT_Elementos_Esenciales_Det we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_IT_Elementos_Esenciales_DetUpsertArgs>(args: SelectSubset<T, Multas_IT_Elementos_Esenciales_DetUpsertArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_DetPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_IT_Elementos_Esenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetCountArgs} args - Arguments to filter Multas_IT_Elementos_Esenciales_Dets to count.
+     * @example
+     * // Count the number of Multas_IT_Elementos_Esenciales_Dets
+     * const count = await prisma.multas_IT_Elementos_Esenciales_Det.count({
+     *   where: {
+     *     // ... the filter for the Multas_IT_Elementos_Esenciales_Dets we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_IT_Elementos_Esenciales_DetCountArgs>(
+      args?: Subset<T, Multas_IT_Elementos_Esenciales_DetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_IT_Elementos_Esenciales_DetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_IT_Elementos_Esenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_IT_Elementos_Esenciales_DetAggregateArgs>(args: Subset<T, Multas_IT_Elementos_Esenciales_DetAggregateArgs>): Prisma.PrismaPromise<GetMultas_IT_Elementos_Esenciales_DetAggregateType<T>>
+
+    /**
+     * Group by Multas_IT_Elementos_Esenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_IT_Elementos_Esenciales_DetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_IT_Elementos_Esenciales_DetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_IT_Elementos_Esenciales_DetGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_IT_Elementos_Esenciales_DetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_IT_Elementos_Esenciales_DetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_IT_Elementos_Esenciales_DetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_IT_Elementos_Esenciales_Det model
+   */
+  readonly fields: Multas_IT_Elementos_Esenciales_DetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_IT_Elementos_Esenciales_Det.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_IT_Elementos_Esenciales_DetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cab<T extends Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>>): Prisma__Multas_IT_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_IT_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_IT_Elementos_Esenciales_Det model
+   */ 
+  interface Multas_IT_Elementos_Esenciales_DetFieldRefs {
+    readonly id: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly cabId: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly orden: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'Int'>
+    readonly letra: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly aspecto: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly formaEvaluar: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly periodoCorreccion: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly tienePeriodoCorreccion: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'Boolean'>
+    readonly medioVerificacion: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly consideracionesEspecificas: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly pautaSolucionAnexo3: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'String'>
+    readonly createdAt: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_IT_Elementos_Esenciales_Det", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_IT_Elementos_Esenciales_Det findUnique
+   */
+  export type Multas_IT_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Det to fetch.
+     */
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det findUniqueOrThrow
+   */
+  export type Multas_IT_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Det to fetch.
+     */
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det findFirst
+   */
+  export type Multas_IT_Elementos_Esenciales_DetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Det to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_IT_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_IT_Elementos_Esenciales_Dets.
+     */
+    distinct?: Multas_IT_Elementos_Esenciales_DetScalarFieldEnum | Multas_IT_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det findFirstOrThrow
+   */
+  export type Multas_IT_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Det to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_IT_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_IT_Elementos_Esenciales_Dets.
+     */
+    distinct?: Multas_IT_Elementos_Esenciales_DetScalarFieldEnum | Multas_IT_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det findMany
+   */
+  export type Multas_IT_Elementos_Esenciales_DetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_IT_Elementos_Esenciales_Dets to fetch.
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_IT_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_IT_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_IT_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_IT_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    distinct?: Multas_IT_Elementos_Esenciales_DetScalarFieldEnum | Multas_IT_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det create
+   */
+  export type Multas_IT_Elementos_Esenciales_DetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_IT_Elementos_Esenciales_Det.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_DetCreateInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det createMany
+   */
+  export type Multas_IT_Elementos_Esenciales_DetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_IT_Elementos_Esenciales_Dets.
+     */
+    data: Multas_IT_Elementos_Esenciales_DetCreateManyInput | Multas_IT_Elementos_Esenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det createManyAndReturn
+   */
+  export type Multas_IT_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_IT_Elementos_Esenciales_Dets.
+     */
+    data: Multas_IT_Elementos_Esenciales_DetCreateManyInput | Multas_IT_Elementos_Esenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det update
+   */
+  export type Multas_IT_Elementos_Esenciales_DetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_IT_Elementos_Esenciales_Det.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_DetUpdateInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_IT_Elementos_Esenciales_Det to update.
+     */
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det updateMany
+   */
+  export type Multas_IT_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_IT_Elementos_Esenciales_Dets.
+     */
+    data: XOR<Multas_IT_Elementos_Esenciales_DetUpdateManyMutationInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Dets to update
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det upsert
+   */
+  export type Multas_IT_Elementos_Esenciales_DetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_IT_Elementos_Esenciales_Det to update in case it exists.
+     */
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * In case the Multas_IT_Elementos_Esenciales_Det found by the `where` argument doesn't exist, create a new Multas_IT_Elementos_Esenciales_Det with this data.
+     */
+    create: XOR<Multas_IT_Elementos_Esenciales_DetCreateInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateInput>
+    /**
+     * In case the Multas_IT_Elementos_Esenciales_Det was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_IT_Elementos_Esenciales_DetUpdateInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det delete
+   */
+  export type Multas_IT_Elementos_Esenciales_DetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Det to delete.
+     */
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det deleteMany
+   */
+  export type Multas_IT_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_IT_Elementos_Esenciales_Dets to delete
+     */
+    where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+  }
+
+  /**
+   * Multas_IT_Elementos_Esenciales_Det without action
+   */
+  export type Multas_IT_Elementos_Esenciales_DetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_IT_Elementos_Esenciales_Det
+     */
+    select?: Multas_IT_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_IT_Elementos_Esenciales_DetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Aspecto_EE_Restriccion
+   */
+
+  export type AggregateMultas_Aspecto_EE_Restriccion = {
+    _count: Multas_Aspecto_EE_RestriccionCountAggregateOutputType | null
+    _avg: Multas_Aspecto_EE_RestriccionAvgAggregateOutputType | null
+    _sum: Multas_Aspecto_EE_RestriccionSumAggregateOutputType | null
+    _min: Multas_Aspecto_EE_RestriccionMinAggregateOutputType | null
+    _max: Multas_Aspecto_EE_RestriccionMaxAggregateOutputType | null
+  }
+
+  export type Multas_Aspecto_EE_RestriccionAvgAggregateOutputType = {
+    licId: number | null
+    anho: number | null
+    valorFijo: number | null
+  }
+
+  export type Multas_Aspecto_EE_RestriccionSumAggregateOutputType = {
+    licId: number | null
+    anho: number | null
+    valorFijo: number | null
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    letra: string | null
+    tipo: string | null
+    anho: number | null
+    fechaDesde: Date | null
+    fechaHasta: Date | null
+    accion: string | null
+    valorFijo: number | null
+    descripcion: string | null
+    activo: boolean | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    letra: string | null
+    tipo: string | null
+    anho: number | null
+    fechaDesde: Date | null
+    fechaHasta: Date | null
+    accion: string | null
+    valorFijo: number | null
+    descripcion: string | null
+    activo: boolean | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Aspecto_EE_RestriccionCountAggregateOutputType = {
+    id: number
+    licId: number
+    letra: number
+    tipo: number
+    anho: number
+    fechaDesde: number
+    fechaHasta: number
+    accion: number
+    valorFijo: number
+    descripcion: number
+    activo: number
+    creadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Aspecto_EE_RestriccionAvgAggregateInputType = {
+    licId?: true
+    anho?: true
+    valorFijo?: true
+  }
+
+  export type Multas_Aspecto_EE_RestriccionSumAggregateInputType = {
+    licId?: true
+    anho?: true
+    valorFijo?: true
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMinAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    tipo?: true
+    anho?: true
+    fechaDesde?: true
+    fechaHasta?: true
+    accion?: true
+    valorFijo?: true
+    descripcion?: true
+    activo?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    tipo?: true
+    anho?: true
+    fechaDesde?: true
+    fechaHasta?: true
+    accion?: true
+    valorFijo?: true
+    descripcion?: true
+    activo?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Aspecto_EE_RestriccionCountAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    tipo?: true
+    anho?: true
+    fechaDesde?: true
+    fechaHasta?: true
+    accion?: true
+    valorFijo?: true
+    descripcion?: true
+    activo?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Aspecto_EE_RestriccionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Aspecto_EE_Restriccion to aggregate.
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Aspecto_EE_Restriccions to fetch.
+     */
+    orderBy?: Multas_Aspecto_EE_RestriccionOrderByWithRelationInput | Multas_Aspecto_EE_RestriccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Aspecto_EE_Restriccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Aspecto_EE_Restriccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Aspecto_EE_Restriccions
+    **/
+    _count?: true | Multas_Aspecto_EE_RestriccionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Aspecto_EE_RestriccionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Aspecto_EE_RestriccionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Aspecto_EE_RestriccionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Aspecto_EE_RestriccionMaxAggregateInputType
+  }
+
+  export type GetMultas_Aspecto_EE_RestriccionAggregateType<T extends Multas_Aspecto_EE_RestriccionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Aspecto_EE_Restriccion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Aspecto_EE_Restriccion[P]>
+      : GetScalarType<T[P], AggregateMultas_Aspecto_EE_Restriccion[P]>
+  }
+
+
+
+
+  export type Multas_Aspecto_EE_RestriccionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+    orderBy?: Multas_Aspecto_EE_RestriccionOrderByWithAggregationInput | Multas_Aspecto_EE_RestriccionOrderByWithAggregationInput[]
+    by: Multas_Aspecto_EE_RestriccionScalarFieldEnum[] | Multas_Aspecto_EE_RestriccionScalarFieldEnum
+    having?: Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Aspecto_EE_RestriccionCountAggregateInputType | true
+    _avg?: Multas_Aspecto_EE_RestriccionAvgAggregateInputType
+    _sum?: Multas_Aspecto_EE_RestriccionSumAggregateInputType
+    _min?: Multas_Aspecto_EE_RestriccionMinAggregateInputType
+    _max?: Multas_Aspecto_EE_RestriccionMaxAggregateInputType
+  }
+
+  export type Multas_Aspecto_EE_RestriccionGroupByOutputType = {
+    id: string
+    licId: number
+    letra: string
+    tipo: string
+    anho: number | null
+    fechaDesde: Date | null
+    fechaHasta: Date | null
+    accion: string
+    valorFijo: number | null
+    descripcion: string | null
+    activo: boolean
+    creadoPor: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Aspecto_EE_RestriccionCountAggregateOutputType | null
+    _avg: Multas_Aspecto_EE_RestriccionAvgAggregateOutputType | null
+    _sum: Multas_Aspecto_EE_RestriccionSumAggregateOutputType | null
+    _min: Multas_Aspecto_EE_RestriccionMinAggregateOutputType | null
+    _max: Multas_Aspecto_EE_RestriccionMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Aspecto_EE_RestriccionGroupByPayload<T extends Multas_Aspecto_EE_RestriccionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Aspecto_EE_RestriccionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Aspecto_EE_RestriccionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Aspecto_EE_RestriccionGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Aspecto_EE_RestriccionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Aspecto_EE_RestriccionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    tipo?: boolean
+    anho?: boolean
+    fechaDesde?: boolean
+    fechaHasta?: boolean
+    accion?: boolean
+    valorFijo?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Aspecto_EE_Restriccion"]>
+
+  export type Multas_Aspecto_EE_RestriccionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    tipo?: boolean
+    anho?: boolean
+    fechaDesde?: boolean
+    fechaHasta?: boolean
+    accion?: boolean
+    valorFijo?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Aspecto_EE_Restriccion"]>
+
+  export type Multas_Aspecto_EE_RestriccionSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    tipo?: boolean
+    anho?: boolean
+    fechaDesde?: boolean
+    fechaHasta?: boolean
+    accion?: boolean
+    valorFijo?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Aspecto_EE_RestriccionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Aspecto_EE_Restriccion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      letra: string
+      tipo: string
+      anho: number | null
+      fechaDesde: Date | null
+      fechaHasta: Date | null
+      accion: string
+      valorFijo: number | null
+      descripcion: string | null
+      activo: boolean
+      creadoPor: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Aspecto_EE_Restriccion"]>
+    composites: {}
+  }
+
+  type Multas_Aspecto_EE_RestriccionGetPayload<S extends boolean | null | undefined | Multas_Aspecto_EE_RestriccionDefaultArgs> = $Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload, S>
+
+  type Multas_Aspecto_EE_RestriccionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Aspecto_EE_RestriccionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Aspecto_EE_RestriccionCountAggregateInputType | true
+    }
+
+  export interface Multas_Aspecto_EE_RestriccionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Aspecto_EE_Restriccion'], meta: { name: 'Multas_Aspecto_EE_Restriccion' } }
+    /**
+     * Find zero or one Multas_Aspecto_EE_Restriccion that matches the filter.
+     * @param {Multas_Aspecto_EE_RestriccionFindUniqueArgs} args - Arguments to find a Multas_Aspecto_EE_Restriccion
+     * @example
+     * // Get one Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Aspecto_EE_RestriccionFindUniqueArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionFindUniqueArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Aspecto_EE_Restriccion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Aspecto_EE_RestriccionFindUniqueOrThrowArgs} args - Arguments to find a Multas_Aspecto_EE_Restriccion
+     * @example
+     * // Get one Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Aspecto_EE_RestriccionFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Aspecto_EE_Restriccion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionFindFirstArgs} args - Arguments to find a Multas_Aspecto_EE_Restriccion
+     * @example
+     * // Get one Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Aspecto_EE_RestriccionFindFirstArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionFindFirstArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Aspecto_EE_Restriccion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionFindFirstOrThrowArgs} args - Arguments to find a Multas_Aspecto_EE_Restriccion
+     * @example
+     * // Get one Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Aspecto_EE_RestriccionFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Aspecto_EE_Restriccions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Aspecto_EE_Restriccions
+     * const multas_Aspecto_EE_Restriccions = await prisma.multas_Aspecto_EE_Restriccion.findMany()
+     * 
+     * // Get first 10 Multas_Aspecto_EE_Restriccions
+     * const multas_Aspecto_EE_Restriccions = await prisma.multas_Aspecto_EE_Restriccion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Aspecto_EE_RestriccionWithIdOnly = await prisma.multas_Aspecto_EE_Restriccion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Aspecto_EE_RestriccionFindManyArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Aspecto_EE_Restriccion.
+     * @param {Multas_Aspecto_EE_RestriccionCreateArgs} args - Arguments to create a Multas_Aspecto_EE_Restriccion.
+     * @example
+     * // Create one Multas_Aspecto_EE_Restriccion
+     * const Multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.create({
+     *   data: {
+     *     // ... data to create a Multas_Aspecto_EE_Restriccion
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Aspecto_EE_RestriccionCreateArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionCreateArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Aspecto_EE_Restriccions.
+     * @param {Multas_Aspecto_EE_RestriccionCreateManyArgs} args - Arguments to create many Multas_Aspecto_EE_Restriccions.
+     * @example
+     * // Create many Multas_Aspecto_EE_Restriccions
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Aspecto_EE_RestriccionCreateManyArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Aspecto_EE_Restriccions and returns the data saved in the database.
+     * @param {Multas_Aspecto_EE_RestriccionCreateManyAndReturnArgs} args - Arguments to create many Multas_Aspecto_EE_Restriccions.
+     * @example
+     * // Create many Multas_Aspecto_EE_Restriccions
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Aspecto_EE_Restriccions and only return the `id`
+     * const multas_Aspecto_EE_RestriccionWithIdOnly = await prisma.multas_Aspecto_EE_Restriccion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Aspecto_EE_RestriccionCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Aspecto_EE_Restriccion.
+     * @param {Multas_Aspecto_EE_RestriccionDeleteArgs} args - Arguments to delete one Multas_Aspecto_EE_Restriccion.
+     * @example
+     * // Delete one Multas_Aspecto_EE_Restriccion
+     * const Multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Aspecto_EE_Restriccion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Aspecto_EE_RestriccionDeleteArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionDeleteArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Aspecto_EE_Restriccion.
+     * @param {Multas_Aspecto_EE_RestriccionUpdateArgs} args - Arguments to update one Multas_Aspecto_EE_Restriccion.
+     * @example
+     * // Update one Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Aspecto_EE_RestriccionUpdateArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionUpdateArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Aspecto_EE_Restriccions.
+     * @param {Multas_Aspecto_EE_RestriccionDeleteManyArgs} args - Arguments to filter Multas_Aspecto_EE_Restriccions to delete.
+     * @example
+     * // Delete a few Multas_Aspecto_EE_Restriccions
+     * const { count } = await prisma.multas_Aspecto_EE_Restriccion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Aspecto_EE_RestriccionDeleteManyArgs>(args?: SelectSubset<T, Multas_Aspecto_EE_RestriccionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Aspecto_EE_Restriccions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Aspecto_EE_Restriccions
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Aspecto_EE_RestriccionUpdateManyArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Aspecto_EE_Restriccion.
+     * @param {Multas_Aspecto_EE_RestriccionUpsertArgs} args - Arguments to update or create a Multas_Aspecto_EE_Restriccion.
+     * @example
+     * // Update or create a Multas_Aspecto_EE_Restriccion
+     * const multas_Aspecto_EE_Restriccion = await prisma.multas_Aspecto_EE_Restriccion.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Aspecto_EE_Restriccion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Aspecto_EE_Restriccion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Aspecto_EE_RestriccionUpsertArgs>(args: SelectSubset<T, Multas_Aspecto_EE_RestriccionUpsertArgs<ExtArgs>>): Prisma__Multas_Aspecto_EE_RestriccionClient<$Result.GetResult<Prisma.$Multas_Aspecto_EE_RestriccionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Aspecto_EE_Restriccions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionCountArgs} args - Arguments to filter Multas_Aspecto_EE_Restriccions to count.
+     * @example
+     * // Count the number of Multas_Aspecto_EE_Restriccions
+     * const count = await prisma.multas_Aspecto_EE_Restriccion.count({
+     *   where: {
+     *     // ... the filter for the Multas_Aspecto_EE_Restriccions we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Aspecto_EE_RestriccionCountArgs>(
+      args?: Subset<T, Multas_Aspecto_EE_RestriccionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Aspecto_EE_RestriccionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Aspecto_EE_Restriccion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Aspecto_EE_RestriccionAggregateArgs>(args: Subset<T, Multas_Aspecto_EE_RestriccionAggregateArgs>): Prisma.PrismaPromise<GetMultas_Aspecto_EE_RestriccionAggregateType<T>>
+
+    /**
+     * Group by Multas_Aspecto_EE_Restriccion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Aspecto_EE_RestriccionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Aspecto_EE_RestriccionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Aspecto_EE_RestriccionGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Aspecto_EE_RestriccionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Aspecto_EE_RestriccionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Aspecto_EE_RestriccionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Aspecto_EE_Restriccion model
+   */
+  readonly fields: Multas_Aspecto_EE_RestriccionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Aspecto_EE_Restriccion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Aspecto_EE_RestriccionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Aspecto_EE_Restriccion model
+   */ 
+  interface Multas_Aspecto_EE_RestriccionFieldRefs {
+    readonly id: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly licId: FieldRef<"Multas_Aspecto_EE_Restriccion", 'Int'>
+    readonly letra: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly tipo: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly anho: FieldRef<"Multas_Aspecto_EE_Restriccion", 'Int'>
+    readonly fechaDesde: FieldRef<"Multas_Aspecto_EE_Restriccion", 'DateTime'>
+    readonly fechaHasta: FieldRef<"Multas_Aspecto_EE_Restriccion", 'DateTime'>
+    readonly accion: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly valorFijo: FieldRef<"Multas_Aspecto_EE_Restriccion", 'Float'>
+    readonly descripcion: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly activo: FieldRef<"Multas_Aspecto_EE_Restriccion", 'Boolean'>
+    readonly creadoPor: FieldRef<"Multas_Aspecto_EE_Restriccion", 'String'>
+    readonly createdAt: FieldRef<"Multas_Aspecto_EE_Restriccion", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Aspecto_EE_Restriccion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Aspecto_EE_Restriccion findUnique
+   */
+  export type Multas_Aspecto_EE_RestriccionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Aspecto_EE_Restriccion to fetch.
+     */
+    where: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion findUniqueOrThrow
+   */
+  export type Multas_Aspecto_EE_RestriccionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Aspecto_EE_Restriccion to fetch.
+     */
+    where: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion findFirst
+   */
+  export type Multas_Aspecto_EE_RestriccionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Aspecto_EE_Restriccion to fetch.
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Aspecto_EE_Restriccions to fetch.
+     */
+    orderBy?: Multas_Aspecto_EE_RestriccionOrderByWithRelationInput | Multas_Aspecto_EE_RestriccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Aspecto_EE_Restriccions.
+     */
+    cursor?: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Aspecto_EE_Restriccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Aspecto_EE_Restriccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Aspecto_EE_Restriccions.
+     */
+    distinct?: Multas_Aspecto_EE_RestriccionScalarFieldEnum | Multas_Aspecto_EE_RestriccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion findFirstOrThrow
+   */
+  export type Multas_Aspecto_EE_RestriccionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Aspecto_EE_Restriccion to fetch.
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Aspecto_EE_Restriccions to fetch.
+     */
+    orderBy?: Multas_Aspecto_EE_RestriccionOrderByWithRelationInput | Multas_Aspecto_EE_RestriccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Aspecto_EE_Restriccions.
+     */
+    cursor?: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Aspecto_EE_Restriccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Aspecto_EE_Restriccions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Aspecto_EE_Restriccions.
+     */
+    distinct?: Multas_Aspecto_EE_RestriccionScalarFieldEnum | Multas_Aspecto_EE_RestriccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion findMany
+   */
+  export type Multas_Aspecto_EE_RestriccionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Aspecto_EE_Restriccions to fetch.
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Aspecto_EE_Restriccions to fetch.
+     */
+    orderBy?: Multas_Aspecto_EE_RestriccionOrderByWithRelationInput | Multas_Aspecto_EE_RestriccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Aspecto_EE_Restriccions.
+     */
+    cursor?: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Aspecto_EE_Restriccions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Aspecto_EE_Restriccions.
+     */
+    skip?: number
+    distinct?: Multas_Aspecto_EE_RestriccionScalarFieldEnum | Multas_Aspecto_EE_RestriccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion create
+   */
+  export type Multas_Aspecto_EE_RestriccionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Aspecto_EE_Restriccion.
+     */
+    data: XOR<Multas_Aspecto_EE_RestriccionCreateInput, Multas_Aspecto_EE_RestriccionUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion createMany
+   */
+  export type Multas_Aspecto_EE_RestriccionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Aspecto_EE_Restriccions.
+     */
+    data: Multas_Aspecto_EE_RestriccionCreateManyInput | Multas_Aspecto_EE_RestriccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion createManyAndReturn
+   */
+  export type Multas_Aspecto_EE_RestriccionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Aspecto_EE_Restriccions.
+     */
+    data: Multas_Aspecto_EE_RestriccionCreateManyInput | Multas_Aspecto_EE_RestriccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion update
+   */
+  export type Multas_Aspecto_EE_RestriccionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Aspecto_EE_Restriccion.
+     */
+    data: XOR<Multas_Aspecto_EE_RestriccionUpdateInput, Multas_Aspecto_EE_RestriccionUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Aspecto_EE_Restriccion to update.
+     */
+    where: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion updateMany
+   */
+  export type Multas_Aspecto_EE_RestriccionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Aspecto_EE_Restriccions.
+     */
+    data: XOR<Multas_Aspecto_EE_RestriccionUpdateManyMutationInput, Multas_Aspecto_EE_RestriccionUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Aspecto_EE_Restriccions to update
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion upsert
+   */
+  export type Multas_Aspecto_EE_RestriccionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Aspecto_EE_Restriccion to update in case it exists.
+     */
+    where: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+    /**
+     * In case the Multas_Aspecto_EE_Restriccion found by the `where` argument doesn't exist, create a new Multas_Aspecto_EE_Restriccion with this data.
+     */
+    create: XOR<Multas_Aspecto_EE_RestriccionCreateInput, Multas_Aspecto_EE_RestriccionUncheckedCreateInput>
+    /**
+     * In case the Multas_Aspecto_EE_Restriccion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Aspecto_EE_RestriccionUpdateInput, Multas_Aspecto_EE_RestriccionUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion delete
+   */
+  export type Multas_Aspecto_EE_RestriccionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Aspecto_EE_Restriccion to delete.
+     */
+    where: Multas_Aspecto_EE_RestriccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion deleteMany
+   */
+  export type Multas_Aspecto_EE_RestriccionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Aspecto_EE_Restriccions to delete
+     */
+    where?: Multas_Aspecto_EE_RestriccionWhereInput
+  }
+
+  /**
+   * Multas_Aspecto_EE_Restriccion without action
+   */
+  export type Multas_Aspecto_EE_RestriccionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
+     */
+    select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
   }
 
 
@@ -154004,6 +158674,86 @@ export namespace Prisma {
   export type Multas_Elementos_Esenciales_DetScalarFieldEnum = (typeof Multas_Elementos_Esenciales_DetScalarFieldEnum)[keyof typeof Multas_Elementos_Esenciales_DetScalarFieldEnum]
 
 
+  export const Multas_Privilegio_EEScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    puedeEliminarIndividual: 'puedeEliminarIndividual',
+    puedeEliminarMasivo: 'puedeEliminarMasivo',
+    otorgadoPor: 'otorgadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Privilegio_EEScalarFieldEnum = (typeof Multas_Privilegio_EEScalarFieldEnum)[keyof typeof Multas_Privilegio_EEScalarFieldEnum]
+
+
+  export const Multas_IT_Elementos_Esenciales_CabScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    licitacionCodigoPdf: 'licitacionCodigoPdf',
+    licitacionHomologada: 'licitacionHomologada',
+    codigoDocumento: 'codigoDocumento',
+    tituloDocumento: 'tituloDocumento',
+    numeroRevision: 'numeroRevision',
+    fechaRevision: 'fechaRevision',
+    totalPaginas: 'totalPaginas',
+    objetivo: 'objetivo',
+    alcance: 'alcance',
+    plazoNotificacionHoras: 'plazoNotificacionHoras',
+    plazoCorreccionDias: 'plazoCorreccionDias',
+    aspectosModalidadesJson: 'aspectosModalidadesJson',
+    causasImputabilidadJson: 'causasImputabilidadJson',
+    anexoPesajeJson: 'anexoPesajeJson',
+    anexoFrutasVerdurasJson: 'anexoFrutasVerdurasJson',
+    nombreArchivo: 'nombreArchivo',
+    archivoBase64: 'archivoBase64',
+    cargadoPor: 'cargadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_IT_Elementos_Esenciales_CabScalarFieldEnum = (typeof Multas_IT_Elementos_Esenciales_CabScalarFieldEnum)[keyof typeof Multas_IT_Elementos_Esenciales_CabScalarFieldEnum]
+
+
+  export const Multas_IT_Elementos_Esenciales_DetScalarFieldEnum: {
+    id: 'id',
+    cabId: 'cabId',
+    orden: 'orden',
+    letra: 'letra',
+    aspecto: 'aspecto',
+    formaEvaluar: 'formaEvaluar',
+    periodoCorreccion: 'periodoCorreccion',
+    tienePeriodoCorreccion: 'tienePeriodoCorreccion',
+    medioVerificacion: 'medioVerificacion',
+    consideracionesEspecificas: 'consideracionesEspecificas',
+    pautaSolucionAnexo3: 'pautaSolucionAnexo3',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_IT_Elementos_Esenciales_DetScalarFieldEnum = (typeof Multas_IT_Elementos_Esenciales_DetScalarFieldEnum)[keyof typeof Multas_IT_Elementos_Esenciales_DetScalarFieldEnum]
+
+
+  export const Multas_Aspecto_EE_RestriccionScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    letra: 'letra',
+    tipo: 'tipo',
+    anho: 'anho',
+    fechaDesde: 'fechaDesde',
+    fechaHasta: 'fechaHasta',
+    accion: 'accion',
+    valorFijo: 'valorFijo',
+    descripcion: 'descripcion',
+    activo: 'activo',
+    creadoPor: 'creadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Aspecto_EE_RestriccionScalarFieldEnum = (typeof Multas_Aspecto_EE_RestriccionScalarFieldEnum)[keyof typeof Multas_Aspecto_EE_RestriccionScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -155614,6 +160364,7 @@ export namespace Prisma {
     areas?: AreaListRelationFilter
     licitaciones?: LicitacionListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
+    privilegioEE?: XOR<Multas_Privilegio_EENullableRelationFilter, Multas_Privilegio_EEWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -155636,6 +160387,7 @@ export namespace Prisma {
     areas?: AreaOrderByRelationAggregateInput
     licitaciones?: LicitacionOrderByRelationAggregateInput
     delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
+    privilegioEE?: Multas_Privilegio_EEOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -155661,6 +160413,7 @@ export namespace Prisma {
     areas?: AreaListRelationFilter
     licitaciones?: LicitacionListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
+    privilegioEE?: XOR<Multas_Privilegio_EENullableRelationFilter, Multas_Privilegio_EEWhereInput> | null
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -156472,6 +161225,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraListRelationFilter
     actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
     users?: UserListRelationFilter
+    itElementosEsenciales?: XOR<Multas_IT_Elementos_Esenciales_CabNullableRelationFilter, Multas_IT_Elementos_Esenciales_CabWhereInput> | null
   }
 
   export type LicitacionOrderByWithRelationInput = {
@@ -156487,6 +161241,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraOrderByRelationAggregateInput
     actasPlantillas?: ActaSupervisionPlantillaOrderByRelationAggregateInput
     users?: UserOrderByRelationAggregateInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput
   }
 
   export type LicitacionWhereUniqueInput = Prisma.AtLeast<{
@@ -156505,6 +161260,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraListRelationFilter
     actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
     users?: UserListRelationFilter
+    itElementosEsenciales?: XOR<Multas_IT_Elementos_Esenciales_CabNullableRelationFilter, Multas_IT_Elementos_Esenciales_CabWhereInput> | null
   }, "licId">
 
   export type LicitacionOrderByWithAggregationInput = {
@@ -159794,6 +164550,412 @@ export namespace Prisma {
     formulaAplicada?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
     montoMulta?: FloatWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | number
     variablesUsadas?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+  }
+
+  export type Multas_Privilegio_EEWhereInput = {
+    AND?: Multas_Privilegio_EEWhereInput | Multas_Privilegio_EEWhereInput[]
+    OR?: Multas_Privilegio_EEWhereInput[]
+    NOT?: Multas_Privilegio_EEWhereInput | Multas_Privilegio_EEWhereInput[]
+    id?: StringFilter<"Multas_Privilegio_EE"> | string
+    userId?: StringFilter<"Multas_Privilegio_EE"> | string
+    puedeEliminarIndividual?: BoolFilter<"Multas_Privilegio_EE"> | boolean
+    puedeEliminarMasivo?: BoolFilter<"Multas_Privilegio_EE"> | boolean
+    otorgadoPor?: StringNullableFilter<"Multas_Privilegio_EE"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Privilegio_EE"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Privilegio_EE"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type Multas_Privilegio_EEOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    puedeEliminarIndividual?: SortOrder
+    puedeEliminarMasivo?: SortOrder
+    otorgadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type Multas_Privilegio_EEWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: Multas_Privilegio_EEWhereInput | Multas_Privilegio_EEWhereInput[]
+    OR?: Multas_Privilegio_EEWhereInput[]
+    NOT?: Multas_Privilegio_EEWhereInput | Multas_Privilegio_EEWhereInput[]
+    puedeEliminarIndividual?: BoolFilter<"Multas_Privilegio_EE"> | boolean
+    puedeEliminarMasivo?: BoolFilter<"Multas_Privilegio_EE"> | boolean
+    otorgadoPor?: StringNullableFilter<"Multas_Privilegio_EE"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Privilegio_EE"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Privilegio_EE"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type Multas_Privilegio_EEOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    puedeEliminarIndividual?: SortOrder
+    puedeEliminarMasivo?: SortOrder
+    otorgadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Privilegio_EECountOrderByAggregateInput
+    _max?: Multas_Privilegio_EEMaxOrderByAggregateInput
+    _min?: Multas_Privilegio_EEMinOrderByAggregateInput
+  }
+
+  export type Multas_Privilegio_EEScalarWhereWithAggregatesInput = {
+    AND?: Multas_Privilegio_EEScalarWhereWithAggregatesInput | Multas_Privilegio_EEScalarWhereWithAggregatesInput[]
+    OR?: Multas_Privilegio_EEScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Privilegio_EEScalarWhereWithAggregatesInput | Multas_Privilegio_EEScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Privilegio_EE"> | string
+    userId?: StringWithAggregatesFilter<"Multas_Privilegio_EE"> | string
+    puedeEliminarIndividual?: BoolWithAggregatesFilter<"Multas_Privilegio_EE"> | boolean
+    puedeEliminarMasivo?: BoolWithAggregatesFilter<"Multas_Privilegio_EE"> | boolean
+    otorgadoPor?: StringNullableWithAggregatesFilter<"Multas_Privilegio_EE"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Privilegio_EE"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Privilegio_EE"> | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabWhereInput = {
+    AND?: Multas_IT_Elementos_Esenciales_CabWhereInput | Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    OR?: Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_CabWhereInput | Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    id?: StringFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string
+    licId?: IntFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number
+    licitacionCodigoPdf?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    licitacionHomologada?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    codigoDocumento?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    tituloDocumento?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    numeroRevision?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    fechaRevision?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    totalPaginas?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    objetivo?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    alcance?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    plazoNotificacionHoras?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    plazoCorreccionDias?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    aspectosModalidadesJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    causasImputabilidadJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoPesajeJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoFrutasVerdurasJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    nombreArchivo?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    archivoBase64?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    cargadoPor?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    createdAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+    detalles?: Multas_IT_Elementos_Esenciales_DetListRelationFilter
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    licitacionCodigoPdf?: SortOrderInput | SortOrder
+    licitacionHomologada?: SortOrderInput | SortOrder
+    codigoDocumento?: SortOrderInput | SortOrder
+    tituloDocumento?: SortOrderInput | SortOrder
+    numeroRevision?: SortOrderInput | SortOrder
+    fechaRevision?: SortOrderInput | SortOrder
+    totalPaginas?: SortOrderInput | SortOrder
+    objetivo?: SortOrderInput | SortOrder
+    alcance?: SortOrderInput | SortOrder
+    plazoNotificacionHoras?: SortOrderInput | SortOrder
+    plazoCorreccionDias?: SortOrderInput | SortOrder
+    aspectosModalidadesJson?: SortOrderInput | SortOrder
+    causasImputabilidadJson?: SortOrderInput | SortOrder
+    anexoPesajeJson?: SortOrderInput | SortOrder
+    anexoFrutasVerdurasJson?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrderInput | SortOrder
+    archivoBase64?: SortOrderInput | SortOrder
+    cargadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    licitacion?: LicitacionOrderByWithRelationInput
+    detalles?: Multas_IT_Elementos_Esenciales_DetOrderByRelationAggregateInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId?: number
+    AND?: Multas_IT_Elementos_Esenciales_CabWhereInput | Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    OR?: Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_CabWhereInput | Multas_IT_Elementos_Esenciales_CabWhereInput[]
+    licitacionCodigoPdf?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    licitacionHomologada?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    codigoDocumento?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    tituloDocumento?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    numeroRevision?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    fechaRevision?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    totalPaginas?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    objetivo?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    alcance?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    plazoNotificacionHoras?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    plazoCorreccionDias?: IntNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    aspectosModalidadesJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    causasImputabilidadJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoPesajeJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoFrutasVerdurasJson?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    nombreArchivo?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    archivoBase64?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    cargadoPor?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    createdAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+    detalles?: Multas_IT_Elementos_Esenciales_DetListRelationFilter
+  }, "id" | "licId">
+
+  export type Multas_IT_Elementos_Esenciales_CabOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    licitacionCodigoPdf?: SortOrderInput | SortOrder
+    licitacionHomologada?: SortOrderInput | SortOrder
+    codigoDocumento?: SortOrderInput | SortOrder
+    tituloDocumento?: SortOrderInput | SortOrder
+    numeroRevision?: SortOrderInput | SortOrder
+    fechaRevision?: SortOrderInput | SortOrder
+    totalPaginas?: SortOrderInput | SortOrder
+    objetivo?: SortOrderInput | SortOrder
+    alcance?: SortOrderInput | SortOrder
+    plazoNotificacionHoras?: SortOrderInput | SortOrder
+    plazoCorreccionDias?: SortOrderInput | SortOrder
+    aspectosModalidadesJson?: SortOrderInput | SortOrder
+    causasImputabilidadJson?: SortOrderInput | SortOrder
+    anexoPesajeJson?: SortOrderInput | SortOrder
+    anexoFrutasVerdurasJson?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrderInput | SortOrder
+    archivoBase64?: SortOrderInput | SortOrder
+    cargadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_IT_Elementos_Esenciales_CabCountOrderByAggregateInput
+    _avg?: Multas_IT_Elementos_Esenciales_CabAvgOrderByAggregateInput
+    _max?: Multas_IT_Elementos_Esenciales_CabMaxOrderByAggregateInput
+    _min?: Multas_IT_Elementos_Esenciales_CabMinOrderByAggregateInput
+    _sum?: Multas_IT_Elementos_Esenciales_CabSumOrderByAggregateInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput = {
+    AND?: Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput | Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    OR?: Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput | Multas_IT_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string
+    licId?: IntWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number
+    licitacionCodigoPdf?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    licitacionHomologada?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    codigoDocumento?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    tituloDocumento?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    numeroRevision?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    fechaRevision?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    totalPaginas?: IntNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    objetivo?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    alcance?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    plazoNotificacionHoras?: IntNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    plazoCorreccionDias?: IntNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | number | null
+    aspectosModalidadesJson?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    causasImputabilidadJson?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoPesajeJson?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    anexoFrutasVerdurasJson?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    nombreArchivo?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    archivoBase64?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    cargadoPor?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Cab"> | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetWhereInput = {
+    AND?: Multas_IT_Elementos_Esenciales_DetWhereInput | Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    OR?: Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_DetWhereInput | Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    id?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    cabId?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    orden?: IntFilter<"Multas_IT_Elementos_Esenciales_Det"> | number
+    letra?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    aspecto?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    formaEvaluar?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    periodoCorreccion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    tienePeriodoCorreccion?: BoolFilter<"Multas_IT_Elementos_Esenciales_Det"> | boolean
+    medioVerificacion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    consideracionesEspecificas?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    pautaSolucionAnexo3?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    createdAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    cab?: XOR<Multas_IT_Elementos_Esenciales_CabRelationFilter, Multas_IT_Elementos_Esenciales_CabWhereInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetOrderByWithRelationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    orden?: SortOrder
+    letra?: SortOrder
+    aspecto?: SortOrder
+    formaEvaluar?: SortOrder
+    periodoCorreccion?: SortOrder
+    tienePeriodoCorreccion?: SortOrder
+    medioVerificacion?: SortOrder
+    consideracionesEspecificas?: SortOrderInput | SortOrder
+    pautaSolucionAnexo3?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cab?: Multas_IT_Elementos_Esenciales_CabOrderByWithRelationInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_IT_Elementos_Esenciales_DetWhereInput | Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    OR?: Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_DetWhereInput | Multas_IT_Elementos_Esenciales_DetWhereInput[]
+    cabId?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    orden?: IntFilter<"Multas_IT_Elementos_Esenciales_Det"> | number
+    letra?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    aspecto?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    formaEvaluar?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    periodoCorreccion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    tienePeriodoCorreccion?: BoolFilter<"Multas_IT_Elementos_Esenciales_Det"> | boolean
+    medioVerificacion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    consideracionesEspecificas?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    pautaSolucionAnexo3?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    createdAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    cab?: XOR<Multas_IT_Elementos_Esenciales_CabRelationFilter, Multas_IT_Elementos_Esenciales_CabWhereInput>
+  }, "id">
+
+  export type Multas_IT_Elementos_Esenciales_DetOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    orden?: SortOrder
+    letra?: SortOrder
+    aspecto?: SortOrder
+    formaEvaluar?: SortOrder
+    periodoCorreccion?: SortOrder
+    tienePeriodoCorreccion?: SortOrder
+    medioVerificacion?: SortOrder
+    consideracionesEspecificas?: SortOrderInput | SortOrder
+    pautaSolucionAnexo3?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_IT_Elementos_Esenciales_DetCountOrderByAggregateInput
+    _avg?: Multas_IT_Elementos_Esenciales_DetAvgOrderByAggregateInput
+    _max?: Multas_IT_Elementos_Esenciales_DetMaxOrderByAggregateInput
+    _min?: Multas_IT_Elementos_Esenciales_DetMinOrderByAggregateInput
+    _sum?: Multas_IT_Elementos_Esenciales_DetSumOrderByAggregateInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput = {
+    AND?: Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput | Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    OR?: Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput | Multas_IT_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    cabId?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    orden?: IntWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | number
+    letra?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    aspecto?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    formaEvaluar?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    periodoCorreccion?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    tienePeriodoCorreccion?: BoolWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | boolean
+    medioVerificacion?: StringWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    consideracionesEspecificas?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    pautaSolucionAnexo3?: StringNullableWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionWhereInput = {
+    AND?: Multas_Aspecto_EE_RestriccionWhereInput | Multas_Aspecto_EE_RestriccionWhereInput[]
+    OR?: Multas_Aspecto_EE_RestriccionWhereInput[]
+    NOT?: Multas_Aspecto_EE_RestriccionWhereInput | Multas_Aspecto_EE_RestriccionWhereInput[]
+    id?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    licId?: IntFilter<"Multas_Aspecto_EE_Restriccion"> | number
+    letra?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    tipo?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    anho?: IntNullableFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    fechaDesde?: DateTimeNullableFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    fechaHasta?: DateTimeNullableFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    accion?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    valorFijo?: FloatNullableFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    descripcion?: StringNullableFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    activo?: BoolFilter<"Multas_Aspecto_EE_Restriccion"> | boolean
+    creadoPor?: StringNullableFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    tipo?: SortOrder
+    anho?: SortOrderInput | SortOrder
+    fechaDesde?: SortOrderInput | SortOrder
+    fechaHasta?: SortOrderInput | SortOrder
+    accion?: SortOrder
+    valorFijo?: SortOrderInput | SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    creadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Aspecto_EE_RestriccionWhereInput | Multas_Aspecto_EE_RestriccionWhereInput[]
+    OR?: Multas_Aspecto_EE_RestriccionWhereInput[]
+    NOT?: Multas_Aspecto_EE_RestriccionWhereInput | Multas_Aspecto_EE_RestriccionWhereInput[]
+    licId?: IntFilter<"Multas_Aspecto_EE_Restriccion"> | number
+    letra?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    tipo?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    anho?: IntNullableFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    fechaDesde?: DateTimeNullableFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    fechaHasta?: DateTimeNullableFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    accion?: StringFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    valorFijo?: FloatNullableFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    descripcion?: StringNullableFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    activo?: BoolFilter<"Multas_Aspecto_EE_Restriccion"> | boolean
+    creadoPor?: StringNullableFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+  }, "id">
+
+  export type Multas_Aspecto_EE_RestriccionOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    tipo?: SortOrder
+    anho?: SortOrderInput | SortOrder
+    fechaDesde?: SortOrderInput | SortOrder
+    fechaHasta?: SortOrderInput | SortOrder
+    accion?: SortOrder
+    valorFijo?: SortOrderInput | SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    creadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Aspecto_EE_RestriccionCountOrderByAggregateInput
+    _avg?: Multas_Aspecto_EE_RestriccionAvgOrderByAggregateInput
+    _max?: Multas_Aspecto_EE_RestriccionMaxOrderByAggregateInput
+    _min?: Multas_Aspecto_EE_RestriccionMinOrderByAggregateInput
+    _sum?: Multas_Aspecto_EE_RestriccionSumOrderByAggregateInput
+  }
+
+  export type Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput = {
+    AND?: Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput | Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput[]
+    OR?: Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput | Multas_Aspecto_EE_RestriccionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | number
+    letra?: StringWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    tipo?: StringWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    anho?: IntNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    fechaDesde?: DateTimeNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    fechaHasta?: DateTimeNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string | null
+    accion?: StringWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string
+    valorFijo?: FloatNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | number | null
+    descripcion?: StringNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    activo?: BoolWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | boolean
+    creadoPor?: StringNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -167163,6 +172325,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -167184,6 +172347,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -167205,6 +172369,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -167226,6 +172391,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -168142,6 +173308,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateInput = {
@@ -168157,6 +173324,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUpdateInput = {
@@ -168171,6 +173339,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateInput = {
@@ -168186,6 +173355,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionCreateManyInput = {
@@ -172012,6 +177182,483 @@ export namespace Prisma {
     formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
     montoMulta?: FloatFieldUpdateOperationsInput | number
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Privilegio_EECreateInput = {
+    id?: string
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPrivilegioEEInput
+  }
+
+  export type Multas_Privilegio_EEUncheckedCreateInput = {
+    id?: string
+    userId: string
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Privilegio_EEUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPrivilegioEENestedInput
+  }
+
+  export type Multas_Privilegio_EEUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Privilegio_EECreateManyInput = {
+    id?: string
+    userId: string
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Privilegio_EEUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Privilegio_EEUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateInput = {
+    id?: string
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutItElementosEsencialesInput
+    detalles?: Multas_IT_Elementos_Esenciales_DetCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedCreateInput = {
+    id?: string
+    licId: number
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutItElementosEsencialesNestedInput
+    detalles?: Multas_IT_Elementos_Esenciales_DetUpdateManyWithoutCabNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateManyInput = {
+    id?: string
+    licId: number
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateInput = {
+    id?: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cab: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutDetallesInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedCreateInput = {
+    id?: string
+    cabId: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cab?: Multas_IT_Elementos_Esenciales_CabUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateManyInput = {
+    id?: string
+    cabId: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionCreateInput = {
+    id?: string
+    licId: number
+    letra: string
+    tipo?: string
+    anho?: number | null
+    fechaDesde?: Date | string | null
+    fechaHasta?: Date | string | null
+    accion?: string
+    valorFijo?: number | null
+    descripcion?: string | null
+    activo?: boolean
+    creadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionUncheckedCreateInput = {
+    id?: string
+    licId: number
+    letra: string
+    tipo?: string
+    anho?: number | null
+    fechaDesde?: Date | string | null
+    fechaHasta?: Date | string | null
+    accion?: string
+    valorFijo?: number | null
+    descripcion?: string | null
+    activo?: boolean
+    creadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    anho?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaDesde?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accion?: StringFieldUpdateOperationsInput | string
+    valorFijo?: NullableFloatFieldUpdateOperationsInput | number | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    anho?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaDesde?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accion?: StringFieldUpdateOperationsInput | string
+    valorFijo?: NullableFloatFieldUpdateOperationsInput | number | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionCreateManyInput = {
+    id?: string
+    licId: number
+    letra: string
+    tipo?: string
+    anho?: number | null
+    fechaDesde?: Date | string | null
+    fechaHasta?: Date | string | null
+    accion?: string
+    valorFijo?: number | null
+    descripcion?: string | null
+    activo?: boolean
+    creadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    anho?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaDesde?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accion?: StringFieldUpdateOperationsInput | string
+    valorFijo?: NullableFloatFieldUpdateOperationsInput | number | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Aspecto_EE_RestriccionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    anho?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaDesde?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaHasta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accion?: StringFieldUpdateOperationsInput | string
+    valorFijo?: NullableFloatFieldUpdateOperationsInput | number | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Descargos_CabCreateInput = {
@@ -180354,6 +186001,11 @@ export namespace Prisma {
     none?: DelegacionVisualizacionWhereInput
   }
 
+  export type Multas_Privilegio_EENullableRelationFilter = {
+    is?: Multas_Privilegio_EEWhereInput | null
+    isNot?: Multas_Privilegio_EEWhereInput | null
+  }
+
   export type SucursalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -181035,6 +186687,11 @@ export namespace Prisma {
     every?: ActaSupervisionPlantillaWhereInput
     some?: ActaSupervisionPlantillaWhereInput
     none?: ActaSupervisionPlantillaWhereInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabNullableRelationFilter = {
+    is?: Multas_IT_Elementos_Esenciales_CabWhereInput | null
+    isNot?: Multas_IT_Elementos_Esenciales_CabWhereInput | null
   }
 
   export type UTOrderByRelationAggregateInput = {
@@ -183335,6 +188992,264 @@ export namespace Prisma {
     montoMulta?: SortOrder
   }
 
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type Multas_Privilegio_EECountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    puedeEliminarIndividual?: SortOrder
+    puedeEliminarMasivo?: SortOrder
+    otorgadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Privilegio_EEMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    puedeEliminarIndividual?: SortOrder
+    puedeEliminarMasivo?: SortOrder
+    otorgadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Privilegio_EEMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    puedeEliminarIndividual?: SortOrder
+    puedeEliminarMasivo?: SortOrder
+    otorgadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetListRelationFilter = {
+    every?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    some?: Multas_IT_Elementos_Esenciales_DetWhereInput
+    none?: Multas_IT_Elementos_Esenciales_DetWhereInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    licitacionCodigoPdf?: SortOrder
+    licitacionHomologada?: SortOrder
+    codigoDocumento?: SortOrder
+    tituloDocumento?: SortOrder
+    numeroRevision?: SortOrder
+    fechaRevision?: SortOrder
+    totalPaginas?: SortOrder
+    objetivo?: SortOrder
+    alcance?: SortOrder
+    plazoNotificacionHoras?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    aspectosModalidadesJson?: SortOrder
+    causasImputabilidadJson?: SortOrder
+    anexoPesajeJson?: SortOrder
+    anexoFrutasVerdurasJson?: SortOrder
+    nombreArchivo?: SortOrder
+    archivoBase64?: SortOrder
+    cargadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    totalPaginas?: SortOrder
+    plazoNotificacionHoras?: SortOrder
+    plazoCorreccionDias?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    licitacionCodigoPdf?: SortOrder
+    licitacionHomologada?: SortOrder
+    codigoDocumento?: SortOrder
+    tituloDocumento?: SortOrder
+    numeroRevision?: SortOrder
+    fechaRevision?: SortOrder
+    totalPaginas?: SortOrder
+    objetivo?: SortOrder
+    alcance?: SortOrder
+    plazoNotificacionHoras?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    aspectosModalidadesJson?: SortOrder
+    causasImputabilidadJson?: SortOrder
+    anexoPesajeJson?: SortOrder
+    anexoFrutasVerdurasJson?: SortOrder
+    nombreArchivo?: SortOrder
+    archivoBase64?: SortOrder
+    cargadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    licitacionCodigoPdf?: SortOrder
+    licitacionHomologada?: SortOrder
+    codigoDocumento?: SortOrder
+    tituloDocumento?: SortOrder
+    numeroRevision?: SortOrder
+    fechaRevision?: SortOrder
+    totalPaginas?: SortOrder
+    objetivo?: SortOrder
+    alcance?: SortOrder
+    plazoNotificacionHoras?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    aspectosModalidadesJson?: SortOrder
+    causasImputabilidadJson?: SortOrder
+    anexoPesajeJson?: SortOrder
+    anexoFrutasVerdurasJson?: SortOrder
+    nombreArchivo?: SortOrder
+    archivoBase64?: SortOrder
+    cargadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabSumOrderByAggregateInput = {
+    licId?: SortOrder
+    totalPaginas?: SortOrder
+    plazoNotificacionHoras?: SortOrder
+    plazoCorreccionDias?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabRelationFilter = {
+    is?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    isNot?: Multas_IT_Elementos_Esenciales_CabWhereInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    orden?: SortOrder
+    letra?: SortOrder
+    aspecto?: SortOrder
+    formaEvaluar?: SortOrder
+    periodoCorreccion?: SortOrder
+    tienePeriodoCorreccion?: SortOrder
+    medioVerificacion?: SortOrder
+    consideracionesEspecificas?: SortOrder
+    pautaSolucionAnexo3?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    orden?: SortOrder
+    letra?: SortOrder
+    aspecto?: SortOrder
+    formaEvaluar?: SortOrder
+    periodoCorreccion?: SortOrder
+    tienePeriodoCorreccion?: SortOrder
+    medioVerificacion?: SortOrder
+    consideracionesEspecificas?: SortOrder
+    pautaSolucionAnexo3?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    orden?: SortOrder
+    letra?: SortOrder
+    aspecto?: SortOrder
+    formaEvaluar?: SortOrder
+    periodoCorreccion?: SortOrder
+    tienePeriodoCorreccion?: SortOrder
+    medioVerificacion?: SortOrder
+    consideracionesEspecificas?: SortOrder
+    pautaSolucionAnexo3?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetSumOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    tipo?: SortOrder
+    anho?: SortOrder
+    fechaDesde?: SortOrder
+    fechaHasta?: SortOrder
+    accion?: SortOrder
+    valorFijo?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    anho?: SortOrder
+    valorFijo?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    tipo?: SortOrder
+    anho?: SortOrder
+    fechaDesde?: SortOrder
+    fechaHasta?: SortOrder
+    accion?: SortOrder
+    valorFijo?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    tipo?: SortOrder
+    anho?: SortOrder
+    fechaDesde?: SortOrder
+    fechaHasta?: SortOrder
+    accion?: SortOrder
+    valorFijo?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Aspecto_EE_RestriccionSumOrderByAggregateInput = {
+    licId?: SortOrder
+    anho?: SortOrder
+    valorFijo?: SortOrder
+  }
+
   export type Descargos_DetListRelationFilter = {
     every?: Descargos_DetWhereInput
     some?: Descargos_DetWhereInput
@@ -184580,11 +190495,6 @@ export namespace Prisma {
     activo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type DelegacionVisualizacionUserIdSucursalIdCompoundUniqueInput = {
@@ -188156,6 +194066,12 @@ export namespace Prisma {
     connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
   }
 
+  export type Multas_Privilegio_EECreateNestedOneWithoutUserInput = {
+    create?: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
+    connectOrCreate?: Multas_Privilegio_EECreateOrConnectWithoutUserInput
+    connect?: Multas_Privilegio_EEWhereUniqueInput
+  }
+
   export type SucursalUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<SucursalCreateWithoutUsersInput, SucursalUncheckedCreateWithoutUsersInput> | SucursalCreateWithoutUsersInput[] | SucursalUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SucursalCreateOrConnectWithoutUsersInput | SucursalCreateOrConnectWithoutUsersInput[]
@@ -188185,6 +194101,12 @@ export namespace Prisma {
     connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
     createMany?: DelegacionVisualizacionCreateManyUserInputEnvelope
     connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+  }
+
+  export type Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
+    connectOrCreate?: Multas_Privilegio_EECreateOrConnectWithoutUserInput
+    connect?: Multas_Privilegio_EEWhereUniqueInput
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -188270,6 +194192,16 @@ export namespace Prisma {
     deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
   }
 
+  export type Multas_Privilegio_EEUpdateOneWithoutUserNestedInput = {
+    create?: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
+    connectOrCreate?: Multas_Privilegio_EECreateOrConnectWithoutUserInput
+    upsert?: Multas_Privilegio_EEUpsertWithoutUserInput
+    disconnect?: Multas_Privilegio_EEWhereInput | boolean
+    delete?: Multas_Privilegio_EEWhereInput | boolean
+    connect?: Multas_Privilegio_EEWhereUniqueInput
+    update?: XOR<XOR<Multas_Privilegio_EEUpdateToOneWithWhereWithoutUserInput, Multas_Privilegio_EEUpdateWithoutUserInput>, Multas_Privilegio_EEUncheckedUpdateWithoutUserInput>
+  }
+
   export type SucursalUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<SucursalCreateWithoutUsersInput, SucursalUncheckedCreateWithoutUsersInput> | SucursalCreateWithoutUsersInput[] | SucursalUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SucursalCreateOrConnectWithoutUsersInput | SucursalCreateOrConnectWithoutUsersInput[]
@@ -188334,6 +194266,16 @@ export namespace Prisma {
     update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput | DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+  }
+
+  export type Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
+    connectOrCreate?: Multas_Privilegio_EECreateOrConnectWithoutUserInput
+    upsert?: Multas_Privilegio_EEUpsertWithoutUserInput
+    disconnect?: Multas_Privilegio_EEWhereInput | boolean
+    delete?: Multas_Privilegio_EEWhereInput | boolean
+    connect?: Multas_Privilegio_EEWhereUniqueInput
+    update?: XOR<XOR<Multas_Privilegio_EEUpdateToOneWithWhereWithoutUserInput, Multas_Privilegio_EEUpdateWithoutUserInput>, Multas_Privilegio_EEUncheckedUpdateWithoutUserInput>
   }
 
   export type UTCreateNestedOneWithoutPmpasInput = {
@@ -188496,6 +194438,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutLicitacionInput
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
   export type UTUncheckedCreateNestedManyWithoutLicitacionInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -188542,6 +194490,12 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput> | UserCreateWithoutLicitacionesInput[] | UserUncheckedCreateWithoutLicitacionesInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLicitacionesInput | UserCreateOrConnectWithoutLicitacionesInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutLicitacionInput
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
   }
 
   export type UTUpdateManyWithoutLicitacionNestedInput = {
@@ -188641,6 +194595,16 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutLicitacionInput
+    upsert?: Multas_IT_Elementos_Esenciales_CabUpsertWithoutLicitacionInput
+    disconnect?: Multas_IT_Elementos_Esenciales_CabWhereInput | boolean
+    delete?: Multas_IT_Elementos_Esenciales_CabWhereInput | boolean
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    update?: XOR<XOR<Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUpdateWithoutLicitacionInput>, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutLicitacionInput>
+  }
+
   export type UTUncheckedUpdateManyWithoutLicitacionNestedInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -188736,6 +194700,16 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutLicitacionesInput | UserUpdateWithWhereUniqueWithoutLicitacionesInput[]
     updateMany?: UserUpdateManyWithWhereWithoutLicitacionesInput | UserUpdateManyWithWhereWithoutLicitacionesInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutLicitacionInput
+    upsert?: Multas_IT_Elementos_Esenciales_CabUpsertWithoutLicitacionInput
+    disconnect?: Multas_IT_Elementos_Esenciales_CabWhereInput | boolean
+    delete?: Multas_IT_Elementos_Esenciales_CabWhereInput | boolean
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    update?: XOR<XOR<Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUpdateWithoutLicitacionInput>, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutLicitacionInput>
   }
 
   export type LicitacionCreateNestedOneWithoutAspectosEEInput = {
@@ -190074,6 +196048,90 @@ export namespace Prisma {
     upsert?: Multas_Elementos_Esenciales_CabUpsertWithoutDetallesInput
     connect?: Multas_Elementos_Esenciales_CabWhereUniqueInput
     update?: XOR<XOR<Multas_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type UserCreateNestedOneWithoutPrivilegioEEInput = {
+    create?: XOR<UserCreateWithoutPrivilegioEEInput, UserUncheckedCreateWithoutPrivilegioEEInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPrivilegioEEInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPrivilegioEENestedInput = {
+    create?: XOR<UserCreateWithoutPrivilegioEEInput, UserUncheckedCreateWithoutPrivilegioEEInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPrivilegioEEInput
+    upsert?: UserUpsertWithoutPrivilegioEEInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPrivilegioEEInput, UserUpdateWithoutPrivilegioEEInput>, UserUncheckedUpdateWithoutPrivilegioEEInput>
+  }
+
+  export type LicitacionCreateNestedOneWithoutItElementosEsencialesInput = {
+    create?: XOR<LicitacionCreateWithoutItElementosEsencialesInput, LicitacionUncheckedCreateWithoutItElementosEsencialesInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutItElementosEsencialesInput
+    connect?: LicitacionWhereUniqueInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateNestedManyWithoutCabInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Multas_IT_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    connect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedCreateNestedManyWithoutCabInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Multas_IT_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    connect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+  }
+
+  export type LicitacionUpdateOneRequiredWithoutItElementosEsencialesNestedInput = {
+    create?: XOR<LicitacionCreateWithoutItElementosEsencialesInput, LicitacionUncheckedCreateWithoutItElementosEsencialesInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutItElementosEsencialesInput
+    upsert?: LicitacionUpsertWithoutItElementosEsencialesInput
+    connect?: LicitacionWhereUniqueInput
+    update?: XOR<XOR<LicitacionUpdateToOneWithWhereWithoutItElementosEsencialesInput, LicitacionUpdateWithoutItElementosEsencialesInput>, LicitacionUncheckedUpdateWithoutItElementosEsencialesInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Multas_IT_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Multas_IT_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    set?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    disconnect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    delete?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    connect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    update?: Multas_IT_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Multas_IT_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Multas_IT_Elementos_Esenciales_DetScalarWhereInput | Multas_IT_Elementos_Esenciales_DetScalarWhereInput[]
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Multas_IT_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Multas_IT_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    set?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    disconnect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    delete?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    connect?: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput | Multas_IT_Elementos_Esenciales_DetWhereUniqueInput[]
+    update?: Multas_IT_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Multas_IT_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput | Multas_IT_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Multas_IT_Elementos_Esenciales_DetScalarWhereInput | Multas_IT_Elementos_Esenciales_DetScalarWhereInput[]
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput
+    upsert?: Multas_IT_Elementos_Esenciales_CabUpsertWithoutDetallesInput
+    connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    update?: XOR<XOR<Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
   }
 
   export type Descargos_DetCreateNestedManyWithoutCabInput = {
@@ -194098,6 +200156,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -194118,6 +200177,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -194313,6 +200373,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutUsersInput = {
@@ -194327,6 +200388,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutUsersInput = {
@@ -194356,6 +200418,29 @@ export namespace Prisma {
   export type DelegacionVisualizacionCreateManyUserInputEnvelope = {
     data: DelegacionVisualizacionCreateManyUserInput | DelegacionVisualizacionCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type Multas_Privilegio_EECreateWithoutUserInput = {
+    id?: string
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Privilegio_EEUncheckedCreateWithoutUserInput = {
+    id?: string
+    puedeEliminarIndividual?: boolean
+    puedeEliminarMasivo?: boolean
+    otorgadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Privilegio_EECreateOrConnectWithoutUserInput = {
+    where: Multas_Privilegio_EEWhereUniqueInput
+    create: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -194531,6 +200616,35 @@ export namespace Prisma {
     sucursalId?: StringFilter<"DelegacionVisualizacion"> | string
     createdAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
     updatedAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+  }
+
+  export type Multas_Privilegio_EEUpsertWithoutUserInput = {
+    update: XOR<Multas_Privilegio_EEUpdateWithoutUserInput, Multas_Privilegio_EEUncheckedUpdateWithoutUserInput>
+    create: XOR<Multas_Privilegio_EECreateWithoutUserInput, Multas_Privilegio_EEUncheckedCreateWithoutUserInput>
+    where?: Multas_Privilegio_EEWhereInput
+  }
+
+  export type Multas_Privilegio_EEUpdateToOneWithWhereWithoutUserInput = {
+    where?: Multas_Privilegio_EEWhereInput
+    data: XOR<Multas_Privilegio_EEUpdateWithoutUserInput, Multas_Privilegio_EEUncheckedUpdateWithoutUserInput>
+  }
+
+  export type Multas_Privilegio_EEUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Privilegio_EEUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    puedeEliminarIndividual?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminarMasivo?: BoolFieldUpdateOperationsInput | boolean
+    otorgadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UTCreateWithoutPmpasInput = {
@@ -195046,6 +201160,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLicitacionesInput = {
@@ -195066,11 +201181,67 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLicitacionesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput = {
+    id?: string
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput = {
+    id?: string
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutLicitacionInput = {
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    create: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
   }
 
   export type UTUpsertWithWhereUniqueWithoutLicitacionInput = {
@@ -195276,6 +201447,67 @@ export namespace Prisma {
     data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutLicitacionesInput>
   }
 
+  export type Multas_IT_Elementos_Esenciales_CabUpsertWithoutLicitacionInput = {
+    update: XOR<Multas_IT_Elementos_Esenciales_CabUpdateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutLicitacionInput>
+    create: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutLicitacionInput>
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutLicitacionInput = {
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    data: XOR<Multas_IT_Elementos_Esenciales_CabUpdateWithoutLicitacionInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutLicitacionInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetUpdateManyWithoutCabNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
   export type LicitacionCreateWithoutAspectosEEInput = {
     licitacionHomologada?: string | null
     estado?: number
@@ -195287,6 +201519,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutAspectosEEInput = {
@@ -195301,6 +201534,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutAspectosEEInput = {
@@ -195330,6 +201564,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutAspectosEEInput = {
@@ -195344,6 +201579,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type ListaCorreoCreateWithoutSucursalInput = {
@@ -195509,6 +201745,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSucursalesInput = {
@@ -195529,6 +201766,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSucursalesInput = {
@@ -196388,6 +202626,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutUtsInput = {
@@ -196402,6 +202641,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutUtsInput = {
@@ -196568,6 +202808,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUtsInput = {
@@ -196582,6 +202823,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type SucursalUpsertWithoutUtsInput = {
@@ -196926,6 +203168,7 @@ export namespace Prisma {
     areas?: AreaCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAllowedFormsInput = {
@@ -196946,6 +203189,7 @@ export namespace Prisma {
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAllowedFormsInput = {
@@ -197115,6 +203359,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAreasInput = {
@@ -197135,6 +203380,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAreasInput = {
@@ -198247,6 +204493,371 @@ export namespace Prisma {
     fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserCreateWithoutPrivilegioEEInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    canReceiveCollab?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    sucursales?: SucursalCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPrivilegioEEInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    roleId: string
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    canReceiveCollab?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPrivilegioEEInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPrivilegioEEInput, UserUncheckedCreateWithoutPrivilegioEEInput>
+  }
+
+  export type UserUpsertWithoutPrivilegioEEInput = {
+    update: XOR<UserUpdateWithoutPrivilegioEEInput, UserUncheckedUpdateWithoutPrivilegioEEInput>
+    create: XOR<UserCreateWithoutPrivilegioEEInput, UserUncheckedCreateWithoutPrivilegioEEInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPrivilegioEEInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPrivilegioEEInput, UserUncheckedUpdateWithoutPrivilegioEEInput>
+  }
+
+  export type UserUpdateWithoutPrivilegioEEInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    canReceiveCollab?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    sucursales?: SucursalUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPrivilegioEEInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    canReceiveCollab?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type LicitacionCreateWithoutItElementosEsencialesInput = {
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
+  }
+
+  export type LicitacionUncheckedCreateWithoutItElementosEsencialesInput = {
+    licId?: number
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+  }
+
+  export type LicitacionCreateOrConnectWithoutItElementosEsencialesInput = {
+    where: LicitacionWhereUniqueInput
+    create: XOR<LicitacionCreateWithoutItElementosEsencialesInput, LicitacionUncheckedCreateWithoutItElementosEsencialesInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput = {
+    id?: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput = {
+    id?: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput = {
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    create: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateManyCabInputEnvelope = {
+    data: Multas_IT_Elementos_Esenciales_DetCreateManyCabInput | Multas_IT_Elementos_Esenciales_DetCreateManyCabInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LicitacionUpsertWithoutItElementosEsencialesInput = {
+    update: XOR<LicitacionUpdateWithoutItElementosEsencialesInput, LicitacionUncheckedUpdateWithoutItElementosEsencialesInput>
+    create: XOR<LicitacionCreateWithoutItElementosEsencialesInput, LicitacionUncheckedCreateWithoutItElementosEsencialesInput>
+    where?: LicitacionWhereInput
+  }
+
+  export type LicitacionUpdateToOneWithWhereWithoutItElementosEsencialesInput = {
+    where?: LicitacionWhereInput
+    data: XOR<LicitacionUpdateWithoutItElementosEsencialesInput, LicitacionUncheckedUpdateWithoutItElementosEsencialesInput>
+  }
+
+  export type LicitacionUpdateWithoutItElementosEsencialesInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateWithoutItElementosEsencialesInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput = {
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    update: XOR<Multas_IT_Elementos_Esenciales_DetUpdateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput>
+    create: XOR<Multas_IT_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput = {
+    where: Multas_IT_Elementos_Esenciales_DetWhereUniqueInput
+    data: XOR<Multas_IT_Elementos_Esenciales_DetUpdateWithoutCabInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput = {
+    where: Multas_IT_Elementos_Esenciales_DetScalarWhereInput
+    data: XOR<Multas_IT_Elementos_Esenciales_DetUpdateManyMutationInput, Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetScalarWhereInput = {
+    AND?: Multas_IT_Elementos_Esenciales_DetScalarWhereInput | Multas_IT_Elementos_Esenciales_DetScalarWhereInput[]
+    OR?: Multas_IT_Elementos_Esenciales_DetScalarWhereInput[]
+    NOT?: Multas_IT_Elementos_Esenciales_DetScalarWhereInput | Multas_IT_Elementos_Esenciales_DetScalarWhereInput[]
+    id?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    cabId?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    orden?: IntFilter<"Multas_IT_Elementos_Esenciales_Det"> | number
+    letra?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    aspecto?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    formaEvaluar?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    periodoCorreccion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    tienePeriodoCorreccion?: BoolFilter<"Multas_IT_Elementos_Esenciales_Det"> | boolean
+    medioVerificacion?: StringFilter<"Multas_IT_Elementos_Esenciales_Det"> | string
+    consideracionesEspecificas?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    pautaSolucionAnexo3?: StringNullableFilter<"Multas_IT_Elementos_Esenciales_Det"> | string | null
+    createdAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_IT_Elementos_Esenciales_Det"> | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateWithoutDetallesInput = {
+    id?: string
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutItElementosEsencialesInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    licId: number
+    licitacionCodigoPdf?: string | null
+    licitacionHomologada?: string | null
+    codigoDocumento?: string | null
+    tituloDocumento?: string | null
+    numeroRevision?: string | null
+    fechaRevision?: string | null
+    totalPaginas?: number | null
+    objetivo?: string | null
+    alcance?: string | null
+    plazoNotificacionHoras?: number | null
+    plazoCorreccionDias?: number | null
+    aspectosModalidadesJson?: string | null
+    causasImputabilidadJson?: string | null
+    anexoPesajeJson?: string | null
+    anexoFrutasVerdurasJson?: string | null
+    nombreArchivo?: string | null
+    archivoBase64?: string | null
+    cargadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput = {
+    where: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
+    create: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpsertWithoutDetallesInput = {
+    update: XOR<Multas_IT_Elementos_Esenciales_CabUpdateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+    create: XOR<Multas_IT_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: Multas_IT_Elementos_Esenciales_CabWhereInput
+    data: XOR<Multas_IT_Elementos_Esenciales_CabUpdateWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutItElementosEsencialesNestedInput
+  }
+
+  export type Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionCodigoPdf?: NullableStringFieldUpdateOperationsInput | string | null
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    tituloDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRevision?: NullableStringFieldUpdateOperationsInput | string | null
+    totalPaginas?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    plazoNotificacionHoras?: NullableIntFieldUpdateOperationsInput | number | null
+    plazoCorreccionDias?: NullableIntFieldUpdateOperationsInput | number | null
+    aspectosModalidadesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasImputabilidadJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoPesajeJson?: NullableStringFieldUpdateOperationsInput | string | null
+    anexoFrutasVerdurasJson?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
+    archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
+    cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_DetCreateWithoutCabInput = {
     id?: string
     letraAspecto: string
@@ -198684,6 +205295,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutVehiculosInput = {
@@ -198698,6 +205310,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutVehiculosInput = {
@@ -198895,6 +205508,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutVehiculosInput = {
@@ -198909,6 +205523,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type SupervisorVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
@@ -199260,6 +205875,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutJefesZonalesInput = {
@@ -199274,6 +205890,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutJefesZonalesInput = {
@@ -199342,6 +205959,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutJefesZonalesInput = {
@@ -199356,6 +205974,7 @@ export namespace Prisma {
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type JefeZonalCreateWithoutSucursalesInput = {
@@ -200573,6 +207192,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutMatricesInput = {
@@ -200587,6 +207207,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutMatricesInput = {
@@ -200760,6 +207381,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutMatricesInput = {
@@ -200774,6 +207396,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput = {
@@ -201428,6 +208051,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
+    privilegioEE?: Multas_Privilegio_EECreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDelegacionesInput = {
@@ -201448,6 +208072,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
     licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDelegacionesInput = {
@@ -201537,6 +208162,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDelegacionesInput = {
@@ -201557,6 +208183,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type SucursalUpsertWithoutDelegacionesInput = {
@@ -201629,6 +208256,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     users?: UserCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutActasPlantillasInput = {
@@ -201643,6 +208271,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedCreateNestedOneWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutActasPlantillasInput = {
@@ -201724,6 +208353,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     users?: UserUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutActasPlantillasInput = {
@@ -201738,6 +208368,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput = {
@@ -208263,6 +214894,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -208283,6 +214915,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -208452,6 +215085,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUsersInput = {
@@ -208466,6 +215100,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    itElementosEsenciales?: Multas_IT_Elementos_Esenciales_CabUncheckedUpdateOneWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateManyWithoutUsersInput = {
@@ -208832,6 +215467,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLicitacionesInput = {
@@ -208852,6 +215488,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutLicitacionesInput = {
@@ -209161,6 +215798,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSucursalesInput = {
@@ -209181,6 +215819,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutSucursalesInput = {
@@ -209735,6 +216374,7 @@ export namespace Prisma {
     areas?: AreaUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAllowedFormsInput = {
@@ -209755,6 +216395,7 @@ export namespace Prisma {
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAllowedFormsInput = {
@@ -209853,6 +216494,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAreasInput = {
@@ -209873,6 +216515,7 @@ export namespace Prisma {
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+    privilegioEE?: Multas_Privilegio_EEUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAreasInput = {
@@ -210065,6 +216708,66 @@ export namespace Prisma {
     formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
     montoMulta?: FloatFieldUpdateOperationsInput | number
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetCreateManyCabInput = {
+    id?: string
+    orden?: number
+    letra: string
+    aspecto: string
+    formaEvaluar: string
+    periodoCorreccion?: string
+    tienePeriodoCorreccion?: boolean
+    medioVerificacion: string
+    consideracionesEspecificas?: string | null
+    pautaSolucionAnexo3?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_IT_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    formaEvaluar?: StringFieldUpdateOperationsInput | string
+    periodoCorreccion?: StringFieldUpdateOperationsInput | string
+    tienePeriodoCorreccion?: BoolFieldUpdateOperationsInput | boolean
+    medioVerificacion?: StringFieldUpdateOperationsInput | string
+    consideracionesEspecificas?: NullableStringFieldUpdateOperationsInput | string | null
+    pautaSolucionAnexo3?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Descargos_DetCreateManyCabInput = {
@@ -213468,6 +220171,10 @@ export namespace Prisma {
      */
     export type Multas_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs instead
+     */
+    export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use Descargos_CabCountOutputTypeDefaultArgs instead
      */
     export type Descargos_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
@@ -213803,6 +220510,22 @@ export namespace Prisma {
      * @deprecated Use Multas_Elementos_Esenciales_DetDefaultArgs instead
      */
     export type Multas_Elementos_Esenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_DetDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Privilegio_EEDefaultArgs instead
+     */
+    export type Multas_Privilegio_EEArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Privilegio_EEDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_IT_Elementos_Esenciales_CabDefaultArgs instead
+     */
+    export type Multas_IT_Elementos_Esenciales_CabArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_IT_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_IT_Elementos_Esenciales_DetDefaultArgs instead
+     */
+    export type Multas_IT_Elementos_Esenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_IT_Elementos_Esenciales_DetDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Aspecto_EE_RestriccionDefaultArgs instead
+     */
+    export type Multas_Aspecto_EE_RestriccionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Aspecto_EE_RestriccionDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

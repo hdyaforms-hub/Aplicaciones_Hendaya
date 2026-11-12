@@ -1,7 +1,8 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
+import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -422,10 +423,24 @@ export async function calculateAll(params: {
         if (folios.length === 0) return { count: 0 }
 
         // 2. Prepare for massive calculation
+        await ensureMultasEETables()
         const allLicIds = Array.from(new Set(folios.map(f => f.licId).filter(Boolean))) as number[]
-        const allAspectos = await prisma.aspectoEE.findMany({ where: { licId: { in: allLicIds } } })
-        const allUtms = await prisma.uTM.findMany()
-        const allServicios = await prisma.multaServicio.findMany()
+        let allRestricciones: any[] = []
+        try {
+            allRestricciones = allLicIds.length > 0 ? await rawPrisma.$queryRawUnsafe(`
+                SELECT id, "licId", letra, tipo, anho, "fechaDesde", "fechaHasta", accion, "valorFijo", descripcion
+                FROM "Multas_Aspecto_EE_Restriccion"
+                WHERE activo = true AND "licId" IN (${allLicIds.map(id => Number(id)).join(',')})
+            `) : []
+        } catch (rErr) {
+            console.warn('Advertencia al consultar restricciones masivas:', rErr)
+        }
+
+        const [allAspectos, allUtms, allServicios] = await Promise.all([
+            prisma.aspectoEE.findMany({ where: { licId: { in: allLicIds } } }),
+            prisma.uTM.findMany(),
+            prisma.multaServicio.findMany()
+        ])
 
         let count = 0
         // Process in chunks to avoid overwhelming the DB/Memory
@@ -632,6 +647,35 @@ export async function calculateAll(params: {
                     const formula = formulasForLic.find(f => f.letra === letra)?.formula
                     if (!formula) continue
 
+                    // Evaluar si existe restricción activa para este aspecto (ej: Aspecto M año 2024 = $0)
+                    const restriccionMatch = allRestricciones.find(r => {
+                        if (r.licId !== licId || r.letra.toUpperCase() !== letra?.toUpperCase()) return false
+                        if (r.tipo === 'ANHO') {
+                            return r.anho === anho
+                        }
+                        if (r.tipo === 'RANGO_FECHAS' && fecha && r.fechaDesde && r.fechaHasta) {
+                            return fecha >= new Date(r.fechaDesde) && fecha <= new Date(r.fechaHasta)
+                        }
+                        return false
+                    })
+
+                    if (restriccionMatch) {
+                        const montoR = restriccionMatch.accion === 'VALOR_CERO' ? 0 : (restriccionMatch.valorFijo || 0)
+                        const glosaR = restriccionMatch.accion === 'VALOR_CERO'
+                            ? `RESTRICCIÓN APLICADA: Año ${restriccionMatch.anho || anho} -> $0 (Exento)`
+                            : `RESTRICCIÓN APLICADA: Monto fijo $${montoR}`
+
+                        totalMonto += montoR
+                        detallesCalc.push({
+                            letraAspecto: letra || '?',
+                            descripcion: d.observacionesOMedioDeVerificacion,
+                            formulaAplicada: glosaR,
+                            montoMulta: montoR,
+                            variablesUsadas: JSON.stringify(savedVars || {})
+                        })
+                        continue
+                    }
+
                     try {
                         const cleanFormula = formula.toUpperCase()
                         
@@ -738,8 +782,20 @@ export async function getDetalleFolioParaCalculo(folio: string) {
 
         if (!cab) return { error: 'Folio no encontrado.' }
 
-        // Find formulas for this licitacion
+        // Find formulas and active restrictions for this licitacion
+        await ensureMultasEETables()
         const licId = cab.licId
+        let restriccionesAspecto: any[] = []
+        try {
+            restriccionesAspecto = await rawPrisma.$queryRawUnsafe(`
+                SELECT id, "licId", letra, tipo, anho, "fechaDesde", "fechaHasta", accion, "valorFijo", descripcion
+                FROM "Multas_Aspecto_EE_Restriccion"
+                WHERE activo = true AND "licId" = $1
+            `, Number(licId ?? -1))
+        } catch (rErr) {
+            console.warn('Advertencia al consultar restricciones del folio:', rErr)
+        }
+
         const aspectosFormulas = await prisma.aspectoEE.findMany({
             where: { licId: licId ?? -1 }
         })
@@ -749,17 +805,60 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             d.nc?.trim().toUpperCase() === 'X'
         )
 
-        // Enhance with formula info
+        // Buscar la Instrucción de Trabajo EE correspondiente a la licitación
+        let itCab: any = null
+        if (licId) {
+            itCab = await prisma.multas_IT_Elementos_Esenciales_Cab.findUnique({
+                where: { licId },
+                include: { detalles: true }
+            })
+        }
+        if (!itCab && cab.licitacion) {
+            itCab = await prisma.multas_IT_Elementos_Esenciales_Cab.findFirst({
+                where: {
+                    OR: [
+                        { licitacionHomologada: { contains: cab.licitacion, mode: 'insensitive' } },
+                        { licitacionCodigoPdf: { contains: cab.licitacion, mode: 'insensitive' } }
+                    ]
+                },
+                include: { detalles: true }
+            })
+        }
+
+        const fechaSupervisionDate = cab.fechaSupervision ? new Date(cab.fechaSupervision) : null
+        const anhoSupervisionVal = fechaSupervisionDate?.getFullYear()
+
+        // Enhance with formula info and active restrictions
         const detallesConFormula = detallesRelevantes.map(d => {
             const letraMatch = d.aspecto?.match(/^([A-Z])\./)
             const letra = letraMatch ? letraMatch[1] : null
             const formulaObj = aspectosFormulas.find(af => af.letra === letra)
+
+            // Evaluar restricción activa (ej: Aspecto M año 2024 = $0)
+            const restriccionMatch = restriccionesAspecto.find(r => {
+                if (r.letra.toUpperCase() !== letra?.toUpperCase()) return false
+                if (r.tipo === 'ANHO') {
+                    return r.anho === anhoSupervisionVal
+                }
+                if (r.tipo === 'RANGO_FECHAS' && fechaSupervisionDate && r.fechaDesde && r.fechaHasta) {
+                    return fechaSupervisionDate >= new Date(r.fechaDesde) && fechaSupervisionDate <= new Date(r.fechaHasta)
+                }
+                return false
+            })
 
             return {
                 ...d,
                 letraAspecto: letra,
                 formulaAsignada: formulaObj ? formulaObj.formula : null,
                 solucionable: formulaObj ? formulaObj.solucionable : null,
+                restriccionAplicada: restriccionMatch ? {
+                    id: restriccionMatch.id,
+                    tipo: restriccionMatch.tipo,
+                    anho: restriccionMatch.anho,
+                    accion: restriccionMatch.accion,
+                    valorFijo: restriccionMatch.valorFijo,
+                    descripcion: restriccionMatch.descripcion
+                } : null,
                 incompleto: false
             }
         })
@@ -960,17 +1059,41 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             orderBy: { nombre: 'asc' }
         })
 
+        const racionesTotal = pmpaRecord?.raceqJunaeb || 0
+
+        const detallesConIT = detallesConFormula.map(d => {
+            const itAspecto = itCab?.detalles?.find((det: any) => det.letra === d.letraAspecto)
+            const itInfo = generarAlertasITAspecto(
+                d.letraAspecto,
+                racionesTotal,
+                d.observacionesOMedioDeVerificacion,
+                itAspecto,
+                itCab
+            )
+            return {
+                ...d,
+                itInfo
+            }
+        })
+
         return {
             data: cab,
-            detalles: detallesConFormula,
+            detalles: detallesConIT,
             hasPmpa: !!pmpaRecord,
             utmValue: utmRecord?.monto || 0,
             utmPeriod: utmRecord ? `${mes}/${anho}` : 'N/D',
-            racionesValue: pmpaRecord?.raceqJunaeb || 0,
+            racionesValue: racionesTotal,
             keywordsNeeded: Array.from(keywordsNeeded),
             pmpaNiveles,
             savedVariables,
-            serviciosDisponibles
+            serviciosDisponibles,
+            itCabInfo: itCab ? {
+                id: itCab.id,
+                codigoDocumento: itCab.codigoDocumento,
+                numeroRevision: itCab.numeroRevision,
+                fechaRevision: itCab.fechaRevision,
+                nombreArchivo: itCab.nombreArchivo
+            } : null
         }
 
     } catch (error) {
@@ -1163,4 +1286,164 @@ export async function reversarAnulacionFolio(folio: string) {
         console.error('Error en reversarAnulacionFolio:', e)
         return { error: 'Error al reversar anulación.' }
     }
+}
+
+/**
+ * Función utilitaria algorítmica (Costo $0, sin IA) que cruza cada aspecto multado con las reglas
+ * oficiales de la Instrucción de Trabajo (AQL 6,5, 5% tolerancia, plazos de 5 días hábiles,
+ * pautas de descargo del Anexo N°3 y detección de causas no imputables).
+ */
+function generarAlertasITAspecto(
+    letra: string | null,
+    raciones: number,
+    observaciones: string | null,
+    itDetalle: any | null,
+    itCab: any | null
+) {
+    if (!letra) return null;
+
+    const upperLetra = letra.toUpperCase().trim();
+    const obs = observaciones || '';
+    const obsLower = obs.toLowerCase();
+
+    // 1. Datos base de la IT
+    const tienePeriodoCorreccion = itDetalle?.tienePeriodoCorreccion ?? ['B', 'E', 'J', 'L'].includes(upperLetra);
+    const pautaSolucion = itDetalle?.pautaSolucionAnexo3 || (
+        upperLetra === 'B' ? 'Anexo N°3: Enviar acta firmada por dirección del colegio o fotografía con fecha y georreferenciación que demuestre la presencia física o digital del manual en la cocina.' :
+        upperLetra === 'E' ? 'Anexo N°3: Presentar solicitud de homologación/incorporación a TPMPAP aprobada por JUNAEB, o comprobante de retiro y sustitución por una marca autorizada.' :
+        upperLetra === 'J' ? 'Anexo N°3: Factura o guía de despacho de reposición de equipo operativo y fotografía del termómetro o balanza en funcionamiento con baterías en cocina.' :
+        upperLetra === 'L' ? 'Anexo N°3: Guía de entrega firmada por la manipuladora y fotografía con el uniforme reglamentario completo en el establecimiento.' :
+        null
+    );
+
+    const consideraciones = itDetalle?.consideracionesEspecificas || null;
+    const formaEvaluar = itDetalle?.formaEvaluar || null;
+
+    // 2. Cálculo técnico específico por letra
+    let alertaTecnica: any = null;
+
+    // ASPECTO G: Pesaje de bandejas - AQL 6,5 y tolerancia 5%
+    if (upperLetra === 'G') {
+        let muestraMinima = 3;
+        let rangoTexto = '1 a 50 raciones';
+        let ac = 0;
+        let re = 1;
+
+        if (raciones > 50 && raciones <= 150) {
+            muestraMinima = 5;
+            rangoTexto = '51 a 150 raciones';
+            ac = 1;
+            re = 2;
+        } else if (raciones > 150 && raciones <= 500) {
+            muestraMinima = 8;
+            rangoTexto = '151 a 500 raciones';
+            ac = 1;
+            re = 2;
+        } else if (raciones > 500 && raciones <= 1200) {
+            muestraMinima = 13;
+            rangoTexto = '501 a 1.200 raciones';
+            ac = 2;
+            re = 3;
+        } else if (raciones > 1200 && raciones <= 3200) {
+            muestraMinima = 20;
+            rangoTexto = '1.201 a 3.200 raciones';
+            ac = 3;
+            re = 4;
+        } else if (raciones > 3200) {
+            muestraMinima = 32;
+            rangoTexto = 'Más de 3.200 raciones';
+            ac = 5;
+            re = 6;
+        }
+
+        // Detectar si la observación menciona una cantidad de bandejas pesadas
+        const matchBandejas = obs.match(/(?:pesar|pesaje|pesaron|muestra|control|bandeja(?:s)?)[^\d]*(\d+)\s*bandeja/i) ||
+                             obs.match(/(\d+)\s*(?:de\s*\d+\s*)?bandeja(?:s)?/i);
+        const bandejasPesadas = matchBandejas ? parseInt(matchBandejas[1], 10) : null;
+
+        let advertenciaMuestra: string | null = null;
+        let esDefensaGanable = false;
+
+        if (bandejasPesadas !== null && bandejasPesadas < muestraMinima) {
+            advertenciaMuestra = `⚠️ MUESTRA INSUFICIENTE: El supervisor pesó solo ${bandejasPesadas} bandeja(s). Para ${raciones} raciones (${rangoTexto}), el Anexo N°1 de la IT (AQL 6,5) exige una muestra mínima de ${muestraMinima} bandejas. La supervisión tiene vicio de procedimiento y la multa es inválida.`;
+            esDefensaGanable = true;
+        } else if (bandejasPesadas === null) {
+            advertenciaMuestra = `Verificar en el acta si el supervisor pesó al menos ${muestraMinima} bandejas (norma AQL 6,5 para ${raciones || 'este nivel de'} raciones). Si pesó menos de ${muestraMinima}, la multa debe anularse en el descargo.`;
+        }
+
+        alertaTecnica = {
+            tipo: 'AQL_PESAJE',
+            raciones,
+            rangoTexto,
+            muestraMinima,
+            criterioAceptacionRechazo: `Ac = ${ac}, Re = ${re}`,
+            tolerancia: '5% bajo el gramaje neto estipulado en la FEP',
+            bandejasPesadas,
+            advertenciaMuestra,
+            esDefensaGanable
+        };
+    }
+
+    // ASPECTO H: Personal manipulador - 1:70 raciones
+    if (upperLetra === 'H') {
+        const manipuladorasRequeridas = raciones > 0 ? Math.ceil(raciones / 70) : null;
+        alertaTecnica = {
+            tipo: 'PERSONAL_MANIPULADOR',
+            ratio: '1 manipuladora por cada 70 raciones servidas',
+            manipuladorasRequeridas,
+            tolerancia: 'No se imputa falta si la inasistencia se debe a licencia médica imprevista con reemplazo acreditado en tránsito dentro de 2 horas.'
+        };
+    }
+
+    // ASPECTO F: Calidad, Estiba, Frutas y Verduras
+    if (upperLetra === 'F') {
+        alertaTecnica = {
+            tipo: 'CALIDAD_FRUTAS_VERDURAS',
+            criterio: 'Anexo N°2 JUNAEB: Defectos leves hasta 10%, moderados hasta 5%. Defectos graves (pudrición, plagas) 0% de tolerancia.',
+            rotulacion: 'Alimentos no perecibles deben cumplir rotulación RSA y tarimas a 15 cm del suelo.'
+        };
+    }
+
+    // ASPECTO K: Temperaturas permitidas
+    if (upperLetra === 'K') {
+        alertaTecnica = {
+            tipo: 'TEMPERATURA',
+            rangos: 'Refrigeración: 0°C a 5°C. Congelación: <= -18°C.',
+            criterio: 'La medición debe efectuarse inmediatamente al abrir el equipo para evitar alteración térmica ambiental.'
+        };
+    }
+
+    // 3. Detección de Causas No Imputables (Tabla N°1 de la IT)
+    let posibleCausaNoImputable: string | null = null;
+    if (
+        obsLower.includes('corte de agua') ||
+        obsLower.includes('sin agua') ||
+        obsLower.includes('corte de luz') ||
+        obsLower.includes('corte de energ') ||
+        obsLower.includes('sin luz') ||
+        obsLower.includes('sin energ') ||
+        obsLower.includes('toma del') ||
+        obsLower.includes('paro') ||
+        obsLower.includes('suspensi') ||
+        obsLower.includes('fuerza mayor') ||
+        obsLower.includes('lluvia') ||
+        obsLower.includes('temporal') ||
+        obsLower.includes('catástrofe') ||
+        obsLower.includes('catastrofe')
+    ) {
+        posibleCausaNoImputable = 'La observación del acta menciona eventos externos de fuerza mayor o corte de suministros básicos. Conforme a la Tabla N°1 de la IT, esto constituye Causa No Imputable al Prestador y es causal directa de Descargo / Anulación de la multa.';
+    }
+
+    return {
+        letra: upperLetra,
+        tienePeriodoCorreccion,
+        periodoCorreccionTexto: tienePeriodoCorreccion ? 'SI (5 días hábiles)' : 'NO (No subsanable)',
+        plazoDias: tienePeriodoCorreccion ? 5 : 0,
+        pautaSolucion,
+        consideraciones,
+        formaEvaluar,
+        alertaTecnica,
+        posibleCausaNoImputable,
+        itDocumento: itCab ? `${itCab.codigoDocumento || 'IT - EE'} (Rev. ${itCab.numeroRevision || '03'})` : 'IT JUNAEB Oficial'
+    };
 }

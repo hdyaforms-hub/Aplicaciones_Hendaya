@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import UploadModal from './UploadModal'
 import { useDebounce } from '@/hooks/use-debounce'
 import { searchColegios } from '../captura-certificacion/actions'
+import { getUserEEPrivileges } from './actions'
 
 export default function ElementosEsencialesPage() {
     const [registros, setRegistros] = useState<any[]>([])
@@ -16,6 +17,8 @@ export default function ElementosEsencialesPage() {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
     const [selectedIds, setSelectedIds] = useState<string[]>([])
     const [isAdmin, setIsAdmin] = useState(false)
+    const [canDeleteIndividual, setCanDeleteIndividual] = useState(false)
+    const [canDeleteBulk, setCanDeleteBulk] = useState(false)
     
     // Autocomplete state
     const [searchInput, setSearchInput] = useState('')
@@ -66,20 +69,17 @@ export default function ElementosEsencialesPage() {
     }, [search, mes, ano, licitacion, folio, selectedRbd])
 
     useEffect(() => {
-        const checkSession = async () => {
+        const checkPrivileges = async () => {
             try {
-                const res = await fetch('/api/auth/me')
-                if (res.ok) {
-                    const data = await res.json()
-                    if (data.user?.user?.role?.name === 'Administrador') {
-                        setIsAdmin(true)
-                    }
-                }
+                const privs = await getUserEEPrivileges()
+                setIsAdmin(privs.isAdmin)
+                setCanDeleteIndividual(privs.canDeleteIndividual)
+                setCanDeleteBulk(privs.canDeleteBulk)
             } catch (error) {
-                console.error('Error fetching session:', error)
+                console.error('Error fetching EE privileges:', error)
             }
         }
-        checkSession()
+        checkPrivileges()
     }, [])
 
     // Autocomplete effect
@@ -239,7 +239,7 @@ export default function ElementosEsencialesPage() {
                     >
                         <span>📊</span> Exportar a Excel
                     </button>
-                    {isAdmin && selectedIds.length > 0 && (
+                    {canDeleteBulk && selectedIds.length > 0 && (
                         <button 
                             onClick={handleDeleteSelected}
                             className="px-4 py-1 bg-red-600 text-white rounded-xl shadow-sm shadow-red-600/20 font-semibold hover:bg-red-500 transition-all flex items-center gap-2 animate-in slide-in-from-right-4"
@@ -347,7 +347,7 @@ export default function ElementosEsencialesPage() {
                     <table className="w-full text-left text-sm text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-100">
                             <tr>
-                                {isAdmin && (
+                                {canDeleteBulk && (
                                     <th className="px-6 py-4 font-bold text-center">
                                         <input 
                                             type="checkbox" 
@@ -363,19 +363,19 @@ export default function ElementosEsencialesPage() {
                                 <th className="px-6 py-4 font-bold">RBD</th>
                                 <th className="px-6 py-4 font-bold">Establecimiento</th>
                                 <th className="px-6 py-4 font-bold">Archivo</th>
-                                {isAdmin && <th className="px-6 py-4 font-bold text-center">Acciones</th>}
+                                {canDeleteIndividual && <th className="px-6 py-4 font-bold text-center">Acciones</th>}
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan={isAdmin ? 8 : 6} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={6 + (canDeleteBulk ? 1 : 0) + (canDeleteIndividual ? 1 : 0)} className="px-6 py-12 text-center text-gray-400">
                                         <span className="animate-pulse">Cargando registros...</span>
                                     </td>
                                 </tr>
                             ) : paginatedRegistros.length === 0 ? (
                                 <tr>
-                                    <td colSpan={isAdmin ? 8 : 6} className="px-6 py-12 text-center">
+                                    <td colSpan={6 + (canDeleteBulk ? 1 : 0) + (canDeleteIndividual ? 1 : 0)} className="px-6 py-12 text-center">
                                         <div className="flex flex-col items-center justify-center text-gray-400">
                                             <span className="text-4xl mb-2">📄</span>
                                             <p className="font-medium text-gray-500">No se encontraron registros</p>
@@ -390,7 +390,7 @@ export default function ElementosEsencialesPage() {
 
                                     return (
                                         <tr key={reg.id} className={`border-b border-gray-50 hover:bg-gray-50/50 transition-colors ${selectedIds.includes(reg.id) ? 'bg-cyan-50/30' : ''}`}>
-                                            {isAdmin && (
+                                            {canDeleteBulk && (
                                                 <td className="px-4 py-1 text-center">
                                                     <input 
                                                         type="checkbox" 
@@ -406,7 +406,7 @@ export default function ElementosEsencialesPage() {
                                                     onClick={() => {
                                                         setSelectedReg(reg)
                                                         setIsDetailModalOpen(true)
-                                                    }}
+                                                     }}
                                                     className="text-cyan-600 hover:text-cyan-800 font-bold hover:underline"
                                                     title="Ver detalles del acta"
                                                 >
@@ -429,7 +429,7 @@ export default function ElementosEsencialesPage() {
                                                     </a>
                                                 ) : '-'}
                                             </td>
-                                            {isAdmin && (
+                                            {canDeleteIndividual && (
                                                 <td className="px-6 py-4 text-center">
                                                     <button
                                                         onClick={() => handleDelete(reg.id)}

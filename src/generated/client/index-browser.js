@@ -809,6 +809,74 @@ exports.Prisma.Multas_Elementos_Esenciales_DetScalarFieldEnum = {
   variablesUsadas: 'variablesUsadas'
 };
 
+exports.Prisma.Multas_Privilegio_EEScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  puedeEliminarIndividual: 'puedeEliminarIndividual',
+  puedeEliminarMasivo: 'puedeEliminarMasivo',
+  otorgadoPor: 'otorgadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_IT_Elementos_Esenciales_CabScalarFieldEnum = {
+  id: 'id',
+  licId: 'licId',
+  licitacionCodigoPdf: 'licitacionCodigoPdf',
+  licitacionHomologada: 'licitacionHomologada',
+  codigoDocumento: 'codigoDocumento',
+  tituloDocumento: 'tituloDocumento',
+  numeroRevision: 'numeroRevision',
+  fechaRevision: 'fechaRevision',
+  totalPaginas: 'totalPaginas',
+  objetivo: 'objetivo',
+  alcance: 'alcance',
+  plazoNotificacionHoras: 'plazoNotificacionHoras',
+  plazoCorreccionDias: 'plazoCorreccionDias',
+  aspectosModalidadesJson: 'aspectosModalidadesJson',
+  causasImputabilidadJson: 'causasImputabilidadJson',
+  anexoPesajeJson: 'anexoPesajeJson',
+  anexoFrutasVerdurasJson: 'anexoFrutasVerdurasJson',
+  nombreArchivo: 'nombreArchivo',
+  archivoBase64: 'archivoBase64',
+  cargadoPor: 'cargadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_IT_Elementos_Esenciales_DetScalarFieldEnum = {
+  id: 'id',
+  cabId: 'cabId',
+  orden: 'orden',
+  letra: 'letra',
+  aspecto: 'aspecto',
+  formaEvaluar: 'formaEvaluar',
+  periodoCorreccion: 'periodoCorreccion',
+  tienePeriodoCorreccion: 'tienePeriodoCorreccion',
+  medioVerificacion: 'medioVerificacion',
+  consideracionesEspecificas: 'consideracionesEspecificas',
+  pautaSolucionAnexo3: 'pautaSolucionAnexo3',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Aspecto_EE_RestriccionScalarFieldEnum = {
+  id: 'id',
+  licId: 'licId',
+  letra: 'letra',
+  tipo: 'tipo',
+  anho: 'anho',
+  fechaDesde: 'fechaDesde',
+  fechaHasta: 'fechaHasta',
+  accion: 'accion',
+  valorFijo: 'valorFijo',
+  descripcion: 'descripcion',
+  activo: 'activo',
+  creadoPor: 'creadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2017,6 +2085,10 @@ exports.Prisma.ModelName = {
   UTM: 'UTM',
   Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
   Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+  Multas_Privilegio_EE: 'Multas_Privilegio_EE',
+  Multas_IT_Elementos_Esenciales_Cab: 'Multas_IT_Elementos_Esenciales_Cab',
+  Multas_IT_Elementos_Esenciales_Det: 'Multas_IT_Elementos_Esenciales_Det',
+  Multas_Aspecto_EE_Restriccion: 'Multas_Aspecto_EE_Restriccion',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

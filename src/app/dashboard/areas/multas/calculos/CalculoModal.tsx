@@ -169,6 +169,26 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
         for (const d of detalles) {
             if (!d.formulaAsignada) continue
 
+            // Si el aspecto tiene una restricción activa aplicada (ej: Aspecto M año 2024 = $0)
+            if (d.restriccionAplicada) {
+                const r = d.restriccionAplicada
+                const montoR = r.accion === 'VALOR_CERO' ? 0 : (r.valorFijo || 0)
+                const glosaR = r.accion === 'VALOR_CERO'
+                    ? `RESTRICCIÓN APLICADA: Año ${r.anho || ''} -> $0 (Exento)`
+                    : `RESTRICCIÓN APLICADA: Monto fijo $${montoR.toLocaleString('es-CL')}`
+
+                totalMonto += montoR
+                detallesCalc.push({
+                    letraAspecto: d.letraAspecto,
+                    descripcion: d.observacionesOMedioDeVerificacion,
+                    formulaAplicada: glosaR,
+                    montoMulta: montoR,
+                    variablesUsadas: customValues,
+                    restriccionAplicada: r
+                })
+                continue
+            }
+
             const evalRes = evaluateFormulaLocal(d.formulaAsignada, customValues)
             if (evalRes.error) {
                 hasError = true
@@ -453,6 +473,36 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                     <p className="text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded-lg italic">
                                                         <span className="font-bold">Observación:</span> {d.observacionesOMedioDeVerificacion || 'Sin observaciones'}
                                                     </p>
+
+                                                    {/* Restricción Normativa Badge if applicable */}
+                                                    {d.restriccionAplicada && (
+                                                        <div className="mt-3 p-3 bg-cyan-50/80 border border-cyan-200 rounded-xl flex items-start justify-between gap-3 text-xs">
+                                                            <div className="flex items-start gap-2.5">
+                                                                <span className="text-cyan-700 font-bold text-base">🛡️</span>
+                                                                <div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <span className="font-bold text-cyan-900">Restricción Normativa Aplicada</span>
+                                                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                                                                            {d.restriccionAplicada.tipo === 'ANHO' ? `Año ${d.restriccionAplicada.anho}` : 'Rango Fechas'}
+                                                                        </span>
+                                                                    </div>
+                                                                    <p className="text-gray-700 mt-1">
+                                                                        {d.restriccionAplicada.accion === 'VALOR_CERO'
+                                                                            ? 'El valor de la multa para este aspecto ha sido fijado en $0 (Exento).'
+                                                                            : `El valor de la multa para este aspecto ha sido fijado en monto fijo de $${d.restriccionAplicada.valorFijo?.toLocaleString('es-CL')}.`}
+                                                                    </p>
+                                                                    {d.restriccionAplicada.descripcion && (
+                                                                        <p className="text-[11px] text-gray-500 italic mt-0.5">
+                                                                            &quot;{d.restriccionAplicada.descripcion}&quot;
+                                                                        </p>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <span className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                                                                $0 EXENTO
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                     
                                                     {/* Real-time aspect calculation display */}
                                                     {calcObj && (
@@ -533,6 +583,152 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                             </div>
                                                         )}
                                                     </div>
+
+                                                    {/* Bloque Inteligente: Orientación Normativa IT (Verificación y Solución) */}
+                                                    {d.itInfo && (
+                                                        <div className="mt-3.5 rounded-xl border border-slate-200 overflow-hidden bg-white text-xs shadow-sm">
+                                                            {/* Encabezado IT */}
+                                                            <div className={`px-3.5 py-2 flex flex-wrap items-center justify-between gap-2 border-b ${
+                                                                d.itInfo.tienePeriodoCorreccion 
+                                                                    ? 'bg-emerald-50/80 border-emerald-100 text-emerald-950' 
+                                                                    : 'bg-slate-50 border-slate-200 text-slate-800'
+                                                            }`}>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="font-black text-[11px] uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                                                                        📋 Instrucción de Trabajo: Aspecto {d.itInfo.letra}
+                                                                    </span>
+                                                                    <span className="text-[10px] text-slate-500 font-medium">({d.itInfo.itDocumento})</span>
+                                                                </div>
+                                                                <div>
+                                                                    {d.itInfo.tienePeriodoCorreccion ? (
+                                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                                                            🟢 Subsanable — Plazo: 5 Días Hábiles
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700">
+                                                                            ⚪ No Subsanable en Visita
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="p-3.5 space-y-2.5">
+                                                                {/* Alerta de Causa No Imputable detectada */}
+                                                                {d.itInfo.posibleCausaNoImputable && (
+                                                                    <div className="p-2.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-950 flex items-start gap-2.5">
+                                                                        <span className="text-base shrink-0">💡</span>
+                                                                        <div>
+                                                                            <span className="font-bold block text-[10px] uppercase tracking-wider text-indigo-900">
+                                                                                Causal de Descargo Detectada (Tabla N°1 IT)
+                                                                            </span>
+                                                                            <p className="mt-0.5 text-xs text-indigo-800 leading-relaxed font-medium">
+                                                                                {d.itInfo.posibleCausaNoImputable}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Alerta Técnica Aspecto G: Muestra AQL 6,5 y Tolerancia 5% */}
+                                                                {d.itInfo.alertaTecnica?.tipo === 'AQL_PESAJE' && (
+                                                                    <div className={`p-3 rounded-xl border ${
+                                                                        d.itInfo.alertaTecnica.esDefensaGanable 
+                                                                            ? 'bg-rose-50 border-rose-200 text-rose-950' 
+                                                                            : 'bg-cyan-50/70 border-cyan-200 text-cyan-950'
+                                                                    }`}>
+                                                                        <div className="flex flex-wrap items-center justify-between gap-1 font-bold text-xs mb-1.5">
+                                                                            <span className="flex items-center gap-1.5 text-slate-800">
+                                                                                ⚖️ Control de Pesaje AQL 6,5 (Anexo N°1)
+                                                                            </span>
+                                                                            <span className="font-mono bg-white px-2 py-0.5 rounded-lg border border-cyan-200 text-cyan-800 text-[11px]">
+                                                                                {d.itInfo.alertaTecnica.raciones} raciones ({d.itInfo.alertaTecnica.rangoTexto})
+                                                                            </span>
+                                                                        </div>
+                                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-cyan-200/60 text-xs">
+                                                                            <div>
+                                                                                <span className="text-slate-500 block text-[10px] font-bold uppercase">Muestra Mínima Obligatoria:</span>
+                                                                                <span className="font-black text-slate-900 text-sm">
+                                                                                    {d.itInfo.alertaTecnica.muestraMinima} bandejas
+                                                                                </span>
+                                                                                <span className="text-slate-500 text-[10px] ml-1.5 font-medium">
+                                                                                    ({d.itInfo.alertaTecnica.criterioAceptacionRechazo})
+                                                                                </span>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span className="text-slate-500 block text-[10px] font-bold uppercase">Margen de Tolerancia FEP:</span>
+                                                                                <span className="font-black text-slate-900 text-sm">5% bajo gramaje neto</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        {d.itInfo.alertaTecnica.advertenciaMuestra && (
+                                                                            <div className="mt-2.5 pt-2 border-t border-cyan-200/60 font-semibold text-xs flex items-start gap-1.5 leading-relaxed">
+                                                                                <span className="shrink-0 text-sm">📌</span>
+                                                                                <span>{d.itInfo.alertaTecnica.advertenciaMuestra}</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Aspecto H: Manipuladoras */}
+                                                                {d.itInfo.alertaTecnica?.tipo === 'PERSONAL_MANIPULADOR' && (
+                                                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed">
+                                                                        <span className="font-bold block text-[10px] uppercase text-slate-500 mb-0.5">
+                                                                            Criterio de Dotación Manipuladora (1:70):
+                                                                        </span>
+                                                                        <p>
+                                                                            Ratio normativo: <strong>1 manipuladora cada 70 raciones</strong>{' '}
+                                                                            {d.itInfo.alertaTecnica.manipuladorasRequeridas 
+                                                                                ? `(Exige ${d.itInfo.alertaTecnica.manipuladorasRequeridas} manipuladoras para ${d.itInfo.alertaTecnica.raciones || 'este servicio'})` 
+                                                                                : ''}. {d.itInfo.alertaTecnica.tolerancia}
+                                                                        </p>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Aspecto F: Calidad Frutas y Verduras */}
+                                                                {d.itInfo.alertaTecnica?.tipo === 'CALIDAD_FRUTAS_VERDURAS' && (
+                                                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed">
+                                                                        <span className="font-bold block text-[10px] uppercase text-slate-500 mb-0.5">
+                                                                            Tolerancias de Calidad Frutas y Verduras (Anexo N°2):
+                                                                        </span>
+                                                                        <p>{d.itInfo.alertaTecnica.criterio} {d.itInfo.alertaTecnica.rotulacion}</p>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Aspecto K: Temperaturas */}
+                                                                {d.itInfo.alertaTecnica?.tipo === 'TEMPERATURA' && (
+                                                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed">
+                                                                        <span className="font-bold block text-[10px] uppercase text-slate-500 mb-0.5">
+                                                                            Rangos Normativos de Temperatura:
+                                                                        </span>
+                                                                        <p><strong>{d.itInfo.alertaTecnica.rangos}</strong> {d.itInfo.alertaTecnica.criterio}</p>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Pauta de Solución (Anexo N°3) para subsanables */}
+                                                                {d.itInfo.pautaSolucion && (
+                                                                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs">
+                                                                        <span className="font-black text-[10px] uppercase tracking-wider text-emerald-900 block mb-1 flex items-center gap-1.5">
+                                                                            🛠️ Pauta de Solución Oficial (Medio de Descargo Exigido — Anexo N°3):
+                                                                        </span>
+                                                                        <p className="leading-relaxed font-semibold text-emerald-900">{d.itInfo.pautaSolucion}</p>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Desplegable de Criterio Oficial y Consideraciones 5.4 */}
+                                                                <details className="text-[11px] text-slate-600 bg-slate-50/70 rounded-xl p-2.5 border border-slate-200 cursor-pointer">
+                                                                    <summary className="font-bold text-slate-700 hover:text-cyan-700 select-none">
+                                                                        🔍 Ver Criterio Completo de la IT (Forma de evaluar y Consideraciones 5.4)
+                                                                    </summary>
+                                                                    <div className="mt-2 pt-2 border-t border-slate-200 space-y-1.5 text-slate-700 leading-relaxed">
+                                                                        {d.itInfo.formaEvaluar && (
+                                                                            <p><strong className="text-slate-900">Forma de Evaluar:</strong> {d.itInfo.formaEvaluar}</p>
+                                                                        )}
+                                                                        {d.itInfo.consideraciones && (
+                                                                            <p><strong className="text-slate-900">Consideraciones 5.4:</strong> {d.itInfo.consideraciones}</p>
+                                                                        )}
+                                                                    </div>
+                                                                </details>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

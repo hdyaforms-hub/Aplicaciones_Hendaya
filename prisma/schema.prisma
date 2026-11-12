@@ -38,6 +38,7 @@ model User {
   areas              Area[]                    @relation("UserAreas")
   licitaciones       Licitacion[]              @relation("UserLicitaciones")
   delegaciones       DelegacionVisualizacion[]
+  privilegioEE       Multas_Privilegio_EE?
 }
 
 model PMPA {
@@ -182,6 +183,7 @@ model Licitacion {
   matrices             MatrizT_Cabecera[]
   actasPlantillas      ActaSupervisionPlantilla[]
   users                User[]                     @relation("UserLicitaciones")
+  itElementosEsenciales Multas_IT_Elementos_Esenciales_Cab?
 }
 
 model AspectoEE {
@@ -769,6 +771,83 @@ model Multas_Elementos_Esenciales_Det {
   montoMulta      Float
   variablesUsadas String?                         @db.Text // JSON con los valores ingresados
   cab             Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
+model Multas_Privilegio_EE {
+  id                      String   @id @default(uuid())
+  userId                  String   @unique
+  puedeEliminarIndividual Boolean  @default(false)
+  puedeEliminarMasivo     Boolean  @default(false)
+  otorgadoPor             String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Multas_IT_Elementos_Esenciales_Cab {
+  id                      String                               @id @default(uuid())
+  licId                   Int                                  @unique
+  licitacionCodigoPdf     String?
+  licitacionHomologada    String?
+  codigoDocumento         String?                              @default("IT - ELEMENTOS ESENCIALES PAE")
+  tituloDocumento         String?                              @default("INSTRUCCIÓN DE TRABAJO SUPERVISIÓN ELEMENTOS ESENCIALES")
+  numeroRevision          String?                              @default("03")
+  fechaRevision           String?                              @default("10-02-2026")
+  totalPaginas            Int?                                 @default(37)
+  objetivo                String?                              @db.Text
+  alcance                 String?                              @db.Text
+  plazoNotificacionHoras  Int?                                 @default(24)
+  plazoCorreccionDias     Int?                                 @default(5)
+  aspectosModalidadesJson String?                              @db.Text
+  causasImputabilidadJson String?                              @db.Text
+  anexoPesajeJson         String?                              @db.Text
+  anexoFrutasVerdurasJson String?                              @db.Text
+  nombreArchivo           String?
+  archivoBase64           String?                              @db.Text
+  cargadoPor              String?
+  createdAt               DateTime                             @default(now())
+  updatedAt               DateTime                             @updatedAt
+  licitacion              Licitacion                           @relation(fields: [licId], references: [licId], onDelete: Cascade)
+  detalles                Multas_IT_Elementos_Esenciales_Det[]
+}
+
+model Multas_IT_Elementos_Esenciales_Det {
+  id                         String                             @id @default(uuid())
+  cabId                      String
+  orden                      Int                                @default(1)
+  letra                      String                             @db.VarChar(5)
+  aspecto                    String                             @db.Text
+  formaEvaluar               String                             @db.Text
+  periodoCorreccion          String                             @default("NO") @db.VarChar(10)
+  tienePeriodoCorreccion     Boolean                            @default(false)
+  medioVerificacion          String                             @db.Text
+  consideracionesEspecificas String?                            @db.Text
+  pautaSolucionAnexo3        String?                            @db.Text
+  createdAt                  DateTime                           @default(now())
+  updatedAt                  DateTime                           @updatedAt
+  cab                        Multas_IT_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+
+  @@index([cabId])
+  @@index([letra])
+}
+
+model Multas_Aspecto_EE_Restriccion {
+  id          String    @id @default(uuid())
+  licId       Int
+  letra       String    @db.VarChar(5)
+  tipo        String    @default("ANHO") @db.VarChar(20)
+  anho        Int?
+  fechaDesde  DateTime?
+  fechaHasta  DateTime?
+  accion      String    @default("VALOR_CERO") @db.VarChar(20)
+  valorFijo   Float?    @default(0)
+  descripcion String?   @db.Text
+  activo      Boolean   @default(true)
+  creadoPor   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([licId, letra])
 }
 
 model Descargos_Cab {

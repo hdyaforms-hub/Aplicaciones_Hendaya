@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { getAspectosEE, saveAspectoEE, deleteAspectoEE, getLicitaciones, testFormula, getPmpaLevelsForFolio } from './actions'
+import RestriccionesAspectoModal from './RestriccionesAspectoModal'
 
 export default function AspectosEEPage() {
     const [aspectos, setAspectos] = useState<any[]>([])
@@ -13,6 +14,10 @@ export default function AspectosEEPage() {
 
     // Help Modal
     const [showHelp, setShowHelp] = useState(false)
+
+    // Restricciones Modal State
+    const [selectedAspectoForRestricciones, setSelectedAspectoForRestricciones] = useState<any | null>(null)
+    const [showRestriccionesModal, setShowRestriccionesModal] = useState(false)
 
     // Test Formula State
     const [testFolio, setTestFolio] = useState('')
@@ -39,9 +44,18 @@ export default function AspectosEEPage() {
 
     const fetchData = async () => {
         setLoading(true)
+        setError('')
         const [resAsp, resLic] = await Promise.all([getAspectosEE(), getLicitaciones()])
-        if (resAsp.aspectos) setAspectos(resAsp.aspectos)
-        if (resLic.licitaciones) setLicitaciones(resLic.licitaciones)
+        if (resAsp.error) {
+            setError(resAsp.error)
+        } else if (resAsp.aspectos) {
+            setAspectos(resAsp.aspectos)
+        }
+        if (resLic.error) {
+            setError(resLic.error)
+        } else if (resLic.licitaciones) {
+            setLicitaciones(resLic.licitaciones)
+        }
         setLoading(false)
     }
 
@@ -95,6 +109,11 @@ export default function AspectosEEPage() {
         const res = await deleteAspectoEE(id)
         if (res.error) setError(res.error)
         else fetchData()
+    }
+
+    const handleOpenRestricciones = (asp: any) => {
+        setSelectedAspectoForRestricciones(asp)
+        setShowRestriccionesModal(true)
     }
 
     const handleTest = async () => {
@@ -500,7 +519,24 @@ export default function AspectosEEPage() {
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-2">
+                                                <div className="flex justify-end items-center gap-2">
+                                                    <button
+                                                        onClick={() => handleOpenRestricciones(asp)}
+                                                        className="px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-cyan-800 bg-slate-100 hover:bg-cyan-50 border border-slate-200 hover:border-cyan-200 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
+                                                        title="Configurar restricciones para este aspecto (ej. año 2024 = $0)"
+                                                    >
+                                                        <span>🛡️</span>
+                                                        <span className="hidden sm:inline">Restricciones</span>
+                                                        {asp.restriccionesActivasCount > 0 ? (
+                                                            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-cyan-600 text-white font-bold">
+                                                                {asp.restriccionesActivasCount}
+                                                            </span>
+                                                        ) : asp.restriccionesCount > 0 ? (
+                                                            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-400 text-white font-bold">
+                                                                0
+                                                            </span>
+                                                        ) : null}
+                                                    </button>
                                                     <button
                                                         onClick={() => handleEdit(asp)}
                                                         className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors"
@@ -527,6 +563,14 @@ export default function AspectosEEPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Restricciones por Aspecto */}
+            <RestriccionesAspectoModal
+                isOpen={showRestriccionesModal}
+                onClose={() => setShowRestriccionesModal(false)}
+                aspecto={selectedAspectoForRestricciones}
+                onUpdated={fetchData}
+            />
         </div>
     )
 }

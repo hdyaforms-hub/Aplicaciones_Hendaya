@@ -23,6 +23,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }: { isOp
         }
     }, [isOpen])
 
+    const handleClose = () => {
+        if (successCount > 0 || omittedFiles.length > 0) {
+            onUploadSuccess()
+        }
+        onClose()
+    }
+
     if (!isOpen) return null
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +115,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }: { isOp
                         <h3 className="text-xl font-bold text-gray-900">Carga Masiva de Actas</h3>
                         <p className="text-sm text-gray-500 mt-1">Sube múltiples archivos para procesarlos automáticamente.</p>
                     </div>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600">✕</button>
+                    <button onClick={handleClose} className="text-gray-400 hover:text-gray-600">✕</button>
                 </div>
 
                 <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
@@ -220,12 +227,20 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }: { isOp
 
                 <div className="p-6 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3">
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         disabled={loading}
                         className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-50 transition-all active:scale-95"
                     >
                         {successCount > 0 || omittedFiles.length > 0 ? 'Cerrar' : 'Cancelar'}
                     </button>
+                    {(successCount > 0 || omittedFiles.length > 0) && (
+                        <button
+                            onClick={handleClose}
+                            className="px-5 py-2.5 text-sm font-bold text-white bg-cyan-600 rounded-xl shadow-md shadow-cyan-600/20 hover:bg-cyan-500 transition-all flex items-center gap-2"
+                        >
+                            <span>👁️ Ver en la tabla</span>
+                        </button>
+                    )}
                     {files.length > 0 && successCount === 0 && omittedFiles.length === 0 && (
                         <button
                             onClick={handleUpload}

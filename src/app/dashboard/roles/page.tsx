@@ -198,6 +198,8 @@ export default async function RolesPage() {
         { id: 'manage_utm', name: 'Gestión de UTM', description: 'Acceso al mantenedor inteligente de UTM con sincronización SII.', category: 'MANTENEDORES -> MULTAS' },
         { id: 'manage_aspectos_ee', name: 'Fórmulas de Aspecto EE', description: 'Asociar fórmulas de multas a aspectos de elementos esenciales por licitación.', category: 'MANTENEDORES -> MULTAS' },
         { id: 'manage_multa_servicios', name: 'Servicios Multas', description: 'Mantenedor de códigos de servicio (D, A, O, C, T) para cálculos de multas.', category: 'MANTENEDORES -> MULTAS' },
+        { id: 'manage_multa_privilegios', name: 'Privilegios Multas EE', description: 'Asignar permisos de eliminación individual y masiva en Carga de Elementos Esenciales.', category: 'MANTENEDORES -> MULTAS' },
+        { id: 'manage_multa_instruccion_ee', name: 'Instrucción de Trabajo EE', description: 'Carga, validación y gestión de Instrucciones de Trabajo EE (PDF) por licitación.', category: 'MANTENEDORES -> MULTAS' },
 
         { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'MANTENEDORES -> CALCULADORA' },
         { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'MANTENEDORES -> CALCULADORA' },

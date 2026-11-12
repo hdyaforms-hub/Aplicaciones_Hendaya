@@ -1,14 +1,20 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
+import { logAuditAction } from '@/lib/audit'
 
 const PATH = '/dashboard/mantenedor/multas/aspectos-ee'
 
 async function checkPermission() {
     const session = await getSession()
-    if (!session) return false
+    if (!session?.user) return false
+
+    // Administradores siempre tienen acceso completo
+    const sessionRole = session.user.role?.name?.toUpperCase() || ''
+    if (sessionRole.includes('ADMIN') || sessionRole.includes('SUPER')) return true
 
     const user = await prisma.user.findUnique({
         where: { id: session.user.id },
@@ -17,17 +23,35 @@ async function checkPermission() {
 
     if (!user) return false
     
-    // Parse permissions if they are stored as a JSON string
-    const permissions = JSON.parse(user.role.permissions as string)
-    return permissions.includes('manage_aspectos_ee')
+    const userRole = user.role?.name?.toUpperCase() || ''
+    if (userRole.includes('ADMIN') || userRole.includes('SUPER')) return true
+
+    try {
+        let permissions: string[] = []
+        if (typeof user.role?.permissions === 'string') {
+            permissions = JSON.parse(user.role.permissions)
+        } else if (Array.isArray(user.role?.permissions)) {
+            permissions = user.role.permissions as any
+        }
+        return permissions.includes('manage_aspectos_ee') || permissions.includes('*')
+    } catch {
+        return false
+    }
 }
 
 export async function getAspectosEE(licId?: number) {
     if (!await checkPermission()) {
-        return { error: 'No tienes permisos.' }
+        return { error: 'No tienes permisos para consultar aspectos EE.' }
     }
 
     try {
+        try {
+            await ensureMultasEETables()
+        } catch (initErr) {
+            console.warn('Advertencia en ensureMultasEETables:', initErr)
+        }
+
+        // 1. Consultar aspectos directamente
         const aspectos = await prisma.aspectoEE.findMany({
             where: licId ? { licId } : {},
             include: { licitacion: true },
@@ -36,9 +60,34 @@ export async function getAspectosEE(licId?: number) {
                 { letra: 'asc' }
             ]
         })
-        return { aspectos }
-    } catch (e) {
-        return { error: 'Error al consultar aspectos.' }
+
+        // 2. Consultar restricciones de manera desacoplada
+        let restricciones: any[] = []
+        try {
+            restricciones = await rawPrisma.$queryRawUnsafe(`
+                SELECT "licId", UPPER(letra) as letra, activo
+                FROM "Multas_Aspecto_EE_Restriccion"
+                ${licId ? 'WHERE "licId" = ' + Number(licId) : ''}
+            `)
+        } catch (rErr) {
+            console.warn('Advertencia al consultar restricciones:', rErr)
+        }
+
+        const aspectosConRestricciones = aspectos.map(asp => {
+            const aspRestricciones = restricciones.filter(
+                r => r.licId === asp.licId && r.letra.toUpperCase() === asp.letra.toUpperCase()
+            )
+            return {
+                ...asp,
+                restriccionesCount: aspRestricciones.length,
+                restriccionesActivasCount: aspRestricciones.filter(r => r.activo).length
+            }
+        })
+
+        return { aspectos: aspectosConRestricciones }
+    } catch (e: any) {
+        console.error('Error al consultar aspectos:', e)
+        return { error: 'Error al consultar aspectos: ' + (e?.message || 'Error en servidor') }
     }
 }
 
@@ -264,5 +313,203 @@ export async function getLicitaciones() {
         return { licitaciones }
     } catch (e) {
         return { error: 'Error al consultar licitaciones.' }
+    }
+}
+
+export async function getRestriccionesAspecto(licId: number, letra: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const rows: any[] = await rawPrisma.$queryRawUnsafe(`
+            SELECT 
+                id, 
+                "licId", 
+                letra, 
+                tipo, 
+                anho, 
+                "fechaDesde", 
+                "fechaHasta", 
+                accion, 
+                "valorFijo", 
+                descripcion, 
+                activo, 
+                "creadoPor", 
+                "createdAt", 
+                "updatedAt"
+            FROM "Multas_Aspecto_EE_Restriccion"
+            WHERE "licId" = $1 AND UPPER(letra) = UPPER($2)
+            ORDER BY activo DESC, anho DESC, "createdAt" DESC
+        `, Number(licId), letra.trim().toUpperCase())
+
+        return { restricciones: rows }
+    } catch (e: any) {
+        console.error('Error al obtener restricciones:', e)
+        return { error: 'Error al consultar restricciones del aspecto: ' + (e?.message || 'Error en base de datos') }
+    }
+}
+
+export async function saveRestriccionAspecto(data: {
+    id?: string
+    licId: number
+    letra: string
+    tipo?: string
+    anho?: number | null
+    fechaDesde?: string | null
+    fechaHasta?: string | null
+    accion: string
+    valorFijo?: number
+    descripcion?: string
+    activo: boolean
+}) {
+    const session = await getSession()
+    if (!session || !await checkPermission()) {
+        return { error: 'No tienes permisos para modificar restricciones.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const letraClean = data.letra ? data.letra.trim().toUpperCase() : 'M'
+        const licIdNum = Number(data.licId)
+        const isAnho = !data.tipo || data.tipo === 'ANHO'
+
+        const parsedAnho = isAnho && data.anho ? Number(data.anho) : null
+
+        const isValidDate = (d: any) => typeof d === 'string' && d.trim().length >= 8 && !isNaN(new Date(d).getTime())
+        const parsedFechaDesde = !isAnho && isValidDate(data.fechaDesde) ? new Date(data.fechaDesde!) : null
+        const parsedFechaHasta = !isAnho && isValidDate(data.fechaHasta) ? new Date(data.fechaHasta!) : null
+        const parsedValorFijo = data.valorFijo !== undefined ? Number(data.valorFijo) : 0
+
+        if (data.id) {
+            await rawPrisma.$executeRawUnsafe(`
+                UPDATE "Multas_Aspecto_EE_Restriccion"
+                SET 
+                    tipo = $1,
+                    anho = $2,
+                    "fechaDesde" = $3,
+                    "fechaHasta" = $4,
+                    accion = $5,
+                    "valorFijo" = $6,
+                    descripcion = $7,
+                    activo = $8,
+                    "updatedAt" = CURRENT_TIMESTAMP
+                WHERE id = $9
+            `,
+                data.tipo || 'ANHO',
+                parsedAnho,
+                parsedFechaDesde,
+                parsedFechaHasta,
+                data.accion || 'VALOR_CERO',
+                parsedValorFijo,
+                data.descripcion?.trim() || null,
+                Boolean(data.activo),
+                data.id
+            )
+        } else {
+            await rawPrisma.$executeRawUnsafe(`
+                INSERT INTO "Multas_Aspecto_EE_Restriccion" (
+                    id, "licId", letra, tipo, anho, "fechaDesde", "fechaHasta", accion, "valorFijo", descripcion, activo, "creadoPor", "createdAt", "updatedAt"
+                ) VALUES (
+                    gen_random_uuid()::text, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+                )
+            `,
+                licIdNum,
+                letraClean,
+                data.tipo || 'ANHO',
+                parsedAnho,
+                parsedFechaDesde,
+                parsedFechaHasta,
+                data.accion || 'VALOR_CERO',
+                parsedValorFijo,
+                data.descripcion?.trim() || null,
+                Boolean(data.activo),
+                session.user.username || session.user.name || 'ADMIN'
+            )
+        }
+
+        try {
+            await logAuditAction({
+                username: session.user.username || session.user.name || 'ADMIN',
+                userId: session.user.id,
+                action: data.id ? 'UPDATE' : 'CREATE',
+                modulo: 'MANTENEDOR_MULTAS',
+                detalle: `Restricción aspecto EE ${data.id ? 'actualizada' : 'creada'}: Lic ${licIdNum} Aspecto ${letraClean} Año ${parsedAnho || 'N/A'}`
+            })
+        } catch (auditErr) {
+            console.warn('Advertencia al registrar auditoría:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error al guardar restricción:', e)
+        return { error: 'Error al guardar la restricción: ' + (e?.message || 'Error en base de datos') }
+    }
+}
+
+export async function toggleRestriccionAspecto(id: string, activo: boolean) {
+    const session = await getSession()
+    if (!session || !await checkPermission()) {
+        return { error: 'No tienes permisos para modificar restricciones.' }
+    }
+
+    try {
+        await rawPrisma.$executeRawUnsafe(`
+            UPDATE "Multas_Aspecto_EE_Restriccion"
+            SET activo = $1, "updatedAt" = CURRENT_TIMESTAMP
+            WHERE id = $2
+        `, Boolean(activo), id)
+
+        try {
+            await logAuditAction({
+                username: session.user.username || session.user.name || 'ADMIN',
+                userId: session.user.id,
+                action: 'UPDATE',
+                modulo: 'MANTENEDOR_MULTAS',
+                detalle: `Restricción aspecto EE ${id} cambiada a ${activo ? 'ACTIVA' : 'INACTIVA'}`
+            })
+        } catch (auditErr) {
+            console.warn('Advertencia auditoría:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error al cambiar estado de restricción:', e)
+        return { error: 'Error al cambiar estado de la restricción: ' + (e?.message || 'Error en base de datos') }
+    }
+}
+
+export async function deleteRestriccionAspecto(id: string) {
+    const session = await getSession()
+    if (!session || !await checkPermission()) {
+        return { error: 'No tienes permisos para eliminar restricciones.' }
+    }
+
+    try {
+        await rawPrisma.$executeRawUnsafe(`
+            DELETE FROM "Multas_Aspecto_EE_Restriccion"
+            WHERE id = $1
+        `, id)
+
+        try {
+            await logAuditAction({
+                username: session.user.username || session.user.name || 'ADMIN',
+                userId: session.user.id,
+                action: 'DELETE',
+                modulo: 'MANTENEDOR_MULTAS',
+                detalle: `Restricción aspecto EE eliminada: ID ${id}`
+            })
+        } catch (auditErr) {
+            console.warn('Advertencia auditoría:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error al eliminar restricción:', e)
+        return { error: 'Error al eliminar la restricción: ' + (e?.message || 'Error en base de datos') }
     }
 }

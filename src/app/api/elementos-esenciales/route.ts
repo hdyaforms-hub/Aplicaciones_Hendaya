@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/session';
+import { ensureMultasEETables } from '@/lib/multas-ee-db-init';
+import { logAuditAction } from '@/lib/audit';
 
 export async function GET(request: Request) {
     try {
@@ -9,10 +11,27 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
         }
 
-        const isAdmin = session.user.role?.name === 'Administrador';
+        const roleName = session.user.role?.name?.toLowerCase().trim() || '';
+        const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin';
         const hasPermission = session.user.role?.permissions?.includes('view_elementos_esenciales');
         if (!isAdmin && !hasPermission) {
             return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
+        }
+
+        // Consultar RBDs asignados al usuario si no es admin
+        let userAssignedRbds: number[] | null = null;
+        if (!isAdmin && session.user.id) {
+            const dbUser = await prisma.user.findUnique({
+                where: { id: session.user.id },
+                select: { rbds: true }
+            });
+            const directRbds = (dbUser?.rbds || session.user.rbds || [])
+                .map(Number)
+                .filter((n: number) => !isNaN(n) && n >= 0);
+
+            if (directRbds.length > 0) {
+                userAssignedRbds = Array.from(new Set(directRbds));
+            }
         }
 
         const { searchParams } = new URL(request.url);
@@ -26,17 +45,23 @@ export async function GET(request: Request) {
         // Construir el filtro where
         const where: any = {};
 
-        if (rbdParam) {
+        // Filtro por RBDs del perfil del usuario (únicamente si tiene RBDs asignados explícitamente)
+        if (userAssignedRbds && userAssignedRbds.length > 0) {
+            if (rbdParam) {
+                const targetRbd = Number(rbdParam);
+                if (!userAssignedRbds.includes(targetRbd)) {
+                    return NextResponse.json([]); // RBD fuera de su perfil asignado
+                }
+                where.rbd = targetRbd;
+            } else {
+                where.rbd = { in: userAssignedRbds };
+            }
+        } else if (rbdParam) {
             where.rbd = Number(rbdParam);
         }
 
         if (folioParam) {
             where.folio = { contains: folioParam, mode: 'insensitive' };
-        }
-
-        if (mes || ano) {
-            // Asumiendo que la fecha viene como "DD / MM / YYYY" en el script de python
-            // Pero como es un DateTime en la DB, podemos filtrar por rango
         }
 
         // Búsqueda inteligente
@@ -50,10 +75,6 @@ export async function GET(request: Request) {
                 where.OR.push({ rbd: Number(search) });
             }
 
-            // Para buscar por nombre de establecimiento, necesitamos cruzar con Colegios
-            // Prisma no soporta OR cruzando relaciones de forma simple si la relación no es estricta o 
-            // no la declaramos. Como ColegiosMatriz o Colegios se asocia por RBD pero no es una 
-            // relación en prisma schema para ElementosEsenciales, filtramos primero los colegios.
             const colegios = await prisma.colegios.findMany({
                 where: { nombreEstablecimiento: { contains: search, mode: 'insensitive' } },
                 select: { colRBD: true }
@@ -69,8 +90,6 @@ export async function GET(request: Request) {
             where.licitacion = { contains: licitacion, mode: 'insensitive' };
         }
 
-        // Filtrar por mes/año extrayéndolo si es necesario
-        // Como fechaSupervision es DateTime, podemos hacer validación de año/mes
         if (ano) {
             const startYear = new Date(`${ano}-01-01T00:00:00Z`);
             const endYear = new Date(`${ano}-12-31T23:59:59Z`);
@@ -82,7 +101,6 @@ export async function GET(request: Request) {
 
         if (mes && ano) {
              const startMonth = new Date(`${ano}-${mes.padStart(2, '0')}-01T00:00:00Z`);
-             // Para obtener el fin de mes:
              const endMonth = new Date(Number(ano), Number(mes), 0, 23, 59, 59);
              where.fechaSupervision.gte = startMonth;
              where.fechaSupervision.lte = endMonth;
@@ -123,10 +141,26 @@ export async function DELETE(request: Request) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
         }
 
-        const isAdmin = session.user.role?.name === 'Administrador';
-        const hasPermission = session.user.role?.permissions?.includes('view_elementos_esenciales');
-        if (!isAdmin && !hasPermission) {
-            return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
+        const roleName = session.user.role?.name?.toLowerCase().trim() || '';
+        const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin';
+        
+        await ensureMultasEETables();
+
+        let canDeleteBulk = isAdmin;
+        if (!isAdmin && session.user.id) {
+            const priv = await prisma.multas_Privilegio_EE.findUnique({
+                where: { userId: session.user.id }
+            });
+            if (priv?.puedeEliminarMasivo) {
+                canDeleteBulk = true;
+            }
+        }
+
+        if (!canDeleteBulk) {
+            return NextResponse.json(
+                { error: 'Acceso denegado: No posee privilegios para eliminación masiva en Carga de Elementos Esenciales' },
+                { status: 403 }
+            );
         }
 
         const { ids } = await request.json();
@@ -134,14 +168,39 @@ export async function DELETE(request: Request) {
             return NextResponse.json({ error: 'No se proporcionaron IDs' }, { status: 400 });
         }
 
-        const { unlink } = await import('fs/promises');
-        const { join } = await import('path');
-
-        // Buscar los registros para obtener las rutas de archivos y folios
         const actas = await prisma.elementosEsenciales_Cab.findMany({
             where: { id: { in: ids } },
-            select: { id: true, folio: true, link: true }
+            select: { id: true, folio: true, link: true, rbd: true }
         });
+
+        let userAssignedRbds: number[] | null = null;
+        if (!isAdmin && session.user.id) {
+            const dbUser = await prisma.user.findUnique({
+                where: { id: session.user.id },
+                select: { rbds: true }
+            });
+            const directRbds = (dbUser?.rbds || session.user.rbds || [])
+                .map(Number)
+                .filter((n: number) => !isNaN(n) && n >= 0);
+
+            if (directRbds.length > 0) {
+                userAssignedRbds = Array.from(new Set(directRbds));
+            }
+        }
+
+        // Validar que las actas correspondan a los RBDs permitidos del usuario si tiene asignación estricta
+        if (userAssignedRbds && userAssignedRbds.length > 0) {
+            const actasNoAutorizadas = actas.filter(a => a.rbd && !userAssignedRbds.includes(a.rbd));
+            if (actasNoAutorizadas.length > 0) {
+                return NextResponse.json(
+                    { error: 'No tiene autorización para eliminar actas correspondientes a RBDs fuera de su perfil asignado' },
+                    { status: 403 }
+                );
+            }
+        }
+
+        const { unlink } = await import('fs/promises');
+        const { join } = await import('path');
 
         const folios = actas.map(a => a.folio).filter(Boolean) as string[];
 
@@ -169,10 +228,18 @@ export async function DELETE(request: Request) {
             }
         }
 
+        // Registro de Auditoría
+        await logAuditAction({
+            username: session.user.username || session.user.name || 'Usuario',
+            userId: session.user.id,
+            action: 'ELIMINACION_MASIVA_EE',
+            modulo: 'Elementos Esenciales',
+            detalle: `Eliminación masiva de ${actas.length} acta(s) EE. Folios: ${folios.join(', ') || 'Sin folios'}`
+        });
+
         return NextResponse.json({ success: true, count: actas.length });
     } catch (error: any) {
         console.error('Error en bulk delete:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
-
