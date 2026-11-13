@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { logAuditAction } from '@/lib/audit'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
+import { ensureColegiosActivoColumn } from '@/lib/colegios-db-init'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
 
@@ -175,6 +176,8 @@ export async function getColegiosForPlantilla(plantillaId: string) {
             }
             whereCondition.colRBD = { in: userRbds }
         }
+
+        await ensureColegiosActivoColumn()
 
         const allColegios = await (rawPrisma as any).colegios.findMany({
             where: whereCondition,

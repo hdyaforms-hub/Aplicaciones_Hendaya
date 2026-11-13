@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import AsociarRbdClient from './AsociarRbdClient'
+import { ensureColegiosActivoColumn } from '@/lib/colegios-db-init'
 
 export const dynamic = 'force-dynamic'
 
@@ -42,6 +43,9 @@ export default async function AsociarRbdPage() {
             name: 'asc'
         }
     })
+
+    // Asegurar columna activo en DB
+    await ensureColegiosActivoColumn()
 
     // Cargar listado de colegios para resolver nombres de RBDs
     const colegios = await prisma.colegios.findMany({

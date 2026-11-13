@@ -1,5 +1,6 @@
 import { getSession } from './session'
 import { rawPrisma } from './prisma'
+import { ensureColegiosActivoColumn } from './colegios-db-init'
 
 /**
  * Obtiene los RBDs efectivos a los que tiene acceso el usuario actual.
@@ -100,6 +101,7 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
             allowedRbds.push(0)
         }
         try {
+            await ensureColegiosActivoColumn()
             const colegios = await rawPrisma.colegios.findMany({
                 where: { sucursal: { in: allSucursales }, activo: true },
                 select: { colRBD: true }

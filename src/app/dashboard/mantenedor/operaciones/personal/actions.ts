@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
 import { sanitizeUsername } from '@/lib/validation'
+import { ensureColegiosActivoColumn } from '@/lib/colegios-db-init'
 
 const PATH = '/dashboard/mantenedor/operaciones/personal'
 
@@ -55,6 +56,7 @@ export async function getVehiculos() {
 
 export async function getColegios() {
     try {
+        await ensureColegiosActivoColumn()
         return await prisma.colegios.findMany({
             where: {
                 activo: true
