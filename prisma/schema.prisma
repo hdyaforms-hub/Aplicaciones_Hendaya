@@ -62,7 +62,7 @@ model PMPA {
 }
 
 model Colegios {
-  id                       String @id @default(uuid())
+  id                       String  @id @default(uuid())
   colut                    Int
   colRBD                   Int
   colRBDDV                 String
@@ -73,6 +73,7 @@ model Colegios {
   direccionEstablecimiento String
   comuna                   String
   uploadedBy               String
+  activo                   Boolean @default(true)
 }
 
 model IngRacion {

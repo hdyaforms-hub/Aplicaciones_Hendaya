@@ -18053,6 +18053,7 @@ export namespace Prisma {
     direccionEstablecimiento: string | null
     comuna: string | null
     uploadedBy: string | null
+    activo: boolean | null
   }
 
   export type ColegiosMaxAggregateOutputType = {
@@ -18067,6 +18068,7 @@ export namespace Prisma {
     direccionEstablecimiento: string | null
     comuna: string | null
     uploadedBy: string | null
+    activo: boolean | null
   }
 
   export type ColegiosCountAggregateOutputType = {
@@ -18081,6 +18083,7 @@ export namespace Prisma {
     direccionEstablecimiento: number
     comuna: number
     uploadedBy: number
+    activo: number
     _all: number
   }
 
@@ -18107,6 +18110,7 @@ export namespace Prisma {
     direccionEstablecimiento?: true
     comuna?: true
     uploadedBy?: true
+    activo?: true
   }
 
   export type ColegiosMaxAggregateInputType = {
@@ -18121,6 +18125,7 @@ export namespace Prisma {
     direccionEstablecimiento?: true
     comuna?: true
     uploadedBy?: true
+    activo?: true
   }
 
   export type ColegiosCountAggregateInputType = {
@@ -18135,6 +18140,7 @@ export namespace Prisma {
     direccionEstablecimiento?: true
     comuna?: true
     uploadedBy?: true
+    activo?: true
     _all?: true
   }
 
@@ -18236,6 +18242,7 @@ export namespace Prisma {
     direccionEstablecimiento: string
     comuna: string
     uploadedBy: string
+    activo: boolean
     _count: ColegiosCountAggregateOutputType | null
     _avg: ColegiosAvgAggregateOutputType | null
     _sum: ColegiosSumAggregateOutputType | null
@@ -18269,6 +18276,7 @@ export namespace Prisma {
     direccionEstablecimiento?: boolean
     comuna?: boolean
     uploadedBy?: boolean
+    activo?: boolean
   }, ExtArgs["result"]["colegios"]>
 
   export type ColegiosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18283,6 +18291,7 @@ export namespace Prisma {
     direccionEstablecimiento?: boolean
     comuna?: boolean
     uploadedBy?: boolean
+    activo?: boolean
   }, ExtArgs["result"]["colegios"]>
 
   export type ColegiosSelectScalar = {
@@ -18297,6 +18306,7 @@ export namespace Prisma {
     direccionEstablecimiento?: boolean
     comuna?: boolean
     uploadedBy?: boolean
+    activo?: boolean
   }
 
 
@@ -18315,6 +18325,7 @@ export namespace Prisma {
       direccionEstablecimiento: string
       comuna: string
       uploadedBy: string
+      activo: boolean
     }, ExtArgs["result"]["colegios"]>
     composites: {}
   }
@@ -18719,6 +18730,7 @@ export namespace Prisma {
     readonly direccionEstablecimiento: FieldRef<"Colegios", 'String'>
     readonly comuna: FieldRef<"Colegios", 'String'>
     readonly uploadedBy: FieldRef<"Colegios", 'String'>
+    readonly activo: FieldRef<"Colegios", 'Boolean'>
   }
     
 
@@ -157906,7 +157918,8 @@ export namespace Prisma {
     nombreEstablecimiento: 'nombreEstablecimiento',
     direccionEstablecimiento: 'direccionEstablecimiento',
     comuna: 'comuna',
-    uploadedBy: 'uploadedBy'
+    uploadedBy: 'uploadedBy',
+    activo: 'activo'
   };
 
   export type ColegiosScalarFieldEnum = (typeof ColegiosScalarFieldEnum)[keyof typeof ColegiosScalarFieldEnum]
@@ -160578,6 +160591,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFilter<"Colegios"> | string
     comuna?: StringFilter<"Colegios"> | string
     uploadedBy?: StringFilter<"Colegios"> | string
+    activo?: BoolFilter<"Colegios"> | boolean
   }
 
   export type ColegiosOrderByWithRelationInput = {
@@ -160592,6 +160606,7 @@ export namespace Prisma {
     direccionEstablecimiento?: SortOrder
     comuna?: SortOrder
     uploadedBy?: SortOrder
+    activo?: SortOrder
   }
 
   export type ColegiosWhereUniqueInput = Prisma.AtLeast<{
@@ -160609,6 +160624,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFilter<"Colegios"> | string
     comuna?: StringFilter<"Colegios"> | string
     uploadedBy?: StringFilter<"Colegios"> | string
+    activo?: BoolFilter<"Colegios"> | boolean
   }, "id">
 
   export type ColegiosOrderByWithAggregationInput = {
@@ -160623,6 +160639,7 @@ export namespace Prisma {
     direccionEstablecimiento?: SortOrder
     comuna?: SortOrder
     uploadedBy?: SortOrder
+    activo?: SortOrder
     _count?: ColegiosCountOrderByAggregateInput
     _avg?: ColegiosAvgOrderByAggregateInput
     _max?: ColegiosMaxOrderByAggregateInput
@@ -160645,6 +160662,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringWithAggregatesFilter<"Colegios"> | string
     comuna?: StringWithAggregatesFilter<"Colegios"> | string
     uploadedBy?: StringWithAggregatesFilter<"Colegios"> | string
+    activo?: BoolWithAggregatesFilter<"Colegios"> | boolean
   }
 
   export type IngRacionWhereInput = {
@@ -172578,6 +172596,7 @@ export namespace Prisma {
     direccionEstablecimiento: string
     comuna: string
     uploadedBy: string
+    activo?: boolean
   }
 
   export type ColegiosUncheckedCreateInput = {
@@ -172592,6 +172611,7 @@ export namespace Prisma {
     direccionEstablecimiento: string
     comuna: string
     uploadedBy: string
+    activo?: boolean
   }
 
   export type ColegiosUpdateInput = {
@@ -172606,6 +172626,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFieldUpdateOperationsInput | string
     comuna?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ColegiosUncheckedUpdateInput = {
@@ -172620,6 +172641,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFieldUpdateOperationsInput | string
     comuna?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ColegiosCreateManyInput = {
@@ -172634,6 +172656,7 @@ export namespace Prisma {
     direccionEstablecimiento: string
     comuna: string
     uploadedBy: string
+    activo?: boolean
   }
 
   export type ColegiosUpdateManyMutationInput = {
@@ -172648,6 +172671,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFieldUpdateOperationsInput | string
     comuna?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ColegiosUncheckedUpdateManyInput = {
@@ -172662,6 +172686,7 @@ export namespace Prisma {
     direccionEstablecimiento?: StringFieldUpdateOperationsInput | string
     comuna?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IngRacionCreateInput = {
@@ -186204,6 +186229,7 @@ export namespace Prisma {
     direccionEstablecimiento?: SortOrder
     comuna?: SortOrder
     uploadedBy?: SortOrder
+    activo?: SortOrder
   }
 
   export type ColegiosAvgOrderByAggregateInput = {
@@ -186223,6 +186249,7 @@ export namespace Prisma {
     direccionEstablecimiento?: SortOrder
     comuna?: SortOrder
     uploadedBy?: SortOrder
+    activo?: SortOrder
   }
 
   export type ColegiosMinOrderByAggregateInput = {
@@ -186237,6 +186264,7 @@ export namespace Prisma {
     direccionEstablecimiento?: SortOrder
     comuna?: SortOrder
     uploadedBy?: SortOrder
+    activo?: SortOrder
   }
 
   export type ColegiosSumOrderByAggregateInput = {

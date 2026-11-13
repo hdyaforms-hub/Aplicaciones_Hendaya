@@ -56,6 +56,9 @@ export async function getVehiculos() {
 export async function getColegios() {
     try {
         return await prisma.colegios.findMany({
+            where: {
+                activo: true
+            },
             select: {
                 colRBD: true,
                 nombreEstablecimiento: true,

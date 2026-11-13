@@ -176,7 +176,8 @@ exports.Prisma.ColegiosScalarFieldEnum = {
   nombreEstablecimiento: 'nombreEstablecimiento',
   direccionEstablecimiento: 'direccionEstablecimiento',
   comuna: 'comuna',
-  uploadedBy: 'uploadedBy'
+  uploadedBy: 'uploadedBy',
+  activo: 'activo'
 };
 
 exports.Prisma.IngRacionScalarFieldEnum = {

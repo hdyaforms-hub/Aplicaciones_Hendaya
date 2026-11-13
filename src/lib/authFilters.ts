@@ -101,7 +101,7 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
         }
         try {
             const colegios = await rawPrisma.colegios.findMany({
-                where: { sucursal: { in: allSucursales } },
+                where: { sucursal: { in: allSucursales }, activo: true },
                 select: { colRBD: true }
             })
             for (const c of colegios) {

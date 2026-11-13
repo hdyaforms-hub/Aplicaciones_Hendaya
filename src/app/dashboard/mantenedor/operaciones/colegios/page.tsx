@@ -5,6 +5,8 @@ import Link from 'next/link'
 import UploadModalColegio from './UploadModalColegio'
 import ColegiosFilterForm from './ColegiosFilterForm'
 import ColegiosActions from './ColegiosActions'
+import { ColegioActivoToggle, ColegioDeleteButton } from './ColegioRowActions'
+import { ensureColegiosActivoColumn } from '@/lib/colegios-db-init'
 
 export default async function ColegiosPage({
     searchParams
@@ -18,6 +20,8 @@ export default async function ColegiosPage({
     if (!isAdmin && !permissions.includes('view_colegios')) {
         redirect('/dashboard')
     }
+
+    await ensureColegiosActivoColumn()
 
     const resolvedParams = await searchParams
     const filters = {
@@ -188,6 +192,8 @@ export default async function ColegiosPage({
                                 {renderSortHeader('Dirección', 'direccionEstablecimiento', 'min-w-[200px]')}
                                 {renderSortHeader('Comuna', 'comuna')}
                                 <th className="px-6 py-4 font-semibold border-l border-gray-200 bg-cyan-50 text-cyan-800">Cargado Por</th>
+                                {renderSortHeader('Estado', 'activo', 'text-center border-l border-gray-200')}
+                                <th className="px-4 py-4 font-semibold text-center border-l border-gray-200 bg-slate-50 text-slate-700">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 text-gray-700">
@@ -213,12 +219,18 @@ export default async function ColegiosPage({
                                         {d.uploadedBy}
                                         <div className="text-[10px] text-gray-400 mt-0.5">{new Date(d.createdAt).toLocaleDateString()}</div>
                                     </td>
+                                    <td className="px-4 py-3 text-center border-l border-gray-100">
+                                        <ColegioActivoToggle id={d.id} rbd={d.colRBD} initialActivo={d.activo ?? true} />
+                                    </td>
+                                    <td className="px-4 py-3 text-center border-l border-gray-100">
+                                        <ColegioDeleteButton rbd={d.colRBD} nombre={d.nombreEstablecimiento} />
+                                    </td>
                                 </tr>
                             ))}
 
                             {colegiosData.length === 0 && (
                                 <tr>
-                                    <td colSpan={9} className="px-6 py-12 text-center h-48">
+                                    <td colSpan={11} className="px-6 py-12 text-center h-48">
                                         <span className="text-4xl block mb-3 text-slate-300">🏫</span>
                                         <p className="text-slate-500 font-medium">No se encontraron colegios.</p>
                                         <p className="text-slate-400 text-sm mt-1">Ajusta los filtros o realiza una carga masiva.</p>

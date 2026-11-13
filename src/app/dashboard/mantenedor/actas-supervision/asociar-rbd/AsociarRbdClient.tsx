@@ -29,6 +29,7 @@ type Colegio = {
     nombreEstablecimiento: string
     sucursal: string
     institucion: string
+    activo?: boolean
 }
 
 type Props = {
@@ -188,12 +189,12 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
             return
         }
 
-        const validColRBDs = new Set(colegios.map(c => c.colRBD))
+        const validColRBDs = new Set(colegios.filter(c => c.activo !== false).map(c => c.colRBD))
         const foundRbds = parsedRbds.filter(r => validColRBDs.has(r))
         const notFoundRbds = parsedRbds.filter(r => !validColRBDs.has(r))
 
         if (foundRbds.length === 0) {
-            setMassivePasteError(`Ninguno de los ${parsedRbds.length} RBDs ingresados coincide con colegios registrados en el sistema.`)
+            setMassivePasteError(`Ninguno de los ${parsedRbds.length} RBDs ingresados coincide con colegios activos registrados en el sistema.`)
             return
         }
 
@@ -250,17 +251,19 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
     // Resolves school name
     const getColegioName = (rbd: number) => {
         const col = colegios.find(c => c.colRBD === rbd)
-        return col ? col.nombreEstablecimiento : 'Establecimiento Desconocido'
+        if (!col) return 'Establecimiento Desconocido'
+        return `${col.nombreEstablecimiento}${col.activo === false ? ' (Inactivo)' : ''}`
     }
 
-    // Get unique list of sucursales from colegios list
-    const sucursalesList = Array.from(new Set(colegios.map(c => c.sucursal).filter(Boolean))).sort()
+    // Get unique list of sucursales from active colegios list
+    const sucursalesList = Array.from(new Set(colegios.filter(c => c.activo !== false).map(c => c.sucursal).filter(Boolean))).sort()
 
-    // Get unique list of instituciones from colegios list
-    const institucionesList = Array.from(new Set(colegios.map(c => c.institucion).filter(Boolean))).sort()
+    // Get unique list of instituciones from active colegios list
+    const institucionesList = Array.from(new Set(colegios.filter(c => c.activo !== false).map(c => c.institucion).filter(Boolean))).sort()
 
-    // Filter colegios list in modal by search query, sucursal and institucion
+    // Filter colegios list in modal by active status, search query, sucursal and institucion
     const filteredColegios = colegios.filter(c => {
+        if (c.activo === false) return false
         const q = searchColegio.toLowerCase().trim()
         const matchQuery = !q || c.colRBD.toString().includes(q) || c.nombreEstablecimiento.toLowerCase().includes(q)
         const matchSucursal = !selectedSucursal || c.sucursal === selectedSucursal
@@ -528,7 +531,7 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
 
                             {/* Summary count & Massive Paste Toggle */}
                             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-bold text-slate-500">
-                                <span>Total Colegios: {colegios.length}</span>
+                                <span>Colegios Activos: {colegios.filter(c => c.activo !== false).length}</span>
                                 <div className="flex items-center gap-2">
                                     <button
                                         type="button"

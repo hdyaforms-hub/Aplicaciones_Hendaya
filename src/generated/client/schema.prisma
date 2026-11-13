@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  output   = "../src/generated/client_temp"
 }
 
 datasource db {
@@ -62,7 +62,7 @@ model PMPA {
 }
 
 model Colegios {
-  id                       String @id @default(uuid())
+  id                       String  @id @default(uuid())
   colut                    Int
   colRBD                   Int
   colRBDDV                 String
@@ -73,6 +73,7 @@ model Colegios {
   direccionEstablecimiento String
   comuna                   String
   uploadedBy               String
+  activo                   Boolean @default(true)
 }
 
 model IngRacion {
@@ -829,6 +830,25 @@ model Multas_IT_Elementos_Esenciales_Det {
 
   @@index([cabId])
   @@index([letra])
+}
+
+model Multas_Aspecto_EE_Restriccion {
+  id          String    @id @default(uuid())
+  licId       Int
+  letra       String    @db.VarChar(5)
+  tipo        String    @default("ANHO") @db.VarChar(20)
+  anho        Int?
+  fechaDesde  DateTime?
+  fechaHasta  DateTime?
+  accion      String    @default("VALOR_CERO") @db.VarChar(20)
+  valorFijo   Float?    @default(0)
+  descripcion String?   @db.Text
+  activo      Boolean   @default(true)
+  creadoPor   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([licId, letra])
 }
 
 model Descargos_Cab {

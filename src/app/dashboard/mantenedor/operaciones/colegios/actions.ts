@@ -8,6 +8,7 @@ import {
     deleteColegioFromResolucionSanitaria, 
     syncColegiosToResolucionSanitaria 
 } from '@/lib/calidad/resolucion-sanitaria'
+import { ensureColegiosActivoColumn } from '@/lib/colegios-db-init'
 
 export type ColegioData = {
     colut: number
@@ -19,6 +20,7 @@ export type ColegioData = {
     nombreEstablecimiento: string
     direccionEstablecimiento: string
     comuna: string
+    activo?: boolean
 }
 
 export async function checkColegiosExists(data: ColegioData[]) {
@@ -144,6 +146,7 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
                 nombreEstablecimiento: data.nombreEstablecimiento !== undefined ? data.nombreEstablecimiento.trim() : current.nombreEstablecimiento,
                 direccionEstablecimiento: data.direccionEstablecimiento !== undefined ? data.direccionEstablecimiento.trim() : current.direccionEstablecimiento,
                 comuna: data.comuna !== undefined ? data.comuna.trim() : current.comuna,
+                ...(data.activo !== undefined ? { activo: data.activo } : {})
             }
         })
 
@@ -215,21 +218,73 @@ export async function deleteColegioByRBD(rbd: number) {
     }
 
     try {
-        // 1. Eliminar de Colegios
+        await ensureColegiosActivoColumn()
+
+        // 1. Validar que el RBD no esté asociado a ningún usuario
+        // A) En User.rbds (usuarios registrados no eliminados)
+        const associatedUsers = await prisma.user.findMany({
+            where: {
+                isDeleted: false,
+                rbds: {
+                    has: rbd
+                }
+            },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                role: {
+                    select: { name: true }
+                }
+            }
+        })
+
+        // B) En SupervisorRbd (supervisores con colegios a auditar)
+        const associatedSupervisors = await prisma.supervisorRbd.findMany({
+            where: {
+                rbd: rbd,
+                supervisor: {
+                    vigente: true
+                }
+            },
+            include: {
+                supervisor: {
+                    select: {
+                        nombre: true,
+                        apellido: true
+                    }
+                }
+            }
+        })
+
+        if (associatedUsers.length > 0 || associatedSupervisors.length > 0) {
+            const userNames = associatedUsers.map(u => `${u.name || u.username} (${u.role?.name || 'Usuario'})`)
+            const supNames = associatedSupervisors.map(s => `${s.supervisor.nombre} ${s.supervisor.apellido} (Supervisor)`)
+            const allAssociated = Array.from(new Set([...userNames, ...supNames]))
+
+            return {
+                error: `No se puede eliminar el colegio con RBD ${rbd} porque está asociado a ${allAssociated.length} usuario(s):\n• ${allAssociated.slice(0, 5).join('\n• ')}${allAssociated.length > 5 ? `\n...y ${allAssociated.length - 5} más.` : ''}\n\nDebe desasociar el colegio de estos usuarios antes de poder eliminarlo.`
+            }
+        }
+
+        // 2. Eliminar de Colegios
         await prisma.colegios.deleteMany({
             where: { colRBD: rbd }
         })
 
-        // 2. Marcar como inactivo en ColegiosMatriz si existe
+        // 3. Marcar como inactivo en ColegiosMatriz si existe
         await prisma.colegiosMatriz.updateMany({
             where: { colRBD: rbd },
             data: { isActive: false }
         })
 
-        // 3. Eliminar de Resolución Sanitaria
+        // 4. Eliminar de Resolución Sanitaria
         await deleteColegioFromResolucionSanitaria(rbd)
 
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/actas-supervision/asociar-rbd')
+        revalidatePath('/dashboard/mantenedor/operaciones/personal')
+        revalidatePath('/dashboard/actas/generar-acta')
         revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
         revalidatePath('/dashboard/matriz-riesgo')
         revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
@@ -237,6 +292,51 @@ export async function deleteColegioByRBD(rbd: number) {
     } catch (error) {
         console.error('Error eliminando colegio por RBD:', error)
         return { error: 'No se pudo eliminar el colegio.' }
+    }
+}
+
+export async function toggleColegioActivo(id: string, activo: boolean) {
+    const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
+        return { error: 'No tienes permisos para realizar esta acción' }
+    }
+
+    try {
+        await ensureColegiosActivoColumn()
+
+        const colegio = await prisma.colegios.findUnique({
+            where: { id }
+        })
+
+        if (!colegio) {
+            return { error: 'Colegio no encontrado' }
+        }
+
+        // Actualizar el estado activo en Colegios para este RBD
+        await prisma.colegios.updateMany({
+            where: { colRBD: colegio.colRBD },
+            data: { activo }
+        })
+
+        // Sincronizar en ColegiosMatriz si existe
+        await prisma.colegiosMatriz.updateMany({
+            where: { colRBD: colegio.colRBD },
+            data: { isActive: activo }
+        })
+
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/actas-supervision/asociar-rbd')
+        revalidatePath('/dashboard/mantenedor/operaciones/personal')
+        revalidatePath('/dashboard/actas/generar-acta')
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
+        revalidatePath('/dashboard/matriz-riesgo')
+        revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
+
+        return { success: true, activo }
+    } catch (e: any) {
+        console.error('Error al cambiar estado activo del colegio:', e)
+        return { error: 'No se pudo actualizar el estado del colegio.' }
     }
 }
 

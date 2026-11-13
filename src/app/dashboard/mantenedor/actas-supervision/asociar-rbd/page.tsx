@@ -49,7 +49,8 @@ export default async function AsociarRbdPage() {
             colRBD: true,
             nombreEstablecimiento: true,
             sucursal: true,
-            institucion: true
+            institucion: true,
+            activo: true
         },
         orderBy: {
             colRBD: 'asc'

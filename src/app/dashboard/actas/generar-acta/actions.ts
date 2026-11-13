@@ -166,7 +166,7 @@ export async function getColegiosForPlantilla(plantillaId: string) {
             instList = []
         }
 
-        const whereCondition: any = {}
+        const whereCondition: any = { activo: true }
 
         // Filter by user RBDs if not admin
         if (!isAdmin) {
