@@ -146,9 +146,16 @@ const SYSTEM_PRESETS = [
     {
         id: 'sys-nuevos-modulos',
         name: '🚀 Vista Lo Último Fabricado',
-        description: 'Calculadora de Raciones, Minutas Nutricionales, Sesiones de Usuarios, Consumo Real vs Asignado, Ausentismo y Despacho.',
+        description: 'Atrasos y Adelantos, Firmas Pendientes, Control de Cargas Masivas, Monitoreo RRHH, Cambio de RBD y Restricciones Aspectos EE.',
         layoutType: 'grid-3x2' as LayoutSkeletonType,
-        slots: ['calculadora-raciones', 'calculadora-minutas', 'auditoria-sesiones-usuarios', 'auditoria-consumo-real', 'asistencia-personal', 'logistica-despacho']
+        slots: ['atrasos-adelantos-personal', 'firmas-pendientes-personal', 'control-cargas-masivas', 'monitoreo-rrhh-avances', 'cambio-rbd-personal', 'restricciones-aspectos-ee']
+    },
+    {
+        id: 'sys-rrhh-integral',
+        name: '👥 Panel Integral de RRHH y Personal',
+        description: 'Monitoreo completo de RRHH: Atrasos/Adelantos, Firmas Pendientes, Ausentismo, HHEE, Dotación y Movimientos de Personal.',
+        layoutType: 'grid-3x2' as LayoutSkeletonType,
+        slots: ['atrasos-adelantos-personal', 'firmas-pendientes-personal', 'monitoreo-rrhh-avances', 'asistencia-personal', 'horas-extras-personal', 'cambio-rbd-personal']
     }
 ]
 

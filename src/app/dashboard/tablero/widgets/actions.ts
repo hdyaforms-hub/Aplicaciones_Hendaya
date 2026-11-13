@@ -7,6 +7,10 @@ import { revalidatePath } from 'next/cache'
 import { ensurePersonalAsistenciaTables } from '@/lib/personal-db-init'
 import { ensurePersonalHextraTables } from '@/lib/personal-hextra-db-init'
 import { ensurePersonalDotacionTables } from '@/lib/personal-dotacion-db-init'
+import { ensurePersonalAtrasosTables } from '@/lib/personal-atrasos-db-init'
+import { ensurePersonalRRHHFirmasTables } from '@/lib/personal-rrhh-firmas-db-init'
+import { ensurePersonalCambioRbdTables } from '@/lib/personal-cambio-rbd-db-init'
+import { ensureMonitoreoRRHHTables } from '@/lib/monitoreo-rrhh-db-init'
 import { computeAuditSessionAnalytics } from '@/lib/audit-analytics'
 
 export type WidgetLayoutData = {
@@ -520,6 +524,58 @@ export async function fetchPlatformWidgetsDataAction(filters?: WidgetsFilterPara
             colegiosConIngreso: 0,
             totalColegios: 0,
             servicios: [] as { servicio: string; asig: number; ing: number; pct: number }[]
+        },
+        atrasosAdelantos: {
+            totalAtrasos: 0,
+            minutosAtraso: 0,
+            totalAdelantos: 0,
+            minutosAdelanto: 0,
+            aplicaDescuento: 0,
+            noAplicaDescuento: 0,
+            justificados: 0,
+            sinJustificar: 0,
+            pctJustificados: 0,
+            abiertos: 0,
+            cerrados: 0
+        },
+        firmasPendientes: {
+            totalDocumentos: 0,
+            firmados: 0,
+            pendientes: 0,
+            promedioDiasAtraso: 0,
+            pctCumplimiento: 0,
+            porSucursal: [] as { sucursal: string; cantidad: number }[]
+        },
+        controlCargasMasivas: {
+            modulosTotal: 5,
+            cargados: 0,
+            pendientes: 0,
+            parciales: 0,
+            pctAlDia: 0,
+            totalRegistrosMes: 0,
+            modulos: [] as { nombre: string; estado: string; registros: number; fecha?: string }[]
+        },
+        monitoreoRRHH: {
+            porcentajeGlobal: 0,
+            totalAbiertos: 0,
+            gestionados: 0,
+            pendientes: 0,
+            semaforo: 'VERDE' as 'VERDE' | 'AMARILLO' | 'ROJO',
+            desglose: [] as { modulo: string; porcentaje: number; gestionados: number; total: number; semaforo: string }[]
+        },
+        cambioRbd: {
+            totalMovimientos: 0,
+            anexosTraslado: 0,
+            comisionesServicio: 0,
+            colegiosInvolucrados: 0,
+            movimientosRecientes: [] as { fecha: string; origen: string; destino: string; tipo: string }[]
+        },
+        restriccionesAspectosEE: {
+            totalRestricciones: 0,
+            reglasActivas: 0,
+            aspectosExentos: 0,
+            totalInstruccionesTrabajo: 0,
+            aspectosConfigurados: [] as { letra: string; anho: number; accion: string; activo: boolean }[]
         }
     }
 
@@ -1965,6 +2021,269 @@ export async function fetchPlatformWidgetsDataAction(filters?: WidgetsFilterPara
             }
         } catch (e) {
             console.error('Error widgets: consumo real', e)
+        }
+
+        // 38. Recursos Humanos: Atrasos y Adelantos de Personal
+        try {
+            await ensurePersonalAtrasosTables()
+            let whereClause = `1=1`
+            const params: any[] = []
+            if (targetRbds !== null && targetRbds.length > 0) {
+                params.push(targetRbds)
+                whereClause += ` AND (rbd = ANY($${params.length}::int[]))`
+            }
+            if (filters?.sucursal) {
+                params.push(filters.sucursal)
+                whereClause += ` AND sucursal = $${params.length}`
+            }
+
+            const atRes: any[] = await prisma.$queryRawUnsafe(`
+                SELECT 
+                    COUNT(*)::int as total,
+                    COUNT(CASE WHEN tipo = 'ATRASO' THEN 1 END)::int as total_atrasos,
+                    COALESCE(SUM(CASE WHEN tipo = 'ATRASO' THEN "minutosAtraso" ELSE 0 END), 0)::int as min_atrasos,
+                    COUNT(CASE WHEN tipo = 'ADELANTO' THEN 1 END)::int as total_adelantos,
+                    COALESCE(SUM(CASE WHEN tipo = 'ADELANTO' THEN "minutosAdelanto" ELSE 0 END), 0)::int as min_adelantos,
+                    COUNT(CASE WHEN "aplicaDescuento" IS TRUE THEN 1 END)::int as aplica,
+                    COUNT(CASE WHEN "aplicaDescuento" IS FALSE THEN 1 END)::int as no_aplica,
+                    COUNT(CASE WHEN justificado IS NOT NULL AND TRIM(justificado) != '' THEN 1 END)::int as justificados,
+                    COUNT(CASE WHEN estado = 'ABIERTO' THEN 1 END)::int as abiertos,
+                    COUNT(CASE WHEN estado = 'CERRADO' THEN 1 END)::int as cerrados
+                FROM "Pers_Atrasos_Registro"
+                WHERE ${whereClause};
+            `, ...params)
+
+            if (atRes && atRes[0]) {
+                const r = atRes[0]
+                const total = r.total || 0
+                const just = r.justificados || 0
+                data.atrasosAdelantos = {
+                    totalAtrasos: r.total_atrasos || 0,
+                    minutosAtraso: r.min_atrasos || 0,
+                    totalAdelantos: r.total_adelantos || 0,
+                    minutosAdelanto: r.min_adelantos || 0,
+                    aplicaDescuento: r.aplica || 0,
+                    noAplicaDescuento: r.no_aplica || 0,
+                    justificados: just,
+                    sinJustificar: Math.max(0, total - just),
+                    pctJustificados: total > 0 ? Math.round((just / total) * 100) : 100,
+                    abiertos: r.abiertos || 0,
+                    cerrados: r.cerrados || 0
+                }
+            }
+        } catch (e) {
+            console.error('Error widgets: atrasos adelantos', e)
+        }
+
+        // 39. Recursos Humanos: Tablero de Firmas Pendientes
+        try {
+            await ensurePersonalRRHHFirmasTables()
+            let whereClause = `1=1`
+            const params: any[] = []
+            if (targetRbds !== null && targetRbds.length > 0) {
+                params.push(targetRbds)
+                whereClause += ` AND (rbd = ANY($${params.length}::int[]))`
+            }
+            if (filters?.sucursal) {
+                params.push(filters.sucursal)
+                whereClause += ` AND sucursal = $${params.length}`
+            }
+
+            const firmasRes: any[] = await prisma.$queryRawUnsafe(`
+                SELECT 
+                    COUNT(*)::int as total,
+                    COUNT(CASE WHEN "documentoFirmado" ILIKE '%firmado%' AND "documentoFirmado" NOT ILIKE '%no firmado%' THEN 1 END)::int as firmados,
+                    COUNT(CASE WHEN "documentoFirmado" ILIKE '%no firmado%' OR "documentoFirmado" IS NULL THEN 1 END)::int as pendientes,
+                    COALESCE(AVG("diasAtraso"), 0)::float as avg_dias
+                FROM "Pers_RRHH_Firmas_Pendientes"
+                WHERE ${whereClause};
+            `, ...params)
+
+            const sucursalesRes: any[] = await prisma.$queryRawUnsafe(`
+                SELECT sucursal, COUNT(*)::int as cantidad
+                FROM "Pers_RRHH_Firmas_Pendientes"
+                WHERE ${whereClause} AND ("documentoFirmado" ILIKE '%no firmado%' OR "documentoFirmado" IS NULL)
+                GROUP BY sucursal
+                ORDER BY cantidad DESC
+                LIMIT 5;
+            `, ...params)
+
+            if (firmasRes && firmasRes[0]) {
+                const f = firmasRes[0]
+                const total = f.total || 0
+                const firmados = f.firmados || 0
+                data.firmasPendientes = {
+                    totalDocumentos: total,
+                    firmados,
+                    pendientes: f.pendientes || 0,
+                    promedioDiasAtraso: Math.round(f.avg_dias || 0),
+                    pctCumplimiento: total > 0 ? Math.round((firmados / total) * 100) : 0,
+                    porSucursal: sucursalesRes.map(s => ({ sucursal: s.sucursal || 'Sin Sucursal', cantidad: s.cantidad }))
+                }
+            }
+        } catch (e) {
+            console.error('Error widgets: firmas pendientes', e)
+        }
+
+        // 40. Gestión: Control de Cargas Masivas
+        try {
+            const anioActual = selectedYear
+            const mesActual = selectedMonth || new Date().getMonth() + 1
+            const prefixMes = `${anioActual}-${String(mesActual).padStart(2, '0')}`
+
+            const [cargasAsis, cargasDot, cargasHe, cargasAtr, cargasPrev] = await Promise.all([
+                prisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count, MAX("fechaCarga") as ult FROM "Pers_Asis_Carga" WHERE TO_CHAR("fechaCarga", 'YYYY-MM') = $1`, prefixMes).catch(() => [{ count: 0 }]),
+                prisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count, MAX("fechaCarga") as ult FROM "Pers_Dotacion_Carga" WHERE TO_CHAR("fechaCarga", 'YYYY-MM') = $1`, prefixMes).catch(() => [{ count: 0 }]),
+                prisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count, MAX("fechaCarga") as ult FROM "Pers_Hextra_Carga" WHERE TO_CHAR("fechaCarga", 'YYYY-MM') = $1`, prefixMes).catch(() => [{ count: 0 }]),
+                prisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count, MAX("fechaCarga") as ult FROM "Pers_Atrasos_Carga" WHERE TO_CHAR("fechaCarga", 'YYYY-MM') = $1`, prefixMes).catch(() => [{ count: 0 }]),
+                prisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count, MAX("fechaCarga") as ult FROM "Prev_Indicadores_Carga" WHERE anio = $1 AND mes = $2`, anioActual, mesActual).catch(() => [{ count: 0 }])
+            ])
+
+            const modulosList = [
+                { nombre: 'Ausentismo (RRHH)', count: cargasAsis[0]?.count || 0, ult: cargasAsis[0]?.ult },
+                { nombre: 'Dotación Activa (RRHH)', count: cargasDot[0]?.count || 0, ult: cargasDot[0]?.ult },
+                { nombre: 'Horas Extras (RRHH)', count: cargasHe[0]?.count || 0, ult: cargasHe[0]?.ult },
+                { nombre: 'Atrasos y Adelantos', count: cargasAtr[0]?.count || 0, ult: cargasAtr[0]?.ult },
+                { nombre: 'Indicadores Prevención', count: cargasPrev[0]?.count || 0, ult: cargasPrev[0]?.ult }
+            ]
+
+            let cargados = 0
+            const modulosFormatted = modulosList.map(m => {
+                const estado = m.count > 0 ? 'CARGADO' : 'PENDIENTE'
+                if (estado === 'CARGADO') cargados++
+                return {
+                    nombre: m.nombre,
+                    estado,
+                    registros: m.count,
+                    fecha: m.ult ? new Date(m.ult).toLocaleDateString('es-CL') : undefined
+                }
+            })
+
+            data.controlCargasMasivas = {
+                modulosTotal: modulosList.length,
+                cargados,
+                pendientes: modulosList.length - cargados,
+                parciales: 0,
+                pctAlDia: Math.round((cargados / modulosList.length) * 100),
+                totalRegistrosMes: modulosList.reduce((acc, curr) => acc + curr.count, 0),
+                modulos: modulosFormatted
+            }
+        } catch (e) {
+            console.error('Error widgets: control cargas masivas', e)
+        }
+
+        // 41. Recursos Humanos: Monitoreo de Avance RRHH
+        try {
+            await ensureMonitoreoRRHHTables()
+            const totalAusencias = data.asistenciaPersonal.totalAusencias || 0
+            const justAusencias = data.asistenciaPersonal.justificados || 0
+            const totalHe = data.horasExtras.totalRegistros || 0
+            const aprobadasHe = data.horasExtras.aprobadas || 0
+            const totalAtr = (data.atrasosAdelantos.totalAtrasos || 0) + (data.atrasosAdelantos.totalAdelantos || 0)
+            const justAtr = data.atrasosAdelantos.justificados || 0
+
+            const totalCasos = totalAusencias + totalHe + totalAtr
+            const totalGestionados = justAusencias + aprobadasHe + justAtr
+            const pctGlobal = totalCasos > 0 ? Math.round((totalGestionados / totalCasos) * 100) : 100
+
+            let semaforo: 'VERDE' | 'AMARILLO' | 'ROJO' = 'VERDE'
+            if (pctGlobal < 60) semaforo = 'ROJO'
+            else if (pctGlobal < 85) semaforo = 'AMARILLO'
+
+            data.monitoreoRRHH = {
+                porcentajeGlobal: pctGlobal,
+                totalAbiertos: totalCasos,
+                gestionados: totalGestionados,
+                pendientes: Math.max(0, totalCasos - totalGestionados),
+                semaforo,
+                desglose: [
+                    { modulo: 'Ausentismo', porcentaje: totalAusencias > 0 ? Math.round((justAusencias / totalAusencias) * 100) : 100, gestionados: justAusencias, total: totalAusencias, semaforo: (justAusencias / (totalAusencias || 1)) >= 0.85 ? 'VERDE' : 'AMARILLO' },
+                    { modulo: 'Horas Extras', porcentaje: totalHe > 0 ? Math.round((aprobadasHe / totalHe) * 100) : 100, gestionados: aprobadasHe, total: totalHe, semaforo: (aprobadasHe / (totalHe || 1)) >= 0.85 ? 'VERDE' : 'AMARILLO' },
+                    { modulo: 'Atrasos y Adelantos', porcentaje: totalAtr > 0 ? Math.round((justAtr / totalAtr) * 100) : 100, gestionados: justAtr, total: totalAtr, semaforo: (justAtr / (totalAtr || 1)) >= 0.85 ? 'VERDE' : 'AMARILLO' }
+                ]
+            }
+        } catch (e) {
+            console.error('Error widgets: monitoreo rrhh', e)
+        }
+
+        // 42. Recursos Humanos: Cambio de RBD de Personal
+        try {
+            await ensurePersonalCambioRbdTables()
+            const cRes: any[] = await prisma.$queryRawUnsafe(`
+                SELECT 
+                    COUNT(*)::int as total,
+                    COUNT(CASE WHEN "tipoCambio" = 'ANEXO_TRASLADO' THEN 1 END)::int as anexos,
+                    COUNT(CASE WHEN "tipoCambio" = 'COMISION_SERVICIO' THEN 1 END)::int as comisiones,
+                    COUNT(DISTINCT "rbdDestino")::int as rbds_destino
+                FROM "Pers_Cambio_Rbd";
+            `)
+
+            const rec: any[] = await prisma.$queryRawUnsafe(`
+                SELECT "fechaDesde", "establecimientoOrigen", "establecimientoDestino", "tipoCambio"
+                FROM "Pers_Cambio_Rbd"
+                ORDER BY "createdAt" DESC
+                LIMIT 4;
+            `)
+
+            if (cRes && cRes[0]) {
+                data.cambioRbd = {
+                    totalMovimientos: cRes[0].total || 0,
+                    anexosTraslado: cRes[0].anexos || 0,
+                    comisionesServicio: cRes[0].comisiones || 0,
+                    colegiosInvolucrados: cRes[0].rbds_destino || 0,
+                    movimientosRecientes: rec.map(r => ({
+                        fecha: r.fechaDesde ? new Date(r.fechaDesde).toLocaleDateString('es-CL') : '-',
+                        origen: r.establecimientoOrigen || 'Sin origen',
+                        destino: r.establecimientoDestino || 'Sin destino',
+                        tipo: r.tipoCambio === 'ANEXO_TRASLADO' ? 'Traslado' : 'Comisión'
+                    }))
+                }
+            }
+        } catch (e) {
+            console.error('Error widgets: cambio rbd', e)
+        }
+
+        // 43. Operaciones: Restricciones de Aspectos EE (Multas)
+        try {
+            const restRes: any[] = await prisma.$queryRawUnsafe(`
+                SELECT 
+                    COUNT(*)::int as total,
+                    COUNT(CASE WHEN activo IS TRUE THEN 1 END)::int as activas,
+                    COUNT(CASE WHEN accion = 'EXENTO' OR "valorFijo" = 0 THEN 1 END)::int as exentos
+                FROM "Multas_Aspecto_EE_Restriccion";
+            `)
+
+            const items: any[] = await prisma.$queryRawUnsafe(`
+                SELECT letra, anho, accion, activo
+                FROM "Multas_Aspecto_EE_Restriccion"
+                ORDER BY activo DESC, anho DESC
+                LIMIT 4;
+            `)
+
+            let totalInstrucciones = 0
+            try {
+                const instRes: any[] = await prisma.$queryRawUnsafe(`
+                    SELECT COUNT(*)::int as total FROM "Multas_Instruccion_Trabajo_EE";
+                `)
+                totalInstrucciones = instRes[0]?.total || 0
+            } catch {}
+
+            if (restRes && restRes[0]) {
+                data.restriccionesAspectosEE = {
+                    totalRestricciones: restRes[0].total || 0,
+                    reglasActivas: restRes[0].activas || 0,
+                    aspectosExentos: restRes[0].exentos || 0,
+                    totalInstruccionesTrabajo: totalInstrucciones,
+                    aspectosConfigurados: items.map(i => ({
+                        letra: i.letra || 'A',
+                        anho: i.anho || 2024,
+                        accion: i.accion || 'EXENTO',
+                        activo: i.activo ?? true
+                    }))
+                }
+            }
+        } catch (e) {
+            console.error('Error widgets: restricciones aspectos ee', e)
         }
 
         return data

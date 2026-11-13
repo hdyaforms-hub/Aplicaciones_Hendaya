@@ -1804,8 +1804,446 @@ export function WidgetAuditoriaConsumoReal({ data }: { data: any }) {
     )
 }
 
+// 38. Widget Recursos Humanos: Atrasos y Adelantos de Personal
+export function WidgetAtrasosAdelantos({ data }: { data: any }) {
+    const at = data?.atrasosAdelantos || {
+        totalAtrasos: 45,
+        minutosAtraso: 680,
+        totalAdelantos: 12,
+        minutosAdelanto: 190,
+        aplicaDescuento: 28,
+        noAplicaDescuento: 29,
+        justificados: 38,
+        sinJustificar: 19,
+        pctJustificados: 67,
+        abiertos: 50,
+        cerrados: 7
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{at.totalAtrasos}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Atrasos</span>
+                    <span className="text-slate-500 mx-1.5">|</span>
+                    <span className="text-xl font-bold text-amber-400">{at.totalAdelantos}</span>
+                    <span className="text-xs text-slate-400 ml-1">Adelantos</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold">
+                    ⏱️ {at.pctJustificados}% Justificados
+                </span>
+            </div>
+
+            <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden my-1">
+                <div
+                    className="bg-gradient-to-r from-cyan-500 to-emerald-400 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, at.pctJustificados))}%` }}
+                ></div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 my-1 text-center">
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-rose-400 font-bold block">Min. Atraso</span>
+                    <span className="text-sm font-bold text-white">{at.minutosAtraso}m</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-amber-400 font-bold block">Min. Adelanto</span>
+                    <span className="text-sm font-bold text-white">{at.minutosAdelanto}m</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-cyan-400 font-bold block">Aplica Desc.</span>
+                    <span className="text-sm font-bold text-white">{at.aplicaDescuento}</span>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>{at.abiertos} Abiertos · {at.cerrados} Cerrados</span>
+                <a
+                    href="/dashboard/areas/personal/asistencia/atrasos-adelantos"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ver Módulo</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 39. Widget Recursos Humanos: Tablero de Firmas Pendientes
+export function WidgetFirmasPendientes({ data }: { data: any }) {
+    const f = data?.firmasPendientes || {
+        totalDocumentos: 142,
+        firmados: 98,
+        pendientes: 44,
+        promedioDiasAtraso: 12,
+        pctCumplimiento: 69,
+        porSucursal: [
+            { sucursal: 'CASA MATRIZ', cantidad: 18 },
+            { sucursal: 'SUR', cantidad: 14 },
+            { sucursal: 'NORTE', cantidad: 12 }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{f.pendientes}</span>
+                    <span className="text-xs text-rose-400 font-semibold ml-1.5">Firmas Pendientes</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">
+                    ⏳ {f.promedioDiasAtraso} días atraso prom.
+                </span>
+            </div>
+
+            <div className="space-y-1 my-1">
+                <div className="flex justify-between text-xs text-slate-400">
+                    <span>Cumplimiento Digital</span>
+                    <span className="text-emerald-400 font-bold">{f.pctCumplimiento}%</span>
+                </div>
+                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                    <div
+                        className="bg-gradient-to-r from-rose-500 via-amber-500 to-emerald-400 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min(100, Math.max(0, f.pctCumplimiento))}%` }}
+                    ></div>
+                </div>
+            </div>
+
+            {/* Top sucursales pendientes */}
+            <div className="grid grid-cols-3 gap-1.5 my-1 text-center">
+                {f.porSucursal?.slice(0, 3).map((s: any, idx: number) => (
+                    <div key={idx} className="p-1.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                        <span className="text-[10px] text-slate-400 truncate block font-medium">{s.sucursal}</span>
+                        <span className="text-xs font-bold text-rose-300">{s.cantidad} pend.</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>{f.totalDocumentos} contratos/anexos emitidos</span>
+                <a
+                    href="/dashboard/tablero/firmas-pendientes"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Tablero Firmas</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 40. Widget Gestión: Control de Cargas Masivas
+export function WidgetControlCargasMasivas({ data }: { data: any }) {
+    const c = data?.controlCargasMasivas || {
+        modulosTotal: 5,
+        cargados: 4,
+        pendientes: 1,
+        parciales: 0,
+        pctAlDia: 80,
+        totalRegistrosMes: 1250,
+        modulos: [
+            { nombre: 'Ausentismo (RRHH)', estado: 'CARGADO', registros: 412 },
+            { nombre: 'Dotación Activa (RRHH)', estado: 'CARGADO', registros: 338 },
+            { nombre: 'Horas Extras (RRHH)', estado: 'CARGADO', registros: 164 },
+            { nombre: 'Atrasos y Adelantos', estado: 'CARGADO', registros: 336 },
+            { nombre: 'Indicadores Prevención', estado: 'PENDIENTE', registros: 0 }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{c.cargados} / {c.modulosTotal}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Módulos al Día</span>
+                </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full font-semibold border ${
+                    c.pctAlDia >= 80
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                        : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                }`}>
+                    📂 {c.pctAlDia}% al Día
+                </span>
+            </div>
+
+            {/* Lista compacta de módulos */}
+            <div className="space-y-1.5 my-1">
+                {c.modulos?.slice(0, 4).map((m: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 rounded-lg bg-slate-800/60 border border-slate-700/40">
+                        <span className="text-slate-200 truncate font-medium">{m.nombre}</span>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                            m.estado === 'CARGADO'
+                                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                                : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                        }`}>
+                            {m.estado}
+                        </span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Período en curso</span>
+                <a
+                    href="/dashboard/tablero/control-cargas-masivas"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Control de Cargas</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 41. Widget Recursos Humanos: Monitoreo de Avance RRHH
+export function WidgetMonitoreoRRHH({ data }: { data: any }) {
+    const m = data?.monitoreoRRHH || {
+        porcentajeGlobal: 88,
+        totalAbiertos: 140,
+        gestionados: 123,
+        pendientes: 17,
+        semaforo: 'VERDE',
+        desglose: [
+            { modulo: 'Ausentismo', porcentaje: 91, gestionados: 40, total: 44, semaforo: 'VERDE' },
+            { modulo: 'Horas Extras', porcentaje: 85, gestionados: 35, total: 41, semaforo: 'VERDE' },
+            { modulo: 'Atrasos y Adelantos', porcentaje: 87, gestionados: 48, total: 55, semaforo: 'VERDE' }
+        ]
+    }
+
+    const semaforoColor = m.semaforo === 'VERDE'
+        ? 'text-emerald-400 bg-emerald-500/20 border-emerald-500/30'
+        : m.semaforo === 'AMARILLO'
+            ? 'text-amber-400 bg-amber-500/20 border-amber-500/30'
+            : 'text-rose-400 bg-rose-500/20 border-rose-500/30'
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{m.porcentajeGlobal}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Avance Global RRHH</span>
+                </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full font-bold border ${semaforoColor}`}>
+                    ● {m.semaforo}
+                </span>
+            </div>
+
+            <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden my-1">
+                <div
+                    className="bg-gradient-to-r from-cyan-500 to-emerald-400 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, m.porcentajeGlobal))}%` }}
+                ></div>
+            </div>
+
+            {/* Submódulos RRHH */}
+            <div className="grid grid-cols-3 gap-1.5 my-1 text-center">
+                {m.desglose?.map((d: any, idx: number) => (
+                    <div key={idx} className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                        <span className="text-[10px] text-slate-400 truncate block font-medium">{d.modulo}</span>
+                        <span className="text-sm font-bold text-white">{d.porcentaje}%</span>
+                        <span className="text-[9px] text-slate-500 block">{d.gestionados}/{d.total}</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>{m.gestionados} de {m.totalAbiertos} casos resueltos</span>
+                <a
+                    href="/dashboard/tablero/monitoreo-rrhh"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Monitoreo RRHH</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 42. Widget Recursos Humanos: Cambio de RBD de Personal
+export function WidgetCambioRbdPersonal({ data }: { data: any }) {
+    const c = data?.cambioRbd || {
+        totalMovimientos: 18,
+        anexosTraslado: 11,
+        comisionesServicio: 7,
+        colegiosInvolucrados: 14,
+        movimientosRecientes: [
+            { fecha: '12/11/2026', origen: 'Col. San José', destino: 'Liceo Bicentenario', tipo: 'Traslado' },
+            { fecha: '10/11/2026', origen: 'Esc. Gabriela Mistral', destino: 'Col. España', tipo: 'Comisión' }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{c.totalMovimientos}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Reasignaciones</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-semibold">
+                    🏫 {c.colegiosInvolucrados} RBDs
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1 text-center">
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-[11px] text-purple-400 font-semibold block">Anexos de Traslado</span>
+                    <span className="text-base font-bold text-white mt-0.5">{c.anexosTraslado}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-[11px] text-sky-400 font-semibold block">Comisión de Servicio</span>
+                    <span className="text-base font-bold text-white mt-0.5">{c.comisionesServicio}</span>
+                </div>
+            </div>
+
+            {/* Recientes */}
+            <div className="space-y-1 my-0.5">
+                {c.movimientosRecientes?.slice(0, 2).map((m: any, idx: number) => (
+                    <div key={idx} className="text-[10px] text-slate-400 flex items-center justify-between p-1 rounded-lg bg-slate-800/40">
+                        <span className="truncate max-w-[170px] text-slate-300">
+                            {m.origen} → <strong className="text-cyan-300">{m.destino}</strong>
+                        </span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">{m.tipo}</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Movimientos vigentes</span>
+                <a
+                    href="/dashboard/areas/personal/asistencia/cambio-rbd"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ver Módulo</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 43. Widget Operaciones: Restricciones de Aspectos EE (Multas)
+export function WidgetRestriccionesAspectosEE({ data }: { data: any }) {
+    const r = data?.restriccionesAspectosEE || {
+        totalRestricciones: 4,
+        reglasActivas: 4,
+        aspectosExentos: 2,
+        totalInstruccionesTrabajo: 16,
+        aspectosConfigurados: [
+            { letra: 'M', anho: 2024, accion: 'EXENTO', activo: true },
+            { letra: 'A', anho: 2024, accion: 'MONTO FIJO', activo: true }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{r.totalRestricciones}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Reglas de Aspecto</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold">
+                    🛡️ {r.reglasActivas} Activas
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1 text-center">
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-[11px] text-emerald-400 font-semibold block">Aspectos Exentos ($0)</span>
+                    <span className="text-base font-bold text-white mt-0.5">{r.aspectosExentos}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-[11px] text-cyan-400 font-semibold block">Instrucciones IT</span>
+                    <span className="text-base font-bold text-white mt-0.5">{r.totalInstruccionesTrabajo}</span>
+                </div>
+            </div>
+
+            {/* Listado de reglas activas */}
+            <div className="space-y-1 my-0.5">
+                {r.aspectosConfigurados?.slice(0, 2).map((item: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 rounded-lg bg-slate-800/50 border border-slate-700/40">
+                        <span className="text-slate-200 font-medium">Aspecto {item.letra} ({item.anho})</span>
+                        <span className="text-[10px] font-bold text-emerald-400 px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                            {item.accion}
+                        </span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Cálculo automático de multas</span>
+                <a
+                    href="/dashboard/mantenedor/multas/aspectos-ee"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Configurar Reglas</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
 // CATÁLOGO MAESTRO DE WIDGETS
 export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
+    {
+        id: 'atrasos-adelantos-personal',
+        title: 'Atrasos y Adelantos de Personal',
+        category: 'Recursos Humanos y Personal',
+        description: 'Minutos acumulados de atraso y adelanto, resoluciones de descuento y porcentaje de justificaciones.',
+        icon: '⏱️',
+        badge: 'Nuevo',
+        component: WidgetAtrasosAdelantos
+    },
+    {
+        id: 'firmas-pendientes-personal',
+        title: 'Tablero de Firmas Pendientes',
+        category: 'Recursos Humanos y Personal',
+        description: 'Contratos y anexos pendientes de firma digital, promedio de días de atraso y desglose por sucursal.',
+        icon: '✍️',
+        badge: 'Nuevo',
+        component: WidgetFirmasPendientes
+    },
+    {
+        id: 'control-cargas-masivas',
+        title: 'Control de Cargas Masivas',
+        category: 'Gestión y Auditoría',
+        description: 'Estado de carga mensual de planillas (Ausentismo, Dotación, HHEE, Atrasos y Prevención) y alertas.',
+        icon: '📂',
+        badge: 'Nuevo',
+        component: WidgetControlCargasMasivas
+    },
+    {
+        id: 'monitoreo-rrhh-avances',
+        title: 'Monitoreo de Avance RRHH',
+        category: 'Recursos Humanos y Personal',
+        description: 'Semáforo global de gestión de incidencias de personal, porcentaje de resolución y desglose por módulo.',
+        icon: '📊',
+        badge: 'Nuevo',
+        component: WidgetMonitoreoRRHH
+    },
+    {
+        id: 'cambio-rbd-personal',
+        title: 'Cambio de RBD y Traslados',
+        category: 'Recursos Humanos y Personal',
+        description: 'Movimientos de personal activos, anexos de traslado, comisiones de servicio y colegios involucrados.',
+        icon: '🔄',
+        badge: 'Nuevo',
+        component: WidgetCambioRbdPersonal
+    },
+    {
+        id: 'restricciones-aspectos-ee',
+        title: 'Restricciones y Reglas Aspectos EE',
+        category: 'Operaciones y Mantenimiento',
+        description: 'Configuración de reglas automáticas de multas, aspectos con exención a $0 e instrucciones de trabajo.',
+        icon: '🛡️',
+        badge: 'Nuevo',
+        component: WidgetRestriccionesAspectosEE
+    },
     {
         id: 'asistencia-personal',
         title: 'Ausentismo y Asistencia de Personal',
