@@ -279,6 +279,16 @@ export type Multas_Aspecto_EE_Restriccion = $Result.DefaultSelection<Prisma.$Mul
  */
 export type Multas_Parametros_Licitacion = $Result.DefaultSelection<Prisma.$Multas_Parametros_LicitacionPayload>
 /**
+ * Model Multas_Horario_Servicio
+ * 
+ */
+export type Multas_Horario_Servicio = $Result.DefaultSelection<Prisma.$Multas_Horario_ServicioPayload>
+/**
+ * Model Multas_Estrato_Excluido
+ * 
+ */
+export type Multas_Estrato_Excluido = $Result.DefaultSelection<Prisma.$Multas_Estrato_ExcluidoPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1366,6 +1376,26 @@ export class PrismaClient<
     * ```
     */
   get multas_Parametros_Licitacion(): Prisma.Multas_Parametros_LicitacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Horario_Servicio`: Exposes CRUD operations for the **Multas_Horario_Servicio** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Horario_Servicios
+    * const multas_Horario_Servicios = await prisma.multas_Horario_Servicio.findMany()
+    * ```
+    */
+  get multas_Horario_Servicio(): Prisma.Multas_Horario_ServicioDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Estrato_Excluido`: Exposes CRUD operations for the **Multas_Estrato_Excluido** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Estrato_Excluidos
+    * const multas_Estrato_Excluidos = await prisma.multas_Estrato_Excluido.findMany()
+    * ```
+    */
+  get multas_Estrato_Excluido(): Prisma.Multas_Estrato_ExcluidoDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2730,6 +2760,8 @@ export namespace Prisma {
     Multas_IT_Elementos_Esenciales_Det: 'Multas_IT_Elementos_Esenciales_Det',
     Multas_Aspecto_EE_Restriccion: 'Multas_Aspecto_EE_Restriccion',
     Multas_Parametros_Licitacion: 'Multas_Parametros_Licitacion',
+    Multas_Horario_Servicio: 'Multas_Horario_Servicio',
+    Multas_Estrato_Excluido: 'Multas_Estrato_Excluido',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2832,7 +2864,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6543,6 +6575,146 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Parametros_LicitacionCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Parametros_LicitacionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Horario_Servicio: {
+        payload: Prisma.$Multas_Horario_ServicioPayload<ExtArgs>
+        fields: Prisma.Multas_Horario_ServicioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Horario_ServicioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Horario_ServicioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Horario_ServicioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Horario_ServicioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Horario_ServicioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Horario_ServicioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Horario_ServicioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Horario_ServicioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Horario_ServicioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          update: {
+            args: Prisma.Multas_Horario_ServicioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Horario_ServicioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Horario_ServicioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Horario_ServicioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Horario_ServicioPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Horario_ServicioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Horario_Servicio>
+          }
+          groupBy: {
+            args: Prisma.Multas_Horario_ServicioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Horario_ServicioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Horario_ServicioCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Horario_ServicioCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Estrato_Excluido: {
+        payload: Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>
+        fields: Prisma.Multas_Estrato_ExcluidoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Estrato_ExcluidoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Estrato_ExcluidoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Estrato_ExcluidoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Estrato_ExcluidoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Estrato_ExcluidoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Estrato_ExcluidoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Estrato_ExcluidoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Estrato_ExcluidoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Estrato_ExcluidoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          update: {
+            args: Prisma.Multas_Estrato_ExcluidoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Estrato_ExcluidoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Estrato_ExcluidoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Estrato_ExcluidoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Estrato_ExcluidoPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Estrato_ExcluidoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Estrato_Excluido>
+          }
+          groupBy: {
+            args: Prisma.Multas_Estrato_ExcluidoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Estrato_ExcluidoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Estrato_ExcluidoCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Estrato_ExcluidoCountAggregateOutputType> | number
           }
         }
       }
@@ -69817,6 +69989,1930 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Parametros_Licitacion
      */
     select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Horario_Servicio
+   */
+
+  export type AggregateMultas_Horario_Servicio = {
+    _count: Multas_Horario_ServicioCountAggregateOutputType | null
+    _avg: Multas_Horario_ServicioAvgAggregateOutputType | null
+    _sum: Multas_Horario_ServicioSumAggregateOutputType | null
+    _min: Multas_Horario_ServicioMinAggregateOutputType | null
+    _max: Multas_Horario_ServicioMaxAggregateOutputType | null
+  }
+
+  export type Multas_Horario_ServicioAvgAggregateOutputType = {
+    licId: number | null
+    toleranciaMinutos: number | null
+  }
+
+  export type Multas_Horario_ServicioSumAggregateOutputType = {
+    licId: number | null
+    toleranciaMinutos: number | null
+  }
+
+  export type Multas_Horario_ServicioMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    servicioCodigo: string | null
+    horaInicio: string | null
+    horaFin: string | null
+    toleranciaMinutos: number | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Horario_ServicioMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    servicioCodigo: string | null
+    horaInicio: string | null
+    horaFin: string | null
+    toleranciaMinutos: number | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Horario_ServicioCountAggregateOutputType = {
+    id: number
+    licId: number
+    servicioCodigo: number
+    horaInicio: number
+    horaFin: number
+    toleranciaMinutos: number
+    activo: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Horario_ServicioAvgAggregateInputType = {
+    licId?: true
+    toleranciaMinutos?: true
+  }
+
+  export type Multas_Horario_ServicioSumAggregateInputType = {
+    licId?: true
+    toleranciaMinutos?: true
+  }
+
+  export type Multas_Horario_ServicioMinAggregateInputType = {
+    id?: true
+    licId?: true
+    servicioCodigo?: true
+    horaInicio?: true
+    horaFin?: true
+    toleranciaMinutos?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Horario_ServicioMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    servicioCodigo?: true
+    horaInicio?: true
+    horaFin?: true
+    toleranciaMinutos?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Horario_ServicioCountAggregateInputType = {
+    id?: true
+    licId?: true
+    servicioCodigo?: true
+    horaInicio?: true
+    horaFin?: true
+    toleranciaMinutos?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Horario_ServicioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Horario_Servicio to aggregate.
+     */
+    where?: Multas_Horario_ServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Horario_Servicios to fetch.
+     */
+    orderBy?: Multas_Horario_ServicioOrderByWithRelationInput | Multas_Horario_ServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Horario_ServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Horario_Servicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Horario_Servicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Horario_Servicios
+    **/
+    _count?: true | Multas_Horario_ServicioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Horario_ServicioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Horario_ServicioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Horario_ServicioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Horario_ServicioMaxAggregateInputType
+  }
+
+  export type GetMultas_Horario_ServicioAggregateType<T extends Multas_Horario_ServicioAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Horario_Servicio]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Horario_Servicio[P]>
+      : GetScalarType<T[P], AggregateMultas_Horario_Servicio[P]>
+  }
+
+
+
+
+  export type Multas_Horario_ServicioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Horario_ServicioWhereInput
+    orderBy?: Multas_Horario_ServicioOrderByWithAggregationInput | Multas_Horario_ServicioOrderByWithAggregationInput[]
+    by: Multas_Horario_ServicioScalarFieldEnum[] | Multas_Horario_ServicioScalarFieldEnum
+    having?: Multas_Horario_ServicioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Horario_ServicioCountAggregateInputType | true
+    _avg?: Multas_Horario_ServicioAvgAggregateInputType
+    _sum?: Multas_Horario_ServicioSumAggregateInputType
+    _min?: Multas_Horario_ServicioMinAggregateInputType
+    _max?: Multas_Horario_ServicioMaxAggregateInputType
+  }
+
+  export type Multas_Horario_ServicioGroupByOutputType = {
+    id: string
+    licId: number
+    servicioCodigo: string
+    horaInicio: string
+    horaFin: string
+    toleranciaMinutos: number
+    activo: boolean
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Horario_ServicioCountAggregateOutputType | null
+    _avg: Multas_Horario_ServicioAvgAggregateOutputType | null
+    _sum: Multas_Horario_ServicioSumAggregateOutputType | null
+    _min: Multas_Horario_ServicioMinAggregateOutputType | null
+    _max: Multas_Horario_ServicioMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Horario_ServicioGroupByPayload<T extends Multas_Horario_ServicioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Horario_ServicioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Horario_ServicioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Horario_ServicioGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Horario_ServicioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Horario_ServicioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    servicioCodigo?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    toleranciaMinutos?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Horario_Servicio"]>
+
+  export type Multas_Horario_ServicioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    servicioCodigo?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    toleranciaMinutos?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Horario_Servicio"]>
+
+  export type Multas_Horario_ServicioSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    servicioCodigo?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    toleranciaMinutos?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Horario_ServicioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Horario_Servicio"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      servicioCodigo: string
+      horaInicio: string
+      horaFin: string
+      toleranciaMinutos: number
+      activo: boolean
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Horario_Servicio"]>
+    composites: {}
+  }
+
+  type Multas_Horario_ServicioGetPayload<S extends boolean | null | undefined | Multas_Horario_ServicioDefaultArgs> = $Result.GetResult<Prisma.$Multas_Horario_ServicioPayload, S>
+
+  type Multas_Horario_ServicioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Horario_ServicioFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Horario_ServicioCountAggregateInputType | true
+    }
+
+  export interface Multas_Horario_ServicioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Horario_Servicio'], meta: { name: 'Multas_Horario_Servicio' } }
+    /**
+     * Find zero or one Multas_Horario_Servicio that matches the filter.
+     * @param {Multas_Horario_ServicioFindUniqueArgs} args - Arguments to find a Multas_Horario_Servicio
+     * @example
+     * // Get one Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Horario_ServicioFindUniqueArgs>(args: SelectSubset<T, Multas_Horario_ServicioFindUniqueArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Horario_Servicio that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Horario_ServicioFindUniqueOrThrowArgs} args - Arguments to find a Multas_Horario_Servicio
+     * @example
+     * // Get one Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Horario_ServicioFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Horario_ServicioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Horario_Servicio that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioFindFirstArgs} args - Arguments to find a Multas_Horario_Servicio
+     * @example
+     * // Get one Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Horario_ServicioFindFirstArgs>(args?: SelectSubset<T, Multas_Horario_ServicioFindFirstArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Horario_Servicio that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioFindFirstOrThrowArgs} args - Arguments to find a Multas_Horario_Servicio
+     * @example
+     * // Get one Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Horario_ServicioFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Horario_ServicioFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Horario_Servicios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Horario_Servicios
+     * const multas_Horario_Servicios = await prisma.multas_Horario_Servicio.findMany()
+     * 
+     * // Get first 10 Multas_Horario_Servicios
+     * const multas_Horario_Servicios = await prisma.multas_Horario_Servicio.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Horario_ServicioWithIdOnly = await prisma.multas_Horario_Servicio.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Horario_ServicioFindManyArgs>(args?: SelectSubset<T, Multas_Horario_ServicioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Horario_Servicio.
+     * @param {Multas_Horario_ServicioCreateArgs} args - Arguments to create a Multas_Horario_Servicio.
+     * @example
+     * // Create one Multas_Horario_Servicio
+     * const Multas_Horario_Servicio = await prisma.multas_Horario_Servicio.create({
+     *   data: {
+     *     // ... data to create a Multas_Horario_Servicio
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Horario_ServicioCreateArgs>(args: SelectSubset<T, Multas_Horario_ServicioCreateArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Horario_Servicios.
+     * @param {Multas_Horario_ServicioCreateManyArgs} args - Arguments to create many Multas_Horario_Servicios.
+     * @example
+     * // Create many Multas_Horario_Servicios
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Horario_ServicioCreateManyArgs>(args?: SelectSubset<T, Multas_Horario_ServicioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Horario_Servicios and returns the data saved in the database.
+     * @param {Multas_Horario_ServicioCreateManyAndReturnArgs} args - Arguments to create many Multas_Horario_Servicios.
+     * @example
+     * // Create many Multas_Horario_Servicios
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Horario_Servicios and only return the `id`
+     * const multas_Horario_ServicioWithIdOnly = await prisma.multas_Horario_Servicio.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Horario_ServicioCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Horario_ServicioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Horario_Servicio.
+     * @param {Multas_Horario_ServicioDeleteArgs} args - Arguments to delete one Multas_Horario_Servicio.
+     * @example
+     * // Delete one Multas_Horario_Servicio
+     * const Multas_Horario_Servicio = await prisma.multas_Horario_Servicio.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Horario_Servicio
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Horario_ServicioDeleteArgs>(args: SelectSubset<T, Multas_Horario_ServicioDeleteArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Horario_Servicio.
+     * @param {Multas_Horario_ServicioUpdateArgs} args - Arguments to update one Multas_Horario_Servicio.
+     * @example
+     * // Update one Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Horario_ServicioUpdateArgs>(args: SelectSubset<T, Multas_Horario_ServicioUpdateArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Horario_Servicios.
+     * @param {Multas_Horario_ServicioDeleteManyArgs} args - Arguments to filter Multas_Horario_Servicios to delete.
+     * @example
+     * // Delete a few Multas_Horario_Servicios
+     * const { count } = await prisma.multas_Horario_Servicio.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Horario_ServicioDeleteManyArgs>(args?: SelectSubset<T, Multas_Horario_ServicioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Horario_Servicios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Horario_Servicios
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Horario_ServicioUpdateManyArgs>(args: SelectSubset<T, Multas_Horario_ServicioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Horario_Servicio.
+     * @param {Multas_Horario_ServicioUpsertArgs} args - Arguments to update or create a Multas_Horario_Servicio.
+     * @example
+     * // Update or create a Multas_Horario_Servicio
+     * const multas_Horario_Servicio = await prisma.multas_Horario_Servicio.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Horario_Servicio
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Horario_Servicio we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Horario_ServicioUpsertArgs>(args: SelectSubset<T, Multas_Horario_ServicioUpsertArgs<ExtArgs>>): Prisma__Multas_Horario_ServicioClient<$Result.GetResult<Prisma.$Multas_Horario_ServicioPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Horario_Servicios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioCountArgs} args - Arguments to filter Multas_Horario_Servicios to count.
+     * @example
+     * // Count the number of Multas_Horario_Servicios
+     * const count = await prisma.multas_Horario_Servicio.count({
+     *   where: {
+     *     // ... the filter for the Multas_Horario_Servicios we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Horario_ServicioCountArgs>(
+      args?: Subset<T, Multas_Horario_ServicioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Horario_ServicioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Horario_Servicio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Horario_ServicioAggregateArgs>(args: Subset<T, Multas_Horario_ServicioAggregateArgs>): Prisma.PrismaPromise<GetMultas_Horario_ServicioAggregateType<T>>
+
+    /**
+     * Group by Multas_Horario_Servicio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Horario_ServicioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Horario_ServicioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Horario_ServicioGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Horario_ServicioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Horario_ServicioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Horario_ServicioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Horario_Servicio model
+   */
+  readonly fields: Multas_Horario_ServicioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Horario_Servicio.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Horario_ServicioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Horario_Servicio model
+   */ 
+  interface Multas_Horario_ServicioFieldRefs {
+    readonly id: FieldRef<"Multas_Horario_Servicio", 'String'>
+    readonly licId: FieldRef<"Multas_Horario_Servicio", 'Int'>
+    readonly servicioCodigo: FieldRef<"Multas_Horario_Servicio", 'String'>
+    readonly horaInicio: FieldRef<"Multas_Horario_Servicio", 'String'>
+    readonly horaFin: FieldRef<"Multas_Horario_Servicio", 'String'>
+    readonly toleranciaMinutos: FieldRef<"Multas_Horario_Servicio", 'Int'>
+    readonly activo: FieldRef<"Multas_Horario_Servicio", 'Boolean'>
+    readonly usuarioModif: FieldRef<"Multas_Horario_Servicio", 'String'>
+    readonly createdAt: FieldRef<"Multas_Horario_Servicio", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Horario_Servicio", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Horario_Servicio findUnique
+   */
+  export type Multas_Horario_ServicioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Horario_Servicio to fetch.
+     */
+    where: Multas_Horario_ServicioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Horario_Servicio findUniqueOrThrow
+   */
+  export type Multas_Horario_ServicioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Horario_Servicio to fetch.
+     */
+    where: Multas_Horario_ServicioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Horario_Servicio findFirst
+   */
+  export type Multas_Horario_ServicioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Horario_Servicio to fetch.
+     */
+    where?: Multas_Horario_ServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Horario_Servicios to fetch.
+     */
+    orderBy?: Multas_Horario_ServicioOrderByWithRelationInput | Multas_Horario_ServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Horario_Servicios.
+     */
+    cursor?: Multas_Horario_ServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Horario_Servicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Horario_Servicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Horario_Servicios.
+     */
+    distinct?: Multas_Horario_ServicioScalarFieldEnum | Multas_Horario_ServicioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Horario_Servicio findFirstOrThrow
+   */
+  export type Multas_Horario_ServicioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Horario_Servicio to fetch.
+     */
+    where?: Multas_Horario_ServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Horario_Servicios to fetch.
+     */
+    orderBy?: Multas_Horario_ServicioOrderByWithRelationInput | Multas_Horario_ServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Horario_Servicios.
+     */
+    cursor?: Multas_Horario_ServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Horario_Servicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Horario_Servicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Horario_Servicios.
+     */
+    distinct?: Multas_Horario_ServicioScalarFieldEnum | Multas_Horario_ServicioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Horario_Servicio findMany
+   */
+  export type Multas_Horario_ServicioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Horario_Servicios to fetch.
+     */
+    where?: Multas_Horario_ServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Horario_Servicios to fetch.
+     */
+    orderBy?: Multas_Horario_ServicioOrderByWithRelationInput | Multas_Horario_ServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Horario_Servicios.
+     */
+    cursor?: Multas_Horario_ServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Horario_Servicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Horario_Servicios.
+     */
+    skip?: number
+    distinct?: Multas_Horario_ServicioScalarFieldEnum | Multas_Horario_ServicioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Horario_Servicio create
+   */
+  export type Multas_Horario_ServicioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Horario_Servicio.
+     */
+    data: XOR<Multas_Horario_ServicioCreateInput, Multas_Horario_ServicioUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Horario_Servicio createMany
+   */
+  export type Multas_Horario_ServicioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Horario_Servicios.
+     */
+    data: Multas_Horario_ServicioCreateManyInput | Multas_Horario_ServicioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Horario_Servicio createManyAndReturn
+   */
+  export type Multas_Horario_ServicioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Horario_Servicios.
+     */
+    data: Multas_Horario_ServicioCreateManyInput | Multas_Horario_ServicioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Horario_Servicio update
+   */
+  export type Multas_Horario_ServicioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Horario_Servicio.
+     */
+    data: XOR<Multas_Horario_ServicioUpdateInput, Multas_Horario_ServicioUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Horario_Servicio to update.
+     */
+    where: Multas_Horario_ServicioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Horario_Servicio updateMany
+   */
+  export type Multas_Horario_ServicioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Horario_Servicios.
+     */
+    data: XOR<Multas_Horario_ServicioUpdateManyMutationInput, Multas_Horario_ServicioUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Horario_Servicios to update
+     */
+    where?: Multas_Horario_ServicioWhereInput
+  }
+
+  /**
+   * Multas_Horario_Servicio upsert
+   */
+  export type Multas_Horario_ServicioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Horario_Servicio to update in case it exists.
+     */
+    where: Multas_Horario_ServicioWhereUniqueInput
+    /**
+     * In case the Multas_Horario_Servicio found by the `where` argument doesn't exist, create a new Multas_Horario_Servicio with this data.
+     */
+    create: XOR<Multas_Horario_ServicioCreateInput, Multas_Horario_ServicioUncheckedCreateInput>
+    /**
+     * In case the Multas_Horario_Servicio was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Horario_ServicioUpdateInput, Multas_Horario_ServicioUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Horario_Servicio delete
+   */
+  export type Multas_Horario_ServicioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Horario_Servicio to delete.
+     */
+    where: Multas_Horario_ServicioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Horario_Servicio deleteMany
+   */
+  export type Multas_Horario_ServicioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Horario_Servicios to delete
+     */
+    where?: Multas_Horario_ServicioWhereInput
+  }
+
+  /**
+   * Multas_Horario_Servicio without action
+   */
+  export type Multas_Horario_ServicioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Horario_Servicio
+     */
+    select?: Multas_Horario_ServicioSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Estrato_Excluido
+   */
+
+  export type AggregateMultas_Estrato_Excluido = {
+    _count: Multas_Estrato_ExcluidoCountAggregateOutputType | null
+    _avg: Multas_Estrato_ExcluidoAvgAggregateOutputType | null
+    _sum: Multas_Estrato_ExcluidoSumAggregateOutputType | null
+    _min: Multas_Estrato_ExcluidoMinAggregateOutputType | null
+    _max: Multas_Estrato_ExcluidoMaxAggregateOutputType | null
+  }
+
+  export type Multas_Estrato_ExcluidoAvgAggregateOutputType = {
+    licId: number | null
+  }
+
+  export type Multas_Estrato_ExcluidoSumAggregateOutputType = {
+    licId: number | null
+  }
+
+  export type Multas_Estrato_ExcluidoMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    estrato: string | null
+    descripcion: string | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Estrato_ExcluidoMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    estrato: string | null
+    descripcion: string | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Estrato_ExcluidoCountAggregateOutputType = {
+    id: number
+    licId: number
+    estrato: number
+    descripcion: number
+    activo: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Estrato_ExcluidoAvgAggregateInputType = {
+    licId?: true
+  }
+
+  export type Multas_Estrato_ExcluidoSumAggregateInputType = {
+    licId?: true
+  }
+
+  export type Multas_Estrato_ExcluidoMinAggregateInputType = {
+    id?: true
+    licId?: true
+    estrato?: true
+    descripcion?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Estrato_ExcluidoMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    estrato?: true
+    descripcion?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Estrato_ExcluidoCountAggregateInputType = {
+    id?: true
+    licId?: true
+    estrato?: true
+    descripcion?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Estrato_ExcluidoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Estrato_Excluido to aggregate.
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Estrato_Excluidos to fetch.
+     */
+    orderBy?: Multas_Estrato_ExcluidoOrderByWithRelationInput | Multas_Estrato_ExcluidoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Estrato_ExcluidoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Estrato_Excluidos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Estrato_Excluidos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Estrato_Excluidos
+    **/
+    _count?: true | Multas_Estrato_ExcluidoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Estrato_ExcluidoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Estrato_ExcluidoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Estrato_ExcluidoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Estrato_ExcluidoMaxAggregateInputType
+  }
+
+  export type GetMultas_Estrato_ExcluidoAggregateType<T extends Multas_Estrato_ExcluidoAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Estrato_Excluido]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Estrato_Excluido[P]>
+      : GetScalarType<T[P], AggregateMultas_Estrato_Excluido[P]>
+  }
+
+
+
+
+  export type Multas_Estrato_ExcluidoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Estrato_ExcluidoWhereInput
+    orderBy?: Multas_Estrato_ExcluidoOrderByWithAggregationInput | Multas_Estrato_ExcluidoOrderByWithAggregationInput[]
+    by: Multas_Estrato_ExcluidoScalarFieldEnum[] | Multas_Estrato_ExcluidoScalarFieldEnum
+    having?: Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Estrato_ExcluidoCountAggregateInputType | true
+    _avg?: Multas_Estrato_ExcluidoAvgAggregateInputType
+    _sum?: Multas_Estrato_ExcluidoSumAggregateInputType
+    _min?: Multas_Estrato_ExcluidoMinAggregateInputType
+    _max?: Multas_Estrato_ExcluidoMaxAggregateInputType
+  }
+
+  export type Multas_Estrato_ExcluidoGroupByOutputType = {
+    id: string
+    licId: number
+    estrato: string
+    descripcion: string | null
+    activo: boolean
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Estrato_ExcluidoCountAggregateOutputType | null
+    _avg: Multas_Estrato_ExcluidoAvgAggregateOutputType | null
+    _sum: Multas_Estrato_ExcluidoSumAggregateOutputType | null
+    _min: Multas_Estrato_ExcluidoMinAggregateOutputType | null
+    _max: Multas_Estrato_ExcluidoMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Estrato_ExcluidoGroupByPayload<T extends Multas_Estrato_ExcluidoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Estrato_ExcluidoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Estrato_ExcluidoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Estrato_ExcluidoGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Estrato_ExcluidoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Estrato_ExcluidoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    estrato?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Estrato_Excluido"]>
+
+  export type Multas_Estrato_ExcluidoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    estrato?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Estrato_Excluido"]>
+
+  export type Multas_Estrato_ExcluidoSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    estrato?: boolean
+    descripcion?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Estrato_ExcluidoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Estrato_Excluido"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      estrato: string
+      descripcion: string | null
+      activo: boolean
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Estrato_Excluido"]>
+    composites: {}
+  }
+
+  type Multas_Estrato_ExcluidoGetPayload<S extends boolean | null | undefined | Multas_Estrato_ExcluidoDefaultArgs> = $Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload, S>
+
+  type Multas_Estrato_ExcluidoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Estrato_ExcluidoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Estrato_ExcluidoCountAggregateInputType | true
+    }
+
+  export interface Multas_Estrato_ExcluidoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Estrato_Excluido'], meta: { name: 'Multas_Estrato_Excluido' } }
+    /**
+     * Find zero or one Multas_Estrato_Excluido that matches the filter.
+     * @param {Multas_Estrato_ExcluidoFindUniqueArgs} args - Arguments to find a Multas_Estrato_Excluido
+     * @example
+     * // Get one Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Estrato_ExcluidoFindUniqueArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoFindUniqueArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Estrato_Excluido that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Estrato_ExcluidoFindUniqueOrThrowArgs} args - Arguments to find a Multas_Estrato_Excluido
+     * @example
+     * // Get one Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Estrato_ExcluidoFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Estrato_Excluido that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoFindFirstArgs} args - Arguments to find a Multas_Estrato_Excluido
+     * @example
+     * // Get one Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Estrato_ExcluidoFindFirstArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoFindFirstArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Estrato_Excluido that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoFindFirstOrThrowArgs} args - Arguments to find a Multas_Estrato_Excluido
+     * @example
+     * // Get one Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Estrato_ExcluidoFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Estrato_Excluidos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Estrato_Excluidos
+     * const multas_Estrato_Excluidos = await prisma.multas_Estrato_Excluido.findMany()
+     * 
+     * // Get first 10 Multas_Estrato_Excluidos
+     * const multas_Estrato_Excluidos = await prisma.multas_Estrato_Excluido.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Estrato_ExcluidoWithIdOnly = await prisma.multas_Estrato_Excluido.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Estrato_ExcluidoFindManyArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Estrato_Excluido.
+     * @param {Multas_Estrato_ExcluidoCreateArgs} args - Arguments to create a Multas_Estrato_Excluido.
+     * @example
+     * // Create one Multas_Estrato_Excluido
+     * const Multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.create({
+     *   data: {
+     *     // ... data to create a Multas_Estrato_Excluido
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Estrato_ExcluidoCreateArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoCreateArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Estrato_Excluidos.
+     * @param {Multas_Estrato_ExcluidoCreateManyArgs} args - Arguments to create many Multas_Estrato_Excluidos.
+     * @example
+     * // Create many Multas_Estrato_Excluidos
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Estrato_ExcluidoCreateManyArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Estrato_Excluidos and returns the data saved in the database.
+     * @param {Multas_Estrato_ExcluidoCreateManyAndReturnArgs} args - Arguments to create many Multas_Estrato_Excluidos.
+     * @example
+     * // Create many Multas_Estrato_Excluidos
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Estrato_Excluidos and only return the `id`
+     * const multas_Estrato_ExcluidoWithIdOnly = await prisma.multas_Estrato_Excluido.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Estrato_ExcluidoCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Estrato_Excluido.
+     * @param {Multas_Estrato_ExcluidoDeleteArgs} args - Arguments to delete one Multas_Estrato_Excluido.
+     * @example
+     * // Delete one Multas_Estrato_Excluido
+     * const Multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Estrato_Excluido
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Estrato_ExcluidoDeleteArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoDeleteArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Estrato_Excluido.
+     * @param {Multas_Estrato_ExcluidoUpdateArgs} args - Arguments to update one Multas_Estrato_Excluido.
+     * @example
+     * // Update one Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Estrato_ExcluidoUpdateArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoUpdateArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Estrato_Excluidos.
+     * @param {Multas_Estrato_ExcluidoDeleteManyArgs} args - Arguments to filter Multas_Estrato_Excluidos to delete.
+     * @example
+     * // Delete a few Multas_Estrato_Excluidos
+     * const { count } = await prisma.multas_Estrato_Excluido.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Estrato_ExcluidoDeleteManyArgs>(args?: SelectSubset<T, Multas_Estrato_ExcluidoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Estrato_Excluidos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Estrato_Excluidos
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Estrato_ExcluidoUpdateManyArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Estrato_Excluido.
+     * @param {Multas_Estrato_ExcluidoUpsertArgs} args - Arguments to update or create a Multas_Estrato_Excluido.
+     * @example
+     * // Update or create a Multas_Estrato_Excluido
+     * const multas_Estrato_Excluido = await prisma.multas_Estrato_Excluido.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Estrato_Excluido
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Estrato_Excluido we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Estrato_ExcluidoUpsertArgs>(args: SelectSubset<T, Multas_Estrato_ExcluidoUpsertArgs<ExtArgs>>): Prisma__Multas_Estrato_ExcluidoClient<$Result.GetResult<Prisma.$Multas_Estrato_ExcluidoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Estrato_Excluidos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoCountArgs} args - Arguments to filter Multas_Estrato_Excluidos to count.
+     * @example
+     * // Count the number of Multas_Estrato_Excluidos
+     * const count = await prisma.multas_Estrato_Excluido.count({
+     *   where: {
+     *     // ... the filter for the Multas_Estrato_Excluidos we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Estrato_ExcluidoCountArgs>(
+      args?: Subset<T, Multas_Estrato_ExcluidoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Estrato_ExcluidoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Estrato_Excluido.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Estrato_ExcluidoAggregateArgs>(args: Subset<T, Multas_Estrato_ExcluidoAggregateArgs>): Prisma.PrismaPromise<GetMultas_Estrato_ExcluidoAggregateType<T>>
+
+    /**
+     * Group by Multas_Estrato_Excluido.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Estrato_ExcluidoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Estrato_ExcluidoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Estrato_ExcluidoGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Estrato_ExcluidoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Estrato_ExcluidoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Estrato_ExcluidoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Estrato_Excluido model
+   */
+  readonly fields: Multas_Estrato_ExcluidoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Estrato_Excluido.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Estrato_ExcluidoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Estrato_Excluido model
+   */ 
+  interface Multas_Estrato_ExcluidoFieldRefs {
+    readonly id: FieldRef<"Multas_Estrato_Excluido", 'String'>
+    readonly licId: FieldRef<"Multas_Estrato_Excluido", 'Int'>
+    readonly estrato: FieldRef<"Multas_Estrato_Excluido", 'String'>
+    readonly descripcion: FieldRef<"Multas_Estrato_Excluido", 'String'>
+    readonly activo: FieldRef<"Multas_Estrato_Excluido", 'Boolean'>
+    readonly usuarioModif: FieldRef<"Multas_Estrato_Excluido", 'String'>
+    readonly createdAt: FieldRef<"Multas_Estrato_Excluido", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Estrato_Excluido", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Estrato_Excluido findUnique
+   */
+  export type Multas_Estrato_ExcluidoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Estrato_Excluido to fetch.
+     */
+    where: Multas_Estrato_ExcluidoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido findUniqueOrThrow
+   */
+  export type Multas_Estrato_ExcluidoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Estrato_Excluido to fetch.
+     */
+    where: Multas_Estrato_ExcluidoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido findFirst
+   */
+  export type Multas_Estrato_ExcluidoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Estrato_Excluido to fetch.
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Estrato_Excluidos to fetch.
+     */
+    orderBy?: Multas_Estrato_ExcluidoOrderByWithRelationInput | Multas_Estrato_ExcluidoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Estrato_Excluidos.
+     */
+    cursor?: Multas_Estrato_ExcluidoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Estrato_Excluidos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Estrato_Excluidos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Estrato_Excluidos.
+     */
+    distinct?: Multas_Estrato_ExcluidoScalarFieldEnum | Multas_Estrato_ExcluidoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Estrato_Excluido findFirstOrThrow
+   */
+  export type Multas_Estrato_ExcluidoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Estrato_Excluido to fetch.
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Estrato_Excluidos to fetch.
+     */
+    orderBy?: Multas_Estrato_ExcluidoOrderByWithRelationInput | Multas_Estrato_ExcluidoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Estrato_Excluidos.
+     */
+    cursor?: Multas_Estrato_ExcluidoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Estrato_Excluidos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Estrato_Excluidos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Estrato_Excluidos.
+     */
+    distinct?: Multas_Estrato_ExcluidoScalarFieldEnum | Multas_Estrato_ExcluidoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Estrato_Excluido findMany
+   */
+  export type Multas_Estrato_ExcluidoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Estrato_Excluidos to fetch.
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Estrato_Excluidos to fetch.
+     */
+    orderBy?: Multas_Estrato_ExcluidoOrderByWithRelationInput | Multas_Estrato_ExcluidoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Estrato_Excluidos.
+     */
+    cursor?: Multas_Estrato_ExcluidoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Estrato_Excluidos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Estrato_Excluidos.
+     */
+    skip?: number
+    distinct?: Multas_Estrato_ExcluidoScalarFieldEnum | Multas_Estrato_ExcluidoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Estrato_Excluido create
+   */
+  export type Multas_Estrato_ExcluidoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Estrato_Excluido.
+     */
+    data: XOR<Multas_Estrato_ExcluidoCreateInput, Multas_Estrato_ExcluidoUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Estrato_Excluido createMany
+   */
+  export type Multas_Estrato_ExcluidoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Estrato_Excluidos.
+     */
+    data: Multas_Estrato_ExcluidoCreateManyInput | Multas_Estrato_ExcluidoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Estrato_Excluido createManyAndReturn
+   */
+  export type Multas_Estrato_ExcluidoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Estrato_Excluidos.
+     */
+    data: Multas_Estrato_ExcluidoCreateManyInput | Multas_Estrato_ExcluidoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Estrato_Excluido update
+   */
+  export type Multas_Estrato_ExcluidoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Estrato_Excluido.
+     */
+    data: XOR<Multas_Estrato_ExcluidoUpdateInput, Multas_Estrato_ExcluidoUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Estrato_Excluido to update.
+     */
+    where: Multas_Estrato_ExcluidoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido updateMany
+   */
+  export type Multas_Estrato_ExcluidoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Estrato_Excluidos.
+     */
+    data: XOR<Multas_Estrato_ExcluidoUpdateManyMutationInput, Multas_Estrato_ExcluidoUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Estrato_Excluidos to update
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido upsert
+   */
+  export type Multas_Estrato_ExcluidoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Estrato_Excluido to update in case it exists.
+     */
+    where: Multas_Estrato_ExcluidoWhereUniqueInput
+    /**
+     * In case the Multas_Estrato_Excluido found by the `where` argument doesn't exist, create a new Multas_Estrato_Excluido with this data.
+     */
+    create: XOR<Multas_Estrato_ExcluidoCreateInput, Multas_Estrato_ExcluidoUncheckedCreateInput>
+    /**
+     * In case the Multas_Estrato_Excluido was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Estrato_ExcluidoUpdateInput, Multas_Estrato_ExcluidoUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Estrato_Excluido delete
+   */
+  export type Multas_Estrato_ExcluidoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Estrato_Excluido to delete.
+     */
+    where: Multas_Estrato_ExcluidoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido deleteMany
+   */
+  export type Multas_Estrato_ExcluidoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Estrato_Excluidos to delete
+     */
+    where?: Multas_Estrato_ExcluidoWhereInput
+  }
+
+  /**
+   * Multas_Estrato_Excluido without action
+   */
+  export type Multas_Estrato_ExcluidoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Estrato_Excluido
+     */
+    select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
   }
 
 
@@ -159964,6 +162060,36 @@ export namespace Prisma {
   export type Multas_Parametros_LicitacionScalarFieldEnum = (typeof Multas_Parametros_LicitacionScalarFieldEnum)[keyof typeof Multas_Parametros_LicitacionScalarFieldEnum]
 
 
+  export const Multas_Horario_ServicioScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    servicioCodigo: 'servicioCodigo',
+    horaInicio: 'horaInicio',
+    horaFin: 'horaFin',
+    toleranciaMinutos: 'toleranciaMinutos',
+    activo: 'activo',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Horario_ServicioScalarFieldEnum = (typeof Multas_Horario_ServicioScalarFieldEnum)[keyof typeof Multas_Horario_ServicioScalarFieldEnum]
+
+
+  export const Multas_Estrato_ExcluidoScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    estrato: 'estrato',
+    descripcion: 'descripcion',
+    activo: 'activo',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Estrato_ExcluidoScalarFieldEnum = (typeof Multas_Estrato_ExcluidoScalarFieldEnum)[keyof typeof Multas_Estrato_ExcluidoScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -166285,6 +168411,156 @@ export namespace Prisma {
     usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Parametros_Licitacion"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Parametros_Licitacion"> | Date | string
+  }
+
+  export type Multas_Horario_ServicioWhereInput = {
+    AND?: Multas_Horario_ServicioWhereInput | Multas_Horario_ServicioWhereInput[]
+    OR?: Multas_Horario_ServicioWhereInput[]
+    NOT?: Multas_Horario_ServicioWhereInput | Multas_Horario_ServicioWhereInput[]
+    id?: StringFilter<"Multas_Horario_Servicio"> | string
+    licId?: IntFilter<"Multas_Horario_Servicio"> | number
+    servicioCodigo?: StringFilter<"Multas_Horario_Servicio"> | string
+    horaInicio?: StringFilter<"Multas_Horario_Servicio"> | string
+    horaFin?: StringFilter<"Multas_Horario_Servicio"> | string
+    toleranciaMinutos?: IntFilter<"Multas_Horario_Servicio"> | number
+    activo?: BoolFilter<"Multas_Horario_Servicio"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Horario_Servicio"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Horario_Servicio"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Horario_Servicio"> | Date | string
+  }
+
+  export type Multas_Horario_ServicioOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    servicioCodigo?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    toleranciaMinutos?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId_servicioCodigo?: Multas_Horario_ServicioLicIdServicioCodigoCompoundUniqueInput
+    AND?: Multas_Horario_ServicioWhereInput | Multas_Horario_ServicioWhereInput[]
+    OR?: Multas_Horario_ServicioWhereInput[]
+    NOT?: Multas_Horario_ServicioWhereInput | Multas_Horario_ServicioWhereInput[]
+    licId?: IntFilter<"Multas_Horario_Servicio"> | number
+    servicioCodigo?: StringFilter<"Multas_Horario_Servicio"> | string
+    horaInicio?: StringFilter<"Multas_Horario_Servicio"> | string
+    horaFin?: StringFilter<"Multas_Horario_Servicio"> | string
+    toleranciaMinutos?: IntFilter<"Multas_Horario_Servicio"> | number
+    activo?: BoolFilter<"Multas_Horario_Servicio"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Horario_Servicio"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Horario_Servicio"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Horario_Servicio"> | Date | string
+  }, "id" | "licId_servicioCodigo">
+
+  export type Multas_Horario_ServicioOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    servicioCodigo?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    toleranciaMinutos?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Horario_ServicioCountOrderByAggregateInput
+    _avg?: Multas_Horario_ServicioAvgOrderByAggregateInput
+    _max?: Multas_Horario_ServicioMaxOrderByAggregateInput
+    _min?: Multas_Horario_ServicioMinOrderByAggregateInput
+    _sum?: Multas_Horario_ServicioSumOrderByAggregateInput
+  }
+
+  export type Multas_Horario_ServicioScalarWhereWithAggregatesInput = {
+    AND?: Multas_Horario_ServicioScalarWhereWithAggregatesInput | Multas_Horario_ServicioScalarWhereWithAggregatesInput[]
+    OR?: Multas_Horario_ServicioScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Horario_ServicioScalarWhereWithAggregatesInput | Multas_Horario_ServicioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Horario_Servicio"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Horario_Servicio"> | number
+    servicioCodigo?: StringWithAggregatesFilter<"Multas_Horario_Servicio"> | string
+    horaInicio?: StringWithAggregatesFilter<"Multas_Horario_Servicio"> | string
+    horaFin?: StringWithAggregatesFilter<"Multas_Horario_Servicio"> | string
+    toleranciaMinutos?: IntWithAggregatesFilter<"Multas_Horario_Servicio"> | number
+    activo?: BoolWithAggregatesFilter<"Multas_Horario_Servicio"> | boolean
+    usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Horario_Servicio"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Horario_Servicio"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Horario_Servicio"> | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoWhereInput = {
+    AND?: Multas_Estrato_ExcluidoWhereInput | Multas_Estrato_ExcluidoWhereInput[]
+    OR?: Multas_Estrato_ExcluidoWhereInput[]
+    NOT?: Multas_Estrato_ExcluidoWhereInput | Multas_Estrato_ExcluidoWhereInput[]
+    id?: StringFilter<"Multas_Estrato_Excluido"> | string
+    licId?: IntFilter<"Multas_Estrato_Excluido"> | number
+    estrato?: StringFilter<"Multas_Estrato_Excluido"> | string
+    descripcion?: StringNullableFilter<"Multas_Estrato_Excluido"> | string | null
+    activo?: BoolFilter<"Multas_Estrato_Excluido"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Estrato_Excluido"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Estrato_Excluido"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Estrato_Excluido"> | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    estrato?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId_estrato?: Multas_Estrato_ExcluidoLicIdEstratoCompoundUniqueInput
+    AND?: Multas_Estrato_ExcluidoWhereInput | Multas_Estrato_ExcluidoWhereInput[]
+    OR?: Multas_Estrato_ExcluidoWhereInput[]
+    NOT?: Multas_Estrato_ExcluidoWhereInput | Multas_Estrato_ExcluidoWhereInput[]
+    licId?: IntFilter<"Multas_Estrato_Excluido"> | number
+    estrato?: StringFilter<"Multas_Estrato_Excluido"> | string
+    descripcion?: StringNullableFilter<"Multas_Estrato_Excluido"> | string | null
+    activo?: BoolFilter<"Multas_Estrato_Excluido"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Estrato_Excluido"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Estrato_Excluido"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Estrato_Excluido"> | Date | string
+  }, "id" | "licId_estrato">
+
+  export type Multas_Estrato_ExcluidoOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    estrato?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Estrato_ExcluidoCountOrderByAggregateInput
+    _avg?: Multas_Estrato_ExcluidoAvgOrderByAggregateInput
+    _max?: Multas_Estrato_ExcluidoMaxOrderByAggregateInput
+    _min?: Multas_Estrato_ExcluidoMinOrderByAggregateInput
+    _sum?: Multas_Estrato_ExcluidoSumOrderByAggregateInput
+  }
+
+  export type Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput = {
+    AND?: Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput | Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput[]
+    OR?: Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput | Multas_Estrato_ExcluidoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Estrato_Excluido"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Estrato_Excluido"> | number
+    estrato?: StringWithAggregatesFilter<"Multas_Estrato_Excluido"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"Multas_Estrato_Excluido"> | string | null
+    activo?: BoolWithAggregatesFilter<"Multas_Estrato_Excluido"> | boolean
+    usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Estrato_Excluido"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Estrato_Excluido"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Estrato_Excluido"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -179137,6 +181413,174 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Horario_ServicioCreateInput = {
+    id?: string
+    licId: number
+    servicioCodigo: string
+    horaInicio: string
+    horaFin: string
+    toleranciaMinutos?: number
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Horario_ServicioUncheckedCreateInput = {
+    id?: string
+    licId: number
+    servicioCodigo: string
+    horaInicio: string
+    horaFin: string
+    toleranciaMinutos?: number
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Horario_ServicioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    servicioCodigo?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    toleranciaMinutos?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Horario_ServicioUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    servicioCodigo?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    toleranciaMinutos?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Horario_ServicioCreateManyInput = {
+    id?: string
+    licId: number
+    servicioCodigo: string
+    horaInicio: string
+    horaFin: string
+    toleranciaMinutos?: number
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Horario_ServicioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    servicioCodigo?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    toleranciaMinutos?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Horario_ServicioUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    servicioCodigo?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    toleranciaMinutos?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoCreateInput = {
+    id?: string
+    licId: number
+    estrato: string
+    descripcion?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoUncheckedCreateInput = {
+    id?: string
+    licId: number
+    estrato: string
+    descripcion?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoCreateManyInput = {
+    id?: string
+    licId: number
+    estrato: string
+    descripcion?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Estrato_ExcluidoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -190811,6 +193255,106 @@ export namespace Prisma {
     toleranciaFModerado?: SortOrder
     toleranciaFGrave?: SortOrder
     plazoCorreccionDias?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioLicIdServicioCodigoCompoundUniqueInput = {
+    licId: number
+    servicioCodigo: string
+  }
+
+  export type Multas_Horario_ServicioCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    servicioCodigo?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    toleranciaMinutos?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    toleranciaMinutos?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    servicioCodigo?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    toleranciaMinutos?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    servicioCodigo?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    toleranciaMinutos?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Horario_ServicioSumOrderByAggregateInput = {
+    licId?: SortOrder
+    toleranciaMinutos?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoLicIdEstratoCompoundUniqueInput = {
+    licId: number
+    estrato: string
+  }
+
+  export type Multas_Estrato_ExcluidoCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    estrato?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoAvgOrderByAggregateInput = {
+    licId?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    estrato?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    estrato?: SortOrder
+    descripcion?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Estrato_ExcluidoSumOrderByAggregateInput = {
+    licId?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -222093,6 +224637,14 @@ export namespace Prisma {
      * @deprecated Use Multas_Parametros_LicitacionDefaultArgs instead
      */
     export type Multas_Parametros_LicitacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Parametros_LicitacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Horario_ServicioDefaultArgs instead
+     */
+    export type Multas_Horario_ServicioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Horario_ServicioDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Estrato_ExcluidoDefaultArgs instead
+     */
+    export type Multas_Estrato_ExcluidoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Estrato_ExcluidoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

@@ -873,6 +873,36 @@ model Multas_Parametros_Licitacion {
   @@index([licId])
 }
 
+model Multas_Horario_Servicio {
+  id                String   @id @default(uuid())
+  licId             Int
+  servicioCodigo    String   @db.VarChar(5)
+  horaInicio        String   @db.VarChar(5)
+  horaFin           String   @db.VarChar(5)
+  toleranciaMinutos Int      @default(0)
+  activo            Boolean  @default(true)
+  usuarioModif      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([licId, servicioCodigo])
+  @@index([licId])
+}
+
+model Multas_Estrato_Excluido {
+  id           String   @id @default(uuid())
+  licId        Int
+  estrato      String   @db.VarChar(20)
+  descripcion  String?  @db.Text
+  activo       Boolean  @default(true)
+  usuarioModif String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([licId, estrato])
+  @@index([licId])
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

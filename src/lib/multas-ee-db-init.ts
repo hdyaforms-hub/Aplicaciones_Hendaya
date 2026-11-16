@@ -147,7 +147,57 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Parametros_Licitacion" ("licId");
         `)
 
-        // 6. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
+        // 6. Tabla de Horarios por Servicio (C2.1)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Horario_Servicio" (
+                "id" TEXT PRIMARY KEY,
+                "licId" INTEGER NOT NULL,
+                "servicioCodigo" VARCHAR(5) NOT NULL,
+                "horaInicio" VARCHAR(5) NOT NULL,
+                "horaFin" VARCHAR(5) NOT NULL,
+                "toleranciaMinutos" INTEGER NOT NULL DEFAULT 0,
+                "activo" BOOLEAN NOT NULL DEFAULT true,
+                "usuarioModif" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Horario_Servicio_licId_servicioCodigo_key"
+            ON "Multas_Horario_Servicio" ("licId", "servicioCodigo");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Horario_Servicio_licId_idx"
+            ON "Multas_Horario_Servicio" ("licId");
+        `)
+
+        // 7. Tabla de Estratos Excluidos (C2.2)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Estrato_Excluido" (
+                "id" TEXT PRIMARY KEY,
+                "licId" INTEGER NOT NULL,
+                "estrato" VARCHAR(20) NOT NULL,
+                "descripcion" TEXT,
+                "activo" BOOLEAN NOT NULL DEFAULT true,
+                "usuarioModif" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Estrato_Excluido_licId_estrato_key"
+            ON "Multas_Estrato_Excluido" ("licId", "estrato");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Estrato_Excluido_licId_idx"
+            ON "Multas_Estrato_Excluido" ("licId");
+        `)
+
+        // 8. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
             DO $$ 
             BEGIN

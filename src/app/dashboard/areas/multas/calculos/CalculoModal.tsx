@@ -48,7 +48,9 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                 ...res.data,
                 utmValue: res.utmValue,
                 utmPeriod: res.utmPeriod,
-                racionesValue: res.racionesValue
+                racionesValue: res.racionesValue,
+                racionesExcluidas: res.racionesExcluidas || 0,
+                estratosExcluidos: res.estratosExcluidos || []
             })
             setDetalles(res.detalles || [])
             setHasPmpa(res.hasPmpa || false)
@@ -543,7 +545,14 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                     <span>💰 UTM: ${data?.utmValue?.toLocaleString()} <span className="font-normal opacity-70">({data?.utmPeriod})</span></span>
                                                                 )}
                                                                 {d.formulaAsignada.toUpperCase().includes('RACIONES') && (
-                                                                    <span>📊 RACIONES: {data?.racionesValue?.toLocaleString()}</span>
+                                                                    <span className="flex items-center gap-1.5 flex-wrap">
+                                                                        <span>📊 RACIONES: {data?.racionesValue?.toLocaleString()}</span>
+                                                                        {data?.racionesExcluidas > 0 && (
+                                                                            <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded" title={`Se excluyeron ${data.racionesExcluidas} raciones de estratos: ${data.estratosExcluidos?.join(', ')}`}>
+                                                                                (Se excluyeron {data.racionesExcluidas} por estratos {data.estratosExcluidos?.join(', ')})
+                                                                            </span>
+                                                                        )}
+                                                                    </span>
                                                                 )}
                                                                 {d.formulaAsignada.toUpperCase().includes('NIVELCONTROLADO') && (() => {
                                                                     const selectedLevelLabel = customValues['NIVELCONTROLADO'] || ''

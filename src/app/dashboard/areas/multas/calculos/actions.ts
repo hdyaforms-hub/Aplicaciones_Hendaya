@@ -6,6 +6,7 @@ import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
 import { evaluarRestriccionAspecto } from '@/lib/multas/restricciones'
 import { generarAlertasITAspecto } from '@/lib/multas/it/alertas'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { getRacionesFolio } from '@/lib/multas/raciones'
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -55,28 +56,31 @@ export async function getLicitacionesDisponibles() {
         })
 
         const options: { value: string; label: string }[] = []
-        const seenValues = new Set<string>()
+        const seenKeys = new Set<string>()
 
         for (const l of lics) {
             const val = String(l.licId)
-            const label = l.licitacionHomologada && l.licitacionHomologada !== String(l.licId)
-                ? `${l.licitacionHomologada} (${l.licId})`
-                : (l.licitacionHomologada || `Licitación ${l.licId}`)
+            const homologada = l.licitacionHomologada ? l.licitacionHomologada.trim() : ''
+            const label = homologada && homologada !== val
+                ? `${homologada} (${l.licId})`
+                : (homologada || `Licitación ${l.licId}`)
 
-            seenValues.add(val)
-            if (l.licitacionHomologada) {
-                seenValues.add(l.licitacionHomologada.toUpperCase().trim())
-            }
+            const key = (homologada || val).toUpperCase()
+            if (seenKeys.has(key) || seenKeys.has(val)) continue
+
+            seenKeys.add(val)
+            if (homologada) seenKeys.add(homologada.toUpperCase())
+
             options.push({ value: val, label })
         }
 
         for (const c of cabLics) {
             const raw = c.licitacion?.trim()
             if (!raw) continue
-            if (c.licId && seenValues.has(String(c.licId))) continue
-            if (seenValues.has(raw.toUpperCase())) continue
+            if (c.licId && seenKeys.has(String(c.licId))) continue
+            if (seenKeys.has(raw.toUpperCase())) continue
 
-            seenValues.add(raw.toUpperCase())
+            seenKeys.add(raw.toUpperCase())
             options.push({ value: raw, label: raw })
         }
 
@@ -187,7 +191,12 @@ export async function getFoliosIncompletos(params: {
             const isNum = !isNaN(Number(params.licitacion))
             if (!whereClause.AND) whereClause.AND = []
             if (isNum) {
-                whereClause.AND.push({ licId: Number(params.licitacion) })
+                whereClause.AND.push({
+                    OR: [
+                        { licId: Number(params.licitacion) },
+                        { licitacion: params.licitacion }
+                    ]
+                })
             } else {
                 whereClause.AND.push({ licitacion: { contains: params.licitacion, mode: 'insensitive' } })
             }
@@ -483,7 +492,12 @@ export async function calculateAll(params: {
             const isNum = !isNaN(Number(params.licitacion))
             if (!whereClause.AND) whereClause.AND = []
             if (isNum) {
-                whereClause.AND.push({ licId: Number(params.licitacion) })
+                whereClause.AND.push({
+                    OR: [
+                        { licId: Number(params.licitacion) },
+                        { licitacion: params.licitacion }
+                    ]
+                })
             } else {
                 whereClause.AND.push({ licitacion: { contains: params.licitacion, mode: 'insensitive' } })
             }
@@ -557,10 +571,15 @@ export async function calculateAll(params: {
                 const mes = fecha.getMonth() + 1
                 const utmVal = allUtms.find(u => u.anho === anho && u.mes === mes)?.monto || 0
                 
-                const pmpas = await prisma.pMPA.findMany({
-                    where: { rbd, ano: anho, mes, licitacion: licId, servicio: serviceCode }
+                const racionesData = await getRacionesFolio({
+                    rbd,
+                    anho,
+                    mes,
+                    licId,
+                    servicioCodigo: serviceCode,
+                    excluirEstratos: false
                 })
-                const raciones = pmpas.reduce((acc, curr) => acc + curr.raceqJunaeb, 0)
+                const raciones = racionesData.racionesTotal
 
                 // Calculate each NC aspect
                 let totalMonto = 0
@@ -698,7 +717,7 @@ export async function calculateAll(params: {
                 }
 
                 // 2. Map PMPA levels for NIVELCONTROLADO lookup
-                const nivelesMap = pmpas.reduce((acc: any, curr) => {
+                const nivelesMap = racionesData.recordsValidos.reduce((acc: any, curr: any) => {
                     if (!acc[curr.nivel]) acc[curr.nivel] = 0
                     acc[curr.nivel] += curr.raceqJunaeb
                     return acc
@@ -911,6 +930,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         }
 
         let parametrosConfig: any = null
+        let moduloC2Activo = false
         if (paramLicitacion) {
             let tablaAqlParsed = undefined
             if (paramLicitacion.tablaAqlJson) {
@@ -939,6 +959,10 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                         if (c5) {
                             moduloC5Activo = c5.activo !== false
                             submodulosActivos = c5.submodulos
+                        }
+                        const c2 = parsedMod.find((m: any) => m.codigo === 'C2')
+                        if (c2) {
+                            moduloC2Activo = c2.activo === true
                         }
                     }
                 } catch {
@@ -1024,25 +1048,22 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             }
 
             if (serviceCode) {
-                const allPmpas = await prisma.pMPA.findMany({
-                    where: { rbd, ano: anho, mes, servicio: serviceCode }
+                const racionesData = await getRacionesFolio({
+                    rbd,
+                    anho,
+                    mes,
+                    licId: cab.licId || licId || 0,
+                    servicioCodigo: serviceCode,
+                    excluirEstratos: moduloC2Activo
                 })
-                
-                if (allPmpas.length > 0) {
+
+                if (racionesData.racionesTotal > 0 || racionesData.recordsValidos.length > 0) {
                     pmpaRecord = {
-                        raceqJunaeb: allPmpas.reduce((acc, curr) => acc + curr.raceqJunaeb, 0)
+                        raceqJunaeb: racionesData.racionesTotal,
+                        racionesExcluidas: racionesData.racionesExcluidas,
+                        estratosExcluidos: racionesData.estratosExcluidosAplicados
                     }
-                    
-                    const nivelesMap = allPmpas.reduce((acc: any, curr) => {
-                        if (!acc[curr.nivel]) acc[curr.nivel] = 0
-                        acc[curr.nivel] += curr.raceqJunaeb
-                        return acc
-                    }, {})
-                    
-                    pmpaNiveles = Object.entries(nivelesMap).map(([nivel, raciones]) => ({
-                        label: nivel,
-                        value: raciones as number
-                    }))
+                    pmpaNiveles = racionesData.niveles
                 }
             }
         }
@@ -1258,6 +1279,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             utmValue: utmRecord?.monto || 0,
             utmPeriod: utmRecord ? `${mes}/${anho}` : 'N/D',
             racionesValue: racionesTotal,
+            racionesExcluidas: pmpaRecord?.racionesExcluidas || 0,
+            estratosExcluidos: pmpaRecord?.estratosExcluidos || [],
             keywordsNeeded: Array.from(keywordsNeeded),
             pmpaNiveles,
             savedVariables,

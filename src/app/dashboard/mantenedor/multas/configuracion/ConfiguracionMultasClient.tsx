@@ -4,12 +4,21 @@ import React, { useState, useEffect } from 'react'
 import {
     getParametrosLicitacion,
     guardarParametrosLicitacion,
-    restablecerParametrosDefecto
+    restablecerParametrosDefecto,
+    getHorariosServicio,
+    guardarHorariosServicio,
+    cargarHorariosSugeridos,
+    getEstratosExcluidos,
+    guardarEstratoExcluido,
+    toggleEstratoExcluido,
+    eliminarEstratoExcluido,
+    cargarEstratosSugeridos
 } from './actions'
 import {
     ModuloSistemaConfig,
     SubModuloReglasC5,
-    SUBMODULOS_C5_DEFAULT
+    SUBMODULOS_C5_DEFAULT,
+    HorarioServicioItem
 } from './types'
 
 interface LicitacionOption {
@@ -24,7 +33,7 @@ interface Props {
 
 export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [selectedLicId, setSelectedLicId] = useState<number>(licitaciones[0]?.licId || 0)
-    const [activeTab, setActiveTab] = useState<'modulos' | 'parametros' | 'aql' | 'causas'>('modulos')
+    const [activeTab, setActiveTab] = useState<'modulos' | 'horarios' | 'estratos' | 'parametros' | 'aql' | 'causas'>('modulos')
 
     // Estado de parámetros
     const [loading, setLoading] = useState<boolean>(false)
@@ -32,7 +41,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [error, setError] = useState<string | null>(null)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
-    // Form data
+    // Form data Parámetros
     const [modulos, setModulos] = useState<ModuloSistemaConfig[]>([])
     const [ratioH, setRatioH] = useState<number>(70)
     const [tempRefriMin, setTempRefriMin] = useState<number>(0.0)
@@ -47,16 +56,27 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [lastUpdated, setLastUpdated] = useState<string | null>(null)
     const [usuarioModif, setUsuarioModif] = useState<string | null>(null)
 
+    // Form data C2.1 Horarios por Servicio
+    const [horarios, setHorarios] = useState<HorarioServicioItem[]>([])
+    const [savingHorarios, setSavingHorarios] = useState(false)
+
+    // Form data C2.2 Estratos Excluidos
+    const [estratos, setEstratos] = useState<any[]>([])
+    const [nuevoEstrato, setNuevoEstrato] = useState('')
+    const [descEstrato, setDescEstrato] = useState('')
+    const [savingEstrato, setSavingEstrato] = useState(false)
+
     // Cargar datos al seleccionar licitación
     useEffect(() => {
         if (!selectedLicId) return
         loadLicitacionConfig(selectedLicId)
+        loadHorarios(selectedLicId)
+        loadEstratos(selectedLicId)
     }, [selectedLicId])
 
     const loadLicitacionConfig = async (licId: number) => {
         setLoading(true)
         setError(null)
-        setSuccessMessage(null)
         try {
             const res = await getParametrosLicitacion(licId)
             if (res.error) {
@@ -81,6 +101,28 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
             setError(err.message || 'Error al cargar la configuración de la licitación.')
         } finally {
             setLoading(false)
+        }
+    }
+
+    const loadHorarios = async (licId: number) => {
+        try {
+            const res = await getHorariosServicio(licId)
+            if (res.horarios) {
+                setHorarios(res.horarios)
+            }
+        } catch (err) {
+            console.error('Error cargando horarios:', err)
+        }
+    }
+
+    const loadEstratos = async (licId: number) => {
+        try {
+            const res = await getEstratosExcluidos(licId)
+            if (res.estratos) {
+                setEstratos(res.estratos)
+            }
+        } catch (err) {
+            console.error('Error cargando estratos:', err)
         }
     }
 
@@ -162,6 +204,123 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
         }
     }
 
+    // Handlers C2.1 Horarios
+    const handleUpdateHorario = (index: number, field: keyof HorarioServicioItem, val: any) => {
+        const next = [...horarios]
+        next[index] = { ...next[index], [field]: val }
+        setHorarios(next)
+    }
+
+    const handleSaveHorarios = async () => {
+        if (!selectedLicId) return
+        setSavingHorarios(true)
+        setError(null)
+        setSuccessMessage(null)
+        try {
+            const res = await guardarHorariosServicio(selectedLicId, horarios)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage('¡Horarios por servicio guardados exitosamente!')
+                loadHorarios(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al guardar horarios.')
+        } finally {
+            setSavingHorarios(false)
+        }
+    }
+
+    const handleCargarHorariosSugeridos = async () => {
+        if (!selectedLicId) return
+        setSavingHorarios(true)
+        setError(null)
+        setSuccessMessage(null)
+        try {
+            const res = await cargarHorariosSugeridos(selectedLicId)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage('¡Horarios sugeridos oficiales cargados exitosamente!')
+                loadHorarios(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al cargar horarios sugeridos.')
+        } finally {
+            setSavingHorarios(false)
+        }
+    }
+
+    // Handlers C2.2 Estratos
+    const handleAddEstrato = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!selectedLicId || !nuevoEstrato.trim()) return
+        setSavingEstrato(true)
+        setError(null)
+        try {
+            const res = await guardarEstratoExcluido(selectedLicId, nuevoEstrato, descEstrato)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setNuevoEstrato('')
+                setDescEstrato('')
+                setSuccessMessage(`Estrato ${nuevoEstrato} agregado exitosamente.`)
+                loadEstratos(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al agregar estrato.')
+        } finally {
+            setSavingEstrato(false)
+        }
+    }
+
+    const handleToggleEstrato = async (id: string, activoActual: boolean) => {
+        try {
+            const res = await toggleEstratoExcluido(id, !activoActual)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                loadEstratos(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al modificar estrato.')
+        }
+    }
+
+    const handleDeleteEstrato = async (id: string, estrato: string) => {
+        if (!confirm(`¿Estás seguro de eliminar el estrato ${estrato}?`)) return
+        try {
+            const res = await eliminarEstratoExcluido(id)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(`Estrato ${estrato} eliminado.`)
+                loadEstratos(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al eliminar estrato.')
+        }
+    }
+
+    const handleCargarEstratosSugeridos = async () => {
+        if (!selectedLicId) return
+        setSavingEstrato(true)
+        setError(null)
+        try {
+            const res = await cargarEstratosSugeridos(selectedLicId)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage('Estratos sugeridos (206, 208, 209) cargados exitosamente.')
+                loadEstratos(selectedLicId)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al cargar estratos sugeridos.')
+        } finally {
+            setSavingEstrato(false)
+        }
+    }
+
     // Handlers para tabla AQL
     const handleUpdateAqlRow = (index: number, field: string, val: any) => {
         const next = [...tablaAql]
@@ -202,7 +361,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                             </h2>
                         </div>
                         <p className="text-xs text-slate-500 mt-1">
-                            Control modular (C1 - C11), tolerancias técnicas de cálculo y tabla de muestreo AQL por licitación autorizada.
+                            Control modular (C1 - C11), horarios por servicio, estratos excluidos, tolerancias técnicas y tabla AQL por licitación autorizada.
                         </p>
                     </div>
 
@@ -226,7 +385,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                             className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl text-xs font-bold shadow-md shadow-cyan-600/20 transition-all flex items-center gap-2 disabled:opacity-50"
                         >
                             <span>💾</span>
-                            <span>{saving ? 'Guardando...' : 'Guardar Cambios'}</span>
+                            <span>{saving ? 'Guardando...' : 'Guardar Parámetros'}</span>
                         </button>
                     </div>
                 </div>
@@ -266,10 +425,10 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
                 <button
                     onClick={() => setActiveTab('modulos')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'modulos'
                             ? 'bg-slate-900 text-white shadow-sm'
                             : 'text-slate-600 hover:bg-slate-100'
@@ -283,8 +442,38 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </button>
 
                 <button
+                    onClick={() => setActiveTab('horarios')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+                        activeTab === 'horarios'
+                            ? 'bg-slate-900 text-white shadow-sm'
+                            : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                >
+                    <span>⏰</span>
+                    <span>Horarios por Servicio (C2.1)</span>
+                    <span className="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-500 text-white text-[10px]">
+                        {horarios.filter(h => h.activo).length}/{horarios.length}
+                    </span>
+                </button>
+
+                <button
+                    onClick={() => setActiveTab('estratos')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+                        activeTab === 'estratos'
+                            ? 'bg-slate-900 text-white shadow-sm'
+                            : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                >
+                    <span>🚫</span>
+                    <span>Estratos Excluidos (C2.2)</span>
+                    <span className="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-500 text-white text-[10px]">
+                        {estratos.filter(e => e.activo).length}/{estratos.length}
+                    </span>
+                </button>
+
+                <button
                     onClick={() => setActiveTab('parametros')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'parametros'
                             ? 'bg-slate-900 text-white shadow-sm'
                             : 'text-slate-600 hover:bg-slate-100'
@@ -296,7 +485,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
 
                 <button
                     onClick={() => setActiveTab('aql')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'aql'
                             ? 'bg-slate-900 text-white shadow-sm'
                             : 'text-slate-600 hover:bg-slate-100'
@@ -308,7 +497,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
 
                 <button
                     onClick={() => setActiveTab('causas')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'causas'
                             ? 'bg-slate-900 text-white shadow-sm'
                             : 'text-slate-600 hover:bg-slate-100'
@@ -383,6 +572,28 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                     </p>
                                 </div>
 
+                                {/* Acciones rápidas para C2: Horarios y Estratos */}
+                                {m.codigo === 'C2' && (
+                                    <div className="mt-3 pt-3 border-t border-slate-200/60 flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveTab('horarios')}
+                                            className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-[10px] font-bold transition-all shadow-sm flex items-center gap-1"
+                                        >
+                                            <span>⏰</span>
+                                            <span>Configurar Horarios</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveTab('estratos')}
+                                            className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-[10px] font-bold transition-all shadow-sm flex items-center gap-1"
+                                        >
+                                            <span>🚫</span>
+                                            <span>Estratos Excluidos</span>
+                                        </button>
+                                    </div>
+                                )}
+
                                 {/* Sub-reglas granulares para el Módulo C5 */}
                                 {m.codigo === 'C5' && m.activo && (
                                     <div className="mt-3 pt-3 border-t border-cyan-200/60 space-y-2">
@@ -421,7 +632,230 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </div>
             )}
 
-            {/* TAB 2: PARAMETROS TECNICOS */}
+            {/* TAB 2: HORARIOS POR SERVICIO (C2.1) */}
+            {activeTab === 'horarios' && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded bg-cyan-900 text-white text-[11px] font-black">C2.1</span>
+                                <h3 className="text-sm font-black text-slate-800">
+                                    Catálogo de Horarios por Servicio Oficiales
+                                </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Establece la ventana horaria oficial para cada servicio de la licitación. Permite detectar supervisiones fuera de horario.
+                            </p>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={handleCargarHorariosSugeridos}
+                                disabled={savingHorarios}
+                                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+                            >
+                                <span>📋</span>
+                                <span>Cargar Horarios Sugeridos</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleSaveHorarios}
+                                disabled={savingHorarios}
+                                className="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-bold shadow-md shadow-cyan-600/20 transition-all flex items-center gap-1"
+                            >
+                                <span>💾</span>
+                                <span>{savingHorarios ? 'Guardando...' : 'Guardar Horarios'}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-xs text-left">
+                            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                                <tr>
+                                    <th className="p-3">Servicio</th>
+                                    <th className="p-3 text-center">Hora Inicio (HH:MM)</th>
+                                    <th className="p-3 text-center">Hora Fin (HH:MM)</th>
+                                    <th className="p-3 text-center">Tolerancia (Min)</th>
+                                    <th className="p-3 text-center">Habilitado</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {horarios.map((h, idx) => (
+                                    <tr key={h.servicioCodigo} className="hover:bg-slate-50/60 transition-colors">
+                                        <td className="p-3 font-semibold text-slate-800 flex items-center gap-2">
+                                            <span className="w-6 h-6 rounded-md bg-cyan-100 text-cyan-800 text-[11px] font-black flex items-center justify-center shrink-0">
+                                                {h.servicioCodigo}
+                                            </span>
+                                            <span>{h.servicioNombre}</span>
+                                        </td>
+                                        <td className="p-3 text-center">
+                                            <input
+                                                type="time"
+                                                value={h.horaInicio}
+                                                onChange={e => handleUpdateHorario(idx, 'horaInicio', e.target.value)}
+                                                className="px-2.5 py-1 text-center bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                            />
+                                        </td>
+                                        <td className="p-3 text-center">
+                                            <input
+                                                type="time"
+                                                value={h.horaFin}
+                                                onChange={e => handleUpdateHorario(idx, 'horaFin', e.target.value)}
+                                                className="px-2.5 py-1 text-center bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                            />
+                                        </td>
+                                        <td className="p-3 text-center">
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max="120"
+                                                value={h.toleranciaMinutos}
+                                                onChange={e => handleUpdateHorario(idx, 'toleranciaMinutos', Number(e.target.value))}
+                                                className="w-16 px-2 py-1 text-center bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                            />
+                                        </td>
+                                        <td className="p-3 text-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleUpdateHorario(idx, 'activo', !h.activo)}
+                                                className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                                    h.activo ? 'bg-cyan-600' : 'bg-slate-300'
+                                                }`}
+                                            >
+                                                <span
+                                                    className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
+                                                        h.activo ? 'translate-x-5' : 'translate-x-0'
+                                                    }`}
+                                                />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+            {/* TAB 3: ESTRATOS EXCLUIDOS (C2.2) */}
+            {activeTab === 'estratos' && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded bg-amber-900 text-white text-[11px] font-black">C2.2</span>
+                                <h3 className="text-sm font-black text-slate-800">
+                                    Estratos Excluidos de Raciones (PMPA)
+                                </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Estratos que no se suman a las raciones evaluadas según norma JUNAEB (ej. 206, 208, 209). Solo se aplican si el módulo C2 está activo.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={handleCargarEstratosSugeridos}
+                            disabled={savingEstrato}
+                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition-all flex items-center gap-1 self-start sm:self-auto"
+                        >
+                            <span>📋</span>
+                            <span>Cargar Sugeridos JUNAEB (206, 208, 209)</span>
+                        </button>
+                    </div>
+
+                    {/* Formulario rápido para agregar estrato */}
+                    <form onSubmit={handleAddEstrato} className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row items-end gap-3">
+                        <div className="w-full md:w-40">
+                            <label className="text-[10px] font-bold text-slate-500 block mb-1">Código Estrato</label>
+                            <input
+                                type="text"
+                                placeholder="Ej: 206"
+                                value={nuevoEstrato}
+                                onChange={e => setNuevoEstrato(e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            />
+                        </div>
+                        <div className="w-full md:flex-1">
+                            <label className="text-[10px] font-bold text-slate-500 block mb-1">Descripción / Motivo Exclusión</label>
+                            <input
+                                type="text"
+                                placeholder="Motivo oficial o alcance de la exclusión..."
+                                value={descEstrato}
+                                onChange={e => setDescEstrato(e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            disabled={savingEstrato || !nuevoEstrato.trim()}
+                            className="w-full md:w-auto px-4 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1 disabled:opacity-50 shrink-0"
+                        >
+                            <span>➕</span>
+                            <span>Agregar Estrato</span>
+                        </button>
+                    </form>
+
+                    {/* Tabla de estratos registrados */}
+                    <div className="space-y-2">
+                        {estratos.length === 0 ? (
+                            <p className="text-xs text-slate-400 italic text-center py-4">
+                                No hay estratos excluidos configurados para esta licitación. Haz clic en &quot;Cargar Sugeridos JUNAEB&quot; para precargar 206, 208 y 209.
+                            </p>
+                        ) : (
+                            estratos.map(est => (
+                                <div
+                                    key={est.id}
+                                    className="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3 hover:border-slate-300 transition-all"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 font-black text-xs">
+                                            {est.estrato}
+                                        </span>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-800">
+                                                {est.descripcion || 'Sin descripción'}
+                                            </p>
+                                            <span className="text-[10px] text-slate-400">
+                                                {est.activo ? '🟢 Activo en cálculo' : '⚪ Inactivo'}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleToggleEstrato(est.id, est.activo)}
+                                            className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                                est.activo ? 'bg-cyan-600' : 'bg-slate-300'
+                                            }`}
+                                        >
+                                            <span
+                                                className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
+                                                    est.activo ? 'translate-x-5' : 'translate-x-0'
+                                                }`}
+                                            />
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDeleteEstrato(est.id, est.estrato)}
+                                            className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg text-xs transition-colors"
+                                            title="Eliminar estrato"
+                                        >
+                                            <span>🗑️</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* TAB 4: PARAMETROS TECNICOS */}
             {activeTab === 'parametros' && (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
                     <div>
@@ -575,7 +1009,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </div>
             )}
 
-            {/* TAB 3: TABLA AQL */}
+            {/* TAB 5: TABLA AQL */}
             {activeTab === 'aql' && (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
                     <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -662,7 +1096,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </div>
             )}
 
-            {/* TAB 4: CAUSAS NO IMPUTABLES */}
+            {/* TAB 6: CAUSAS NO IMPUTABLES */}
             {activeTab === 'causas' && (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
                     <div className="flex items-center justify-between pb-3 border-b border-slate-100">

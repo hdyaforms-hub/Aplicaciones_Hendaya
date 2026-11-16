@@ -11,7 +11,8 @@ import {
     ModuloSistemaConfig,
     MODULOS_C_DEFAULT,
     CAUSAS_NO_IMPUTABLES_DEFAULT,
-    SUBMODULOS_C5_DEFAULT
+    SUBMODULOS_C5_DEFAULT,
+    HorarioServicioItem
 } from './types'
 
 const PATH = '/dashboard/mantenedor/multas/configuracion'
@@ -332,3 +333,398 @@ export async function restablecerParametrosDefecto(licId: number) {
         return { error: error.message || 'Error al restablecer parámetros.' }
     }
 }
+
+/**
+ * =======================================================================
+ * C2.1 HORARIOS POR SERVICIO (CATÁLOGO DE VALIDACIÓN)
+ * =======================================================================
+ */
+
+
+const HORARIOS_SUGERIDOS_OFICIALES: Record<string, { horaInicio: string; horaFin: string; toleranciaMinutos: number }> = {
+    'D': { horaInicio: '06:30', horaFin: '10:30', toleranciaMinutos: 15 },
+    'A': { horaInicio: '11:30', horaFin: '15:30', toleranciaMinutos: 15 },
+    'O': { horaInicio: '15:00', horaFin: '18:00', toleranciaMinutos: 15 },
+    'C': { horaInicio: '18:30', horaFin: '21:30', toleranciaMinutos: 15 },
+    'T': { horaInicio: '15:00', horaFin: '18:00', toleranciaMinutos: 15 }
+}
+
+export async function getHorariosServicio(licId: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para consultar horarios por servicio.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const servicios = await prisma.multaServicio.findMany({
+            orderBy: { nombre: 'asc' }
+        })
+
+        const horarios = await prisma.multas_Horario_Servicio.findMany({
+            where: { licId }
+        })
+
+        const items: HorarioServicioItem[] = servicios.map(s => {
+            const h = horarios.find(x => x.servicioCodigo === s.codigo)
+            const sug = HORARIOS_SUGERIDOS_OFICIALES[s.codigo] || { horaInicio: '08:00', horaFin: '12:00', toleranciaMinutos: 0 }
+            return {
+                id: h?.id,
+                servicioCodigo: s.codigo,
+                servicioNombre: s.nombre,
+                horaInicio: h?.horaInicio || sug.horaInicio,
+                horaFin: h?.horaFin || sug.horaFin,
+                toleranciaMinutos: h?.toleranciaMinutos ?? sug.toleranciaMinutos,
+                activo: h?.activo ?? false
+            }
+        })
+
+        return { horarios: items }
+    } catch (error: any) {
+        console.error('Error al obtener horarios de servicio:', error)
+        return { error: error.message || 'Error al obtener horarios de servicio.' }
+    }
+}
+
+export async function guardarHorariosServicio(
+    licId: number,
+    horarios: Array<{ servicioCodigo: string; horaInicio: string; horaFin: string; toleranciaMinutos: number; activo: boolean }>
+) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para guardar horarios.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/
+
+        for (const h of horarios) {
+            if (!timeRegex.test(h.horaInicio) || !timeRegex.test(h.horaFin)) {
+                return { error: `Formato de hora inválido para el servicio ${h.servicioCodigo} (debe ser HH:MM).` }
+            }
+            if (h.horaInicio >= h.horaFin) {
+                return { error: `La hora de inicio (${h.horaInicio}) debe ser menor a la hora de fin (${h.horaFin}) para ${h.servicioCodigo}.` }
+            }
+        }
+
+        for (const h of horarios) {
+            await prisma.multas_Horario_Servicio.upsert({
+                where: {
+                    licId_servicioCodigo: {
+                        licId,
+                        servicioCodigo: h.servicioCodigo
+                    }
+                },
+                create: {
+                    licId,
+                    servicioCodigo: h.servicioCodigo,
+                    horaInicio: h.horaInicio,
+                    horaFin: h.horaFin,
+                    toleranciaMinutos: Number(h.toleranciaMinutos) || 0,
+                    activo: h.activo,
+                    usuarioModif: username
+                },
+                update: {
+                    horaInicio: h.horaInicio,
+                    horaFin: h.horaFin,
+                    toleranciaMinutos: Number(h.toleranciaMinutos) || 0,
+                    activo: h.activo,
+                    usuarioModif: username
+                }
+            })
+        }
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'EDIT_MULTAS_HORARIOS',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Guardados horarios de servicio para Licitación ID: ${licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al guardar horarios de servicio:', error)
+        return { error: error.message || 'Error al guardar horarios.' }
+    }
+}
+
+export async function cargarHorariosSugeridos(licId: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para cargar horarios sugeridos.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const servicios = await prisma.multaServicio.findMany()
+
+        for (const s of servicios) {
+            const sug = HORARIOS_SUGERIDOS_OFICIALES[s.codigo] || { horaInicio: '08:00', horaFin: '12:00', toleranciaMinutos: 15 }
+            await prisma.multas_Horario_Servicio.upsert({
+                where: {
+                    licId_servicioCodigo: {
+                        licId,
+                        servicioCodigo: s.codigo
+                    }
+                },
+                create: {
+                    licId,
+                    servicioCodigo: s.codigo,
+                    horaInicio: sug.horaInicio,
+                    horaFin: sug.horaFin,
+                    toleranciaMinutos: sug.toleranciaMinutos,
+                    activo: true,
+                    usuarioModif: username
+                },
+                update: {
+                    horaInicio: sug.horaInicio,
+                    horaFin: sug.horaFin,
+                    toleranciaMinutos: sug.toleranciaMinutos,
+                    activo: true,
+                    usuarioModif: username
+                }
+            })
+        }
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'SUGGEST_MULTAS_HORARIOS',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Cargados horarios sugeridos oficiales para Licitación ID: ${licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al cargar horarios sugeridos:', error)
+        return { error: error.message || 'Error al cargar horarios sugeridos.' }
+    }
+}
+
+/**
+ * =======================================================================
+ * C2.2 ESTRATOS EXCLUIDOS (CATÁLOGO DE VALIDACIÓN)
+ * =======================================================================
+ */
+
+export async function getEstratosExcluidos(licId: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para consultar estratos excluidos.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const estratos = await prisma.multas_Estrato_Excluido.findMany({
+            where: { licId },
+            orderBy: { estrato: 'asc' }
+        })
+
+        return { estratos }
+    } catch (error: any) {
+        console.error('Error al consultar estratos excluidos:', error)
+        return { error: error.message || 'Error al consultar estratos excluidos.' }
+    }
+}
+
+export async function guardarEstratoExcluido(licId: number, estrato: string, descripcion?: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para agregar estratos.' }
+    }
+
+    const cleanEstrato = estrato.trim()
+    if (!cleanEstrato) {
+        return { error: 'El código de estrato no puede estar vacío.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const record = await prisma.multas_Estrato_Excluido.upsert({
+            where: {
+                licId_estrato: {
+                    licId,
+                    estrato: cleanEstrato
+                }
+            },
+            create: {
+                licId,
+                estrato: cleanEstrato,
+                descripcion: descripcion?.trim() || null,
+                activo: true,
+                usuarioModif: username
+            },
+            update: {
+                descripcion: descripcion?.trim() || null,
+                activo: true,
+                usuarioModif: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'ADD_MULTAS_ESTRATO',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Agregado estrato excluido ${cleanEstrato} para Licitación ID: ${licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, record }
+    } catch (error: any) {
+        console.error('Error al guardar estrato excluido:', error)
+        return { error: error.message || 'Error al guardar estrato.' }
+    }
+}
+
+export async function toggleEstratoExcluido(id: string, activo: boolean) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para modificar estratos.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const updated = await prisma.multas_Estrato_Excluido.update({
+            where: { id },
+            data: {
+                activo,
+                usuarioModif: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'TOGGLE_MULTAS_ESTRATO',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Estado de estrato ${updated.estrato} cambiado a ${activo ? 'ACTIVO' : 'INACTIVO'}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, updated }
+    } catch (error: any) {
+        console.error('Error al modificar estrato:', error)
+        return { error: error.message || 'Error al modificar estrato.' }
+    }
+}
+
+export async function eliminarEstratoExcluido(id: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para eliminar estratos.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const deleted = await prisma.multas_Estrato_Excluido.delete({
+            where: { id }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'DELETE_MULTAS_ESTRATO',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Eliminado estrato excluido ${deleted.estrato} de Licitación ID: ${deleted.licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al eliminar estrato:', error)
+        return { error: error.message || 'Error al eliminar estrato.' }
+    }
+}
+
+export async function cargarEstratosSugeridos(licId: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para cargar estratos sugeridos.' }
+    }
+
+    const SUGERIDOS = [
+        { estrato: '206', descripcion: 'Estrato especial JUNAEB excluido de raciones base' },
+        { estrato: '208', descripcion: 'Estrato complementario JUNAEB excluido de raciones base' },
+        { estrato: '209', descripcion: 'Estrato no regular JUNAEB excluido de raciones base' }
+    ]
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        for (const s of SUGERIDOS) {
+            await prisma.multas_Estrato_Excluido.upsert({
+                where: {
+                    licId_estrato: {
+                        licId,
+                        estrato: s.estrato
+                    }
+                },
+                create: {
+                    licId,
+                    estrato: s.estrato,
+                    descripcion: s.descripcion,
+                    activo: true,
+                    usuarioModif: username
+                },
+                update: {
+                    descripcion: s.descripcion,
+                    activo: true,
+                    usuarioModif: username
+                }
+            })
+        }
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'SUGGEST_MULTAS_ESTRATOS',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Cargados estratos sugeridos oficiales (206, 208, 209) para Licitación ID: ${licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al cargar estratos sugeridos:', error)
+        return { error: error.message || 'Error al cargar estratos sugeridos.' }
+    }
+}
+

@@ -117,3 +117,24 @@ export const CAUSAS_NO_IMPUTABLES_DEFAULT = [
     { terminoClave: 'lluvia torrencial', descripcion: 'Lluvia torrencial o inundación con afectación de infraestructura.', imputable: false },
     { terminoClave: 'temporal con anegamiento', descripcion: 'Temporal climático severo con anegamiento de accesos o cocina.', imputable: false }
 ]
+
+export interface HorarioServicioItem {
+    id?: string
+    servicioCodigo: string
+    servicioNombre: string
+    horaInicio: string
+    horaFin: string
+    toleranciaMinutos: number
+    activo: boolean
+}
+
+export interface EstratoExcluidoItem {
+    id: string
+    licId: number
+    estrato: string
+    descripcion?: string | null
+    activo: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+}
+
