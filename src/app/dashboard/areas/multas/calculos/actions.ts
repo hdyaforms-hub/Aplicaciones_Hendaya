@@ -817,9 +817,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         // Buscar Parámetros Globales y Técnicos de la Licitación (Hub C1)
         let paramLicitacion: any = null
         if (licId) {
-            paramLicitacion = await prisma.multas_Parametros_Licitacion.findUnique({
-                where: { licId }
-            })
+            try {
+                paramLicitacion = await prisma.multas_Parametros_Licitacion.findUnique({
+                    where: { licId }
+                })
+            } catch (pErr) {
+                console.warn('Advertencia al consultar parametros de licitacion:', pErr)
+            }
         }
 
         let parametrosConfig: any = null
