@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
+import { getMultasDelegate } from '@/lib/multas/db'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
@@ -17,6 +18,12 @@ import {
     ManipuladoraMesItem,
     MinutaMesItem
 } from './types'
+
+const dbParametros = () => getMultasDelegate('multas_Parametros_Licitacion')
+const dbHorarios = () => getMultasDelegate('multas_Horario_Servicio')
+const dbEstratos = () => getMultasDelegate('multas_Estrato_Excluido')
+const dbManipuladoras = () => getMultasDelegate('multas_Manipuladora_Mes')
+const dbMinutas = () => getMultasDelegate('multas_Minuta_Mes')
 
 const PATH = '/dashboard/mantenedor/multas/configuracion'
 
@@ -117,7 +124,7 @@ export async function getParametrosLicitacion(licId: number) {
             return { error: `Licitación ${licId} no encontrada.` }
         }
 
-        const paramRecord = await prisma.multas_Parametros_Licitacion.findUnique({
+        const paramRecord = await dbParametros().findUnique({
             where: { licId }
         })
 
@@ -248,7 +255,7 @@ export async function guardarParametrosLicitacion(data: {
         const tablaAqlJson = JSON.stringify(tablaAqlSanitizada)
         const causasNoImputablesJson = JSON.stringify(data.causasNoImputables)
 
-        const saved = await prisma.multas_Parametros_Licitacion.upsert({
+        const saved = await dbParametros().upsert({
             where: { licId: data.licId },
             create: {
                 licId: data.licId,
@@ -317,7 +324,7 @@ export async function restablecerParametrosDefecto(licId: number) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        await prisma.multas_Parametros_Licitacion.deleteMany({
+        await dbParametros().deleteMany({
             where: { licId }
         })
 
@@ -367,12 +374,12 @@ export async function getHorariosServicio(licId: number) {
             orderBy: { nombre: 'asc' }
         })
 
-        const horarios = await prisma.multas_Horario_Servicio.findMany({
+        const horarios = await dbHorarios().findMany({
             where: { licId }
         })
 
         const items: HorarioServicioItem[] = servicios.map(s => {
-            const h = horarios.find(x => x.servicioCodigo === s.codigo)
+            const h = (horarios as any[]).find((x: any) => x.servicioCodigo === s.codigo)
             const sug = HORARIOS_SUGERIDOS_OFICIALES[s.codigo] || { horaInicio: '08:00', horaFin: '12:00', toleranciaMinutos: 0 }
             return {
                 id: h?.id,
@@ -417,7 +424,7 @@ export async function guardarHorariosServicio(
         }
 
         for (const h of horarios) {
-            await prisma.multas_Horario_Servicio.upsert({
+            await dbHorarios().upsert({
                 where: {
                     licId_servicioCodigo: {
                         licId,
@@ -477,7 +484,7 @@ export async function cargarHorariosSugeridos(licId: number) {
 
         for (const s of servicios) {
             const sug = HORARIOS_SUGERIDOS_OFICIALES[s.codigo] || { horaInicio: '08:00', horaFin: '12:00', toleranciaMinutos: 15 }
-            await prisma.multas_Horario_Servicio.upsert({
+            await dbHorarios().upsert({
                 where: {
                     licId_servicioCodigo: {
                         licId,
@@ -536,7 +543,7 @@ export async function getEstratosExcluidos(licId: number) {
 
     try {
         await ensureMultasEETables()
-        const estratos = await prisma.multas_Estrato_Excluido.findMany({
+        const estratos = await dbEstratos().findMany({
             where: { licId },
             orderBy: { estrato: 'asc' }
         })
@@ -563,7 +570,7 @@ export async function guardarEstratoExcluido(licId: number, estrato: string, des
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const record = await prisma.multas_Estrato_Excluido.upsert({
+        const record = await dbEstratos().upsert({
             where: {
                 licId_estrato: {
                     licId,
@@ -614,7 +621,7 @@ export async function toggleEstratoExcluido(id: string, activo: boolean) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const updated = await prisma.multas_Estrato_Excluido.update({
+        const updated = await dbEstratos().update({
             where: { id },
             data: {
                 activo,
@@ -652,7 +659,7 @@ export async function eliminarEstratoExcluido(id: string) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const deleted = await prisma.multas_Estrato_Excluido.delete({
+        const deleted = await dbEstratos().delete({
             where: { id }
         })
 
@@ -693,7 +700,7 @@ export async function cargarEstratosSugeridos(licId: number) {
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
         for (const s of SUGERIDOS) {
-            await prisma.multas_Estrato_Excluido.upsert({
+            await dbEstratos().upsert({
                 where: {
                     licId_estrato: {
                         licId,
@@ -748,7 +755,7 @@ export async function getDotacionManipuladoras(licId: number, anio: number, mes:
 
     try {
         await ensureMultasEETables()
-        const dotaciones = await prisma.multas_Manipuladora_Mes.findMany({
+        const dotaciones = await dbManipuladoras().findMany({
             where: { licId, anio, mes },
             orderBy: { rbd: 'asc' }
         })
@@ -776,7 +783,7 @@ export async function guardarDotacionManipuladora(data: {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const record = await prisma.multas_Manipuladora_Mes.upsert({
+        const record = await dbManipuladoras().upsert({
             where: {
                 licId_anio_mes_rbd: {
                     licId: data.licId,
@@ -847,7 +854,7 @@ export async function importarDotacionMasiva(
             const total = Number(fila.total)
             if (!rbd || isNaN(rbd) || isNaN(total)) continue
 
-            await prisma.multas_Manipuladora_Mes.upsert({
+            await dbManipuladoras().upsert({
                 where: {
                     licId_anio_mes_rbd: {
                         licId,
@@ -906,7 +913,7 @@ export async function eliminarDotacionManipuladora(id: string) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        await prisma.multas_Manipuladora_Mes.delete({
+        await dbManipuladoras().delete({
             where: { id }
         })
 
@@ -943,7 +950,7 @@ export async function getMinutaMes(licId: number, anio: number, mes: number, niv
 
     try {
         await ensureMultasEETables()
-        const minuta = await prisma.multas_Minuta_Mes.findUnique({
+        const minuta = await dbMinutas().findUnique({
             where: {
                 licId_anio_mes_nivel: {
                     licId,
@@ -977,7 +984,7 @@ export async function guardarMinutaMes(
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const record = await prisma.multas_Minuta_Mes.upsert({
+        const record = await dbMinutas().upsert({
             where: {
                 licId_anio_mes_nivel: {
                     licId,
@@ -1123,7 +1130,7 @@ export async function sincronizarMinutasDesdeSistema(licId: number, anio: number
         for (const [nivel, diasObj] of Object.entries(diasPorNivel)) {
             if (Object.keys(diasObj).length === 0) continue
 
-            await prisma.multas_Minuta_Mes.upsert({
+            await dbMinutas().upsert({
                 where: {
                     licId_anio_mes_nivel: {
                         licId,
@@ -1184,7 +1191,7 @@ export async function eliminarMinutaMes(id: string) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        await prisma.multas_Minuta_Mes.delete({
+        await dbMinutas().delete({
             where: { id }
         })
 

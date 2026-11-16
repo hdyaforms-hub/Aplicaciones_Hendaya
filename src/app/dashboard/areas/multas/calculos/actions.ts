@@ -1,12 +1,21 @@
 'use server'
 
 import { prisma, rawPrisma } from '@/lib/prisma'
+import { getMultasDelegate } from '@/lib/multas/db'
 import { getSession } from '@/lib/session'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
 import { evaluarRestriccionAspecto } from '@/lib/multas/restricciones'
 import { generarAlertasITAspecto } from '@/lib/multas/it/alertas'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { getRacionesFolio } from '@/lib/multas/raciones'
+
+const dbEECab = () => getMultasDelegate('multas_Elementos_Esenciales_Cab')
+const dbEEDet = () => getMultasDelegate('multas_Elementos_Esenciales_Det')
+const dbParametros = () => getMultasDelegate('multas_Parametros_Licitacion')
+const dbRestricciones = () => getMultasDelegate('multas_Aspecto_EE_Restriccion')
+const dbITCab = () => getMultasDelegate('multas_IT_Elementos_Esenciales_Cab')
+const dbManipuladoras = () => getMultasDelegate('multas_Manipuladora_Mes')
+const dbMinutas = () => getMultasDelegate('multas_Minuta_Mes')
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -278,7 +287,7 @@ export async function getFoliosIncompletos(params: {
 
         // Fetch in parallel for speed
         const [calculos, schools, aspectos, pmpas, servicios] = await Promise.all([
-            prisma.multas_Elementos_Esenciales_Cab.findMany({
+            dbEECab().findMany({
                 where: { folioOriginal: { in: validFolios } },
                 include: { detalles: true }
             }),
@@ -297,7 +306,7 @@ export async function getFoliosIncompletos(params: {
         ])
 
         let result = folios.map(f => {
-            const calculo = calculos.find(c => c.folioOriginal === f.folio)
+            const calculo = (calculos as any[]).find((c: any) => c.folioOriginal === f.folio)
             const school = schools.find(s => s.colRBD === f.rbd)
             
             // Validation Logic
@@ -527,7 +536,7 @@ export async function calculateAll(params: {
         const allLicIds = Array.from(new Set(folios.map(f => f.licId).filter(Boolean))) as number[]
         let allRestricciones: any[] = []
         try {
-            allRestricciones = allLicIds.length > 0 ? await prisma.multas_Aspecto_EE_Restriccion.findMany({
+            allRestricciones = allLicIds.length > 0 ? await dbRestricciones().findMany({
                 where: {
                     activo: true,
                     licId: { in: allLicIds }
@@ -540,7 +549,7 @@ export async function calculateAll(params: {
         // 3. Consultar parámetros de configuración por licitación para determinar si exclusión de estratos está activa
         let allParametrosLicitacion: any[] = []
         try {
-            allParametrosLicitacion = allLicIds.length > 0 ? await prisma.multas_Parametros_Licitacion.findMany({
+            allParametrosLicitacion = allLicIds.length > 0 ? await dbParametros().findMany({
                 where: { licId: { in: allLicIds }, activo: true }
             }) : []
         } catch (pErr) {
@@ -619,12 +628,12 @@ export async function calculateAll(params: {
                 // 1. Fetch existing saved variables if any
                 let savedVars: Record<string, string> = {}
                 try {
-                    const existing = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+                    const existing = await dbEECab().findUnique({
                         where: { folioOriginal: cab.folio! },
                         include: { detalles: true }
                     })
                     if (existing && existing.detalles.length > 0) {
-                        const firstWithVars = existing.detalles.find(d => d.variablesUsadas)
+                        const firstWithVars = existing.detalles.find((d: any) => d.variablesUsadas)
                         if (firstWithVars && firstWithVars.variablesUsadas) {
                             savedVars = JSON.parse(firstWithVars.variablesUsadas)
                         }
@@ -853,7 +862,7 @@ export async function calculateAll(params: {
                 }
 
                 // Save using finalEstado
-                await prisma.multas_Elementos_Esenciales_Cab.upsert({
+                await dbEECab().upsert({
                     where: { folioOriginal: cab.folio! },
                     update: {
                         montoTotalCalculado: totalMonto,
@@ -908,7 +917,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         const licId = cab.licId
         let restriccionesAspecto: any[] = []
         try {
-            restriccionesAspecto = await prisma.multas_Aspecto_EE_Restriccion.findMany({
+            restriccionesAspecto = await dbRestricciones().findMany({
                 where: {
                     activo: true,
                     licId: Number(licId ?? -1)
@@ -930,13 +939,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         // Buscar la Instrucción de Trabajo EE correspondiente a la licitación
         let itCab: any = null
         if (licId) {
-            itCab = await prisma.multas_IT_Elementos_Esenciales_Cab.findUnique({
+            itCab = await dbITCab().findUnique({
                 where: { licId },
                 include: { detalles: true }
             })
         }
         if (!itCab && cab.licitacion) {
-            itCab = await prisma.multas_IT_Elementos_Esenciales_Cab.findFirst({
+            itCab = await dbITCab().findFirst({
                 where: {
                     OR: [
                         { licitacionHomologada: { contains: cab.licitacion, mode: 'insensitive' } },
@@ -951,7 +960,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         let paramLicitacion: any = null
         if (licId) {
             try {
-                paramLicitacion = await prisma.multas_Parametros_Licitacion.findUnique({
+                paramLicitacion = await dbParametros().findUnique({
                     where: { licId }
                 })
             } catch (pErr) {
@@ -1121,12 +1130,12 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         // Fetch previously saved variables if any
         let savedVariables: Record<string, string> = {}
         try {
-            const savedCalculo = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+            const savedCalculo = await dbEECab().findUnique({
                 where: { folioOriginal: folio },
                 include: { detalles: true }
             })
             if (savedCalculo && savedCalculo.detalles.length > 0) {
-                const firstWithVars = savedCalculo.detalles.find(d => d.variablesUsadas)
+                const firstWithVars = savedCalculo.detalles.find((d: any) => d.variablesUsadas)
                 if (firstWithVars && firstWithVars.variablesUsadas) {
                     savedVariables = JSON.parse(firstWithVars.variablesUsadas)
                 }
@@ -1282,7 +1291,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         let dotacionOficialColegio: number | null = null
         if (c2DotacionActiva && rbd && anho && mes) {
             try {
-                const recDot = await prisma.multas_Manipuladora_Mes.findUnique({
+                const recDot = await dbManipuladoras().findUnique({
                     where: {
                         licId_anio_mes_rbd: {
                             licId: cab.licId || licId || 0,
@@ -1305,7 +1314,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         if (c2MinutaActiva && anho && mes && cab.fechaSupervision) {
             try {
                 const dia = new Date(cab.fechaSupervision).getDate()
-                const recMin = await prisma.multas_Minuta_Mes.findFirst({
+                const recMin = await dbMinutas().findFirst({
                     where: {
                         licId: cab.licId || licId || 0,
                         anio: anho,
@@ -1425,7 +1434,7 @@ export async function saveCalculo(folio: string, rbd: number, fechaSupervision: 
 
     try {
         // We use upsert so it can be recalculated if needed
-        const result = await prisma.multas_Elementos_Esenciales_Cab.upsert({
+        const result = await dbEECab().upsert({
             where: { folioOriginal: folio },
             update: {
                 montoTotalCalculado: montoTotal,
