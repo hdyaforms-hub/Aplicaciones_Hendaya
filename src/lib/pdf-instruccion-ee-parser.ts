@@ -382,7 +382,7 @@ export async function parseInstruccionTrabajoEE(
             { tipo: 'Causas No Imputables', descripcion: 'Suspensión de clases imprevista o toma del establecimiento educacional declarada formalmente por la Dirección.', imputable: false, terminoClave: 'toma del establecimiento' },
             { tipo: 'Causas No Imputables', descripcion: 'Paro o paralización de actividades docentes o de personal.', imputable: false, terminoClave: 'paro' },
             { tipo: 'Causas No Imputables', descripcion: 'Fuerza mayor o catástrofe climática decretada por la autoridad competente.', imputable: false, terminoClave: 'fuerza mayor' },
-            { tipo: 'Causas No Imputables', descripcion: 'Temporal climático severo o lluvia torrencial con afectación de infraestructura.', imputable: false, terminoClave: 'temporal' }
+            { tipo: 'Causas No Imputables', descripcion: 'Temporal climático severo o lluvia torrencial con afectación de infraestructura.', imputable: false, terminoClave: 'temporal de lluvia' }
         ]
 
         // 6. Anexos técnicos

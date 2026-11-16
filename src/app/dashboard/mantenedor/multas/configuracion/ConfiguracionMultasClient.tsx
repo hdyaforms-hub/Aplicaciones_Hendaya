@@ -6,7 +6,11 @@ import {
     guardarParametrosLicitacion,
     restablecerParametrosDefecto
 } from './actions'
-import { ModuloSistemaConfig } from './types'
+import {
+    ModuloSistemaConfig,
+    SubModuloReglasC5,
+    SUBMODULOS_C5_DEFAULT
+} from './types'
 
 interface LicitacionOption {
     licId: number
@@ -83,6 +87,22 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const handleToggleModulo = (codigo: string) => {
         setModulos(prev =>
             prev.map(m => (m.codigo === codigo ? { ...m, activo: !m.activo } : m))
+        )
+    }
+
+    const handleToggleSubmoduloC5 = (subKey: keyof SubModuloReglasC5) => {
+        setModulos(prev =>
+            prev.map(m => {
+                if (m.codigo !== 'C5') return m
+                const currentSub = m.submodulos || { ...SUBMODULOS_C5_DEFAULT }
+                return {
+                    ...m,
+                    submodulos: {
+                        ...currentSub,
+                        [subKey]: !currentSub[subKey]
+                    }
+                }
+            })
         )
     }
 
@@ -320,46 +340,81 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                         {modulos.map(m => (
                             <div
                                 key={m.codigo}
-                                className={`p-4 rounded-xl border transition-all ${
+                                className={`p-4 rounded-xl border transition-all flex flex-col justify-between ${
                                     m.activo
                                         ? 'bg-gradient-to-br from-cyan-50/40 to-sky-50/20 border-cyan-200 shadow-sm'
                                         : 'bg-slate-50/60 border-slate-200 opacity-75'
                                 }`}
                             >
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="flex items-center gap-2">
-                                        <span className="px-2 py-0.5 rounded-md bg-slate-900 text-white text-[11px] font-black">
-                                            {m.codigo}
-                                        </span>
-                                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                            m.fase === 'Operativo' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
-                                        }`}>
-                                            {m.fase}
-                                        </span>
+                                <div>
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div className="flex items-center gap-2">
+                                            <span className="px-2 py-0.5 rounded-md bg-slate-900 text-white text-[11px] font-black">
+                                                {m.codigo}
+                                            </span>
+                                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                                m.fase === 'Operativo' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
+                                            }`}>
+                                                {m.fase}
+                                            </span>
+                                        </div>
+
+                                        {/* Toggle Switch */}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleToggleModulo(m.codigo)}
+                                            className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                                                m.activo ? 'bg-cyan-600' : 'bg-slate-300'
+                                            }`}
+                                        >
+                                            <span
+                                                className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
+                                                    m.activo ? 'translate-x-5' : 'translate-x-0'
+                                                }`}
+                                            />
+                                        </button>
                                     </div>
 
-                                    {/* Toggle Switch */}
-                                    <button
-                                        type="button"
-                                        onClick={() => handleToggleModulo(m.codigo)}
-                                        className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                                            m.activo ? 'bg-cyan-600' : 'bg-slate-300'
-                                        }`}
-                                    >
-                                        <span
-                                            className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
-                                                m.activo ? 'translate-x-5' : 'translate-x-0'
-                                            }`}
-                                        />
-                                    </button>
+                                    <h4 className="text-xs font-bold text-slate-800 mt-2.5">
+                                        {m.nombre}
+                                    </h4>
+                                    <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                                        {m.descripcion}
+                                    </p>
                                 </div>
 
-                                <h4 className="text-xs font-bold text-slate-800 mt-2.5">
-                                    {m.nombre}
-                                </h4>
-                                <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                                    {m.descripcion}
-                                </p>
+                                {/* Sub-reglas granulares para el Módulo C5 */}
+                                {m.codigo === 'C5' && m.activo && (
+                                    <div className="mt-3 pt-3 border-t border-cyan-200/60 space-y-2">
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-cyan-900 flex items-center justify-between">
+                                            <span>Sub-reglas Técnicas:</span>
+                                            <span className="text-[9px] text-cyan-600 font-normal">Individuales</span>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            {[
+                                                { key: 'aqlPesaje', label: 'Control AQL 6,5 (G)' },
+                                                { key: 'personalManipulador', label: 'Personal H (1:70)' },
+                                                { key: 'temperaturas', label: 'Rangos Térmicos (K)' },
+                                                { key: 'calidadFrutasVerduras', label: 'Tolerancias Anexo 2 (F)' },
+                                                { key: 'causasNoImputables', label: 'Causales No Imputables (Tabla N°1)' },
+                                                { key: 'subsanabilidad', label: 'Subsanabilidad (B, E, J, L)' }
+                                            ].map(sub => {
+                                                const isSubActive = m.submodulos ? m.submodulos[sub.key as keyof SubModuloReglasC5] !== false : true
+                                                return (
+                                                    <label key={sub.key} className="flex items-center justify-between text-[11px] font-semibold text-slate-700 cursor-pointer hover:text-cyan-900">
+                                                        <span>{sub.label}</span>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isSubActive}
+                                                            onChange={() => handleToggleSubmoduloC5(sub.key as keyof SubModuloReglasC5)}
+                                                            className="rounded text-cyan-600 focus:ring-cyan-500 w-3.5 h-3.5 border-slate-300"
+                                                        />
+                                                    </label>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -529,7 +584,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                 Tabla de Muestreo Militar Estándar AQL 6,5 (Aspecto G)
                             </h3>
                             <p className="text-xs text-slate-500">
-                                Determina la cantidad mínima obligatoria de bandejas a pesar según raciones del nivel supervisado.
+                                Determina la cantidad mínima obligatoria de bandejas a pesar según raciones del nivel supervisado. (Max: &quot;Sin tope&quot; para la última fila).
                             </p>
                         </div>
                     </div>
@@ -550,7 +605,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                 {tablaAql.map((row, idx) => (
                                     <tr key={idx} className="hover:bg-slate-50/60 transition-colors">
                                         <td className="p-3 font-semibold text-slate-700">
-                                            {row.rangoTexto || `${row.min} a ${row.max === Infinity ? 'más' : row.max} raciones`}
+                                            {row.rangoTexto || `${row.min} a ${row.max === Infinity || row.max === null || row.max === undefined ? 'más' : row.max} raciones`}
                                         </td>
                                         <td className="p-3 text-center">
                                             <input
@@ -562,9 +617,16 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                         </td>
                                         <td className="p-3 text-center">
                                             <input
-                                                type="number"
-                                                value={row.max === Infinity ? 999999 : row.max}
-                                                onChange={e => handleUpdateAqlRow(idx, 'max', Number(e.target.value) >= 99999 ? Infinity : Number(e.target.value))}
+                                                type="text"
+                                                value={row.max === Infinity || row.max === null || row.max === undefined ? 'Sin tope' : row.max}
+                                                onChange={e => {
+                                                    const v = e.target.value.trim()
+                                                    if (v === '' || v.toLowerCase() === 'sin tope' || v === '∞' || Number(v) >= 999999) {
+                                                        handleUpdateAqlRow(idx, 'max', Infinity)
+                                                    } else {
+                                                        handleUpdateAqlRow(idx, 'max', Number(v))
+                                                    }
+                                                }}
                                                 className="w-20 px-2 py-1 text-center bg-white border border-slate-200 rounded text-xs font-bold"
                                             />
                                         </td>

@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma, rawPrisma } from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
@@ -10,7 +10,8 @@ import { TABLA_AQL_PAE_DEFAULT } from '@/lib/multas/it/alertas'
 import {
     ModuloSistemaConfig,
     MODULOS_C_DEFAULT,
-    CAUSAS_NO_IMPUTABLES_DEFAULT
+    CAUSAS_NO_IMPUTABLES_DEFAULT,
+    SUBMODULOS_C5_DEFAULT
 } from './types'
 
 const PATH = '/dashboard/mantenedor/multas/configuracion'
@@ -112,28 +113,11 @@ export async function getParametrosLicitacion(licId: number) {
             return { error: `Licitación ${licId} no encontrada.` }
         }
 
-        let paramRecord: any = null
-        try {
-            if ((prisma as any).multas_Parametros_Licitacion) {
-                paramRecord = await prisma.multas_Parametros_Licitacion.findUnique({
-                    where: { licId }
-                })
-            } else if ((rawPrisma as any).multas_Parametros_Licitacion) {
-                paramRecord = await (rawPrisma as any).multas_Parametros_Licitacion.findUnique({
-                    where: { licId }
-                })
-            } else {
-                const rows = await rawPrisma.$queryRawUnsafe<any[]>(
-                    `SELECT * FROM "Multas_Parametros_Licitacion" WHERE "licId" = $1 LIMIT 1`,
-                    licId
-                )
-                if (rows && rows.length > 0) paramRecord = rows[0]
-            }
-        } catch (dbErr) {
-            console.warn('Advertencia al consultar Multas_Parametros_Licitacion:', dbErr)
-        }
+        const paramRecord = await prisma.multas_Parametros_Licitacion.findUnique({
+            where: { licId }
+        })
 
-        // Parsear módulos
+        // Parsear módulos C1 - C11 y sus sub-reglas C5
         let modulos: ModuloSistemaConfig[] = MODULOS_C_DEFAULT
         if (paramRecord?.modulosActivosJson) {
             try {
@@ -141,7 +125,14 @@ export async function getParametrosLicitacion(licId: number) {
                 if (Array.isArray(parsedModulos)) {
                     modulos = MODULOS_C_DEFAULT.map(def => {
                         const found = parsedModulos.find((m: any) => m.codigo === def.codigo)
-                        return found ? { ...def, activo: found.activo } : def
+                        if (!found) return def
+                        return {
+                            ...def,
+                            activo: found.activo,
+                            submodulos: def.codigo === 'C5'
+                                ? { ...SUBMODULOS_C5_DEFAULT, ...(found.submodulos || {}) }
+                                : undefined
+                        }
                     })
                 }
             } catch {
@@ -149,13 +140,16 @@ export async function getParametrosLicitacion(licId: number) {
             }
         }
 
-        // Parsear tabla AQL
+        // Parsear tabla AQL: mapear null o undefined en max hacia Infinity para cálculo en cliente
         let tablaAql = TABLA_AQL_PAE_DEFAULT
         if (paramRecord?.tablaAqlJson) {
             try {
                 const parsed = JSON.parse(paramRecord.tablaAqlJson)
                 if (Array.isArray(parsed) && parsed.length > 0) {
-                    tablaAql = parsed
+                    tablaAql = parsed.map((row: any) => ({
+                        ...row,
+                        max: (row.max === null || row.max === undefined) ? Infinity : row.max
+                    }))
                 }
             } catch {
                 tablaAql = TABLA_AQL_PAE_DEFAULT
@@ -228,88 +222,58 @@ export async function guardarParametrosLicitacion(data: {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        const modulosActivosJson = JSON.stringify(data.modulos.map(m => ({ codigo: m.codigo, activo: m.activo })))
-        const tablaAqlJson = JSON.stringify(data.tablaAql)
+        const modulosActivosJson = JSON.stringify(data.modulos.map(m => ({
+            codigo: m.codigo,
+            activo: m.activo,
+            submodulos: m.submodulos || undefined
+        })))
+
+        // Sanitizar tabla AQL: max: Infinity o null se guarda como null ("sin tope")
+        const tablaAqlSanitizada = (data.tablaAql || []).map(row => ({
+            min: Number(row.min) || 0,
+            max: (row.max === Infinity || row.max === null || row.max === undefined || row.max === '' || Number(row.max) >= 999999) ? null : Number(row.max),
+            muestra: Number(row.muestra) || 0,
+            ac: Number(row.ac) || 0,
+            re: Number(row.re) || 0,
+            rangoTexto: row.rangoTexto || undefined
+        }))
+        const tablaAqlJson = JSON.stringify(tablaAqlSanitizada)
         const causasNoImputablesJson = JSON.stringify(data.causasNoImputables)
 
-        let saved: any = null
-        if ((prisma as any).multas_Parametros_Licitacion) {
-            saved = await prisma.multas_Parametros_Licitacion.upsert({
-                where: { licId: data.licId },
-                create: {
-                    licId: data.licId,
-                    modulosActivosJson,
-                    ratioManipuladorasH: Number(data.ratioManipuladorasH) || 70,
-                    tempRefriMin: Number(data.tempRefriMin) || 0.0,
-                    tempRefriMax: Number(data.tempRefriMax) || 5.0,
-                    tempCongelacionMax: Number(data.tempCongelacionMax) || -18.0,
-                    toleranciaFLeve: Number(data.toleranciaFLeve) || 10.0,
-                    toleranciaFModerado: Number(data.toleranciaFModerado) || 5.0,
-                    toleranciaFGrave: Number(data.toleranciaFGrave) || 0.0,
-                    plazoCorreccionDias: Number(data.plazoCorreccionDias) || 5,
-                    tablaAqlJson,
-                    causasNoImputablesJson,
-                    activo: true,
-                    usuarioModif: username
-                },
-                update: {
-                    modulosActivosJson,
-                    ratioManipuladorasH: Number(data.ratioManipuladorasH) || 70,
-                    tempRefriMin: Number(data.tempRefriMin) || 0.0,
-                    tempRefriMax: Number(data.tempRefriMax) || 5.0,
-                    tempCongelacionMax: Number(data.tempCongelacionMax) || -18.0,
-                    toleranciaFLeve: Number(data.toleranciaFLeve) || 10.0,
-                    toleranciaFModerado: Number(data.toleranciaFModerado) || 5.0,
-                    toleranciaFGrave: Number(data.toleranciaFGrave) || 0.0,
-                    plazoCorreccionDias: Number(data.plazoCorreccionDias) || 5,
-                    tablaAqlJson,
-                    causasNoImputablesJson,
-                    activo: true,
-                    usuarioModif: username
-                }
-            })
-        } else {
-            await rawPrisma.$executeRawUnsafe(`
-                INSERT INTO "Multas_Parametros_Licitacion" (
-                    "id", "licId", "modulosActivosJson", "ratioManipuladorasH",
-                    "tempRefriMin", "tempRefriMax", "tempCongelacionMax",
-                    "toleranciaFLeve", "toleranciaFModerado", "toleranciaFGrave",
-                    "plazoCorreccionDias", "tablaAqlJson", "causasNoImputablesJson",
-                    "activo", "usuarioModif", "updatedAt"
-                ) VALUES (
-                    gen_random_uuid()::text, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true, $13, NOW()
-                )
-                ON CONFLICT ("licId") DO UPDATE SET
-                    "modulosActivosJson" = EXCLUDED."modulosActivosJson",
-                    "ratioManipuladorasH" = EXCLUDED."ratioManipuladorasH",
-                    "tempRefriMin" = EXCLUDED."tempRefriMin",
-                    "tempRefriMax" = EXCLUDED."tempRefriMax",
-                    "tempCongelacionMax" = EXCLUDED."tempCongelacionMax",
-                    "toleranciaFLeve" = EXCLUDED."toleranciaFLeve",
-                    "toleranciaFModerado" = EXCLUDED."toleranciaFModerado",
-                    "toleranciaFGrave" = EXCLUDED."toleranciaFGrave",
-                    "plazoCorreccionDias" = EXCLUDED."plazoCorreccionDias",
-                    "tablaAqlJson" = EXCLUDED."tablaAqlJson",
-                    "causasNoImputablesJson" = EXCLUDED."causasNoImputablesJson",
-                    "usuarioModif" = EXCLUDED."usuarioModif",
-                    "updatedAt" = NOW()
-            `,
-                data.licId,
+        const saved = await prisma.multas_Parametros_Licitacion.upsert({
+            where: { licId: data.licId },
+            create: {
+                licId: data.licId,
                 modulosActivosJson,
-                Number(data.ratioManipuladorasH) || 70,
-                Number(data.tempRefriMin) || 0.0,
-                Number(data.tempRefriMax) || 5.0,
-                Number(data.tempCongelacionMax) || -18.0,
-                Number(data.toleranciaFLeve) || 10.0,
-                Number(data.toleranciaFModerado) || 5.0,
-                Number(data.toleranciaFGrave) || 0.0,
-                Number(data.plazoCorreccionDias) || 5,
+                ratioManipuladorasH: Number(data.ratioManipuladorasH) || 70,
+                tempRefriMin: Number(data.tempRefriMin) || 0.0,
+                tempRefriMax: Number(data.tempRefriMax) || 5.0,
+                tempCongelacionMax: Number(data.tempCongelacionMax) || -18.0,
+                toleranciaFLeve: Number(data.toleranciaFLeve) || 10.0,
+                toleranciaFModerado: Number(data.toleranciaFModerado) || 5.0,
+                toleranciaFGrave: Number(data.toleranciaFGrave) || 0.0,
+                plazoCorreccionDias: Number(data.plazoCorreccionDias) || 5,
                 tablaAqlJson,
                 causasNoImputablesJson,
-                username
-            )
-            saved = { licId: data.licId }
-        }
+                activo: true,
+                usuarioModif: username
+            },
+            update: {
+                modulosActivosJson,
+                ratioManipuladorasH: Number(data.ratioManipuladorasH) || 70,
+                tempRefriMin: Number(data.tempRefriMin) || 0.0,
+                tempRefriMax: Number(data.tempRefriMax) || 5.0,
+                tempCongelacionMax: Number(data.tempCongelacionMax) || -18.0,
+                toleranciaFLeve: Number(data.toleranciaFLeve) || 10.0,
+                toleranciaFModerado: Number(data.toleranciaFModerado) || 5.0,
+                toleranciaFGrave: Number(data.toleranciaFGrave) || 0.0,
+                plazoCorreccionDias: Number(data.plazoCorreccionDias) || 5,
+                tablaAqlJson,
+                causasNoImputablesJson,
+                activo: true,
+                usuarioModif: username
+            }
+        })
 
         // Auditoría
         try {
@@ -345,16 +309,9 @@ export async function restablecerParametrosDefecto(licId: number) {
         const session = await getSession()
         const username = session?.user?.name || session?.user?.username || 'Usuario'
 
-        if ((prisma as any).multas_Parametros_Licitacion) {
-            await prisma.multas_Parametros_Licitacion.deleteMany({
-                where: { licId }
-            })
-        } else {
-            await rawPrisma.$executeRawUnsafe(
-                `DELETE FROM "Multas_Parametros_Licitacion" WHERE "licId" = $1`,
-                licId
-            )
-        }
+        await prisma.multas_Parametros_Licitacion.deleteMany({
+            where: { licId }
+        })
 
         try {
             await logAuditAction({

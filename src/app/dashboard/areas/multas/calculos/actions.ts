@@ -186,12 +186,11 @@ export async function getFoliosIncompletos(params: {
         if (params.licitacion && params.licitacion !== 'Todas' && params.licitacion.trim() !== '') {
             const isNum = !isNaN(Number(params.licitacion))
             if (!whereClause.AND) whereClause.AND = []
-            whereClause.AND.push({
-                OR: [
-                    { licitacion: { contains: params.licitacion, mode: 'insensitive' } },
-                    ...(isNum ? [{ licId: Number(params.licitacion) }] : [])
-                ]
-            })
+            if (isNum) {
+                whereClause.AND.push({ licId: Number(params.licitacion) })
+            } else {
+                whereClause.AND.push({ licitacion: { contains: params.licitacion, mode: 'insensitive' } })
+            }
         }
         if (params.folio) whereClause.folio = { contains: params.folio }
 
@@ -483,12 +482,11 @@ export async function calculateAll(params: {
         if (params.licitacion && params.licitacion !== 'Todas' && params.licitacion.trim() !== '') {
             const isNum = !isNaN(Number(params.licitacion))
             if (!whereClause.AND) whereClause.AND = []
-            whereClause.AND.push({
-                OR: [
-                    { licitacion: { contains: params.licitacion, mode: 'insensitive' } },
-                    ...(isNum ? [{ licId: Number(params.licitacion) }] : [])
-                ]
-            })
+            if (isNum) {
+                whereClause.AND.push({ licId: Number(params.licitacion) })
+            } else {
+                whereClause.AND.push({ licitacion: { contains: params.licitacion, mode: 'insensitive' } })
+            }
         }
         if (params.folio) whereClause.folio = { contains: params.folio }
 
@@ -931,7 +929,27 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 }
             }
 
+            let moduloC5Activo = true
+            let submodulosActivos = undefined
+            if (paramLicitacion.modulosActivosJson) {
+                try {
+                    const parsedMod = JSON.parse(paramLicitacion.modulosActivosJson)
+                    if (Array.isArray(parsedMod)) {
+                        const c5 = parsedMod.find((m: any) => m.codigo === 'C5')
+                        if (c5) {
+                            moduloC5Activo = c5.activo !== false
+                            submodulosActivos = c5.submodulos
+                        }
+                    }
+                } catch {
+                    // Ignorar error de parsing
+                }
+            }
+
             parametrosConfig = {
+                moduloC5Activo,
+                submodulosActivos,
+                plazoCorreccionDias: paramLicitacion.plazoCorreccionDias,
                 ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
                 temperaturasK: {
                     refriMin: paramLicitacion.tempRefriMin,

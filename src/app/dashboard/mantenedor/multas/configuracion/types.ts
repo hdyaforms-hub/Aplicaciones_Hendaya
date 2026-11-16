@@ -1,23 +1,109 @@
+export interface SubModuloReglasC5 {
+    aqlPesaje: boolean
+    personalManipulador: boolean
+    temperaturas: boolean
+    calidadFrutasVerduras: boolean
+    causasNoImputables: boolean
+    subsanabilidad: boolean
+}
+
+export const SUBMODULOS_C5_DEFAULT: SubModuloReglasC5 = {
+    aqlPesaje: true,
+    personalManipulador: true,
+    temperaturas: true,
+    calidadFrutasVerduras: true,
+    causasNoImputables: true,
+    subsanabilidad: true
+}
+
 export interface ModuloSistemaConfig {
     codigo: string
     nombre: string
     descripcion: string
     activo: boolean
     fase: 'Operativo' | 'En Desarrollo' | 'Planificado'
+    submodulos?: SubModuloReglasC5
 }
 
 export const MODULOS_C_DEFAULT: ModuloSistemaConfig[] = [
-    { codigo: 'C1', nombre: 'Hub Configuración de Multas y Parámetros', descripcion: 'Parametrización dinámica y centralizada de umbrales por licitación.', activo: true, fase: 'Operativo' },
-    { codigo: 'C2', nombre: 'Restricciones y Reglas por Aspecto', descripcion: 'Reglas de excepción por año calendario y rangos de fechas (ej: M 2024/2025 = $0).', activo: true, fase: 'Operativo' },
-    { codigo: 'C3', nombre: 'Cálculo Dinámico y Alertas Técnicas IT', descripcion: 'Motor de cálculo de multas sincronizado con UTM, servicios y fórmulas oficiales.', activo: true, fase: 'Operativo' },
-    { codigo: 'C4', nombre: 'Gestión de Descargos y Resoluciones', descripcion: 'Control de descargos de actas, resoluciones de multas y plazos de apelación.', activo: true, fase: 'Operativo' },
-    { codigo: 'C5', nombre: 'Detección de Causales No Imputables', descripcion: 'Análisis textual inteligente de cortes de suministro, paros gremiales y fuerza mayor.', activo: true, fase: 'Operativo' },
-    { codigo: 'C6', nombre: 'Auditoría de Pesaje y Control AQL 6,5', descripcion: 'Verificación de tamaño de muestra de bandejas pesadas según tabla Militar Estándar.', activo: true, fase: 'Operativo' },
-    { codigo: 'C7', nombre: 'Control de Ratio Manipuladoras (Aspecto H)', descripcion: 'Cálculo de dotación mínima (1 manipuladora cada 70 raciones de establecimiento).', activo: true, fase: 'Operativo' },
-    { codigo: 'C8', nombre: 'Rangos Térmicos y Calidad (Aspecto K)', descripcion: 'Monitoreo de umbrales térmicos en equipos de frío y congelación.', activo: true, fase: 'Operativo' },
-    { codigo: 'C9', nombre: 'Tolerancias Frutas y Hortalizas (Aspecto F)', descripcion: 'Límites de defectos leves (10%), moderados (5%) y graves (0%) según Anexo 2.', activo: true, fase: 'Operativo' },
-    { codigo: 'C10', nombre: 'Subsanabilidad y Pautas de Solución', descripcion: 'Detección de aspectos subsanables (B, E, J, L) y pautas de solución en 5 días.', activo: true, fase: 'Operativo' },
-    { codigo: 'C11', nombre: 'Tablero Ejecutivo y Reportes EE', descripcion: 'Métricas gerenciales de multas, distribución por aspecto y montos en UTM.', activo: false, fase: 'Planificado' }
+    {
+        codigo: 'C1',
+        nombre: 'Hub Configuración y Parametrización Global',
+        descripcion: 'Parametrización dinámica y centralizada de umbrales por licitación.',
+        activo: true,
+        fase: 'Operativo'
+    },
+    {
+        codigo: 'C2',
+        nombre: 'Catálogos de Validación de Terreno (Horarios, Estratos, Dotación)',
+        descripcion: 'Validación de actas fuera de horario, estratos excluidos (206, 208, 209) y dotación oficial.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C3',
+        nombre: 'Datos Complementarios por Folio (Nivel T/B/M, Bandejas y Ajustes Manuales)',
+        descripcion: 'Captura de nivel supervisado, bandejas evaluadas/rechazadas y ajustes manuales auditados.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C4',
+        nombre: 'Extracción Robusta Multiaspecto (Modo Comparación F, J, K, D, E, L)',
+        descripcion: 'Conteo y comparación automatizada de materias primas, instrumentos y uniformes en actas.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C5',
+        nombre: 'Motor de Reglas NC y Alertas Técnicas IT',
+        descripcion: 'Motor inteligente de alertas: pesaje AQL, personal H (1:70), temperaturas K, tolerancias F y causales no imputables.',
+        activo: true,
+        fase: 'Operativo',
+        submodulos: { ...SUBMODULOS_C5_DEFAULT }
+    },
+    {
+        codigo: 'C6',
+        nombre: 'Notificaciones JUNAEB y Conciliación REX',
+        descripcion: 'Recepción, conciliación de resoluciones exentas y control de plazos perentorios de descargo.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C7',
+        nombre: 'Ciclo Legal y Expedientes (Descargos formales, Recursos, Judicial)',
+        descripcion: 'Trazabilidad de escritos legales, recursos de reposición, jerárquicos y reclamaciones.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C8',
+        nombre: 'Biblioteca de Argumentos y Jurisprudencia',
+        descripcion: 'Repositorio de descargos exitosos, fallos favorables y precedentes por causal de multa.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C9',
+        nombre: 'Soluciones y Planes de Acción de Sucursales',
+        descripcion: 'Compromisos de corrección en terreno por supervisores y jefaturas zonales de operaciones.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C10',
+        nombre: 'Análisis con IA y Lectura Automatizada de Pesaje',
+        descripcion: 'Extracción multimodal de datos desde fotos de actas y planillas de pesaje de bandejas.',
+        activo: false,
+        fase: 'Planificado'
+    },
+    {
+        codigo: 'C11',
+        nombre: 'Tablero Ejecutivo y Reportes Analíticos de Multas',
+        descripcion: 'KPIs directivos, montos proyectados en UTM/CLP y métricas de multas por aspecto y licitación.',
+        activo: false,
+        fase: 'Planificado'
+    }
 ]
 
 export const CAUSAS_NO_IMPUTABLES_DEFAULT = [
@@ -26,5 +112,8 @@ export const CAUSAS_NO_IMPUTABLES_DEFAULT = [
     { terminoClave: 'toma del establecimiento', descripcion: 'Toma del establecimiento educacional declarada formalmente por dirección.', imputable: false },
     { terminoClave: 'paro', descripcion: 'Paralización de actividades o paro docente/estudiantil/gremial.', imputable: false },
     { terminoClave: 'fuerza mayor', descripcion: 'Evento imprevisto de fuerza mayor, catástrofe natural o emergencia comunal.', imputable: false },
-    { terminoClave: 'temporal', descripcion: 'Temporal climático severo, lluvias torrenciales o anegamiento de accesos.', imputable: false }
+    { terminoClave: 'temporal de lluvia', descripcion: 'Temporal climático severo con lluvias torrenciales.', imputable: false },
+    { terminoClave: 'temporal de viento', descripcion: 'Temporal de viento o alerta meteorológica extrema.', imputable: false },
+    { terminoClave: 'lluvia torrencial', descripcion: 'Lluvia torrencial o inundación con afectación de infraestructura.', imputable: false },
+    { terminoClave: 'temporal con anegamiento', descripcion: 'Temporal climático severo con anegamiento de accesos o cocina.', imputable: false }
 ]

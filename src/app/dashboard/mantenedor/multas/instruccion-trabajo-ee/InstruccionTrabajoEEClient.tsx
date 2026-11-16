@@ -340,7 +340,7 @@ export default function InstruccionTrabajoEEClient({ licitaciones, currentUserNa
                     <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex items-start gap-3">
                         <span className="text-base shrink-0">📋</span>
                         <div className="leading-relaxed">
-                            <span className="font-bold">Plantilla Base Oficial Homologada:</span> Los aspectos, tabla AQL, causales de no imputabilidad y plazos se inicializan con la plantilla base de la Instrucción de Trabajo oficial JUNAEB (IT-DAE-SUP026 Rev. 03). Estos parámetros pueden personalizarse y ajustarse dinámicamente para cada licitación desde el módulo <span className="font-bold text-cyan-800">Mantenedor &gt; Multas &gt; Configuración</span>.
+                            <span className="font-bold">Datos base de plantilla oficial homologada (IT-DAE-SUP026 Rev. 03):</span> Verificar contra el PDF físico cargado y calibrar parámetros específicos en el Hub de Configuración (<span className="font-bold text-cyan-800">Mantenedor &gt; Multas &gt; Configuración</span>). Los parámetros editados en el Hub tienen máxima prioridad en el cálculo de multas.
                         </div>
                     </div>
 
