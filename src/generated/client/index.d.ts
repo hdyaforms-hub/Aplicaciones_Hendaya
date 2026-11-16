@@ -274,6 +274,11 @@ export type Multas_IT_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma
  */
 export type Multas_Aspecto_EE_Restriccion = $Result.DefaultSelection<Prisma.$Multas_Aspecto_EE_RestriccionPayload>
 /**
+ * Model Multas_Parametros_Licitacion
+ * 
+ */
+export type Multas_Parametros_Licitacion = $Result.DefaultSelection<Prisma.$Multas_Parametros_LicitacionPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1351,6 +1356,16 @@ export class PrismaClient<
     * ```
     */
   get multas_Aspecto_EE_Restriccion(): Prisma.Multas_Aspecto_EE_RestriccionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Parametros_Licitacion`: Exposes CRUD operations for the **Multas_Parametros_Licitacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Parametros_Licitacions
+    * const multas_Parametros_Licitacions = await prisma.multas_Parametros_Licitacion.findMany()
+    * ```
+    */
+  get multas_Parametros_Licitacion(): Prisma.Multas_Parametros_LicitacionDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2714,6 +2729,7 @@ export namespace Prisma {
     Multas_IT_Elementos_Esenciales_Cab: 'Multas_IT_Elementos_Esenciales_Cab',
     Multas_IT_Elementos_Esenciales_Det: 'Multas_IT_Elementos_Esenciales_Det',
     Multas_Aspecto_EE_Restriccion: 'Multas_Aspecto_EE_Restriccion',
+    Multas_Parametros_Licitacion: 'Multas_Parametros_Licitacion',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2816,7 +2832,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6457,6 +6473,76 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Aspecto_EE_RestriccionCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Aspecto_EE_RestriccionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Parametros_Licitacion: {
+        payload: Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>
+        fields: Prisma.Multas_Parametros_LicitacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Parametros_LicitacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Parametros_LicitacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Parametros_LicitacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Parametros_LicitacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Parametros_LicitacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Parametros_LicitacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Parametros_LicitacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Parametros_LicitacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Parametros_LicitacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          update: {
+            args: Prisma.Multas_Parametros_LicitacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Parametros_LicitacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Parametros_LicitacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Parametros_LicitacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Parametros_LicitacionPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Parametros_LicitacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Parametros_Licitacion>
+          }
+          groupBy: {
+            args: Prisma.Multas_Parametros_LicitacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Parametros_LicitacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Parametros_LicitacionCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Parametros_LicitacionCountAggregateOutputType> | number
           }
         }
       }
@@ -68643,6 +68729,1094 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Aspecto_EE_Restriccion
      */
     select?: Multas_Aspecto_EE_RestriccionSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Parametros_Licitacion
+   */
+
+  export type AggregateMultas_Parametros_Licitacion = {
+    _count: Multas_Parametros_LicitacionCountAggregateOutputType | null
+    _avg: Multas_Parametros_LicitacionAvgAggregateOutputType | null
+    _sum: Multas_Parametros_LicitacionSumAggregateOutputType | null
+    _min: Multas_Parametros_LicitacionMinAggregateOutputType | null
+    _max: Multas_Parametros_LicitacionMaxAggregateOutputType | null
+  }
+
+  export type Multas_Parametros_LicitacionAvgAggregateOutputType = {
+    licId: number | null
+    ratioManipuladorasH: number | null
+    tempRefriMin: number | null
+    tempRefriMax: number | null
+    tempCongelacionMax: number | null
+    toleranciaFLeve: number | null
+    toleranciaFModerado: number | null
+    toleranciaFGrave: number | null
+    plazoCorreccionDias: number | null
+  }
+
+  export type Multas_Parametros_LicitacionSumAggregateOutputType = {
+    licId: number | null
+    ratioManipuladorasH: number | null
+    tempRefriMin: number | null
+    tempRefriMax: number | null
+    tempCongelacionMax: number | null
+    toleranciaFLeve: number | null
+    toleranciaFModerado: number | null
+    toleranciaFGrave: number | null
+    plazoCorreccionDias: number | null
+  }
+
+  export type Multas_Parametros_LicitacionMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    modulosActivosJson: string | null
+    ratioManipuladorasH: number | null
+    tempRefriMin: number | null
+    tempRefriMax: number | null
+    tempCongelacionMax: number | null
+    toleranciaFLeve: number | null
+    toleranciaFModerado: number | null
+    toleranciaFGrave: number | null
+    plazoCorreccionDias: number | null
+    tablaAqlJson: string | null
+    causasNoImputablesJson: string | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Parametros_LicitacionMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    modulosActivosJson: string | null
+    ratioManipuladorasH: number | null
+    tempRefriMin: number | null
+    tempRefriMax: number | null
+    tempCongelacionMax: number | null
+    toleranciaFLeve: number | null
+    toleranciaFModerado: number | null
+    toleranciaFGrave: number | null
+    plazoCorreccionDias: number | null
+    tablaAqlJson: string | null
+    causasNoImputablesJson: string | null
+    activo: boolean | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Parametros_LicitacionCountAggregateOutputType = {
+    id: number
+    licId: number
+    modulosActivosJson: number
+    ratioManipuladorasH: number
+    tempRefriMin: number
+    tempRefriMax: number
+    tempCongelacionMax: number
+    toleranciaFLeve: number
+    toleranciaFModerado: number
+    toleranciaFGrave: number
+    plazoCorreccionDias: number
+    tablaAqlJson: number
+    causasNoImputablesJson: number
+    activo: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Parametros_LicitacionAvgAggregateInputType = {
+    licId?: true
+    ratioManipuladorasH?: true
+    tempRefriMin?: true
+    tempRefriMax?: true
+    tempCongelacionMax?: true
+    toleranciaFLeve?: true
+    toleranciaFModerado?: true
+    toleranciaFGrave?: true
+    plazoCorreccionDias?: true
+  }
+
+  export type Multas_Parametros_LicitacionSumAggregateInputType = {
+    licId?: true
+    ratioManipuladorasH?: true
+    tempRefriMin?: true
+    tempRefriMax?: true
+    tempCongelacionMax?: true
+    toleranciaFLeve?: true
+    toleranciaFModerado?: true
+    toleranciaFGrave?: true
+    plazoCorreccionDias?: true
+  }
+
+  export type Multas_Parametros_LicitacionMinAggregateInputType = {
+    id?: true
+    licId?: true
+    modulosActivosJson?: true
+    ratioManipuladorasH?: true
+    tempRefriMin?: true
+    tempRefriMax?: true
+    tempCongelacionMax?: true
+    toleranciaFLeve?: true
+    toleranciaFModerado?: true
+    toleranciaFGrave?: true
+    plazoCorreccionDias?: true
+    tablaAqlJson?: true
+    causasNoImputablesJson?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Parametros_LicitacionMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    modulosActivosJson?: true
+    ratioManipuladorasH?: true
+    tempRefriMin?: true
+    tempRefriMax?: true
+    tempCongelacionMax?: true
+    toleranciaFLeve?: true
+    toleranciaFModerado?: true
+    toleranciaFGrave?: true
+    plazoCorreccionDias?: true
+    tablaAqlJson?: true
+    causasNoImputablesJson?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Parametros_LicitacionCountAggregateInputType = {
+    id?: true
+    licId?: true
+    modulosActivosJson?: true
+    ratioManipuladorasH?: true
+    tempRefriMin?: true
+    tempRefriMax?: true
+    tempCongelacionMax?: true
+    toleranciaFLeve?: true
+    toleranciaFModerado?: true
+    toleranciaFGrave?: true
+    plazoCorreccionDias?: true
+    tablaAqlJson?: true
+    causasNoImputablesJson?: true
+    activo?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Parametros_LicitacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Parametros_Licitacion to aggregate.
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Parametros_Licitacions to fetch.
+     */
+    orderBy?: Multas_Parametros_LicitacionOrderByWithRelationInput | Multas_Parametros_LicitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Parametros_LicitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Parametros_Licitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Parametros_Licitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Parametros_Licitacions
+    **/
+    _count?: true | Multas_Parametros_LicitacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Parametros_LicitacionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Parametros_LicitacionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Parametros_LicitacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Parametros_LicitacionMaxAggregateInputType
+  }
+
+  export type GetMultas_Parametros_LicitacionAggregateType<T extends Multas_Parametros_LicitacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Parametros_Licitacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Parametros_Licitacion[P]>
+      : GetScalarType<T[P], AggregateMultas_Parametros_Licitacion[P]>
+  }
+
+
+
+
+  export type Multas_Parametros_LicitacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Parametros_LicitacionWhereInput
+    orderBy?: Multas_Parametros_LicitacionOrderByWithAggregationInput | Multas_Parametros_LicitacionOrderByWithAggregationInput[]
+    by: Multas_Parametros_LicitacionScalarFieldEnum[] | Multas_Parametros_LicitacionScalarFieldEnum
+    having?: Multas_Parametros_LicitacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Parametros_LicitacionCountAggregateInputType | true
+    _avg?: Multas_Parametros_LicitacionAvgAggregateInputType
+    _sum?: Multas_Parametros_LicitacionSumAggregateInputType
+    _min?: Multas_Parametros_LicitacionMinAggregateInputType
+    _max?: Multas_Parametros_LicitacionMaxAggregateInputType
+  }
+
+  export type Multas_Parametros_LicitacionGroupByOutputType = {
+    id: string
+    licId: number
+    modulosActivosJson: string | null
+    ratioManipuladorasH: number
+    tempRefriMin: number
+    tempRefriMax: number
+    tempCongelacionMax: number
+    toleranciaFLeve: number
+    toleranciaFModerado: number
+    toleranciaFGrave: number
+    plazoCorreccionDias: number
+    tablaAqlJson: string | null
+    causasNoImputablesJson: string | null
+    activo: boolean
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Parametros_LicitacionCountAggregateOutputType | null
+    _avg: Multas_Parametros_LicitacionAvgAggregateOutputType | null
+    _sum: Multas_Parametros_LicitacionSumAggregateOutputType | null
+    _min: Multas_Parametros_LicitacionMinAggregateOutputType | null
+    _max: Multas_Parametros_LicitacionMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Parametros_LicitacionGroupByPayload<T extends Multas_Parametros_LicitacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Parametros_LicitacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Parametros_LicitacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Parametros_LicitacionGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Parametros_LicitacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Parametros_LicitacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    modulosActivosJson?: boolean
+    ratioManipuladorasH?: boolean
+    tempRefriMin?: boolean
+    tempRefriMax?: boolean
+    tempCongelacionMax?: boolean
+    toleranciaFLeve?: boolean
+    toleranciaFModerado?: boolean
+    toleranciaFGrave?: boolean
+    plazoCorreccionDias?: boolean
+    tablaAqlJson?: boolean
+    causasNoImputablesJson?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Parametros_Licitacion"]>
+
+  export type Multas_Parametros_LicitacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    modulosActivosJson?: boolean
+    ratioManipuladorasH?: boolean
+    tempRefriMin?: boolean
+    tempRefriMax?: boolean
+    tempCongelacionMax?: boolean
+    toleranciaFLeve?: boolean
+    toleranciaFModerado?: boolean
+    toleranciaFGrave?: boolean
+    plazoCorreccionDias?: boolean
+    tablaAqlJson?: boolean
+    causasNoImputablesJson?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Parametros_Licitacion"]>
+
+  export type Multas_Parametros_LicitacionSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    modulosActivosJson?: boolean
+    ratioManipuladorasH?: boolean
+    tempRefriMin?: boolean
+    tempRefriMax?: boolean
+    tempCongelacionMax?: boolean
+    toleranciaFLeve?: boolean
+    toleranciaFModerado?: boolean
+    toleranciaFGrave?: boolean
+    plazoCorreccionDias?: boolean
+    tablaAqlJson?: boolean
+    causasNoImputablesJson?: boolean
+    activo?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Parametros_LicitacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Parametros_Licitacion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      modulosActivosJson: string | null
+      ratioManipuladorasH: number
+      tempRefriMin: number
+      tempRefriMax: number
+      tempCongelacionMax: number
+      toleranciaFLeve: number
+      toleranciaFModerado: number
+      toleranciaFGrave: number
+      plazoCorreccionDias: number
+      tablaAqlJson: string | null
+      causasNoImputablesJson: string | null
+      activo: boolean
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Parametros_Licitacion"]>
+    composites: {}
+  }
+
+  type Multas_Parametros_LicitacionGetPayload<S extends boolean | null | undefined | Multas_Parametros_LicitacionDefaultArgs> = $Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload, S>
+
+  type Multas_Parametros_LicitacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Parametros_LicitacionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Parametros_LicitacionCountAggregateInputType | true
+    }
+
+  export interface Multas_Parametros_LicitacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Parametros_Licitacion'], meta: { name: 'Multas_Parametros_Licitacion' } }
+    /**
+     * Find zero or one Multas_Parametros_Licitacion that matches the filter.
+     * @param {Multas_Parametros_LicitacionFindUniqueArgs} args - Arguments to find a Multas_Parametros_Licitacion
+     * @example
+     * // Get one Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Parametros_LicitacionFindUniqueArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionFindUniqueArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Parametros_Licitacion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Parametros_LicitacionFindUniqueOrThrowArgs} args - Arguments to find a Multas_Parametros_Licitacion
+     * @example
+     * // Get one Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Parametros_LicitacionFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Parametros_Licitacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionFindFirstArgs} args - Arguments to find a Multas_Parametros_Licitacion
+     * @example
+     * // Get one Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Parametros_LicitacionFindFirstArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionFindFirstArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Parametros_Licitacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionFindFirstOrThrowArgs} args - Arguments to find a Multas_Parametros_Licitacion
+     * @example
+     * // Get one Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Parametros_LicitacionFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Parametros_Licitacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Parametros_Licitacions
+     * const multas_Parametros_Licitacions = await prisma.multas_Parametros_Licitacion.findMany()
+     * 
+     * // Get first 10 Multas_Parametros_Licitacions
+     * const multas_Parametros_Licitacions = await prisma.multas_Parametros_Licitacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Parametros_LicitacionWithIdOnly = await prisma.multas_Parametros_Licitacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Parametros_LicitacionFindManyArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Parametros_Licitacion.
+     * @param {Multas_Parametros_LicitacionCreateArgs} args - Arguments to create a Multas_Parametros_Licitacion.
+     * @example
+     * // Create one Multas_Parametros_Licitacion
+     * const Multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.create({
+     *   data: {
+     *     // ... data to create a Multas_Parametros_Licitacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Parametros_LicitacionCreateArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionCreateArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Parametros_Licitacions.
+     * @param {Multas_Parametros_LicitacionCreateManyArgs} args - Arguments to create many Multas_Parametros_Licitacions.
+     * @example
+     * // Create many Multas_Parametros_Licitacions
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Parametros_LicitacionCreateManyArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Parametros_Licitacions and returns the data saved in the database.
+     * @param {Multas_Parametros_LicitacionCreateManyAndReturnArgs} args - Arguments to create many Multas_Parametros_Licitacions.
+     * @example
+     * // Create many Multas_Parametros_Licitacions
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Parametros_Licitacions and only return the `id`
+     * const multas_Parametros_LicitacionWithIdOnly = await prisma.multas_Parametros_Licitacion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Parametros_LicitacionCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Parametros_Licitacion.
+     * @param {Multas_Parametros_LicitacionDeleteArgs} args - Arguments to delete one Multas_Parametros_Licitacion.
+     * @example
+     * // Delete one Multas_Parametros_Licitacion
+     * const Multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Parametros_Licitacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Parametros_LicitacionDeleteArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionDeleteArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Parametros_Licitacion.
+     * @param {Multas_Parametros_LicitacionUpdateArgs} args - Arguments to update one Multas_Parametros_Licitacion.
+     * @example
+     * // Update one Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Parametros_LicitacionUpdateArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionUpdateArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Parametros_Licitacions.
+     * @param {Multas_Parametros_LicitacionDeleteManyArgs} args - Arguments to filter Multas_Parametros_Licitacions to delete.
+     * @example
+     * // Delete a few Multas_Parametros_Licitacions
+     * const { count } = await prisma.multas_Parametros_Licitacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Parametros_LicitacionDeleteManyArgs>(args?: SelectSubset<T, Multas_Parametros_LicitacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Parametros_Licitacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Parametros_Licitacions
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Parametros_LicitacionUpdateManyArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Parametros_Licitacion.
+     * @param {Multas_Parametros_LicitacionUpsertArgs} args - Arguments to update or create a Multas_Parametros_Licitacion.
+     * @example
+     * // Update or create a Multas_Parametros_Licitacion
+     * const multas_Parametros_Licitacion = await prisma.multas_Parametros_Licitacion.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Parametros_Licitacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Parametros_Licitacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Parametros_LicitacionUpsertArgs>(args: SelectSubset<T, Multas_Parametros_LicitacionUpsertArgs<ExtArgs>>): Prisma__Multas_Parametros_LicitacionClient<$Result.GetResult<Prisma.$Multas_Parametros_LicitacionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Parametros_Licitacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionCountArgs} args - Arguments to filter Multas_Parametros_Licitacions to count.
+     * @example
+     * // Count the number of Multas_Parametros_Licitacions
+     * const count = await prisma.multas_Parametros_Licitacion.count({
+     *   where: {
+     *     // ... the filter for the Multas_Parametros_Licitacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Parametros_LicitacionCountArgs>(
+      args?: Subset<T, Multas_Parametros_LicitacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Parametros_LicitacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Parametros_Licitacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Parametros_LicitacionAggregateArgs>(args: Subset<T, Multas_Parametros_LicitacionAggregateArgs>): Prisma.PrismaPromise<GetMultas_Parametros_LicitacionAggregateType<T>>
+
+    /**
+     * Group by Multas_Parametros_Licitacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Parametros_LicitacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Parametros_LicitacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Parametros_LicitacionGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Parametros_LicitacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Parametros_LicitacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Parametros_LicitacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Parametros_Licitacion model
+   */
+  readonly fields: Multas_Parametros_LicitacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Parametros_Licitacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Parametros_LicitacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Parametros_Licitacion model
+   */ 
+  interface Multas_Parametros_LicitacionFieldRefs {
+    readonly id: FieldRef<"Multas_Parametros_Licitacion", 'String'>
+    readonly licId: FieldRef<"Multas_Parametros_Licitacion", 'Int'>
+    readonly modulosActivosJson: FieldRef<"Multas_Parametros_Licitacion", 'String'>
+    readonly ratioManipuladorasH: FieldRef<"Multas_Parametros_Licitacion", 'Int'>
+    readonly tempRefriMin: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly tempRefriMax: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly tempCongelacionMax: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly toleranciaFLeve: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly toleranciaFModerado: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly toleranciaFGrave: FieldRef<"Multas_Parametros_Licitacion", 'Float'>
+    readonly plazoCorreccionDias: FieldRef<"Multas_Parametros_Licitacion", 'Int'>
+    readonly tablaAqlJson: FieldRef<"Multas_Parametros_Licitacion", 'String'>
+    readonly causasNoImputablesJson: FieldRef<"Multas_Parametros_Licitacion", 'String'>
+    readonly activo: FieldRef<"Multas_Parametros_Licitacion", 'Boolean'>
+    readonly usuarioModif: FieldRef<"Multas_Parametros_Licitacion", 'String'>
+    readonly createdAt: FieldRef<"Multas_Parametros_Licitacion", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Parametros_Licitacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Parametros_Licitacion findUnique
+   */
+  export type Multas_Parametros_LicitacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Parametros_Licitacion to fetch.
+     */
+    where: Multas_Parametros_LicitacionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion findUniqueOrThrow
+   */
+  export type Multas_Parametros_LicitacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Parametros_Licitacion to fetch.
+     */
+    where: Multas_Parametros_LicitacionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion findFirst
+   */
+  export type Multas_Parametros_LicitacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Parametros_Licitacion to fetch.
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Parametros_Licitacions to fetch.
+     */
+    orderBy?: Multas_Parametros_LicitacionOrderByWithRelationInput | Multas_Parametros_LicitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Parametros_Licitacions.
+     */
+    cursor?: Multas_Parametros_LicitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Parametros_Licitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Parametros_Licitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Parametros_Licitacions.
+     */
+    distinct?: Multas_Parametros_LicitacionScalarFieldEnum | Multas_Parametros_LicitacionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Parametros_Licitacion findFirstOrThrow
+   */
+  export type Multas_Parametros_LicitacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Parametros_Licitacion to fetch.
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Parametros_Licitacions to fetch.
+     */
+    orderBy?: Multas_Parametros_LicitacionOrderByWithRelationInput | Multas_Parametros_LicitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Parametros_Licitacions.
+     */
+    cursor?: Multas_Parametros_LicitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Parametros_Licitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Parametros_Licitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Parametros_Licitacions.
+     */
+    distinct?: Multas_Parametros_LicitacionScalarFieldEnum | Multas_Parametros_LicitacionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Parametros_Licitacion findMany
+   */
+  export type Multas_Parametros_LicitacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Parametros_Licitacions to fetch.
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Parametros_Licitacions to fetch.
+     */
+    orderBy?: Multas_Parametros_LicitacionOrderByWithRelationInput | Multas_Parametros_LicitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Parametros_Licitacions.
+     */
+    cursor?: Multas_Parametros_LicitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Parametros_Licitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Parametros_Licitacions.
+     */
+    skip?: number
+    distinct?: Multas_Parametros_LicitacionScalarFieldEnum | Multas_Parametros_LicitacionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Parametros_Licitacion create
+   */
+  export type Multas_Parametros_LicitacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Parametros_Licitacion.
+     */
+    data: XOR<Multas_Parametros_LicitacionCreateInput, Multas_Parametros_LicitacionUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Parametros_Licitacion createMany
+   */
+  export type Multas_Parametros_LicitacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Parametros_Licitacions.
+     */
+    data: Multas_Parametros_LicitacionCreateManyInput | Multas_Parametros_LicitacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Parametros_Licitacion createManyAndReturn
+   */
+  export type Multas_Parametros_LicitacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Parametros_Licitacions.
+     */
+    data: Multas_Parametros_LicitacionCreateManyInput | Multas_Parametros_LicitacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Parametros_Licitacion update
+   */
+  export type Multas_Parametros_LicitacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Parametros_Licitacion.
+     */
+    data: XOR<Multas_Parametros_LicitacionUpdateInput, Multas_Parametros_LicitacionUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Parametros_Licitacion to update.
+     */
+    where: Multas_Parametros_LicitacionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion updateMany
+   */
+  export type Multas_Parametros_LicitacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Parametros_Licitacions.
+     */
+    data: XOR<Multas_Parametros_LicitacionUpdateManyMutationInput, Multas_Parametros_LicitacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Parametros_Licitacions to update
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion upsert
+   */
+  export type Multas_Parametros_LicitacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Parametros_Licitacion to update in case it exists.
+     */
+    where: Multas_Parametros_LicitacionWhereUniqueInput
+    /**
+     * In case the Multas_Parametros_Licitacion found by the `where` argument doesn't exist, create a new Multas_Parametros_Licitacion with this data.
+     */
+    create: XOR<Multas_Parametros_LicitacionCreateInput, Multas_Parametros_LicitacionUncheckedCreateInput>
+    /**
+     * In case the Multas_Parametros_Licitacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Parametros_LicitacionUpdateInput, Multas_Parametros_LicitacionUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Parametros_Licitacion delete
+   */
+  export type Multas_Parametros_LicitacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Parametros_Licitacion to delete.
+     */
+    where: Multas_Parametros_LicitacionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion deleteMany
+   */
+  export type Multas_Parametros_LicitacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Parametros_Licitacions to delete
+     */
+    where?: Multas_Parametros_LicitacionWhereInput
+  }
+
+  /**
+   * Multas_Parametros_Licitacion without action
+   */
+  export type Multas_Parametros_LicitacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Parametros_Licitacion
+     */
+    select?: Multas_Parametros_LicitacionSelect<ExtArgs> | null
   }
 
 
@@ -158767,6 +159941,29 @@ export namespace Prisma {
   export type Multas_Aspecto_EE_RestriccionScalarFieldEnum = (typeof Multas_Aspecto_EE_RestriccionScalarFieldEnum)[keyof typeof Multas_Aspecto_EE_RestriccionScalarFieldEnum]
 
 
+  export const Multas_Parametros_LicitacionScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    modulosActivosJson: 'modulosActivosJson',
+    ratioManipuladorasH: 'ratioManipuladorasH',
+    tempRefriMin: 'tempRefriMin',
+    tempRefriMax: 'tempRefriMax',
+    tempCongelacionMax: 'tempCongelacionMax',
+    toleranciaFLeve: 'toleranciaFLeve',
+    toleranciaFModerado: 'toleranciaFModerado',
+    toleranciaFGrave: 'toleranciaFGrave',
+    plazoCorreccionDias: 'plazoCorreccionDias',
+    tablaAqlJson: 'tablaAqlJson',
+    causasNoImputablesJson: 'causasNoImputablesJson',
+    activo: 'activo',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Parametros_LicitacionScalarFieldEnum = (typeof Multas_Parametros_LicitacionScalarFieldEnum)[keyof typeof Multas_Parametros_LicitacionScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -164974,6 +166171,120 @@ export namespace Prisma {
     creadoPor?: StringNullableWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Aspecto_EE_Restriccion"> | Date | string
+  }
+
+  export type Multas_Parametros_LicitacionWhereInput = {
+    AND?: Multas_Parametros_LicitacionWhereInput | Multas_Parametros_LicitacionWhereInput[]
+    OR?: Multas_Parametros_LicitacionWhereInput[]
+    NOT?: Multas_Parametros_LicitacionWhereInput | Multas_Parametros_LicitacionWhereInput[]
+    id?: StringFilter<"Multas_Parametros_Licitacion"> | string
+    licId?: IntFilter<"Multas_Parametros_Licitacion"> | number
+    modulosActivosJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    ratioManipuladorasH?: IntFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMin?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMax?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    tempCongelacionMax?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFLeve?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFModerado?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFGrave?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    plazoCorreccionDias?: IntFilter<"Multas_Parametros_Licitacion"> | number
+    tablaAqlJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    causasNoImputablesJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    activo?: BoolFilter<"Multas_Parametros_Licitacion"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Parametros_Licitacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Parametros_Licitacion"> | Date | string
+  }
+
+  export type Multas_Parametros_LicitacionOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    modulosActivosJson?: SortOrderInput | SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    tablaAqlJson?: SortOrderInput | SortOrder
+    causasNoImputablesJson?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId?: number
+    AND?: Multas_Parametros_LicitacionWhereInput | Multas_Parametros_LicitacionWhereInput[]
+    OR?: Multas_Parametros_LicitacionWhereInput[]
+    NOT?: Multas_Parametros_LicitacionWhereInput | Multas_Parametros_LicitacionWhereInput[]
+    modulosActivosJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    ratioManipuladorasH?: IntFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMin?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMax?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    tempCongelacionMax?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFLeve?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFModerado?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFGrave?: FloatFilter<"Multas_Parametros_Licitacion"> | number
+    plazoCorreccionDias?: IntFilter<"Multas_Parametros_Licitacion"> | number
+    tablaAqlJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    causasNoImputablesJson?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    activo?: BoolFilter<"Multas_Parametros_Licitacion"> | boolean
+    usuarioModif?: StringNullableFilter<"Multas_Parametros_Licitacion"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Parametros_Licitacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Parametros_Licitacion"> | Date | string
+  }, "id" | "licId">
+
+  export type Multas_Parametros_LicitacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    modulosActivosJson?: SortOrderInput | SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    tablaAqlJson?: SortOrderInput | SortOrder
+    causasNoImputablesJson?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Parametros_LicitacionCountOrderByAggregateInput
+    _avg?: Multas_Parametros_LicitacionAvgOrderByAggregateInput
+    _max?: Multas_Parametros_LicitacionMaxOrderByAggregateInput
+    _min?: Multas_Parametros_LicitacionMinOrderByAggregateInput
+    _sum?: Multas_Parametros_LicitacionSumOrderByAggregateInput
+  }
+
+  export type Multas_Parametros_LicitacionScalarWhereWithAggregatesInput = {
+    AND?: Multas_Parametros_LicitacionScalarWhereWithAggregatesInput | Multas_Parametros_LicitacionScalarWhereWithAggregatesInput[]
+    OR?: Multas_Parametros_LicitacionScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Parametros_LicitacionScalarWhereWithAggregatesInput | Multas_Parametros_LicitacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    modulosActivosJson?: StringNullableWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string | null
+    ratioManipuladorasH?: IntWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMin?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    tempRefriMax?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    tempCongelacionMax?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFLeve?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFModerado?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    toleranciaFGrave?: FloatWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    plazoCorreccionDias?: IntWithAggregatesFilter<"Multas_Parametros_Licitacion"> | number
+    tablaAqlJson?: StringNullableWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string | null
+    causasNoImputablesJson?: StringNullableWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string | null
+    activo?: BoolWithAggregatesFilter<"Multas_Parametros_Licitacion"> | boolean
+    usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Parametros_Licitacion"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Parametros_Licitacion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Parametros_Licitacion"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -177686,6 +178997,146 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Parametros_LicitacionCreateInput = {
+    id?: string
+    licId: number
+    modulosActivosJson?: string | null
+    ratioManipuladorasH?: number
+    tempRefriMin?: number
+    tempRefriMax?: number
+    tempCongelacionMax?: number
+    toleranciaFLeve?: number
+    toleranciaFModerado?: number
+    toleranciaFGrave?: number
+    plazoCorreccionDias?: number
+    tablaAqlJson?: string | null
+    causasNoImputablesJson?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Parametros_LicitacionUncheckedCreateInput = {
+    id?: string
+    licId: number
+    modulosActivosJson?: string | null
+    ratioManipuladorasH?: number
+    tempRefriMin?: number
+    tempRefriMax?: number
+    tempCongelacionMax?: number
+    toleranciaFLeve?: number
+    toleranciaFModerado?: number
+    toleranciaFGrave?: number
+    plazoCorreccionDias?: number
+    tablaAqlJson?: string | null
+    causasNoImputablesJson?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Parametros_LicitacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    modulosActivosJson?: NullableStringFieldUpdateOperationsInput | string | null
+    ratioManipuladorasH?: IntFieldUpdateOperationsInput | number
+    tempRefriMin?: FloatFieldUpdateOperationsInput | number
+    tempRefriMax?: FloatFieldUpdateOperationsInput | number
+    tempCongelacionMax?: FloatFieldUpdateOperationsInput | number
+    toleranciaFLeve?: FloatFieldUpdateOperationsInput | number
+    toleranciaFModerado?: FloatFieldUpdateOperationsInput | number
+    toleranciaFGrave?: FloatFieldUpdateOperationsInput | number
+    plazoCorreccionDias?: IntFieldUpdateOperationsInput | number
+    tablaAqlJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasNoImputablesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Parametros_LicitacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    modulosActivosJson?: NullableStringFieldUpdateOperationsInput | string | null
+    ratioManipuladorasH?: IntFieldUpdateOperationsInput | number
+    tempRefriMin?: FloatFieldUpdateOperationsInput | number
+    tempRefriMax?: FloatFieldUpdateOperationsInput | number
+    tempCongelacionMax?: FloatFieldUpdateOperationsInput | number
+    toleranciaFLeve?: FloatFieldUpdateOperationsInput | number
+    toleranciaFModerado?: FloatFieldUpdateOperationsInput | number
+    toleranciaFGrave?: FloatFieldUpdateOperationsInput | number
+    plazoCorreccionDias?: IntFieldUpdateOperationsInput | number
+    tablaAqlJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasNoImputablesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Parametros_LicitacionCreateManyInput = {
+    id?: string
+    licId: number
+    modulosActivosJson?: string | null
+    ratioManipuladorasH?: number
+    tempRefriMin?: number
+    tempRefriMax?: number
+    tempCongelacionMax?: number
+    toleranciaFLeve?: number
+    toleranciaFModerado?: number
+    toleranciaFGrave?: number
+    plazoCorreccionDias?: number
+    tablaAqlJson?: string | null
+    causasNoImputablesJson?: string | null
+    activo?: boolean
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Parametros_LicitacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    modulosActivosJson?: NullableStringFieldUpdateOperationsInput | string | null
+    ratioManipuladorasH?: IntFieldUpdateOperationsInput | number
+    tempRefriMin?: FloatFieldUpdateOperationsInput | number
+    tempRefriMax?: FloatFieldUpdateOperationsInput | number
+    tempCongelacionMax?: FloatFieldUpdateOperationsInput | number
+    toleranciaFLeve?: FloatFieldUpdateOperationsInput | number
+    toleranciaFModerado?: FloatFieldUpdateOperationsInput | number
+    toleranciaFGrave?: FloatFieldUpdateOperationsInput | number
+    plazoCorreccionDias?: IntFieldUpdateOperationsInput | number
+    tablaAqlJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasNoImputablesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Parametros_LicitacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    modulosActivosJson?: NullableStringFieldUpdateOperationsInput | string | null
+    ratioManipuladorasH?: IntFieldUpdateOperationsInput | number
+    tempRefriMin?: FloatFieldUpdateOperationsInput | number
+    tempRefriMax?: FloatFieldUpdateOperationsInput | number
+    tempCongelacionMax?: FloatFieldUpdateOperationsInput | number
+    toleranciaFLeve?: FloatFieldUpdateOperationsInput | number
+    toleranciaFModerado?: FloatFieldUpdateOperationsInput | number
+    toleranciaFGrave?: FloatFieldUpdateOperationsInput | number
+    plazoCorreccionDias?: IntFieldUpdateOperationsInput | number
+    tablaAqlJson?: NullableStringFieldUpdateOperationsInput | string | null
+    causasNoImputablesJson?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -189276,6 +190727,90 @@ export namespace Prisma {
     licId?: SortOrder
     anho?: SortOrder
     valorFijo?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    modulosActivosJson?: SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    tablaAqlJson?: SortOrder
+    causasNoImputablesJson?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    modulosActivosJson?: SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    tablaAqlJson?: SortOrder
+    causasNoImputablesJson?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    modulosActivosJson?: SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
+    tablaAqlJson?: SortOrder
+    causasNoImputablesJson?: SortOrder
+    activo?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Parametros_LicitacionSumOrderByAggregateInput = {
+    licId?: SortOrder
+    ratioManipuladorasH?: SortOrder
+    tempRefriMin?: SortOrder
+    tempRefriMax?: SortOrder
+    tempCongelacionMax?: SortOrder
+    toleranciaFLeve?: SortOrder
+    toleranciaFModerado?: SortOrder
+    toleranciaFGrave?: SortOrder
+    plazoCorreccionDias?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -220554,6 +222089,10 @@ export namespace Prisma {
      * @deprecated Use Multas_Aspecto_EE_RestriccionDefaultArgs instead
      */
     export type Multas_Aspecto_EE_RestriccionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Aspecto_EE_RestriccionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Parametros_LicitacionDefaultArgs instead
+     */
+    export type Multas_Parametros_LicitacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Parametros_LicitacionDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

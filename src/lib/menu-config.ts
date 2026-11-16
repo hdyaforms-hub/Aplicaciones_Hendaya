@@ -481,13 +481,14 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             },
             {
                 name: 'Multas',
-                requiredPermission: ['manage_utm', 'manage_aspectos_ee', 'manage_multa_servicios', 'manage_multa_privilegios', 'manage_multa_instruccion_ee'],
+                requiredPermission: ['manage_utm', 'manage_aspectos_ee', 'manage_multa_servicios', 'manage_multa_privilegios', 'manage_multa_instruccion_ee', 'manage_multa_configuracion'],
                 subItems: [
                     { name: 'UTM', href: '/dashboard/mantenedor/multas/utm', requiredPermission: 'manage_utm' },
                     { name: 'Fórmulas de Aspecto EE', href: '/dashboard/mantenedor/multas/aspectos-ee', requiredPermission: 'manage_aspectos_ee' },
                     { name: 'Servicios', href: '/dashboard/mantenedor/multas/servicios', requiredPermission: 'manage_multa_servicios' },
                     { name: 'Privilegios', href: '/dashboard/mantenedor/multas/privilegios', requiredPermission: 'manage_multa_privilegios' },
-                    { name: 'Instrucción de trabajo EE', href: '/dashboard/mantenedor/multas/instruccion-trabajo-ee', requiredPermission: 'manage_multa_instruccion_ee' }
+                    { name: 'Instrucción de trabajo EE', href: '/dashboard/mantenedor/multas/instruccion-trabajo-ee', requiredPermission: 'manage_multa_instruccion_ee' },
+                    { name: 'Configuración', href: '/dashboard/mantenedor/multas/configuracion', requiredPermission: 'manage_multa_configuracion' }
                 ]
             },
             {

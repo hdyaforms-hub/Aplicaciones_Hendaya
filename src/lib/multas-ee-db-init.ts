@@ -119,7 +119,35 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Aspecto_EE_Restriccion" ("licId", "letra");
         `)
 
-        // 5. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
+        // 5. Tabla de Parámetros Globales por Licitación (Hub C1)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Parametros_Licitacion" (
+                "id" TEXT PRIMARY KEY,
+                "licId" INTEGER NOT NULL,
+                "modulosActivosJson" TEXT,
+                "ratioManipuladorasH" INTEGER NOT NULL DEFAULT 70,
+                "tempRefriMin" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+                "tempRefriMax" DOUBLE PRECISION NOT NULL DEFAULT 5.0,
+                "tempCongelacionMax" DOUBLE PRECISION NOT NULL DEFAULT -18.0,
+                "toleranciaFLeve" DOUBLE PRECISION NOT NULL DEFAULT 10.0,
+                "toleranciaFModerado" DOUBLE PRECISION NOT NULL DEFAULT 5.0,
+                "toleranciaFGrave" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+                "plazoCorreccionDias" INTEGER NOT NULL DEFAULT 5,
+                "tablaAqlJson" TEXT,
+                "causasNoImputablesJson" TEXT,
+                "activo" BOOLEAN NOT NULL DEFAULT true,
+                "usuarioModif" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Parametros_Licitacion_licId_key"
+            ON "Multas_Parametros_Licitacion" ("licId");
+        `)
+
+        // 6. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
             DO $$ 
             BEGIN
@@ -175,6 +203,21 @@ export async function ensureMultasEETables(): Promise<void> {
                 ) THEN
                     ALTER TABLE "Multas_Aspecto_EE_Restriccion" 
                     ADD CONSTRAINT fk_multas_restr_lic 
+                    FOREIGN KEY ("licId") REFERENCES "Licitacion"("licId") ON DELETE CASCADE;
+                END IF;
+            END $$;
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            DO $$ 
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.table_constraints 
+                    WHERE constraint_name = 'fk_multas_param_lic' 
+                      AND table_name = 'Multas_Parametros_Licitacion'
+                ) THEN
+                    ALTER TABLE "Multas_Parametros_Licitacion" 
+                    ADD CONSTRAINT fk_multas_param_lic 
                     FOREIGN KEY ("licId") REFERENCES "Licitacion"("licId") ON DELETE CASCADE;
                 END IF;
             END $$;

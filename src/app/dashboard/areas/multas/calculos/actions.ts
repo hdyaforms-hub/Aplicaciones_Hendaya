@@ -814,6 +814,50 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             })
         }
 
+        // Buscar Parámetros Globales y Técnicos de la Licitación (Hub C1)
+        let paramLicitacion: any = null
+        if (licId) {
+            paramLicitacion = await prisma.multas_Parametros_Licitacion.findUnique({
+                where: { licId }
+            })
+        }
+
+        let parametrosConfig: any = null
+        if (paramLicitacion) {
+            let tablaAqlParsed = undefined
+            if (paramLicitacion.tablaAqlJson) {
+                try {
+                    tablaAqlParsed = JSON.parse(paramLicitacion.tablaAqlJson)
+                } catch {
+                    tablaAqlParsed = undefined
+                }
+            }
+            let causasParsed = undefined
+            if (paramLicitacion.causasNoImputablesJson) {
+                try {
+                    causasParsed = JSON.parse(paramLicitacion.causasNoImputablesJson)
+                } catch {
+                    causasParsed = undefined
+                }
+            }
+
+            parametrosConfig = {
+                ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
+                temperaturasK: {
+                    refriMin: paramLicitacion.tempRefriMin,
+                    refriMax: paramLicitacion.tempRefriMax,
+                    congelacionMax: paramLicitacion.tempCongelacionMax
+                },
+                toleranciasF: {
+                    defectosLevesMaxPorcentaje: paramLicitacion.toleranciaFLeve,
+                    defectosModeradosMaxPorcentaje: paramLicitacion.toleranciaFModerado,
+                    defectosGravesMaxPorcentaje: paramLicitacion.toleranciaFGrave
+                },
+                tablaAQL: tablaAqlParsed,
+                causasNoImputablesCustom: causasParsed
+            }
+        }
+
         const fechaSupervisionDate = cab.fechaSupervision ? new Date(cab.fechaSupervision) : null
 
         // Enhance with formula info and active restrictions
@@ -1090,7 +1134,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     racionesTotal,
                     racionesNivel: racionesAspecto,
                     esTotalPorDefecto: d.letraAspecto === 'G' && esTotalPorDefecto
-                }
+                },
+                parametrosConfig
             )
             return {
                 ...d,
@@ -1109,6 +1154,16 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             pmpaNiveles,
             savedVariables,
             serviciosDisponibles,
+            parametrosLicitacion: paramLicitacion ? {
+                ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
+                plazoCorreccionDias: paramLicitacion.plazoCorreccionDias,
+                tempRefriMin: paramLicitacion.tempRefriMin,
+                tempRefriMax: paramLicitacion.tempRefriMax,
+                tempCongelacionMax: paramLicitacion.tempCongelacionMax,
+                toleranciaFLeve: paramLicitacion.toleranciaFLeve,
+                toleranciaFModerado: paramLicitacion.toleranciaFModerado,
+                toleranciaFGrave: paramLicitacion.toleranciaFGrave
+            } : null,
             itCabInfo: itCab ? {
                 id: itCab.id,
                 codigoDocumento: itCab.codigoDocumento,

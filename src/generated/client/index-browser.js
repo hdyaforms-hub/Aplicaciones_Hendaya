@@ -878,6 +878,26 @@ exports.Prisma.Multas_Aspecto_EE_RestriccionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Parametros_LicitacionScalarFieldEnum = {
+  id: 'id',
+  licId: 'licId',
+  modulosActivosJson: 'modulosActivosJson',
+  ratioManipuladorasH: 'ratioManipuladorasH',
+  tempRefriMin: 'tempRefriMin',
+  tempRefriMax: 'tempRefriMax',
+  tempCongelacionMax: 'tempCongelacionMax',
+  toleranciaFLeve: 'toleranciaFLeve',
+  toleranciaFModerado: 'toleranciaFModerado',
+  toleranciaFGrave: 'toleranciaFGrave',
+  plazoCorreccionDias: 'plazoCorreccionDias',
+  tablaAqlJson: 'tablaAqlJson',
+  causasNoImputablesJson: 'causasNoImputablesJson',
+  activo: 'activo',
+  usuarioModif: 'usuarioModif',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2090,6 +2110,7 @@ exports.Prisma.ModelName = {
   Multas_IT_Elementos_Esenciales_Cab: 'Multas_IT_Elementos_Esenciales_Cab',
   Multas_IT_Elementos_Esenciales_Det: 'Multas_IT_Elementos_Esenciales_Det',
   Multas_Aspecto_EE_Restriccion: 'Multas_Aspecto_EE_Restriccion',
+  Multas_Parametros_Licitacion: 'Multas_Parametros_Licitacion',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

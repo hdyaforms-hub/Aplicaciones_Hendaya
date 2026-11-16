@@ -373,13 +373,16 @@ export async function parseInstruccionTrabajoEE(
 
         // 5. Causas de Imputabilidad (Tabla N°1)
         const causasImputabilidadJson = [
-            { tipo: 'Causas Imputables', descripcion: 'Falta de materias primas o insumos por retraso del proveedor de la empresa.', imputable: true },
-            { tipo: 'Causas Imputables', descripcion: 'Inasistencia del personal manipulador sin reemplazo oportuno.', imputable: true },
-            { tipo: 'Causas Imputables', descripcion: 'Falta de gas por descuido en la recarga del estanque/cilindros.', imputable: true },
-            { tipo: 'Causas Imputables', descripcion: 'Termómetros o balanzas inoperativas o descalibradas sin batería.', imputable: true },
-            { tipo: 'Causas No Imputables', descripcion: 'Corte general de suministro de agua potable o electricidad en la comuna/zona acreditado por la empresa sanitaria/eléctrica.', imputable: false },
-            { tipo: 'Causas No Imputables', descripcion: 'Suspensión de clases imprevista o toma del establecimiento educacional declarada formalmente por la Dirección.', imputable: false },
-            { tipo: 'Causas No Imputables', descripcion: 'Fuerza mayor o catástrofe climática decretada por la autoridad competente.', imputable: false }
+            { tipo: 'Causas Imputables', descripcion: 'Falta de materias primas o insumos por retraso del proveedor de la empresa.', imputable: true, terminoClave: 'falta de materias primas' },
+            { tipo: 'Causas Imputables', descripcion: 'Inasistencia del personal manipulador sin reemplazo oportuno.', imputable: true, terminoClave: 'inasistencia' },
+            { tipo: 'Causas Imputables', descripcion: 'Falta de gas por descuido en la recarga del estanque/cilindros.', imputable: true, terminoClave: 'falta de gas' },
+            { tipo: 'Causas Imputables', descripcion: 'Termómetros o balanzas inoperativas o descalibradas sin batería.', imputable: true, terminoClave: 'inoperativo' },
+            { tipo: 'Causas No Imputables', descripcion: 'Corte general de suministro de agua potable o electricidad en la comuna/zona acreditado por la empresa sanitaria/eléctrica.', imputable: false, terminoClave: 'corte de agua' },
+            { tipo: 'Causas No Imputables', descripcion: 'Corte de electricidad o suministro de energía eléctrica no atribuible al prestador.', imputable: false, terminoClave: 'corte de luz' },
+            { tipo: 'Causas No Imputables', descripcion: 'Suspensión de clases imprevista o toma del establecimiento educacional declarada formalmente por la Dirección.', imputable: false, terminoClave: 'toma del establecimiento' },
+            { tipo: 'Causas No Imputables', descripcion: 'Paro o paralización de actividades docentes o de personal.', imputable: false, terminoClave: 'paro' },
+            { tipo: 'Causas No Imputables', descripcion: 'Fuerza mayor o catástrofe climática decretada por la autoridad competente.', imputable: false, terminoClave: 'fuerza mayor' },
+            { tipo: 'Causas No Imputables', descripcion: 'Temporal climático severo o lluvia torrencial con afectación de infraestructura.', imputable: false, terminoClave: 'temporal' }
         ]
 
         // 6. Anexos técnicos
@@ -387,7 +390,14 @@ export async function parseInstruccionTrabajoEE(
             norma: 'Militar Estándar AQL 6,5',
             aql: 6.5,
             toleranciaPorcentaje: 5.0,
-            descripcion: 'Planilla de pesaje de bandejas servidas. Tolerancia máxima permitida del 5% bajo el gramaje neto FEP estipulado.'
+            descripcion: 'Planilla de pesaje de bandejas servidas. Tolerancia máxima permitida del 5% bajo el gramaje neto FEP estipulado.',
+            tablaAQL: [
+                { min: 2, max: 15, muestra: 2, ac: 0, re: 1, rangoTexto: '2 a 15 raciones' },
+                { min: 16, max: 50, muestra: 3, ac: 1, re: 2, rangoTexto: '16 a 50 raciones' },
+                { min: 51, max: 150, muestra: 5, ac: 1, re: 2, rangoTexto: '51 a 150 raciones' },
+                { min: 151, max: 500, muestra: 8, ac: 1, re: 2, rangoTexto: '151 a 500 raciones' },
+                { min: 501, max: Infinity, muestra: 13, ac: 2, re: 3, rangoTexto: '501 o más raciones (Tope máximo)' }
+            ]
         }
 
         const anexoFrutasVerdurasJson = {

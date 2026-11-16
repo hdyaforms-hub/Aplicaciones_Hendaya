@@ -851,6 +851,28 @@ model Multas_Aspecto_EE_Restriccion {
   @@index([licId, letra])
 }
 
+model Multas_Parametros_Licitacion {
+  id                     String    @id @default(uuid())
+  licId                  Int       @unique
+  modulosActivosJson     String?   @db.Text
+  ratioManipuladorasH    Int       @default(70)
+  tempRefriMin           Float     @default(0.0)
+  tempRefriMax           Float     @default(5.0)
+  tempCongelacionMax     Float     @default(-18.0)
+  toleranciaFLeve        Float     @default(10.0)
+  toleranciaFModerado    Float     @default(5.0)
+  toleranciaFGrave       Float     @default(0.0)
+  plazoCorreccionDias    Int       @default(5)
+  tablaAqlJson           String?   @db.Text
+  causasNoImputablesJson String?   @db.Text
+  activo                 Boolean   @default(true)
+  usuarioModif           String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([licId])
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

@@ -291,16 +291,18 @@ export default function RestriccionesAspectoModal({
                                 <p className="text-xs text-gray-500">Total: {restricciones.length} regla(s)</p>
                             </div>
                             <div className="flex items-center gap-2">
-                                <button
-                                    type="button"
-                                    onClick={handleCargarSugeridas}
-                                    disabled={saving}
-                                    className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
-                                    title="Cargar reglas sugeridas por normativa oficial (ej: M hasta mayo 2025 = $0)"
-                                >
-                                    <span>💡</span>
-                                    <span>Cargar sugeridas</span>
-                                </button>
+                                {aspecto.letra?.trim().toUpperCase() === 'M' && (
+                                    <button
+                                        type="button"
+                                        onClick={handleCargarSugeridas}
+                                        disabled={saving}
+                                        className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                                        title="Cargar reglas sugeridas por normativa oficial (ej: M hasta mayo 2025 = $0)"
+                                    >
+                                        <span>💡</span>
+                                        <span>Cargar sugeridas</span>
+                                    </button>
+                                )}
                                 <button
                                     onClick={handleOpenCreate}
                                     className="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-bold shadow-md shadow-cyan-600/20 transition-all flex items-center gap-1.5"

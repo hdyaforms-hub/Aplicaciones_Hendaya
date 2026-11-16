@@ -336,6 +336,14 @@ export default function InstruccionTrabajoEEClient({ licitaciones, currentUserNa
             {/* Pestañas Principales */}
             {itData && (
                 <div className="space-y-4">
+                    {/* Nota de transparencia: Plantilla Base Oficial Editable */}
+                    <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs text-amber-900 flex items-start gap-3">
+                        <span className="text-base shrink-0">📋</span>
+                        <div className="leading-relaxed">
+                            <span className="font-bold">Plantilla Base Oficial Homologada:</span> Los aspectos, tabla AQL, causales de no imputabilidad y plazos se inicializan con la plantilla base de la Instrucción de Trabajo oficial JUNAEB (IT-DAE-SUP026 Rev. 03). Estos parámetros pueden personalizarse y ajustarse dinámicamente para cada licitación desde el módulo <span className="font-bold text-cyan-800">Mantenedor &gt; Multas &gt; Configuración</span>.
+                        </div>
+                    </div>
+
                     <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
                         <button
                             onClick={() => setSelectedTab('aspectos')}

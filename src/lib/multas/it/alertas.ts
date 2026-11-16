@@ -4,6 +4,15 @@
  * Sin llamadas a Prisma ni dependencias de base de datos.
  */
 
+import { fechaToChileCalendarStr } from '../restricciones'
+
+/**
+ * Escapa caracteres especiales de expresiones regulares para evitar errores sintácticos.
+ */
+function escapeRegExp(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 export interface ParametrosITLicitacion {
     ratioManipuladorasH?: number // Default: 70
     temperaturasK?: {
@@ -24,7 +33,7 @@ export interface ParametrosITLicitacion {
         re: number
         rangoTexto?: string
     }>
-    causasNoImputablesCustom?: string[]
+    causasNoImputablesCustom?: Array<string | { terminoClave?: string; descripcion?: string }>
 }
 
 export interface AlertaITAspectoResult {
@@ -172,9 +181,13 @@ export function generarAlertasITAspecto(
 
     // --- ASPECTO F: Calidad, Estiba, Frutas y Verduras ---
     if (upperLetra === 'F') {
+        const tolLeve = parametrosConfig?.toleranciasF?.defectosLevesMaxPorcentaje ?? 10
+        const tolMod = parametrosConfig?.toleranciasF?.defectosModeradosMaxPorcentaje ?? 5
+        const tolGrave = parametrosConfig?.toleranciasF?.defectosGravesMaxPorcentaje ?? 0
         alertaTecnica = {
             tipo: 'CALIDAD_FRUTAS_VERDURAS',
-            criterio: 'Anexo N°2 JUNAEB: Defectos leves hasta 10%, moderados hasta 5%. Defectos graves (pudrición, plagas) 0% de tolerancia.',
+            tolerancias: { leves: tolLeve, moderados: tolMod, graves: tolGrave },
+            criterio: `Anexo N°2 JUNAEB: Defectos leves hasta ${tolLeve}%, moderados hasta ${tolMod}%. Defectos graves (pudrición, plagas) ${tolGrave}% de tolerancia.`,
             rotulacion: 'Alimentos no perecibles deben cumplir rotulación RSA y tarimas a 15 cm del suelo.'
         }
     }
@@ -190,12 +203,9 @@ export function generarAlertasITAspecto(
 
     // --- ASPECTO M: Alerta orientativa de exigibilidad (IT-DAE-SUP026 pp. 12 y 15) ---
     if (upperLetra === 'M') {
-        const fechaSup = fechaSupervision ? new Date(fechaSupervision) : null
-        const esAntesJunio2025 = fechaSup && !isNaN(fechaSup.getTime()) ? (
-            fechaSup.getFullYear() < 2025 || (fechaSup.getFullYear() === 2025 && fechaSup.getMonth() < 5)
-        ) : false
-
-        const fechaFmt = fechaSup && !isNaN(fechaSup.getTime()) ? fechaSup.toLocaleDateString('es-CL') : 'sin fecha'
+        const fechaChileStr = fechaToChileCalendarStr(fechaSupervision)
+        const esAntesJunio2025 = fechaChileStr ? fechaChileStr < '2025-06-01' : false
+        const fechaFmt = fechaChileStr || 'sin fecha'
 
         if (esAntesJunio2025) {
             alertaTecnica = {
@@ -234,7 +244,7 @@ export function generarAlertasITAspecto(
          /(?:viento|lluvia|inundaci|alerta|inclemencia|techo|volad|inundada|anegad)/i.test(obs))
     )
 
-    // Chequeo de causales adicionales desde causasImputabilidadJson de la IT (si existen)
+    // Chequeo de causales adicionales desde causasImputabilidadJson de la IT o configuradas en la licitación
     let causaCustomDetectada: string | null = null
     try {
         let causasIT: any[] = []
@@ -245,7 +255,7 @@ export function generarAlertasITAspecto(
         }
         for (const c of causasIT) {
             if (c && c.imputable === false && c.terminoClave) {
-                const rx = new RegExp(`\\b${c.terminoClave}\\b`, 'i')
+                const rx = new RegExp(`\\b${escapeRegExp(c.terminoClave.trim())}\\b`, 'i')
                 if (rx.test(obs)) {
                     causaCustomDetectada = c.descripcion || c.terminoClave
                     break
@@ -254,6 +264,19 @@ export function generarAlertasITAspecto(
         }
     } catch {
         // Ignorar error de parsing
+    }
+
+    if (!causaCustomDetectada && parametrosConfig?.causasNoImputablesCustom && Array.isArray(parametrosConfig.causasNoImputablesCustom)) {
+        for (const item of parametrosConfig.causasNoImputablesCustom) {
+            const termino = typeof item === 'string' ? item : item?.terminoClave
+            if (termino && termino.trim()) {
+                const rx = new RegExp(`\\b${escapeRegExp(termino.trim())}\\b`, 'i')
+                if (rx.test(obs)) {
+                    causaCustomDetectada = typeof item === 'object' && item.descripcion ? item.descripcion : termino
+                    break
+                }
+            }
+        }
     }
 
     if (tieneCorteSuministro || tieneTomaEstablecimiento || tieneParo || tieneSuspension || tieneFuerzaMayor || esTemporalClimatico || causaCustomDetectada) {
@@ -265,14 +288,17 @@ export function generarAlertasITAspecto(
         else if (esTemporalClimatico) motivo = 'temporal climático severo o lluvia torrencial'
         else if (causaCustomDetectada) motivo = causaCustomDetectada
 
-        posibleCausaNoImputable = `Posible defensa (Causa No Imputable): La observación del acta consigna ${motivo}. Conforme a la Tabla N°1 de la IT-DAE-SUP026, esto constituye causal no imputable al prestador y sustenta la solicitud de anulación o descargo de la multa.`
+        posibleCausaNoImputable = `Posible defensa (Causa No Imputable): La observación del acta consigna ${motivo}. Conforme a la Tabla N°1 de la IT-DAE-SUP026, esto podría constituir causal no imputable al prestador y sustenta la solicitud de anulación o descargo de la multa.`
     }
+
+    const plazoDias = itDetalle?.plazoCorreccionDias ?? (itCab?.plazoCorreccionDias ?? 5)
+    const periodoCorreccionTexto = tienePeriodoCorreccion ? `SI (${plazoDias} días hábiles)` : 'NO (No subsanable)'
 
     return {
         letra: upperLetra,
         tienePeriodoCorreccion,
-        periodoCorreccionTexto: tienePeriodoCorreccion ? 'SI (5 días hábiles)' : 'NO (No subsanable)',
-        plazoDias: tienePeriodoCorreccion ? 5 : 0,
+        periodoCorreccionTexto,
+        plazoDias: tienePeriodoCorreccion ? plazoDias : 0,
         pautaSolucion,
         consideraciones,
         formaEvaluar,

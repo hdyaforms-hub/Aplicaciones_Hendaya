@@ -494,8 +494,8 @@ export async function deleteRestriccionAspecto(id: string) {
 
 /**
  * Carga las restricciones normativas sugeridas para la licitación.
- * Por ejemplo para el Aspecto M: "M hasta el 31-05-2025 = $0" (IT-DAE-SUP026 pp. 12 y 15).
- * No duplica restricciones si ya existe una activa para ese aspecto y rango.
+ * Aplica exclusivamente al Aspecto M: "M hasta el 31-05-2025 = $0" (IT-DAE-SUP026 pp. 12 y 15).
+ * No duplica si ya existe una restricción de rango que cubra hasta mayo de 2025.
  */
 export async function cargarRestriccionesSugeridas(licId: number, letra?: string) {
     const session = await getSession()
@@ -508,18 +508,30 @@ export async function cargarRestriccionesSugeridas(licId: number, letra?: string
         const targetLetra = (letra || 'M').trim().toUpperCase()
         const licIdNum = Number(licId)
 
-        // Verificar si ya existe una restricción activa para el aspecto M en esta licitación
-        const existente = await prisma.multas_Aspecto_EE_Restriccion.findFirst({
+        if (targetLetra !== 'M') {
+            return { error: 'Las restricciones normativas sugeridas (IT-DAE-SUP026) aplican exclusivamente al Aspecto M (Plan de Gestión de Residuos).' }
+        }
+
+        // Verificar si ya existe una restricción activa que cubra el rango de corte a mayo de 2025
+        const existentes = await prisma.multas_Aspecto_EE_Restriccion.findMany({
             where: {
                 licId: licIdNum,
-                letra: targetLetra,
+                letra: 'M',
                 activo: true
             }
         })
 
-        if (existente) {
+        const yaTieneRangoCorte = existentes.some(r => {
+            if (r.tipo === 'RANGO_FECHAS' && r.fechaHasta) {
+                const hastaStr = new Date(r.fechaHasta).toISOString().slice(0, 10)
+                return hastaStr >= '2025-05-31'
+            }
+            return false
+        })
+
+        if (yaTieneRangoCorte) {
             return {
-                warning: `El Aspecto ${targetLetra} ya cuenta con una restricción activa en esta licitación (${existente.descripcion || existente.tipo}). No se duplicó.`
+                warning: `El Aspecto M ya cuenta con una restricción activa que cubre hasta el 31-05-2025 en esta licitación. No se duplicó.`
             }
         }
 
@@ -527,10 +539,10 @@ export async function cargarRestriccionesSugeridas(licId: number, letra?: string
         await prisma.multas_Aspecto_EE_Restriccion.create({
             data: {
                 licId: licIdNum,
-                letra: targetLetra,
+                letra: 'M',
                 tipo: 'RANGO_FECHAS',
-                fechaDesde: new Date('2024-01-01T00:00:00'),
-                fechaHasta: new Date('2025-05-31T23:59:59.999'),
+                fechaDesde: new Date('2024-01-01T00:00:00.000Z'),
+                fechaHasta: new Date('2025-05-31T23:59:59.999Z'),
                 accion: 'VALOR_CERO',
                 valorFijo: 0,
                 descripcion: 'Normativa IT-DAE-SUP026 pp. 12 y 15: Aspecto M exigible desde junio 2025 (supervisiones previas exentas a $0)',
@@ -545,14 +557,14 @@ export async function cargarRestriccionesSugeridas(licId: number, letra?: string
                 userId: session.user.id,
                 action: 'CREATE',
                 modulo: 'MANTENEDOR_MULTAS',
-                detalle: `Carga de restricciones sugeridas: Creada restricción de Aspecto ${targetLetra} hasta 31-05-2025 = $0 para Licitación ${licIdNum}`
+                detalle: `Carga de restricciones sugeridas: Creada restricción de Aspecto M hasta 31-05-2025 = $0 para Licitación ${licIdNum}`
             })
         } catch (auditErr) {
             console.warn('Advertencia auditoría:', auditErr)
         }
 
         revalidatePath(PATH)
-        return { success: true, message: `Restricción sugerida para Aspecto ${targetLetra} cargada exitosamente.` }
+        return { success: true, message: `Restricción sugerida para Aspecto M cargada exitosamente (exento hasta 31-05-2025).` }
     } catch (e: any) {
         console.error('Error al cargar restricciones sugeridas:', e)
         return { error: 'Error al cargar restricciones sugeridas: ' + (e?.message || 'Error en base de datos') }
