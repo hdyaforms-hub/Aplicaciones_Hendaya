@@ -124,6 +124,8 @@ export async function getSession() {
                 'view_multas_areas',
                 'manage_calculos_ee',
                 'manage_descargos',
+                'view_analisis_nc',
+                'manage_analisis_nc',
                 'view_prev_gravedad_preparacion',
                 'manage_prev_gravedad_preparacion',
                 'view_prev_riesgo_minuta',

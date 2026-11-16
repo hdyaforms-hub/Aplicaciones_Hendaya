@@ -2082,6 +2082,21 @@ export async function updateEstadoHallazgoAction(params: {
             nota: params.nota,
             usuario
         })
+
+        if (res.ok) {
+            try {
+                await logAuditAction({
+                    username: usuario,
+                    userId: session?.user?.id || null,
+                    action: 'ACTUALIZAR_ESTADO_HALLAZGO_NC',
+                    modulo: 'Áreas -> Multas',
+                    detalle: `Actualizó hallazgo NC #${params.id} a estado '${params.estado}'.${params.nota ? ` Motivo: ${params.nota}` : ''}`
+                })
+            } catch (auditErr) {
+                console.warn('Error en logAuditAction (updateEstadoHallazgoAction):', auditErr)
+            }
+        }
+
         return res
     } catch (e: any) {
         console.error('Error en updateEstadoHallazgoAction:', e)
@@ -2155,6 +2170,18 @@ export async function evaluarHallazgosLicitacionMasivoAction(licId: number, mes?
             const hallazgos = await evaluarYGuardarHallazgosFolio(f.folio, licId, usuario)
             procesados++
             totalHallazgos += hallazgos.length
+        }
+
+        try {
+            await logAuditAction({
+                username: usuario,
+                userId: session?.user?.id || null,
+                action: 'EVALUACION_MASIVA_REGLAS_NC',
+                modulo: 'Áreas -> Multas',
+                detalle: `Evaluación masiva de reglas NC para licitación #${licId} (Período: ${mes && anho ? `${mes}/${anho}` : 'Completo'}). Folios auditados: ${procesados}, Hallazgos detectados: ${totalHallazgos}`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction (evaluarHallazgosLicitacionMasivoAction):', auditErr)
         }
 
         return {

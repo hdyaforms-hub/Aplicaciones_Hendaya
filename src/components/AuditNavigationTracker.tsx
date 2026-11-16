@@ -83,6 +83,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/calidad/transporte-higiene')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Registro transportista interno higiene y estado Transporte' }
     if (path.startsWith('/dashboard/areas/calidad/higiene-personal')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Registro de Transportista interno Higiene Personal' }
     if (path.startsWith('/dashboard/areas/multas')) {
+        if (path.includes('/analisis-nc')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Análisis de No Conformidades (NC)' }
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }
     }
