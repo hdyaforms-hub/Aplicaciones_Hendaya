@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 import {
     getParametrosLicitacion,
     guardarParametrosLicitacion,
-    restablecerParametrosDefecto,
-    ModuloSistemaConfig
+    restablecerParametrosDefecto
 } from './actions'
+import { ModuloSistemaConfig } from './types'
 
 interface LicitacionOption {
     licId: number

@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
 import { evaluarRestriccionAspecto } from '@/lib/multas/restricciones'
 import { generarAlertasITAspecto } from '@/lib/multas/it/alertas'
+import { getUserEffectiveRbds } from '@/lib/authFilters'
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -17,6 +18,66 @@ async function checkPermission(permission: string) {
     if (!user) return false
     const permissions = JSON.parse(user.role.permissions as string)
     return permissions.includes(permission)
+}
+
+export async function getLicitacionesDisponibles() {
+    try {
+        const userEffectiveRbds = await getUserEffectiveRbds()
+        let whereClause: any = {}
+        if (userEffectiveRbds !== null) {
+            if (userEffectiveRbds.length === 0) return { data: [] }
+            whereClause = {
+                uts: {
+                    some: {
+                        colegios: {
+                            some: {
+                                colRBD: { in: userEffectiveRbds }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        const lics = await prisma.licitacion.findMany({
+            where: whereClause,
+            select: {
+                licId: true,
+                licitacionHomologada: true
+            },
+            orderBy: { licId: 'asc' }
+        })
+
+        const cabLics = await prisma.elementosEsenciales_Cab.findMany({
+            select: { licitacion: true, licId: true },
+            distinct: ['licitacion'],
+            where: { licitacion: { not: null } }
+        })
+
+        const optionsMap = new Map<string, string>()
+        for (const l of lics) {
+            const label = l.licitacionHomologada || `Licitación ${l.licId}`
+            optionsMap.set(String(l.licId), label)
+            if (l.licitacionHomologada) {
+                optionsMap.set(l.licitacionHomologada, label)
+            }
+        }
+        for (const c of cabLics) {
+            if (c.licitacion && !optionsMap.has(c.licitacion)) {
+                optionsMap.set(c.licitacion, c.licitacion)
+            }
+        }
+
+        const data = Array.from(optionsMap.entries()).map(([value, label]) => ({
+            value,
+            label: label === value ? label : `${label} (${value})`
+        }))
+
+        return { data }
+    } catch (e) {
+        console.error('Error fetching licitaciones disponibles:', e)
+        return { error: 'Error al obtener licitaciones disponibles' }
+    }
 }
 
 export async function getSucursalesDisponibles() {
@@ -115,7 +176,16 @@ export async function getFoliosIncompletos(params: {
             }
         }
 
-        if (params.licitacion) whereClause.licitacion = { contains: params.licitacion }
+        if (params.licitacion && params.licitacion !== 'Todas' && params.licitacion.trim() !== '') {
+            const isNum = !isNaN(Number(params.licitacion))
+            if (!whereClause.AND) whereClause.AND = []
+            whereClause.AND.push({
+                OR: [
+                    { licitacion: { contains: params.licitacion, mode: 'insensitive' } },
+                    ...(isNum ? [{ licId: Number(params.licitacion) }] : [])
+                ]
+            })
+        }
         if (params.folio) whereClause.folio = { contains: params.folio }
 
         // Apply sucursal constraint
@@ -403,7 +473,16 @@ export async function calculateAll(params: {
                 { folio: { contains: params.search } }
             ]
         }
-        if (params.licitacion) whereClause.licitacion = { contains: params.licitacion }
+        if (params.licitacion && params.licitacion !== 'Todas' && params.licitacion.trim() !== '') {
+            const isNum = !isNaN(Number(params.licitacion))
+            if (!whereClause.AND) whereClause.AND = []
+            whereClause.AND.push({
+                OR: [
+                    { licitacion: { contains: params.licitacion, mode: 'insensitive' } },
+                    ...(isNum ? [{ licId: Number(params.licitacion) }] : [])
+                ]
+            })
+        }
         if (params.folio) whereClause.folio = { contains: params.folio }
 
         let folios = await prisma.elementosEsenciales_Cab.findMany({

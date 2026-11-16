@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles, getSucursalesDisponibles, reversarAnulacionFolio } from './actions'
+import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles, getSucursalesDisponibles, getLicitacionesDisponibles, reversarAnulacionFolio } from './actions'
 import CalculoModal from './CalculoModal'
 import AnularModal from './AnularModal'
 
@@ -10,7 +10,8 @@ export default function CalculosEEPage() {
     const [search, setSearch] = useState('')
     const [mes, setMes] = useState('Todos los meses')
     const [ano, setAno] = useState(new Date().getFullYear().toString())
-    const [licitacion, setLicitacion] = useState('')
+    const [licitacion, setLicitacion] = useState('Todas')
+    const [licitacionesList, setLicitacionesList] = useState<{ value: string; label: string }[]>([])
     const [folio, setFolio] = useState('')
     const [estadoCalculo, setEstadoCalculo] = useState('Todos')
     const [estadoAnulacion, setEstadoAnulacion] = useState('No Anulados')
@@ -55,15 +56,19 @@ export default function CalculosEEPage() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const [resAspectos, resSucursales] = await Promise.all([
+                const [resAspectos, resSucursales, resLicitaciones] = await Promise.all([
                     getAspectosDisponibles(),
-                    getSucursalesDisponibles()
+                    getSucursalesDisponibles(),
+                    getLicitacionesDisponibles()
                 ])
                 if (resAspectos.data) {
                     setAspectosList(resAspectos.data)
                 }
                 if (resSucursales.data) {
                     setSucursalesList(resSucursales.data)
+                }
+                if (resLicitaciones.data) {
+                    setLicitacionesList(resLicitaciones.data)
                 }
             } catch (e) {
                 console.error('Error loading filter data:', e)
@@ -278,13 +283,18 @@ export default function CalculosEEPage() {
                     </div>
                     <div className="lg:col-span-2">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Licitación</label>
-                        <input
-                            type="text"
-                            placeholder="Ej: J52"
+                        <select
                             value={licitacion}
                             onChange={(e) => setLicitacion(e.target.value)}
-                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-medium"
-                        />
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold"
+                        >
+                            <option value="Todas">Todas las licitaciones</option>
+                            {licitacionesList.map((lic, i) => (
+                                <option key={i} value={lic.value}>
+                                    {lic.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="lg:col-span-2">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Mes</label>
