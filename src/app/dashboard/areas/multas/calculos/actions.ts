@@ -54,26 +54,33 @@ export async function getLicitacionesDisponibles() {
             where: { licitacion: { not: null } }
         })
 
-        const optionsMap = new Map<string, string>()
+        const options: { value: string; label: string }[] = []
+        const seenValues = new Set<string>()
+
         for (const l of lics) {
-            const label = l.licitacionHomologada || `Licitación ${l.licId}`
-            optionsMap.set(String(l.licId), label)
+            const val = String(l.licId)
+            const label = l.licitacionHomologada && l.licitacionHomologada !== String(l.licId)
+                ? `${l.licitacionHomologada} (${l.licId})`
+                : (l.licitacionHomologada || `Licitación ${l.licId}`)
+
+            seenValues.add(val)
             if (l.licitacionHomologada) {
-                optionsMap.set(l.licitacionHomologada, label)
+                seenValues.add(l.licitacionHomologada.toUpperCase().trim())
             }
+            options.push({ value: val, label })
         }
+
         for (const c of cabLics) {
-            if (c.licitacion && !optionsMap.has(c.licitacion)) {
-                optionsMap.set(c.licitacion, c.licitacion)
-            }
+            const raw = c.licitacion?.trim()
+            if (!raw) continue
+            if (c.licId && seenValues.has(String(c.licId))) continue
+            if (seenValues.has(raw.toUpperCase())) continue
+
+            seenValues.add(raw.toUpperCase())
+            options.push({ value: raw, label: raw })
         }
 
-        const data = Array.from(optionsMap.entries()).map(([value, label]) => ({
-            value,
-            label: label === value ? label : `${label} (${value})`
-        }))
-
-        return { data }
+        return { data: options }
     } catch (e) {
         console.error('Error fetching licitaciones disponibles:', e)
         return { error: 'Error al obtener licitaciones disponibles' }
