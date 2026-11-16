@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client_temp"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -965,6 +965,34 @@ model Multas_Cantidad_Override {
 
   @@unique([folio, letraAspecto, variable], map: "multas_cant_override_unique")
   @@index([folio])
+}
+
+model Multas_Hallazgo_NC {
+  id            Int       @id @default(autoincrement())
+  folio         String
+  licitacionId  Int?
+  aspecto       String    @db.VarChar(10) // 'A'..'M', 'GENERAL'
+  reglaId       String    @db.VarChar(50) // ej: 'G-J-1', 'K-MARGEN-1'
+  severidad     String    @db.VarChar(20) // 'alta', 'media', 'info'
+  tipo          String    @db.VarChar(30) // 'mal_imputado', 'descargo', 'verificar'
+  titulo        String
+  detalle       String    @db.Text
+  sugerencia    String?   @db.Text
+  evidencia     String?   @db.Text
+  estado        String    @default("PENDIENTE") @db.VarChar(20) // 'PENDIENTE', 'ACEPTADO', 'DESCARTADO'
+  nota          String?   @db.Text
+  autor         String?
+  descartadoPor String?
+  descartadoEn  DateTime?
+  aceptadoPor   String?
+  aceptadoEn    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([folio, aspecto, reglaId], map: "multas_hallazgo_nc_unique")
+  @@index([folio])
+  @@index([licitacionId, estado])
+  @@index([aspecto, estado])
 }
 
 model Descargos_Cab {

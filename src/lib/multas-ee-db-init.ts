@@ -306,7 +306,54 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Cantidad_Override" ("folio");
         `)
 
-        // 12. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
+        // 12. Tabla de Hallazgos NC Auditados (C5)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Hallazgo_NC" (
+                "id" SERIAL NOT NULL,
+                "folio" TEXT NOT NULL,
+                "licitacionId" INTEGER,
+                "aspecto" VARCHAR(10) NOT NULL,
+                "reglaId" VARCHAR(50) NOT NULL,
+                "severidad" VARCHAR(20) NOT NULL,
+                "tipo" VARCHAR(30) NOT NULL,
+                "titulo" TEXT NOT NULL,
+                "detalle" TEXT NOT NULL,
+                "sugerencia" TEXT,
+                "evidencia" TEXT,
+                "estado" VARCHAR(20) NOT NULL DEFAULT 'PENDIENTE',
+                "nota" TEXT,
+                "autor" TEXT,
+                "descartadoPor" TEXT,
+                "descartadoEn" TIMESTAMP(3),
+                "aceptadoPor" TEXT,
+                "aceptadoEn" TIMESTAMP(3),
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT "Multas_Hallazgo_NC_pkey" PRIMARY KEY ("id")
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "multas_hallazgo_nc_unique"
+            ON "Multas_Hallazgo_NC" ("folio", "aspecto", "reglaId");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Hallazgo_NC_folio_idx"
+            ON "Multas_Hallazgo_NC" ("folio");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Hallazgo_NC_licitacionId_estado_idx"
+            ON "Multas_Hallazgo_NC" ("licitacionId", "estado");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Hallazgo_NC_aspecto_estado_idx"
+            ON "Multas_Hallazgo_NC" ("aspecto", "estado");
+        `)
+
+        // 13. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
             DO $$ 
             BEGIN

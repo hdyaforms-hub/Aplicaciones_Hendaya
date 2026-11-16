@@ -24,6 +24,7 @@ import {
     eliminarMinutaMes
 } from './actions'
 import { getComparacionExtraccionLicitacion } from '@/app/dashboard/areas/multas/calculos/actions'
+import { CATALOGO_REGLAS, ReglaCatalogoInfo } from '@/lib/multas/reglas/definiciones'
 import {
     ModuloSistemaConfig,
     SubModuloReglasC5,
@@ -51,7 +52,17 @@ interface Props {
 
 export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [selectedLicId, setSelectedLicId] = useState<number>(licitaciones[0]?.licId || 0)
-    const [activeTab, setActiveTab] = useState<'modulos' | 'horarios' | 'estratos' | 'dotacion' | 'minutas' | 'comparacionC4' | 'parametros' | 'aql' | 'causas'>('modulos')
+    const [activeTab, setActiveTab] = useState<'modulos' | 'horarios' | 'estratos' | 'dotacion' | 'minutas' | 'comparacionC4' | 'catalogoReglasC5' | 'parametros' | 'aql' | 'causas'>('modulos')
+
+    // Estado C5: Calibración de Reglas NC y Parámetros
+    const [c5MargenTemp, setC5MargenTemp] = useState<number>(1.0)
+    const [c5UmbralDotacion, setC5UmbralDotacion] = useState<number>(50)
+    const [c5TolAnticipado, setC5TolAnticipado] = useState<number>(60)
+    const [c5TolPesaje, setC5TolPesaje] = useState<number>(10)
+    const [c5ReglasHabilitadas, setC5ReglasHabilitadas] = useState<Record<string, boolean>>({})
+    const [c5FiltroTexto, setC5FiltroTexto] = useState('')
+    const [c5FiltroAspecto, setC5FiltroAspecto] = useState('ALL')
+    const [c5FiltroSeveridad, setC5FiltroSeveridad] = useState('ALL')
 
     // Estado Modo Comparación C4
     const [compMes, setCompMes] = useState('Todos los meses')
@@ -189,6 +200,20 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 setPlazoCorreccion(p.plazoCorreccionDias)
                 setTablaAql(p.tablaAql || [])
                 setCausas(p.causasNoImputables || [])
+                const c5Mod = (p.modulos || []).find((m: any) => m.codigo === 'C5')
+                if (c5Mod?.parametros) {
+                    setC5MargenTemp(c5Mod.parametros.margenTemperaturaMax ?? 1.0)
+                    setC5UmbralDotacion(c5Mod.parametros.umbralDotacionInasistenciaPct ?? 50)
+                    setC5TolAnticipado(c5Mod.parametros.toleranciaHorarioAnticipadoMin ?? 60)
+                    setC5TolPesaje(c5Mod.parametros.toleranciaHorarioPesajeMin ?? 10)
+                    setC5ReglasHabilitadas(c5Mod.parametros.reglasHabilitadas ?? {})
+                } else {
+                    setC5MargenTemp(1.0)
+                    setC5UmbralDotacion(50)
+                    setC5TolAnticipado(60)
+                    setC5TolPesaje(10)
+                    setC5ReglasHabilitadas({})
+                }
                 setLastUpdated(p.updatedAt ? new Date(p.updatedAt).toLocaleString('es-CL') : null)
                 setUsuarioModif(p.usuarioModif || null)
             }
@@ -321,9 +346,25 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
         setError(null)
         setSuccessMessage(null)
         try {
+            const modulosConC5 = modulos.map(m => {
+                if (m.codigo === 'C5') {
+                    return {
+                        ...m,
+                        parametros: {
+                            margenTemperaturaMax: Number(c5MargenTemp),
+                            umbralDotacionInasistenciaPct: Number(c5UmbralDotacion),
+                            toleranciaHorarioAnticipadoMin: Number(c5TolAnticipado),
+                            toleranciaHorarioPesajeMin: Number(c5TolPesaje),
+                            reglasHabilitadas: c5ReglasHabilitadas
+                        }
+                    }
+                }
+                return m
+            })
+
             const res = await guardarParametrosLicitacion({
                 licId: selectedLicId,
-                modulos,
+                modulos: modulosConC5,
                 ratioManipuladorasH: Number(ratioH),
                 tempRefriMin: Number(tempRefriMin),
                 tempRefriMax: Number(tempRefriMax),
@@ -843,6 +884,21 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </button>
 
                 <button
+                    onClick={() => setActiveTab('catalogoReglasC5')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+                        activeTab === 'catalogoReglasC5'
+                            ? 'bg-slate-900 text-white shadow-sm'
+                            : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                >
+                    <span>⚖️</span>
+                    <span>Reglas NC y Calibración (C5)</span>
+                    <span className="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-600 text-white text-[10px]">
+                        23
+                    </span>
+                </button>
+
+                <button
                     onClick={() => setActiveTab('parametros')}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'parametros'
@@ -1115,6 +1171,14 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                                 )
                                             })}
                                         </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveTab('catalogoReglasC5')}
+                                            className="w-full mt-2 py-1.5 px-2 bg-gradient-to-r from-cyan-50 to-sky-50 hover:from-cyan-100 hover:to-sky-100 border border-cyan-200 rounded text-[11px] font-bold text-cyan-800 flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                                        >
+                                            <span>⚙️ Calibrar 23 Reglas y Parámetros</span>
+                                            <span>&rarr;</span>
+                                        </button>
                                     </div>
                                 )}
                             </div>
@@ -1977,6 +2041,281 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* TAB: CATÁLOGO DE REGLAS NC Y CALIBRACIÓN (C5) */}
+            {activeTab === 'catalogoReglasC5' && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded bg-cyan-900 text-white text-[11px] font-black">C5</span>
+                                <h3 className="text-sm font-black text-slate-800">
+                                    Catálogo de Reglas NC y Calibración de Parámetros (IT-DAE-SUP026)
+                                </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Calibra los márgenes de tolerancia metrológica y habilita/deshabilita individualmente cada una de las 23 reglas de auditoría para la Licitación {selectedLicId}.
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={handleSave}
+                                disabled={saving}
+                                className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                                <span>💾</span>
+                                <span>{saving ? 'Guardando...' : 'Guardar Calibración C5'}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Parámetros de Calibración Cuantitativa */}
+                    <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/80 space-y-4">
+                        <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-cyan-950 flex items-center gap-1.5">
+                                <span>⚙️</span>
+                                <span>Parámetros Numéricos de Tolerancia y Umbrales (C5)</span>
+                            </h4>
+                            <span className="text-[10px] text-slate-500">Configuración por Licitación</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {/* Margen Temperatura */}
+                            <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-700">Margen Temp. (°C)</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-800 font-mono text-[10px] font-bold">K-MARGEN</span>
+                                </div>
+                                <p className="text-[10px] text-slate-500 leading-tight">
+                                    Tolerancia metrológica instrumental (EMA). Desviaciones menores califican como marginales.
+                                </p>
+                                <div className="flex items-center gap-2 pt-1">
+                                    <input
+                                        type="number"
+                                        step="0.1"
+                                        min="0"
+                                        max="5"
+                                        value={c5MargenTemp}
+                                        onChange={(e) => setC5MargenTemp(parseFloat(e.target.value) || 0)}
+                                        className="w-full text-xs font-mono font-bold text-slate-800 px-3 py-1.5 rounded-lg border border-slate-300 focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <span className="text-xs font-bold text-slate-500">°C</span>
+                                </div>
+                            </div>
+
+                            {/* Umbral Inasistencia Dotación */}
+                            <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-700">Umbral Ausentismo H (%)</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-800 font-mono text-[10px] font-bold">H-MANIP</span>
+                                </div>
+                                <p className="text-[10px] text-slate-500 leading-tight">
+                                    Porcentaje de manipuladoras faltantes respecto a la dotación oficial C2.3 para alerta severa.
+                                </p>
+                                <div className="flex items-center gap-2 pt-1">
+                                    <input
+                                        type="number"
+                                        min="10"
+                                        max="100"
+                                        value={c5UmbralDotacion}
+                                        onChange={(e) => setC5UmbralDotacion(parseInt(e.target.value, 10) || 0)}
+                                        className="w-full text-xs font-mono font-bold text-slate-800 px-3 py-1.5 rounded-lg border border-slate-300 focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <span className="text-xs font-bold text-slate-500">%</span>
+                                </div>
+                            </div>
+
+                            {/* Tolerancia Inicio Anticipado */}
+                            <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-700">Inicio Anticipado (min)</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-800 font-mono text-[10px] font-bold">HORARIO-2</span>
+                                </div>
+                                <p className="text-[10px] text-slate-500 leading-tight">
+                                    Minutos previos al servicio para considerar que las preparaciones estaban legítimamente en curso.
+                                </p>
+                                <div className="flex items-center gap-2 pt-1">
+                                    <input
+                                        type="number"
+                                        min="10"
+                                        max="180"
+                                        value={c5TolAnticipado}
+                                        onChange={(e) => setC5TolAnticipado(parseInt(e.target.value, 10) || 0)}
+                                        className="w-full text-xs font-mono font-bold text-slate-800 px-3 py-1.5 rounded-lg border border-slate-300 focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <span className="text-xs font-bold text-slate-500">min</span>
+                                </div>
+                            </div>
+
+                            {/* Tolerancia Pesaje Servicio */}
+                            <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-700">Tolerancia Pesaje (min)</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-800 font-mono text-[10px] font-bold">G-HORARIO</span>
+                                </div>
+                                <p className="text-[10px] text-slate-500 leading-tight">
+                                    Minutos de retraso en llegada o retiro anticipado para considerar pesaje continuo incompleto.
+                                </p>
+                                <div className="flex items-center gap-2 pt-1">
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="60"
+                                        value={c5TolPesaje}
+                                        onChange={(e) => setC5TolPesaje(parseInt(e.target.value, 10) || 0)}
+                                        className="w-full text-xs font-mono font-bold text-slate-800 px-3 py-1.5 rounded-lg border border-slate-300 focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <span className="text-xs font-bold text-slate-500">min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Barra de Filtros y Búsqueda de Reglas */}
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200">
+                        <div className="flex-1 flex items-center gap-2">
+                            <span className="text-slate-400 text-sm">🔍</span>
+                            <input
+                                type="text"
+                                placeholder="Buscar regla por código, nombre, norma o texto..."
+                                value={c5FiltroTexto}
+                                onChange={(e) => setC5FiltroTexto(e.target.value)}
+                                className="w-full text-xs bg-transparent border-0 focus:ring-0 text-slate-800 placeholder-slate-400"
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-2 border-t sm:border-t-0 sm:border-l border-slate-200 pt-2 sm:pt-0 sm:pl-3">
+                            <select
+                                value={c5FiltroAspecto}
+                                onChange={(e) => setC5FiltroAspecto(e.target.value)}
+                                className="text-xs text-slate-700 border border-slate-200 rounded-lg px-2.5 py-1.5 bg-slate-50 focus:ring-1 focus:ring-cyan-500"
+                            >
+                                <option value="ALL">Todos los Aspectos</option>
+                                <option value="GENERAL">GENERAL</option>
+                                <option value="A">Aspecto A (Minutas)</option>
+                                <option value="B">Aspecto B (Manuales)</option>
+                                <option value="C">Aspecto C (Materias Primas)</option>
+                                <option value="F">Aspecto F (Calidad F&V)</option>
+                                <option value="G">Aspecto G (Gramajes AQL)</option>
+                                <option value="H">Aspecto H (Personal)</option>
+                                <option value="J">Aspecto J (Equipos/Inst.)</option>
+                                <option value="K">Aspecto K (Temperaturas)</option>
+                                <option value="M">Aspecto M (Residuos)</option>
+                            </select>
+
+                            <select
+                                value={c5FiltroSeveridad}
+                                onChange={(e) => setC5FiltroSeveridad(e.target.value)}
+                                className="text-xs text-slate-700 border border-slate-200 rounded-lg px-2.5 py-1.5 bg-slate-50 focus:ring-1 focus:ring-cyan-500"
+                            >
+                                <option value="ALL">Todas las Severidades</option>
+                                <option value="alta">🔴 Alta (Mal Imputado)</option>
+                                <option value="media">🟡 Media (Descargo)</option>
+                                <option value="info">ℹ️ Info (Verificar)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Grilla / Listado de las 23 Reglas */}
+                    <div className="space-y-3">
+                        {CATALOGO_REGLAS
+                            .filter(regla => {
+                                if (c5FiltroAspecto !== 'ALL') {
+                                    if (c5FiltroAspecto === 'GENERAL' && regla.aspecto !== 'GENERAL') return false
+                                    if (c5FiltroAspecto !== 'GENERAL' && !regla.aspecto.includes(c5FiltroAspecto)) return false
+                                }
+                                if (c5FiltroSeveridad !== 'ALL' && regla.severidadDefault !== c5FiltroSeveridad) return false
+                                if (c5FiltroTexto.trim()) {
+                                    const q = c5FiltroTexto.toLowerCase()
+                                    const match = regla.id.toLowerCase().includes(q) ||
+                                        regla.nombre.toLowerCase().includes(q) ||
+                                        regla.norma.toLowerCase().includes(q) ||
+                                        regla.descripcion.toLowerCase().includes(q)
+                                    if (!match) return false
+                                }
+                                return true
+                            })
+                            .map(regla => {
+                                const isHabilitada = c5ReglasHabilitadas[regla.id] !== false
+                                return (
+                                    <div
+                                        key={regla.id}
+                                        className={`p-4 rounded-xl border transition-all ${
+                                            isHabilitada
+                                                ? 'bg-white border-slate-200 shadow-sm'
+                                                : 'bg-slate-50/80 border-slate-200/60 opacity-60'
+                                        }`}
+                                    >
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                            <div className="flex items-center gap-2.5 flex-wrap">
+                                                <span className="font-mono text-xs font-black px-2 py-0.5 rounded bg-cyan-900 text-cyan-50 border border-cyan-800">
+                                                    {regla.id}
+                                                </span>
+                                                <span className="text-xs font-black text-slate-800">
+                                                    {regla.nombre}
+                                                </span>
+                                                <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                                    Aspecto {regla.aspecto}
+                                                </span>
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                    regla.severidadDefault === 'alta'
+                                                        ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                                                        : regla.severidadDefault === 'media'
+                                                            ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                                                            : 'bg-sky-100 text-sky-800 border border-sky-200'
+                                                }`}>
+                                                    {regla.severidadDefault.toUpperCase()}
+                                                </span>
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                    regla.tipoDefault === 'mal_imputado'
+                                                        ? 'bg-red-50 text-red-700 border border-red-200'
+                                                        : regla.tipoDefault === 'descargo'
+                                                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                                            : 'bg-indigo-50 text-indigo-800 border border-indigo-200'
+                                                }`}>
+                                                    {regla.tipoDefault === 'mal_imputado' ? 'Mal Imputado' : regla.tipoDefault === 'descargo' ? 'Descargo' : 'Verificar'}
+                                                </span>
+                                                <span className="text-[10px] text-slate-400 font-mono">
+                                                    Ref: {regla.norma}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center gap-3">
+                                                <label className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+                                                    <span className={isHabilitada ? 'text-emerald-700' : 'text-slate-400'}>
+                                                        {isHabilitada ? 'Habilitada' : 'Deshabilitada'}
+                                                    </span>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={isHabilitada}
+                                                        onChange={(e) => {
+                                                            const checked = e.target.checked
+                                                            setC5ReglasHabilitadas(prev => ({
+                                                                ...prev,
+                                                                [regla.id]: checked
+                                                            }))
+                                                        }}
+                                                        className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500 border-slate-300"
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                                            {regla.descripcion}
+                                        </p>
+
+                                        <div className="mt-2 pt-2 border-t border-slate-100 flex items-start gap-1.5 text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg">
+                                            <span className="font-bold text-slate-700 shrink-0">Descargo Sugerido:</span>
+                                            <span className="italic">{regla.sugerenciaBase}</span>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                    </div>
                 </div>
             )}
 

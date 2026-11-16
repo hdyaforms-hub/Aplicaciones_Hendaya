@@ -152,7 +152,8 @@ export async function getParametrosLicitacion(licId: number) {
                         return {
                             ...def,
                             activo: found.activo,
-                            submodulos
+                            submodulos,
+                            parametros: found.parametros || undefined
                         }
                     })
                 }
@@ -246,7 +247,8 @@ export async function guardarParametrosLicitacion(data: {
         const modulosActivosJson = JSON.stringify(data.modulos.map(m => ({
             codigo: m.codigo,
             activo: m.activo,
-            submodulos: m.submodulos || undefined
+            submodulos: m.submodulos || undefined,
+            parametros: (m as any).parametros || undefined
         })))
 
         // Sanitizar tabla AQL: max: Infinity o null se guarda como null ("sin tope")

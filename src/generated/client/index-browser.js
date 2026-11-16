@@ -974,6 +974,29 @@ exports.Prisma.Multas_Cantidad_OverrideScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Hallazgo_NCScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  licitacionId: 'licitacionId',
+  aspecto: 'aspecto',
+  reglaId: 'reglaId',
+  severidad: 'severidad',
+  tipo: 'tipo',
+  titulo: 'titulo',
+  detalle: 'detalle',
+  sugerencia: 'sugerencia',
+  evidencia: 'evidencia',
+  estado: 'estado',
+  nota: 'nota',
+  autor: 'autor',
+  descartadoPor: 'descartadoPor',
+  descartadoEn: 'descartadoEn',
+  aceptadoPor: 'aceptadoPor',
+  aceptadoEn: 'aceptadoEn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2193,6 +2216,7 @@ exports.Prisma.ModelName = {
   Multas_Minuta_Mes: 'Multas_Minuta_Mes',
   Multas_Folio_Dato: 'Multas_Folio_Dato',
   Multas_Cantidad_Override: 'Multas_Cantidad_Override',
+  Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

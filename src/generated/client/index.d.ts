@@ -309,6 +309,11 @@ export type Multas_Folio_Dato = $Result.DefaultSelection<Prisma.$Multas_Folio_Da
  */
 export type Multas_Cantidad_Override = $Result.DefaultSelection<Prisma.$Multas_Cantidad_OverridePayload>
 /**
+ * Model Multas_Hallazgo_NC
+ * 
+ */
+export type Multas_Hallazgo_NC = $Result.DefaultSelection<Prisma.$Multas_Hallazgo_NCPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1456,6 +1461,16 @@ export class PrismaClient<
     * ```
     */
   get multas_Cantidad_Override(): Prisma.Multas_Cantidad_OverrideDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Hallazgo_NC`: Exposes CRUD operations for the **Multas_Hallazgo_NC** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Hallazgo_NCS
+    * const multas_Hallazgo_NCS = await prisma.multas_Hallazgo_NC.findMany()
+    * ```
+    */
+  get multas_Hallazgo_NC(): Prisma.Multas_Hallazgo_NCDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2826,6 +2841,7 @@ export namespace Prisma {
     Multas_Minuta_Mes: 'Multas_Minuta_Mes',
     Multas_Folio_Dato: 'Multas_Folio_Dato',
     Multas_Cantidad_Override: 'Multas_Cantidad_Override',
+    Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2928,7 +2944,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7059,6 +7075,76 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Cantidad_OverrideCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Cantidad_OverrideCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Hallazgo_NC: {
+        payload: Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>
+        fields: Prisma.Multas_Hallazgo_NCFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Hallazgo_NCFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Hallazgo_NCFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Hallazgo_NCFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Hallazgo_NCFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Hallazgo_NCFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Hallazgo_NCCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Hallazgo_NCCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Hallazgo_NCCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Hallazgo_NCDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          update: {
+            args: Prisma.Multas_Hallazgo_NCUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Hallazgo_NCDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Hallazgo_NCUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Hallazgo_NCUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Hallazgo_NCPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Hallazgo_NCAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Hallazgo_NC>
+          }
+          groupBy: {
+            args: Prisma.Multas_Hallazgo_NCGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Hallazgo_NCGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Hallazgo_NCCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Hallazgo_NCCountAggregateOutputType> | number
           }
         }
       }
@@ -76177,6 +76263,1102 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Cantidad_Override
      */
     select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Hallazgo_NC
+   */
+
+  export type AggregateMultas_Hallazgo_NC = {
+    _count: Multas_Hallazgo_NCCountAggregateOutputType | null
+    _avg: Multas_Hallazgo_NCAvgAggregateOutputType | null
+    _sum: Multas_Hallazgo_NCSumAggregateOutputType | null
+    _min: Multas_Hallazgo_NCMinAggregateOutputType | null
+    _max: Multas_Hallazgo_NCMaxAggregateOutputType | null
+  }
+
+  export type Multas_Hallazgo_NCAvgAggregateOutputType = {
+    id: number | null
+    licitacionId: number | null
+  }
+
+  export type Multas_Hallazgo_NCSumAggregateOutputType = {
+    id: number | null
+    licitacionId: number | null
+  }
+
+  export type Multas_Hallazgo_NCMinAggregateOutputType = {
+    id: number | null
+    folio: string | null
+    licitacionId: number | null
+    aspecto: string | null
+    reglaId: string | null
+    severidad: string | null
+    tipo: string | null
+    titulo: string | null
+    detalle: string | null
+    sugerencia: string | null
+    evidencia: string | null
+    estado: string | null
+    nota: string | null
+    autor: string | null
+    descartadoPor: string | null
+    descartadoEn: Date | null
+    aceptadoPor: string | null
+    aceptadoEn: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Hallazgo_NCMaxAggregateOutputType = {
+    id: number | null
+    folio: string | null
+    licitacionId: number | null
+    aspecto: string | null
+    reglaId: string | null
+    severidad: string | null
+    tipo: string | null
+    titulo: string | null
+    detalle: string | null
+    sugerencia: string | null
+    evidencia: string | null
+    estado: string | null
+    nota: string | null
+    autor: string | null
+    descartadoPor: string | null
+    descartadoEn: Date | null
+    aceptadoPor: string | null
+    aceptadoEn: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Hallazgo_NCCountAggregateOutputType = {
+    id: number
+    folio: number
+    licitacionId: number
+    aspecto: number
+    reglaId: number
+    severidad: number
+    tipo: number
+    titulo: number
+    detalle: number
+    sugerencia: number
+    evidencia: number
+    estado: number
+    nota: number
+    autor: number
+    descartadoPor: number
+    descartadoEn: number
+    aceptadoPor: number
+    aceptadoEn: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Hallazgo_NCAvgAggregateInputType = {
+    id?: true
+    licitacionId?: true
+  }
+
+  export type Multas_Hallazgo_NCSumAggregateInputType = {
+    id?: true
+    licitacionId?: true
+  }
+
+  export type Multas_Hallazgo_NCMinAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacionId?: true
+    aspecto?: true
+    reglaId?: true
+    severidad?: true
+    tipo?: true
+    titulo?: true
+    detalle?: true
+    sugerencia?: true
+    evidencia?: true
+    estado?: true
+    nota?: true
+    autor?: true
+    descartadoPor?: true
+    descartadoEn?: true
+    aceptadoPor?: true
+    aceptadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Hallazgo_NCMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacionId?: true
+    aspecto?: true
+    reglaId?: true
+    severidad?: true
+    tipo?: true
+    titulo?: true
+    detalle?: true
+    sugerencia?: true
+    evidencia?: true
+    estado?: true
+    nota?: true
+    autor?: true
+    descartadoPor?: true
+    descartadoEn?: true
+    aceptadoPor?: true
+    aceptadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Hallazgo_NCCountAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacionId?: true
+    aspecto?: true
+    reglaId?: true
+    severidad?: true
+    tipo?: true
+    titulo?: true
+    detalle?: true
+    sugerencia?: true
+    evidencia?: true
+    estado?: true
+    nota?: true
+    autor?: true
+    descartadoPor?: true
+    descartadoEn?: true
+    aceptadoPor?: true
+    aceptadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Hallazgo_NCAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Hallazgo_NC to aggregate.
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Hallazgo_NCS to fetch.
+     */
+    orderBy?: Multas_Hallazgo_NCOrderByWithRelationInput | Multas_Hallazgo_NCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Hallazgo_NCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Hallazgo_NCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Hallazgo_NCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Hallazgo_NCS
+    **/
+    _count?: true | Multas_Hallazgo_NCCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Hallazgo_NCAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Hallazgo_NCSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Hallazgo_NCMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Hallazgo_NCMaxAggregateInputType
+  }
+
+  export type GetMultas_Hallazgo_NCAggregateType<T extends Multas_Hallazgo_NCAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Hallazgo_NC]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Hallazgo_NC[P]>
+      : GetScalarType<T[P], AggregateMultas_Hallazgo_NC[P]>
+  }
+
+
+
+
+  export type Multas_Hallazgo_NCGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Hallazgo_NCWhereInput
+    orderBy?: Multas_Hallazgo_NCOrderByWithAggregationInput | Multas_Hallazgo_NCOrderByWithAggregationInput[]
+    by: Multas_Hallazgo_NCScalarFieldEnum[] | Multas_Hallazgo_NCScalarFieldEnum
+    having?: Multas_Hallazgo_NCScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Hallazgo_NCCountAggregateInputType | true
+    _avg?: Multas_Hallazgo_NCAvgAggregateInputType
+    _sum?: Multas_Hallazgo_NCSumAggregateInputType
+    _min?: Multas_Hallazgo_NCMinAggregateInputType
+    _max?: Multas_Hallazgo_NCMaxAggregateInputType
+  }
+
+  export type Multas_Hallazgo_NCGroupByOutputType = {
+    id: number
+    folio: string
+    licitacionId: number | null
+    aspecto: string
+    reglaId: string
+    severidad: string
+    tipo: string
+    titulo: string
+    detalle: string
+    sugerencia: string | null
+    evidencia: string | null
+    estado: string
+    nota: string | null
+    autor: string | null
+    descartadoPor: string | null
+    descartadoEn: Date | null
+    aceptadoPor: string | null
+    aceptadoEn: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Hallazgo_NCCountAggregateOutputType | null
+    _avg: Multas_Hallazgo_NCAvgAggregateOutputType | null
+    _sum: Multas_Hallazgo_NCSumAggregateOutputType | null
+    _min: Multas_Hallazgo_NCMinAggregateOutputType | null
+    _max: Multas_Hallazgo_NCMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Hallazgo_NCGroupByPayload<T extends Multas_Hallazgo_NCGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Hallazgo_NCGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Hallazgo_NCGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Hallazgo_NCGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Hallazgo_NCGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Hallazgo_NCSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    licitacionId?: boolean
+    aspecto?: boolean
+    reglaId?: boolean
+    severidad?: boolean
+    tipo?: boolean
+    titulo?: boolean
+    detalle?: boolean
+    sugerencia?: boolean
+    evidencia?: boolean
+    estado?: boolean
+    nota?: boolean
+    autor?: boolean
+    descartadoPor?: boolean
+    descartadoEn?: boolean
+    aceptadoPor?: boolean
+    aceptadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Hallazgo_NC"]>
+
+  export type Multas_Hallazgo_NCSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    licitacionId?: boolean
+    aspecto?: boolean
+    reglaId?: boolean
+    severidad?: boolean
+    tipo?: boolean
+    titulo?: boolean
+    detalle?: boolean
+    sugerencia?: boolean
+    evidencia?: boolean
+    estado?: boolean
+    nota?: boolean
+    autor?: boolean
+    descartadoPor?: boolean
+    descartadoEn?: boolean
+    aceptadoPor?: boolean
+    aceptadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Hallazgo_NC"]>
+
+  export type Multas_Hallazgo_NCSelectScalar = {
+    id?: boolean
+    folio?: boolean
+    licitacionId?: boolean
+    aspecto?: boolean
+    reglaId?: boolean
+    severidad?: boolean
+    tipo?: boolean
+    titulo?: boolean
+    detalle?: boolean
+    sugerencia?: boolean
+    evidencia?: boolean
+    estado?: boolean
+    nota?: boolean
+    autor?: boolean
+    descartadoPor?: boolean
+    descartadoEn?: boolean
+    aceptadoPor?: boolean
+    aceptadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Hallazgo_NCPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Hallazgo_NC"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      folio: string
+      licitacionId: number | null
+      aspecto: string
+      reglaId: string
+      severidad: string
+      tipo: string
+      titulo: string
+      detalle: string
+      sugerencia: string | null
+      evidencia: string | null
+      estado: string
+      nota: string | null
+      autor: string | null
+      descartadoPor: string | null
+      descartadoEn: Date | null
+      aceptadoPor: string | null
+      aceptadoEn: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Hallazgo_NC"]>
+    composites: {}
+  }
+
+  type Multas_Hallazgo_NCGetPayload<S extends boolean | null | undefined | Multas_Hallazgo_NCDefaultArgs> = $Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload, S>
+
+  type Multas_Hallazgo_NCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Hallazgo_NCFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Hallazgo_NCCountAggregateInputType | true
+    }
+
+  export interface Multas_Hallazgo_NCDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Hallazgo_NC'], meta: { name: 'Multas_Hallazgo_NC' } }
+    /**
+     * Find zero or one Multas_Hallazgo_NC that matches the filter.
+     * @param {Multas_Hallazgo_NCFindUniqueArgs} args - Arguments to find a Multas_Hallazgo_NC
+     * @example
+     * // Get one Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Hallazgo_NCFindUniqueArgs>(args: SelectSubset<T, Multas_Hallazgo_NCFindUniqueArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Hallazgo_NC that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Hallazgo_NCFindUniqueOrThrowArgs} args - Arguments to find a Multas_Hallazgo_NC
+     * @example
+     * // Get one Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Hallazgo_NCFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Hallazgo_NCFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Hallazgo_NC that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCFindFirstArgs} args - Arguments to find a Multas_Hallazgo_NC
+     * @example
+     * // Get one Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Hallazgo_NCFindFirstArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCFindFirstArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Hallazgo_NC that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCFindFirstOrThrowArgs} args - Arguments to find a Multas_Hallazgo_NC
+     * @example
+     * // Get one Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Hallazgo_NCFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Hallazgo_NCS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Hallazgo_NCS
+     * const multas_Hallazgo_NCS = await prisma.multas_Hallazgo_NC.findMany()
+     * 
+     * // Get first 10 Multas_Hallazgo_NCS
+     * const multas_Hallazgo_NCS = await prisma.multas_Hallazgo_NC.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Hallazgo_NCWithIdOnly = await prisma.multas_Hallazgo_NC.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Hallazgo_NCFindManyArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Hallazgo_NC.
+     * @param {Multas_Hallazgo_NCCreateArgs} args - Arguments to create a Multas_Hallazgo_NC.
+     * @example
+     * // Create one Multas_Hallazgo_NC
+     * const Multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.create({
+     *   data: {
+     *     // ... data to create a Multas_Hallazgo_NC
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Hallazgo_NCCreateArgs>(args: SelectSubset<T, Multas_Hallazgo_NCCreateArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Hallazgo_NCS.
+     * @param {Multas_Hallazgo_NCCreateManyArgs} args - Arguments to create many Multas_Hallazgo_NCS.
+     * @example
+     * // Create many Multas_Hallazgo_NCS
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Hallazgo_NCCreateManyArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Hallazgo_NCS and returns the data saved in the database.
+     * @param {Multas_Hallazgo_NCCreateManyAndReturnArgs} args - Arguments to create many Multas_Hallazgo_NCS.
+     * @example
+     * // Create many Multas_Hallazgo_NCS
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Hallazgo_NCS and only return the `id`
+     * const multas_Hallazgo_NCWithIdOnly = await prisma.multas_Hallazgo_NC.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Hallazgo_NCCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Hallazgo_NC.
+     * @param {Multas_Hallazgo_NCDeleteArgs} args - Arguments to delete one Multas_Hallazgo_NC.
+     * @example
+     * // Delete one Multas_Hallazgo_NC
+     * const Multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Hallazgo_NC
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Hallazgo_NCDeleteArgs>(args: SelectSubset<T, Multas_Hallazgo_NCDeleteArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Hallazgo_NC.
+     * @param {Multas_Hallazgo_NCUpdateArgs} args - Arguments to update one Multas_Hallazgo_NC.
+     * @example
+     * // Update one Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Hallazgo_NCUpdateArgs>(args: SelectSubset<T, Multas_Hallazgo_NCUpdateArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Hallazgo_NCS.
+     * @param {Multas_Hallazgo_NCDeleteManyArgs} args - Arguments to filter Multas_Hallazgo_NCS to delete.
+     * @example
+     * // Delete a few Multas_Hallazgo_NCS
+     * const { count } = await prisma.multas_Hallazgo_NC.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Hallazgo_NCDeleteManyArgs>(args?: SelectSubset<T, Multas_Hallazgo_NCDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Hallazgo_NCS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Hallazgo_NCS
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Hallazgo_NCUpdateManyArgs>(args: SelectSubset<T, Multas_Hallazgo_NCUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Hallazgo_NC.
+     * @param {Multas_Hallazgo_NCUpsertArgs} args - Arguments to update or create a Multas_Hallazgo_NC.
+     * @example
+     * // Update or create a Multas_Hallazgo_NC
+     * const multas_Hallazgo_NC = await prisma.multas_Hallazgo_NC.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Hallazgo_NC
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Hallazgo_NC we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Hallazgo_NCUpsertArgs>(args: SelectSubset<T, Multas_Hallazgo_NCUpsertArgs<ExtArgs>>): Prisma__Multas_Hallazgo_NCClient<$Result.GetResult<Prisma.$Multas_Hallazgo_NCPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Hallazgo_NCS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCCountArgs} args - Arguments to filter Multas_Hallazgo_NCS to count.
+     * @example
+     * // Count the number of Multas_Hallazgo_NCS
+     * const count = await prisma.multas_Hallazgo_NC.count({
+     *   where: {
+     *     // ... the filter for the Multas_Hallazgo_NCS we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Hallazgo_NCCountArgs>(
+      args?: Subset<T, Multas_Hallazgo_NCCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Hallazgo_NCCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Hallazgo_NC.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Hallazgo_NCAggregateArgs>(args: Subset<T, Multas_Hallazgo_NCAggregateArgs>): Prisma.PrismaPromise<GetMultas_Hallazgo_NCAggregateType<T>>
+
+    /**
+     * Group by Multas_Hallazgo_NC.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Hallazgo_NCGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Hallazgo_NCGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Hallazgo_NCGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Hallazgo_NCGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Hallazgo_NCGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Hallazgo_NCGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Hallazgo_NC model
+   */
+  readonly fields: Multas_Hallazgo_NCFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Hallazgo_NC.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Hallazgo_NCClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Hallazgo_NC model
+   */ 
+  interface Multas_Hallazgo_NCFieldRefs {
+    readonly id: FieldRef<"Multas_Hallazgo_NC", 'Int'>
+    readonly folio: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly licitacionId: FieldRef<"Multas_Hallazgo_NC", 'Int'>
+    readonly aspecto: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly reglaId: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly severidad: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly tipo: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly titulo: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly detalle: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly sugerencia: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly evidencia: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly estado: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly nota: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly autor: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly descartadoPor: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly descartadoEn: FieldRef<"Multas_Hallazgo_NC", 'DateTime'>
+    readonly aceptadoPor: FieldRef<"Multas_Hallazgo_NC", 'String'>
+    readonly aceptadoEn: FieldRef<"Multas_Hallazgo_NC", 'DateTime'>
+    readonly createdAt: FieldRef<"Multas_Hallazgo_NC", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Hallazgo_NC", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Hallazgo_NC findUnique
+   */
+  export type Multas_Hallazgo_NCFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Hallazgo_NC to fetch.
+     */
+    where: Multas_Hallazgo_NCWhereUniqueInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC findUniqueOrThrow
+   */
+  export type Multas_Hallazgo_NCFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Hallazgo_NC to fetch.
+     */
+    where: Multas_Hallazgo_NCWhereUniqueInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC findFirst
+   */
+  export type Multas_Hallazgo_NCFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Hallazgo_NC to fetch.
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Hallazgo_NCS to fetch.
+     */
+    orderBy?: Multas_Hallazgo_NCOrderByWithRelationInput | Multas_Hallazgo_NCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Hallazgo_NCS.
+     */
+    cursor?: Multas_Hallazgo_NCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Hallazgo_NCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Hallazgo_NCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Hallazgo_NCS.
+     */
+    distinct?: Multas_Hallazgo_NCScalarFieldEnum | Multas_Hallazgo_NCScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Hallazgo_NC findFirstOrThrow
+   */
+  export type Multas_Hallazgo_NCFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Hallazgo_NC to fetch.
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Hallazgo_NCS to fetch.
+     */
+    orderBy?: Multas_Hallazgo_NCOrderByWithRelationInput | Multas_Hallazgo_NCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Hallazgo_NCS.
+     */
+    cursor?: Multas_Hallazgo_NCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Hallazgo_NCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Hallazgo_NCS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Hallazgo_NCS.
+     */
+    distinct?: Multas_Hallazgo_NCScalarFieldEnum | Multas_Hallazgo_NCScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Hallazgo_NC findMany
+   */
+  export type Multas_Hallazgo_NCFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Hallazgo_NCS to fetch.
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Hallazgo_NCS to fetch.
+     */
+    orderBy?: Multas_Hallazgo_NCOrderByWithRelationInput | Multas_Hallazgo_NCOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Hallazgo_NCS.
+     */
+    cursor?: Multas_Hallazgo_NCWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Hallazgo_NCS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Hallazgo_NCS.
+     */
+    skip?: number
+    distinct?: Multas_Hallazgo_NCScalarFieldEnum | Multas_Hallazgo_NCScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Hallazgo_NC create
+   */
+  export type Multas_Hallazgo_NCCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Hallazgo_NC.
+     */
+    data: XOR<Multas_Hallazgo_NCCreateInput, Multas_Hallazgo_NCUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Hallazgo_NC createMany
+   */
+  export type Multas_Hallazgo_NCCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Hallazgo_NCS.
+     */
+    data: Multas_Hallazgo_NCCreateManyInput | Multas_Hallazgo_NCCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Hallazgo_NC createManyAndReturn
+   */
+  export type Multas_Hallazgo_NCCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Hallazgo_NCS.
+     */
+    data: Multas_Hallazgo_NCCreateManyInput | Multas_Hallazgo_NCCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Hallazgo_NC update
+   */
+  export type Multas_Hallazgo_NCUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Hallazgo_NC.
+     */
+    data: XOR<Multas_Hallazgo_NCUpdateInput, Multas_Hallazgo_NCUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Hallazgo_NC to update.
+     */
+    where: Multas_Hallazgo_NCWhereUniqueInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC updateMany
+   */
+  export type Multas_Hallazgo_NCUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Hallazgo_NCS.
+     */
+    data: XOR<Multas_Hallazgo_NCUpdateManyMutationInput, Multas_Hallazgo_NCUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Hallazgo_NCS to update
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC upsert
+   */
+  export type Multas_Hallazgo_NCUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Hallazgo_NC to update in case it exists.
+     */
+    where: Multas_Hallazgo_NCWhereUniqueInput
+    /**
+     * In case the Multas_Hallazgo_NC found by the `where` argument doesn't exist, create a new Multas_Hallazgo_NC with this data.
+     */
+    create: XOR<Multas_Hallazgo_NCCreateInput, Multas_Hallazgo_NCUncheckedCreateInput>
+    /**
+     * In case the Multas_Hallazgo_NC was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Hallazgo_NCUpdateInput, Multas_Hallazgo_NCUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Hallazgo_NC delete
+   */
+  export type Multas_Hallazgo_NCDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Hallazgo_NC to delete.
+     */
+    where: Multas_Hallazgo_NCWhereUniqueInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC deleteMany
+   */
+  export type Multas_Hallazgo_NCDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Hallazgo_NCS to delete
+     */
+    where?: Multas_Hallazgo_NCWhereInput
+  }
+
+  /**
+   * Multas_Hallazgo_NC without action
+   */
+  export type Multas_Hallazgo_NCDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Hallazgo_NC
+     */
+    select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
   }
 
 
@@ -166418,6 +167600,32 @@ export namespace Prisma {
   export type Multas_Cantidad_OverrideScalarFieldEnum = (typeof Multas_Cantidad_OverrideScalarFieldEnum)[keyof typeof Multas_Cantidad_OverrideScalarFieldEnum]
 
 
+  export const Multas_Hallazgo_NCScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    licitacionId: 'licitacionId',
+    aspecto: 'aspecto',
+    reglaId: 'reglaId',
+    severidad: 'severidad',
+    tipo: 'tipo',
+    titulo: 'titulo',
+    detalle: 'detalle',
+    sugerencia: 'sugerencia',
+    evidencia: 'evidencia',
+    estado: 'estado',
+    nota: 'nota',
+    autor: 'autor',
+    descartadoPor: 'descartadoPor',
+    descartadoEn: 'descartadoEn',
+    aceptadoPor: 'aceptadoPor',
+    aceptadoEn: 'aceptadoEn',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Hallazgo_NCScalarFieldEnum = (typeof Multas_Hallazgo_NCScalarFieldEnum)[keyof typeof Multas_Hallazgo_NCScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -173208,6 +174416,136 @@ export namespace Prisma {
     createdBy?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Cantidad_Override"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Cantidad_Override"> | Date | string
+  }
+
+  export type Multas_Hallazgo_NCWhereInput = {
+    AND?: Multas_Hallazgo_NCWhereInput | Multas_Hallazgo_NCWhereInput[]
+    OR?: Multas_Hallazgo_NCWhereInput[]
+    NOT?: Multas_Hallazgo_NCWhereInput | Multas_Hallazgo_NCWhereInput[]
+    id?: IntFilter<"Multas_Hallazgo_NC"> | number
+    folio?: StringFilter<"Multas_Hallazgo_NC"> | string
+    licitacionId?: IntNullableFilter<"Multas_Hallazgo_NC"> | number | null
+    aspecto?: StringFilter<"Multas_Hallazgo_NC"> | string
+    reglaId?: StringFilter<"Multas_Hallazgo_NC"> | string
+    severidad?: StringFilter<"Multas_Hallazgo_NC"> | string
+    tipo?: StringFilter<"Multas_Hallazgo_NC"> | string
+    titulo?: StringFilter<"Multas_Hallazgo_NC"> | string
+    detalle?: StringFilter<"Multas_Hallazgo_NC"> | string
+    sugerencia?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    evidencia?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    estado?: StringFilter<"Multas_Hallazgo_NC"> | string
+    nota?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    autor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoPor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoEn?: DateTimeNullableFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    aceptadoPor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    aceptadoEn?: DateTimeNullableFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    createdAt?: DateTimeFilter<"Multas_Hallazgo_NC"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Hallazgo_NC"> | Date | string
+  }
+
+  export type Multas_Hallazgo_NCOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    reglaId?: SortOrder
+    severidad?: SortOrder
+    tipo?: SortOrder
+    titulo?: SortOrder
+    detalle?: SortOrder
+    sugerencia?: SortOrderInput | SortOrder
+    evidencia?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    nota?: SortOrderInput | SortOrder
+    autor?: SortOrderInput | SortOrder
+    descartadoPor?: SortOrderInput | SortOrder
+    descartadoEn?: SortOrderInput | SortOrder
+    aceptadoPor?: SortOrderInput | SortOrder
+    aceptadoEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    folio_aspecto_reglaId?: Multas_Hallazgo_NCFolioAspectoReglaIdCompoundUniqueInput
+    AND?: Multas_Hallazgo_NCWhereInput | Multas_Hallazgo_NCWhereInput[]
+    OR?: Multas_Hallazgo_NCWhereInput[]
+    NOT?: Multas_Hallazgo_NCWhereInput | Multas_Hallazgo_NCWhereInput[]
+    folio?: StringFilter<"Multas_Hallazgo_NC"> | string
+    licitacionId?: IntNullableFilter<"Multas_Hallazgo_NC"> | number | null
+    aspecto?: StringFilter<"Multas_Hallazgo_NC"> | string
+    reglaId?: StringFilter<"Multas_Hallazgo_NC"> | string
+    severidad?: StringFilter<"Multas_Hallazgo_NC"> | string
+    tipo?: StringFilter<"Multas_Hallazgo_NC"> | string
+    titulo?: StringFilter<"Multas_Hallazgo_NC"> | string
+    detalle?: StringFilter<"Multas_Hallazgo_NC"> | string
+    sugerencia?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    evidencia?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    estado?: StringFilter<"Multas_Hallazgo_NC"> | string
+    nota?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    autor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoPor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoEn?: DateTimeNullableFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    aceptadoPor?: StringNullableFilter<"Multas_Hallazgo_NC"> | string | null
+    aceptadoEn?: DateTimeNullableFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    createdAt?: DateTimeFilter<"Multas_Hallazgo_NC"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Hallazgo_NC"> | Date | string
+  }, "id" | "folio_aspecto_reglaId">
+
+  export type Multas_Hallazgo_NCOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    reglaId?: SortOrder
+    severidad?: SortOrder
+    tipo?: SortOrder
+    titulo?: SortOrder
+    detalle?: SortOrder
+    sugerencia?: SortOrderInput | SortOrder
+    evidencia?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    nota?: SortOrderInput | SortOrder
+    autor?: SortOrderInput | SortOrder
+    descartadoPor?: SortOrderInput | SortOrder
+    descartadoEn?: SortOrderInput | SortOrder
+    aceptadoPor?: SortOrderInput | SortOrder
+    aceptadoEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Hallazgo_NCCountOrderByAggregateInput
+    _avg?: Multas_Hallazgo_NCAvgOrderByAggregateInput
+    _max?: Multas_Hallazgo_NCMaxOrderByAggregateInput
+    _min?: Multas_Hallazgo_NCMinOrderByAggregateInput
+    _sum?: Multas_Hallazgo_NCSumOrderByAggregateInput
+  }
+
+  export type Multas_Hallazgo_NCScalarWhereWithAggregatesInput = {
+    AND?: Multas_Hallazgo_NCScalarWhereWithAggregatesInput | Multas_Hallazgo_NCScalarWhereWithAggregatesInput[]
+    OR?: Multas_Hallazgo_NCScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Hallazgo_NCScalarWhereWithAggregatesInput | Multas_Hallazgo_NCScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Multas_Hallazgo_NC"> | number
+    folio?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    licitacionId?: IntNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | number | null
+    aspecto?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    reglaId?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    severidad?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    tipo?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    titulo?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    detalle?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    sugerencia?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    evidencia?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    estado?: StringWithAggregatesFilter<"Multas_Hallazgo_NC"> | string
+    nota?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    autor?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoPor?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    descartadoEn?: DateTimeNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    aceptadoPor?: StringNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | string | null
+    aceptadoEn?: DateTimeNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -186592,6 +187930,164 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Hallazgo_NCCreateInput = {
+    folio: string
+    licitacionId?: number | null
+    aspecto: string
+    reglaId: string
+    severidad: string
+    tipo: string
+    titulo: string
+    detalle: string
+    sugerencia?: string | null
+    evidencia?: string | null
+    estado?: string
+    nota?: string | null
+    autor?: string | null
+    descartadoPor?: string | null
+    descartadoEn?: Date | string | null
+    aceptadoPor?: string | null
+    aceptadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Hallazgo_NCUncheckedCreateInput = {
+    id?: number
+    folio: string
+    licitacionId?: number | null
+    aspecto: string
+    reglaId: string
+    severidad: string
+    tipo: string
+    titulo: string
+    detalle: string
+    sugerencia?: string | null
+    evidencia?: string | null
+    estado?: string
+    nota?: string | null
+    autor?: string | null
+    descartadoPor?: string | null
+    descartadoEn?: Date | string | null
+    aceptadoPor?: string | null
+    aceptadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Hallazgo_NCUpdateInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    reglaId?: StringFieldUpdateOperationsInput | string
+    severidad?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    sugerencia?: NullableStringFieldUpdateOperationsInput | string | null
+    evidencia?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    nota?: NullableStringFieldUpdateOperationsInput | string | null
+    autor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aceptadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    aceptadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Hallazgo_NCUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    reglaId?: StringFieldUpdateOperationsInput | string
+    severidad?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    sugerencia?: NullableStringFieldUpdateOperationsInput | string | null
+    evidencia?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    nota?: NullableStringFieldUpdateOperationsInput | string | null
+    autor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aceptadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    aceptadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Hallazgo_NCCreateManyInput = {
+    id?: number
+    folio: string
+    licitacionId?: number | null
+    aspecto: string
+    reglaId: string
+    severidad: string
+    tipo: string
+    titulo: string
+    detalle: string
+    sugerencia?: string | null
+    evidencia?: string | null
+    estado?: string
+    nota?: string | null
+    autor?: string | null
+    descartadoPor?: string | null
+    descartadoEn?: Date | string | null
+    aceptadoPor?: string | null
+    aceptadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Hallazgo_NCUpdateManyMutationInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    reglaId?: StringFieldUpdateOperationsInput | string
+    severidad?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    sugerencia?: NullableStringFieldUpdateOperationsInput | string | null
+    evidencia?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    nota?: NullableStringFieldUpdateOperationsInput | string | null
+    autor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aceptadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    aceptadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Hallazgo_NCUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    reglaId?: StringFieldUpdateOperationsInput | string
+    severidad?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    sugerencia?: NullableStringFieldUpdateOperationsInput | string | null
+    evidencia?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    nota?: NullableStringFieldUpdateOperationsInput | string | null
+    autor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    descartadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aceptadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    aceptadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -198590,6 +200086,91 @@ export namespace Prisma {
   export type Multas_Cantidad_OverrideSumOrderByAggregateInput = {
     valor?: SortOrder
     valorOriginal?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCFolioAspectoReglaIdCompoundUniqueInput = {
+    folio: string
+    aspecto: string
+    reglaId: string
+  }
+
+  export type Multas_Hallazgo_NCCountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacionId?: SortOrder
+    aspecto?: SortOrder
+    reglaId?: SortOrder
+    severidad?: SortOrder
+    tipo?: SortOrder
+    titulo?: SortOrder
+    detalle?: SortOrder
+    sugerencia?: SortOrder
+    evidencia?: SortOrder
+    estado?: SortOrder
+    nota?: SortOrder
+    autor?: SortOrder
+    descartadoPor?: SortOrder
+    descartadoEn?: SortOrder
+    aceptadoPor?: SortOrder
+    aceptadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCAvgOrderByAggregateInput = {
+    id?: SortOrder
+    licitacionId?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacionId?: SortOrder
+    aspecto?: SortOrder
+    reglaId?: SortOrder
+    severidad?: SortOrder
+    tipo?: SortOrder
+    titulo?: SortOrder
+    detalle?: SortOrder
+    sugerencia?: SortOrder
+    evidencia?: SortOrder
+    estado?: SortOrder
+    nota?: SortOrder
+    autor?: SortOrder
+    descartadoPor?: SortOrder
+    descartadoEn?: SortOrder
+    aceptadoPor?: SortOrder
+    aceptadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacionId?: SortOrder
+    aspecto?: SortOrder
+    reglaId?: SortOrder
+    severidad?: SortOrder
+    tipo?: SortOrder
+    titulo?: SortOrder
+    detalle?: SortOrder
+    sugerencia?: SortOrder
+    evidencia?: SortOrder
+    estado?: SortOrder
+    nota?: SortOrder
+    autor?: SortOrder
+    descartadoPor?: SortOrder
+    descartadoEn?: SortOrder
+    aceptadoPor?: SortOrder
+    aceptadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Hallazgo_NCSumOrderByAggregateInput = {
+    id?: SortOrder
+    licitacionId?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -229896,6 +231477,10 @@ export namespace Prisma {
      * @deprecated Use Multas_Cantidad_OverrideDefaultArgs instead
      */
     export type Multas_Cantidad_OverrideArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Cantidad_OverrideDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Hallazgo_NCDefaultArgs instead
+     */
+    export type Multas_Hallazgo_NCArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Hallazgo_NCDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

@@ -8,7 +8,9 @@ import {
     guardarDatosFolio,
     guardarCantidadOverride,
     eliminarCantidadOverride,
-    getDiagnosticoFolio
+    getDiagnosticoFolio,
+    getHallazgosFolioAction,
+    updateEstadoHallazgoAction
 } from './actions'
 import { testFormula } from '@/app/dashboard/mantenedor/multas/aspectos-ee/actions'
 
@@ -90,6 +92,41 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             alert('Error al cargar diagnóstico de extracción.')
         } finally {
             setLoadingDiagnostico(false)
+        }
+    }
+
+    // C5 States: Motor de Reglas NC y Hallazgos Auditados
+    const [hallazgosList, setHallazgosList] = useState<any[]>([])
+    const [loadingHallazgos, setLoadingHallazgos] = useState(false)
+    const [isHallazgosModalOpen, setIsHallazgosModalOpen] = useState(false)
+    const [descarteModal, setDescarteModal] = useState<{ isOpen: boolean; hallazgoId: number | null; nota: string } | null>(null)
+    const [filtroEstadoHallazgos, setFiltroEstadoHallazgos] = useState<string>('ALL')
+
+    const loadHallazgos = async (f: string, licId?: number) => {
+        setLoadingHallazgos(true)
+        try {
+            const hRes = await getHallazgosFolioAction(f, licId)
+            if (hRes.data) {
+                setHallazgosList(hRes.data)
+            }
+        } catch (e) {
+            console.error('Error al cargar hallazgos C5:', e)
+        } finally {
+            setLoadingHallazgos(false)
+        }
+    }
+
+    const handleActualizarEstadoHallazgo = async (id: number, estado: 'PENDIENTE' | 'ACEPTADO' | 'DESCARTADO', nota?: string) => {
+        try {
+            const res = await updateEstadoHallazgoAction({ id, estado, nota })
+            if (res.ok) {
+                await loadHallazgos(folio, data?.licId || undefined)
+                if (descarteModal?.isOpen) setDescarteModal(null)
+            } else {
+                alert(res.mensaje || 'Error al actualizar estado del hallazgo.')
+            }
+        } catch (e) {
+            alert('Error de conexión al actualizar hallazgo.')
         }
     }
 
@@ -182,6 +219,9 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             setBandejasEvaluadasState(res.folioDato?.bandejasEvaluadas !== null && res.folioDato?.bandejasEvaluadas !== undefined ? res.folioDato.bandejasEvaluadas : '')
             setBandejasRechazadasState(res.folioDato?.bandejasRechazadas !== null && res.folioDato?.bandejasRechazadas !== undefined ? res.folioDato.bandejasRechazadas : '')
             setMotivoFolioDatoState(res.folioDato?.motivo || '')
+
+            // C5: Cargar Hallazgos NC auditados
+            loadHallazgos(folio, res.data?.licId || undefined)
         }
         setLoading(false)
     }
@@ -458,14 +498,30 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                     <h3 className="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
                         <span>🧮</span> Cálculo de Multas: Folio {folio}
                     </h3>
-                    <button
-                        type="button"
-                        onClick={handleOpenDiagnostico}
-                        className="px-3.5 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                    >
-                        <span>🔍</span>
-                        <span>Diagnóstico C4</span>
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setIsHallazgosModalOpen(true)}
+                            className={`px-3.5 py-1.5 rounded-xl border text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
+                                hallazgosList.some(h => h.severidad === 'alta' && h.estado === 'PENDIENTE')
+                                    ? 'bg-rose-50 hover:bg-rose-100 text-rose-800 border-rose-300 animate-pulse'
+                                    : hallazgosList.length > 0
+                                        ? 'bg-amber-50 hover:bg-amber-100 text-amber-900 border-amber-300'
+                                        : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                            }`}
+                        >
+                            <span>⚖️</span>
+                            <span>Hallazgos NC ({hallazgosList.length})</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleOpenDiagnostico}
+                            className="px-3.5 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                        >
+                            <span>🔍</span>
+                            <span>Diagnóstico C4</span>
+                        </button>
+                    </div>
                 </div>
 
                 {loading ? (
@@ -474,6 +530,30 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                     <div className="p-4 bg-red-50 text-red-600 rounded-xl mb-4 text-sm font-medium border border-red-100">{error}</div>
                 ) : (
                     <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-6">
+                        
+                        {/* Banner de Alerta de Hallazgos NC C5 */}
+                        {hallazgosList.filter(h => h.estado === 'PENDIENTE').length > 0 && (
+                            <div className="p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 text-xs flex items-center justify-between gap-3 shadow-xs">
+                                <div className="flex items-center gap-2.5">
+                                    <span className="text-xl">⚠️</span>
+                                    <div>
+                                        <p className="font-black text-amber-950">
+                                            {hallazgosList.filter(h => h.estado === 'PENDIENTE').length} Hallazgo(s) NC detectado(s) por el Motor C5
+                                        </p>
+                                        <p className="text-[11px] text-amber-800">
+                                            Existen posibles vicios procedimentales o argumentos de descargo normativos auditables para este folio.
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsHallazgosModalOpen(true)}
+                                    className="px-3 py-1.5 bg-amber-800 hover:bg-amber-900 text-white rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs"
+                                >
+                                    Revisar Hallazgos
+                                </button>
+                            </div>
+                        )}
                         
                         {/* Información General */}
                         <div className="grid grid-cols-2 gap-4">
@@ -1493,6 +1573,292 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                 className="px-5 py-2 rounded-xl text-white bg-slate-900 hover:bg-black text-xs font-bold transition-all shadow-md cursor-pointer"
                             >
                                 Cerrar Diagnóstico
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MODAL: HALLAZGOS NC (C5) */}
+            {isHallazgosModalOpen && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col space-y-4">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                            <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-cyan-900 text-white flex items-center justify-center text-sm font-black shadow-xs">
+                                    ⚖️
+                                </span>
+                                <div>
+                                    <h4 className="text-base font-black text-slate-900 tracking-tight">
+                                        Hallazgos y Reglas NC (C5) · Folio {folio}
+                                    </h4>
+                                    <p className="text-[11px] text-slate-500">
+                                        Auditoría determinística de vicios de imputación, horarios, AQL y descargos sustentados
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setIsHallazgosModalOpen(false)}
+                                className="text-slate-400 hover:text-slate-700 font-bold text-lg cursor-pointer p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Filtros de Estado */}
+                        <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                            <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
+                                {[
+                                    { key: 'ALL', label: `Todos (${hallazgosList.length})` },
+                                    { key: 'PENDIENTE', label: `Pendientes (${hallazgosList.filter(h => h.estado === 'PENDIENTE').length})` },
+                                    { key: 'ACEPTADO', label: `Aceptados (${hallazgosList.filter(h => h.estado === 'ACEPTADO').length})` },
+                                    { key: 'DESCARTADO', label: `Descartados (${hallazgosList.filter(h => h.estado === 'DESCARTADO').length})` }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.key}
+                                        type="button"
+                                        onClick={() => setFiltroEstadoHallazgos(tab.key)}
+                                        className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+                                            filtroEstadoHallazgos === tab.key
+                                                ? 'bg-cyan-900 text-white shadow-xs'
+                                                : 'text-slate-600 hover:bg-slate-100'
+                                        }`}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => loadHallazgos(folio, data?.licitacionId)}
+                                disabled={loadingHallazgos}
+                                className="text-xs text-cyan-700 hover:text-cyan-900 font-bold flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                            >
+                                <span>🔄</span>
+                                <span>{loadingHallazgos ? 'Reevaluando...' : 'Reevaluar'}</span>
+                            </button>
+                        </div>
+
+                        {/* Lista de Hallazgos */}
+                        <div className="flex-1 overflow-y-auto space-y-3 pr-1 custom-scrollbar">
+                            {loadingHallazgos ? (
+                                <div className="py-12 text-center text-slate-400 text-xs">
+                                    <div className="w-6 h-6 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                                    Evaluando reglas normativas del acta...
+                                </div>
+                            ) : hallazgosList.filter(h => filtroEstadoHallazgos === 'ALL' || h.estado === filtroEstadoHallazgos).length === 0 ? (
+                                <div className="py-12 text-center text-slate-400 text-xs">
+                                    No hay hallazgos con el estado seleccionado para este folio.
+                                </div>
+                            ) : (
+                                hallazgosList
+                                    .filter(h => filtroEstadoHallazgos === 'ALL' || h.estado === filtroEstadoHallazgos)
+                                    .map(h => (
+                                        <div
+                                            key={h.id || `${h.aspecto}_${h.reglaId}`}
+                                            className={`p-4 rounded-2xl border transition-all space-y-3 ${
+                                                h.estado === 'DESCARTADO'
+                                                    ? 'bg-slate-50/70 border-slate-200/70 opacity-65'
+                                                    : h.estado === 'ACEPTADO'
+                                                        ? 'bg-emerald-50/40 border-emerald-200'
+                                                        : h.severidad === 'alta'
+                                                            ? 'bg-rose-50/40 border-rose-200 shadow-2xs'
+                                                            : 'bg-white border-slate-200 shadow-xs'
+                                            }`}
+                                        >
+                                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                    <span className="font-mono text-xs font-black px-2 py-0.5 rounded bg-cyan-900 text-cyan-50">
+                                                        {h.reglaId}
+                                                    </span>
+                                                    <span className="text-xs font-bold text-slate-800">
+                                                        {h.titulo}
+                                                    </span>
+                                                    <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-slate-100 text-slate-700">
+                                                        Aspecto {h.aspecto}
+                                                    </span>
+                                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                        h.severidad === 'alta'
+                                                            ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                                                            : h.severidad === 'media'
+                                                                ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                                                                : 'bg-sky-100 text-sky-800 border border-sky-200'
+                                                    }`}>
+                                                        {h.severidad.toUpperCase()}
+                                                    </span>
+                                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                        h.tipo === 'mal_imputado'
+                                                            ? 'bg-red-100 text-red-800'
+                                                            : h.tipo === 'descargo'
+                                                                ? 'bg-emerald-100 text-emerald-800'
+                                                                : 'bg-indigo-100 text-indigo-800'
+                                                    }`}>
+                                                        {h.tipo === 'mal_imputado' ? 'Mal Imputado' : h.tipo === 'descargo' ? 'Descargo' : 'Verificar'}
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className={`text-[10px] px-2.5 py-1 rounded-full font-black uppercase tracking-wider ${
+                                                        h.estado === 'PENDIENTE'
+                                                            ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                                                            : h.estado === 'ACEPTADO'
+                                                                ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                                                                : 'bg-slate-200 text-slate-700 border border-slate-300'
+                                                    }`}>
+                                                        {h.estado}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <p className="text-xs text-slate-700 leading-relaxed">
+                                                {h.detalle}
+                                            </p>
+
+                                            {h.evidencia && (
+                                                <div className="text-[11px] font-mono text-slate-600 bg-slate-100/80 p-2 rounded-lg border border-slate-200">
+                                                    <span className="font-bold text-slate-700">Evidencia del acta:</span> {h.evidencia}
+                                                </div>
+                                            )}
+
+                                            {h.sugerencia && (
+                                                <div className="p-2.5 bg-cyan-50/60 rounded-xl border border-cyan-100 text-[11px] text-cyan-950 space-y-1">
+                                                    <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-cyan-900">
+                                                        <span>💡</span>
+                                                        <span>Fundamento y Sugerencia de Descargo:</span>
+                                                    </div>
+                                                    <p className="italic leading-relaxed">{h.sugerencia}</p>
+                                                </div>
+                                            )}
+
+                                            {/* Trazabilidad y Notas */}
+                                            {h.nota && (
+                                                <div className="p-2 bg-slate-100 rounded-lg text-[11px] text-slate-700 border border-slate-200">
+                                                    <p className="font-bold text-slate-800">
+                                                        Nota de {h.estado === 'DESCARTADO' ? 'descarte' : 'auditoría'}:
+                                                    </p>
+                                                    <p className="italic">{h.nota}</p>
+                                                    <p className="text-[10px] text-slate-400 mt-1">
+                                                        Registrado por: {h.descartadoPor || h.aceptadoPor || h.autor || 'Usuario'}
+                                                        {h.descartadoEn && ` el ${new Date(h.descartadoEn).toLocaleString('es-CL')}`}
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            {/* Botones de Acción */}
+                                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                                                {h.estado === 'PENDIENTE' && (
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setDescarteModal({ isOpen: true, hallazgoId: h.id, nota: '' })}
+                                                            className="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                        >
+                                                            Descartar Hallazgo
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleActualizarEstadoHallazgo(h.id, 'ACEPTADO')}
+                                                            className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                                        >
+                                                            Aceptar Hallazgo
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {h.estado === 'ACEPTADO' && (
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleActualizarEstadoHallazgo(h.id, 'PENDIENTE')}
+                                                            className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                        >
+                                                            Reabrir (Pendiente)
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setDescarteModal({ isOpen: true, hallazgoId: h.id, nota: '' })}
+                                                            className="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                        >
+                                                            Descartar
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {h.estado === 'DESCARTADO' && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleActualizarEstadoHallazgo(h.id, 'PENDIENTE')}
+                                                        className="px-3 py-1 bg-cyan-700 hover:bg-cyan-800 text-white rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                    >
+                                                        Reabrir Hallazgo
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))
+                            )}
+                        </div>
+
+                        <div className="flex justify-end pt-3 border-t border-slate-200">
+                            <button
+                                type="button"
+                                onClick={() => setIsHallazgosModalOpen(false)}
+                                className="px-5 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-md"
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* SUBMODAL: JUSTIFICACIÓN OBLIGATORIA PARA DESCARTE */}
+            {descarteModal?.isOpen && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-2xs flex items-center justify-center p-4 z-60 animate-in fade-in duration-150">
+                    <div className="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+                        <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+                            <span className="text-xl">✍️</span>
+                            <h4 className="text-sm font-black text-slate-900">
+                                Justificación Requerida para Descarte
+                            </h4>
+                        </div>
+
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                            Para auditar el descarte de este hallazgo y evitar que vuelva a generarse al recalcular, indique el motivo o antecedente (ej: <i>"Supervisor acreditó reloj de control calibrado"</i>).
+                        </p>
+
+                        <textarea
+                            rows={3}
+                            placeholder="Ingrese el motivo de descarte..."
+                            value={descarteModal.nota}
+                            onChange={(e) => setDescarteModal({ ...descarteModal, nota: e.target.value })}
+                            className="w-full text-xs p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 text-slate-800 placeholder-slate-400"
+                        />
+
+                        <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                            <button
+                                type="button"
+                                onClick={() => setDescarteModal(null)}
+                                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    if (!descarteModal.nota.trim() || descarteModal.nota.trim().length < 4) {
+                                        alert('Debe ingresar un motivo de al menos 4 caracteres.')
+                                        return
+                                    }
+                                    if (descarteModal.hallazgoId) {
+                                        handleActualizarEstadoHallazgo(descarteModal.hallazgoId, 'DESCARTADO', descarteModal.nota.trim())
+                                    }
+                                }}
+                                className="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-xs"
+                            >
+                                Confirmar Descarte
                             </button>
                         </div>
                     </div>

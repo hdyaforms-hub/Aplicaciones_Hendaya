@@ -303,6 +303,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Descargos de actas',
                         href: '/dashboard/areas/multas/descargos',
                         requiredPermission: 'manage_descargos'
+                    },
+                    {
+                        name: 'Análisis de NC (C5)',
+                        href: '/dashboard/areas/multas/analisis-nc',
+                        requiredPermission: ['manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

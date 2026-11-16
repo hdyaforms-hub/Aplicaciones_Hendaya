@@ -2037,3 +2037,135 @@ export async function getComparacionExtraccionLicitacion(params: {
         return { error: e.message || 'Error al generar comparación de extracción.' }
     }
 }
+
+// ----------------------------------------------------------------------
+// ETAPA 5 (C5): Acciones del Motor de Reglas NC y Hallazgos Auditados
+// ----------------------------------------------------------------------
+
+import {
+    evaluarYGuardarHallazgosFolio,
+    obtenerHallazgosFolio,
+    actualizarEstadoHallazgo,
+    obtenerHallazgosLicitacion,
+    obtenerResumenMetricasNC
+} from '@/lib/multas/reglas/servicio'
+import { EstadoHallazgo } from '@/lib/multas/reglas/definiciones'
+
+/**
+ * Obtiene o evalúa los hallazgos NC para un folio específico, preservando descartes previos.
+ */
+export async function getHallazgosFolioAction(folio: string, licId?: number) {
+    try {
+        const session = await getSession()
+        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+        const hallazgos = await evaluarYGuardarHallazgosFolio(folio, licId, usuario)
+        return { data: hallazgos }
+    } catch (e: any) {
+        console.error('Error en getHallazgosFolioAction:', e)
+        return { error: e.message || 'Error al obtener hallazgos NC del folio.' }
+    }
+}
+
+/**
+ * Actualiza el estado de un hallazgo (ACEPTADO, DESCARTADO, PENDIENTE) con nota obligatoria.
+ */
+export async function updateEstadoHallazgoAction(params: {
+    id: number
+    estado: EstadoHallazgo
+    nota?: string
+}) {
+    try {
+        const session = await getSession()
+        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+        const res = await actualizarEstadoHallazgo({
+            id: params.id,
+            estado: params.estado,
+            nota: params.nota,
+            usuario
+        })
+        return res
+    } catch (e: any) {
+        console.error('Error en updateEstadoHallazgoAction:', e)
+        return { ok: false, mensaje: e.message || 'Error al actualizar estado del hallazgo.' }
+    }
+}
+
+/**
+ * Consulta de hallazgos para la pantalla de Análisis de NC con filtros y paginación.
+ */
+export async function getHallazgosLicitacionAction(filtros: {
+    licId?: number | null
+    mes?: number | null
+    anho?: number | null
+    reglaId?: string | null
+    estado?: string | null
+    severidad?: string | null
+    tipo?: string | null
+    aspecto?: string | null
+    search?: string | null
+    limit?: number
+    offset?: number
+}) {
+    try {
+        const res = await obtenerHallazgosLicitacion(filtros)
+        return { data: res }
+    } catch (e: any) {
+        console.error('Error en getHallazgosLicitacionAction:', e)
+        return { error: e.message || 'Error al consultar hallazgos de licitación.' }
+    }
+}
+
+/**
+ * Métricas consolidadas de hallazgos por estado, severidad y tipo.
+ */
+export async function getResumenMetricasNCAction(licId?: number | null) {
+    try {
+        const metricas = await obtenerResumenMetricasNC(licId)
+        return { data: metricas }
+    } catch (e: any) {
+        console.error('Error en getResumenMetricasNCAction:', e)
+        return { error: e.message || 'Error al obtener resumen de hallazgos NC.' }
+    }
+}
+
+/**
+ * Ejecuta la evaluación masiva de reglas NC sobre todos los folios de una licitación/mes.
+ */
+export async function evaluarHallazgosLicitacionMasivoAction(licId: number, mes?: number, anho?: number) {
+    try {
+        const session = await getSession()
+        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const where: any = { licitacionId: licId }
+        if (mes && anho) {
+            const fDesde = new Date(anho, mes - 1, 1)
+            const fHasta = new Date(anho, mes, 0, 23, 59, 59)
+            where.fecha = { gte: fDesde, lte: fHasta }
+        }
+
+        const foliosCab = await prisma.elementosEsenciales_Cab.findMany({
+            where,
+            select: { folio: true }
+        })
+
+        let procesados = 0
+        let totalHallazgos = 0
+
+        for (const f of foliosCab) {
+            if (!f.folio) continue
+            const hallazgos = await evaluarYGuardarHallazgosFolio(f.folio, licId, usuario)
+            procesados++
+            totalHallazgos += hallazgos.length
+        }
+
+        return {
+            ok: true,
+            foliosEvaluados: procesados,
+            totalHallazgos
+        }
+    } catch (e: any) {
+        console.error('Error en evaluarHallazgosLicitacionMasivoAction:', e)
+        return { ok: false, error: e.message || 'Error al evaluar reglas masivamente.' }
+    }
+}
+

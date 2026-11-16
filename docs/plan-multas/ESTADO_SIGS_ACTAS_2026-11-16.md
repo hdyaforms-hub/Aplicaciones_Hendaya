@@ -10,8 +10,8 @@ Revisión del 16-11-2026 (rama `feature/multas-optimizacion-y-privilegios`).
 | C2.4 Minuta planificada por mes | ✅ Completado (Catálogo en Hub, sincronización automática desde minutas del sistema, calendario de 31 días y contraste en Aspecto A) |
 | C3 Nivel supervisado, bandejas y corrección manual de cantidades | ✅ Completado (C3.1 Nivel supervisado T/B/M y bandejas AQL; C3.2 Correcciones manuales con motivo obligatorio y trazabilidad; jerarquía centralizada en variables.ts; sub-interruptores en Hub de Configuración) |
 | C4 Extracción robusta de cantidades multiaspecto | ✅ Completado (Homologación 100% de sigs_actas en extractor.ts: F con separación FV/No-FV y alerta SUBCONTADA; J con tipos de instrumento máx 2; K, D, E, L; Modo Comparación masivo en Hub; Diagnóstico por folio en modal; invarianza preservada) |
-| C5 Motor de reglas | 🟡 Alertas base de la IT operativas; reglas avanzadas (19 reglas de sigs_actas) es la siguiente etapa |
-| C6 a C11 | ❌ Pendiente |
+| C5 Motor de reglas | ✅ Completado (Homologación 100% de las 19 reglas de sigs_actas / IT-DAE-SUP026, modelo persistente Multas_Hallazgo_NC con resguardo de descartes, calibración en Hub de Configuración, integración en modal de cálculo y pantalla dedicada de Análisis de NC) |
+| C6 a C11 | ❌ Pendiente (Siguiente: C6 Notificaciones JUNAEB y Conciliación REX) |
 
 ## Puntos pendientes resueltos
 
@@ -28,6 +28,12 @@ Revisión del 16-11-2026 (rama `feature/multas-optimizacion-y-privilegios`).
    - **Modo Comparación en Hub de Configuración**: Pestaña dedicada para auditar el impacto en montos folio por folio sin alterar la base de datos.
    - **Diagnóstico por Folio en `CalculoModal`**: Botón `🔍 Diagnóstico C4` que muestra la auditoría del texto leído, valores extraídos y alertas.
    - **Garantía de Invarianza**: Sub-interruptor `extraccionRobusta` apagado por defecto para que ninguna licitación histórica cambie montos hasta que sea activada explícitamente.
+6. ✅ **Etapa 5 - Motor de Reglas NC Avanzadas (C5):**
+   - **Módulos `src/lib/multas/reglas/` (`motor.ts`, `definiciones.ts`, `servicio.ts`)**: Port determinístico de las 19 reglas normativas de la IT JUNAEB (`IT-DAE-SUP026`) cruzando horarios (C2.1), dotación de manipuladoras (C2.3), minutas planificadas (C2.4), AQL 6.5 (C3.1) y subconteo en F (C4).
+   - **Persistencia y Auditoría (`Multas_Hallazgo_NC`)**: Modelo de base de datos con DDL idempotente. Flujo de estados `PENDIENTE`, `ACEPTADO`, `DESCARTADO`. **Garantía estricta de resguardo**: Si un hallazgo se descarta con motivo, no reaparece al recalcular masivamente.
+   - **Calibración en Hub de Configuración**: Pestaña `Catálogo Reglas NC (C5)` con interruptores por regla y parámetros de tolerancia editables (margen temp °C, umbral dotación %, tolerancia horarios).
+   - **Integración en `CalculoModal`**: Botón y banner de hallazgos en cabecera, visor detallado con fundamentación y descargo sugerido, y acciones rápidas de descarte con justificación obligatoria.
+   - **Pantalla Operativa `/dashboard/areas/multas/analisis-nc`**: Vista tabular y vista matricial por aspecto (A a M) con KPIs ejecutivos y evaluación masiva.
 
 ## Orden sugerido
 
@@ -35,6 +41,7 @@ Revisión del 16-11-2026 (rama `feature/multas-optimizacion-y-privilegios`).
 2. ~~C2.3 y C2.4.~~ (✅ Completado)
 3. ~~C3 Datos complementarios por folio (C3.1 y C3.2).~~ (✅ Completado)
 4. ~~C4 Extracción robusta de cantidades multiaspecto.~~ (✅ Completado)
-5. **C5 Motor de reglas avanzadas** (Completar las 19 reglas normativas de la IT).
+5. ~~C5 Motor de reglas avanzadas.~~ (✅ Completado)
+6. **C6 Notificaciones JUNAEB y Conciliación REX** (Carga Anexo 1 Excel, conciliación fila por fila, errores JUNAEB vs internos, exportación Anexo 1 con cálculo propio).
 
 El detalle de cada bloque está en [PENDIENTES_C2_C11_detalle.md](PENDIENTES_C2_C11_detalle.md).

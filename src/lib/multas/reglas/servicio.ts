@@ -1,0 +1,446 @@
+/**
+ * Servicio de Evaluación, Persistencia y Auditoría de Hallazgos NC (C5)
+ */
+
+import { prisma } from '@/lib/prisma'
+import { getMultasDelegate } from '@/lib/multas/db'
+import { getModulosActivosLicitacion } from '@/lib/multas/config'
+import {
+    evaluarReglasNC,
+    EntradaActaMotor,
+    EntradaAspectoMotor,
+    HORARIOS_DEFAULT
+} from './motor'
+import {
+    HallazgoNC,
+    EstadoHallazgo,
+    ParametrosMotorNC
+} from './definiciones'
+
+/**
+ * Obtiene los horarios configurados para la licitación (C2.1) con fallback a los predeterminados.
+ */
+async function getHorariosLicitacion(licId?: number | null): Promise<Record<string, [string, string]>> {
+    const horarios = { ...HORARIOS_DEFAULT }
+    if (!licId) return horarios
+
+    try {
+        const delegate = getMultasDelegate('multas_Horario_Servicio')
+        if (!delegate) return horarios
+
+        const rows = await delegate.findMany({
+            where: { licId, activo: true }
+        })
+
+        for (const row of rows) {
+            const servKey = (row.servicio || '').trim().toLowerCase()
+            if (servKey && row.horaInicio && row.horaFin) {
+                horarios[servKey] = [row.horaInicio, row.horaFin]
+            }
+        }
+    } catch (e) {
+        console.warn('[C5] Error al cargar horarios de licitación:', e)
+    }
+
+    return horarios
+}
+
+/**
+ * Evalúa las reglas NC para un folio, sincroniza de forma idempotente con Multas_Hallazgo_NC
+ * y respeta estrictamente los estados ACEPTADO y DESCARTADO previos con sus notas y autores.
+ */
+export async function evaluarYGuardarHallazgosFolio(
+    folio: string,
+    licIdOpt?: number | null,
+    autor?: string
+): Promise<HallazgoNC[]> {
+    const cab = await prisma.elementosEsenciales_Cab.findFirst({
+        where: { folio }
+    })
+
+    if (!cab) return []
+
+    const licId = licIdOpt || cab.licId || null
+
+    // Verificar si el módulo C5 está activo para la licitación
+    const modulos = await getModulosActivosLicitacion(licId || 0)
+    if (!modulos.c5) {
+        // Si C5 está inactivo, retornamos los hallazgos ya guardados sin recalcular
+        return obtenerHallazgosFolio(folio)
+    }
+
+    // Obtener detalles del acta (aspectos)
+    const detalles = await prisma.elementosEsenciales_Det.findMany({
+        where: { cabId: cab.id }
+    })
+
+    const aspectos: EntradaAspectoMotor[] = detalles.map(d => {
+        const letraMatch = d.aspecto?.match(/^([A-Z])\./)?.[1] || d.aspecto?.slice(0, 1) || '?'
+        const estado = (d.nc && d.nc.trim().length > 0) ? 'NC' : (d.na && d.na.trim().length > 0) ? 'NA' : 'CO'
+        return {
+            codigo: letraMatch.toUpperCase(),
+            estado,
+            observacion: d.observacionesOMedioDeVerificacion || ''
+        }
+    })
+
+    // Consultar C2.1: Horarios configurados
+    const horarios = await getHorariosLicitacion(licId)
+
+    // Consultar C2.3: Dotación oficial del mes para el RBD
+    let dotacionOficial: number | null = null
+    if (cab.rbd && cab.fechaSupervision) {
+        try {
+            const fechaObj = new Date(cab.fechaSupervision)
+            const anho = fechaObj.getFullYear()
+            const mes = fechaObj.getMonth() + 1
+            const manipDelegate = getMultasDelegate('multas_Manipuladora_Mes')
+            if (manipDelegate) {
+                const regManip = await manipDelegate.findFirst({
+                    where: { rbd: cab.rbd, anho, mes, activo: true }
+                })
+                if (regManip) {
+                    dotacionOficial = regManip.totalManipuladoras
+                }
+            }
+        } catch (e) {
+            console.warn('[C5] Error al consultar dotación manipuladoras:', e)
+        }
+    }
+
+    // Consultar C3.1: Datos complementarios del folio
+    let nivelSupervisado: string | null = null
+    let bandejasEvaluadas: number | null = null
+    let bandejasRechazadas: number | null = null
+    try {
+        const folioDatoDelegate = getMultasDelegate('multas_Folio_Dato')
+        if (folioDatoDelegate) {
+            const fd = await folioDatoDelegate.findUnique({
+                where: { folio }
+            })
+            if (fd) {
+                nivelSupervisado = fd.nivelSupervisado || null
+                bandejasEvaluadas = fd.bandejasEvaluadas ?? null
+                bandejasRechazadas = fd.bandejasRechazadas ?? null
+            }
+        }
+    } catch (e) {
+        console.warn('[C5] Error al consultar datos de folio:', e)
+    }
+
+    // Cargar parámetros de configuración C5
+    const paramsMotor: ParametrosMotorNC = {
+        margenTemperaturaMax: modulos.c5Config?.margenTemperaturaMax ?? 1.0,
+        umbralDotacionInasistenciaPct: modulos.c5Config?.umbralDotacionInasistenciaPct ?? 50,
+        toleranciaHorarioAnticipadoMin: modulos.c5Config?.toleranciaHorarioAnticipadoMin ?? 60,
+        toleranciaHorarioPesajeMin: modulos.c5Config?.toleranciaHorarioPesajeMin ?? 10,
+        reglasHabilitadas: modulos.c5Config?.reglasHabilitadas ?? {}
+    }
+
+    const entradaActa: EntradaActaMotor = {
+        folio: cab.folio || folio,
+        licitacionId: licId,
+        rbd: cab.rbd,
+        servicio: cab.servicioManual || cab.servicio,
+        fechaSupervision: cab.fechaSupervision,
+        horaInicio: cab.horaInicio || cab.hora,
+        horaTermino: null,
+        observacionesGenerales: cab.obsALosIncumplimiento,
+        racionesTotales: null,
+        racionesNivelSupervisado: null,
+        nivelSupervisado,
+        bandejasEvaluadas,
+        bandejasRechazadas,
+        dotacionOficial,
+        alertaFSubcontada: false
+    }
+
+    // Ejecutar motor determinístico
+    const hallazgosGenerados = evaluarReglasNC(entradaActa, aspectos, horarios, paramsMotor)
+
+    // Sincronizar con la base de datos preservando estados ACEPTADO y DESCARTADO
+    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
+    if (!hallazgoDelegate) return hallazgosGenerados
+
+    const hallazgosExistentes = await hallazgoDelegate.findMany({
+        where: { folio }
+    })
+
+    const existenteMap = new Map<string, any>()
+    hallazgosExistentes.forEach((h: any) => {
+        const key = `${h.aspecto}_${h.reglaId}`
+        existenteMap.set(key, h)
+    })
+
+    for (const h of hallazgosGenerados) {
+        const key = `${h.aspecto}_${h.reglaId}`
+        const previo = existenteMap.get(key)
+
+        if (previo) {
+            // Si ya existe y fue descartado o aceptado, preservamos el estado, nota y autor intactos
+            const estadoFinal = previo.estado
+            await hallazgoDelegate.update({
+                where: { id: previo.id },
+                data: {
+                    licitacionId: licId,
+                    severidad: h.severidad,
+                    tipo: h.tipo,
+                    titulo: h.titulo,
+                    detalle: h.detalle,
+                    sugerencia: h.sugerencia,
+                    evidencia: h.evidencia,
+                    // Preservar estado anterior
+                    estado: estadoFinal,
+                    nota: previo.nota,
+                    descartadoPor: previo.descartadoPor,
+                    descartadoEn: previo.descartadoEn,
+                    aceptadoPor: previo.aceptadoPor,
+                    aceptadoEn: previo.aceptadoEn
+                }
+            })
+        } else {
+            // Si es nuevo, lo creamos en estado PENDIENTE
+            await hallazgoDelegate.create({
+                data: {
+                    folio,
+                    licitacionId: licId,
+                    aspecto: h.aspecto,
+                    reglaId: h.reglaId,
+                    severidad: h.severidad,
+                    tipo: h.tipo,
+                    titulo: h.titulo,
+                    detalle: h.detalle,
+                    sugerencia: h.sugerencia,
+                    evidencia: h.evidencia,
+                    estado: 'PENDIENTE',
+                    autor: autor || 'Sistema'
+                }
+            })
+        }
+    }
+
+    return obtenerHallazgosFolio(folio)
+}
+
+/**
+ * Retorna todos los hallazgos registrados para un folio ordenados por severidad.
+ */
+export async function obtenerHallazgosFolio(folio: string): Promise<HallazgoNC[]> {
+    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
+    if (!hallazgoDelegate) return []
+
+    const rows = await hallazgoDelegate.findMany({
+        where: { folio },
+        orderBy: [
+            { severidad: 'asc' },
+            { id: 'asc' }
+        ]
+    })
+
+    const ordenSev: Record<string, number> = { alta: 0, media: 1, info: 2 }
+    rows.sort((a: any, b: any) => (ordenSev[a.severidad] ?? 3) - (ordenSev[b.severidad] ?? 3))
+
+    return rows.map((r: any) => ({
+        id: r.id,
+        folio: r.folio,
+        licitacionId: r.licitacionId,
+        aspecto: r.aspecto,
+        reglaId: r.reglaId,
+        severidad: r.severidad as any,
+        tipo: r.tipo as any,
+        titulo: r.titulo,
+        detalle: r.detalle,
+        sugerencia: r.sugerencia,
+        evidencia: r.evidencia,
+        estado: r.estado as any,
+        nota: r.nota,
+        autor: r.autor,
+        descartadoPor: r.descartadoPor,
+        descartadoEn: r.descartadoEn,
+        aceptadoPor: r.aceptadoPor,
+        aceptadoEn: r.aceptadoEn,
+        createdAt: r.createdAt,
+        updatedAt: r.updatedAt
+    }))
+}
+
+/**
+ * Actualiza el estado de un hallazgo (ACEPTADO, DESCARTADO o PENDIENTE) con trazabilidad y nota obligatoria.
+ */
+export async function actualizarEstadoHallazgo(params: {
+    id: number
+    estado: EstadoHallazgo
+    nota?: string
+    usuario: string
+}): Promise<{ ok: boolean; mensaje?: string }> {
+    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
+    if (!hallazgoDelegate) return { ok: false, mensaje: 'Error al conectar con la base de datos' }
+
+    const actual = await hallazgoDelegate.findUnique({
+        where: { id: params.id }
+    })
+
+    if (!actual) return { ok: false, mensaje: 'Hallazgo no encontrado' }
+
+    if (params.estado === 'DESCARTADO' && (!params.nota || params.nota.trim().length < 4)) {
+        return { ok: false, mensaje: 'Para descartar un hallazgo debe ingresar un motivo o justificación' }
+    }
+
+    const dataUpdate: any = {
+        estado: params.estado,
+        nota: params.nota || actual.nota,
+        updatedAt: new Date()
+    }
+
+    if (params.estado === 'DESCARTADO') {
+        dataUpdate.descartadoPor = params.usuario
+        dataUpdate.descartadoEn = new Date()
+    } else if (params.estado === 'ACEPTADO') {
+        dataUpdate.aceptadoPor = params.usuario
+        dataUpdate.aceptadoEn = new Date()
+    } else if (params.estado === 'PENDIENTE') {
+        dataUpdate.descartadoPor = null
+        dataUpdate.descartadoEn = null
+        dataUpdate.aceptadoPor = null
+        dataUpdate.aceptadoEn = null
+    }
+
+    await hallazgoDelegate.update({
+        where: { id: params.id },
+        data: dataUpdate
+    })
+
+    return { ok: true }
+}
+
+/**
+ * Consulta de hallazgos con filtros avanzados para la pantalla de Análisis de NC.
+ */
+export async function obtenerHallazgosLicitacion(filtros: {
+    licId?: number | null
+    mes?: number | null
+    anho?: number | null
+    reglaId?: string | null
+    estado?: string | null
+    severidad?: string | null
+    tipo?: string | null
+    aspecto?: string | null
+    search?: string | null
+    limit?: number
+    offset?: number
+}): Promise<{ items: HallazgoNC[]; total: number }> {
+    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
+    if (!hallazgoDelegate) return { items: [], total: 0 }
+
+    const where: any = {}
+
+    if (filtros.licId) where.licitacionId = filtros.licId
+    if (filtros.reglaId && filtros.reglaId !== 'ALL') where.reglaId = filtros.reglaId
+    if (filtros.estado && filtros.estado !== 'ALL') where.estado = filtros.estado
+    if (filtros.severidad && filtros.severidad !== 'ALL') where.severidad = filtros.severidad
+    if (filtros.tipo && filtros.tipo !== 'ALL') where.tipo = filtros.tipo
+    if (filtros.aspecto && filtros.aspecto !== 'ALL') where.aspecto = filtros.aspecto
+
+    if (filtros.search && filtros.search.trim()) {
+        const q = filtros.search.trim()
+        where.OR = [
+            { folio: { contains: q, mode: 'insensitive' } },
+            { titulo: { contains: q, mode: 'insensitive' } },
+            { detalle: { contains: q, mode: 'insensitive' } },
+            { nota: { contains: q, mode: 'insensitive' } }
+        ]
+    }
+
+    const limit = Math.min(filtros.limit || 50, 200)
+    const offset = filtros.offset || 0
+
+    const [total, rows] = await Promise.all([
+        hallazgoDelegate.count({ where }),
+        hallazgoDelegate.findMany({
+            where,
+            orderBy: [{ updatedAt: 'desc' }],
+            take: limit,
+            skip: offset
+        })
+    ])
+
+    return {
+        total,
+        items: rows.map((r: any) => ({
+            id: r.id,
+            folio: r.folio,
+            licitacionId: r.licitacionId,
+            aspecto: r.aspecto,
+            reglaId: r.reglaId,
+            severidad: r.severidad,
+            tipo: r.tipo,
+            titulo: r.titulo,
+            detalle: r.detalle,
+            sugerencia: r.sugerencia,
+            evidencia: r.evidencia,
+            estado: r.estado,
+            nota: r.nota,
+            autor: r.autor,
+            descartadoPor: r.descartadoPor,
+            descartadoEn: r.descartadoEn,
+            aceptadoPor: r.aceptadoPor,
+            aceptadoEn: r.aceptadoEn,
+            createdAt: r.createdAt,
+            updatedAt: r.updatedAt
+        }))
+    }
+}
+
+/**
+ * Resumen de métricas de hallazgos por estado, severidad y tipo.
+ */
+export async function obtenerResumenMetricasNC(licId?: number | null): Promise<{
+    total: number
+    pendientes: number
+    aceptados: number
+    descartados: number
+    porSeveridad: Record<string, number>
+    porTipo: Record<string, number>
+}> {
+    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
+    if (!hallazgoDelegate) {
+        return {
+            total: 0,
+            pendientes: 0,
+            aceptados: 0,
+            descartados: 0,
+            porSeveridad: { alta: 0, media: 0, info: 0 },
+            porTipo: { mal_imputado: 0, descargo: 0, verificar: 0 }
+        }
+    }
+
+    const where: any = licId ? { licitacionId: licId } : {}
+    const items = await hallazgoDelegate.findMany({
+        where,
+        select: { estado: true, severidad: true, tipo: true }
+    })
+
+    const metricas = {
+        total: items.length,
+        pendientes: 0,
+        aceptados: 0,
+        descartados: 0,
+        porSeveridad: { alta: 0, media: 0, info: 0 } as Record<string, number>,
+        porTipo: { mal_imputado: 0, descargo: 0, verificar: 0 } as Record<string, number>
+    }
+
+    for (const it of items) {
+        if (it.estado === 'PENDIENTE') metricas.pendientes++
+        else if (it.estado === 'ACEPTADO') metricas.aceptados++
+        else if (it.estado === 'DESCARTADO') metricas.descartados++
+
+        if (metricas.porSeveridad[it.severidad] !== undefined) {
+            metricas.porSeveridad[it.severidad]++
+        }
+        if (metricas.porTipo[it.tipo] !== undefined) {
+            metricas.porTipo[it.tipo]++
+        }
+    }
+
+    return metricas
+}

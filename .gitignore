@@ -44,6 +44,7 @@ next-env.d.ts
 /src/generated/prisma
 /src/generated/client_temp
 *.node
+*.old
 prisma/*.node
 
 # database
