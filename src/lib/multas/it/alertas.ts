@@ -78,6 +78,7 @@ export function generarAlertasITAspecto(
         racionesTotal?: number
         racionesNivel?: number
         esTotalPorDefecto?: boolean
+        dotacionOficial?: number | null
     } | null,
     parametrosConfig?: ParametrosITLicitacion | null
 ): AlertaITAspectoResult | null {
@@ -217,11 +218,22 @@ export function generarAlertasITAspecto(
     if (upperLetra === 'H' && c5Activo && submodulos.personalManipulador) {
         const racionesEstablecimiento = nivelInfo?.racionesTotal || racionesNivel
         const manipuladorasRequeridas = racionesEstablecimiento > 0 ? Math.ceil(racionesEstablecimiento / ratioH) : null
+        const dotacionOficial = nivelInfo?.dotacionOficial ?? null
+        let advertenciaDotacion: string | undefined = undefined
+        if (dotacionOficial !== null && manipuladorasRequeridas !== null) {
+            if (dotacionOficial < manipuladorasRequeridas) {
+                advertenciaDotacion = `⚠️ Dotación oficial insuficiente: El colegio tiene ${dotacionOficial} manipuladora(s) oficial(es) registrada(s), pero el ratio 1:${ratioH} exige ${manipuladorasRequeridas}.`
+            } else {
+                advertenciaDotacion = `✅ Dotación oficial contractual adecuada: ${dotacionOficial} manipuladora(s) registrada(s) (requeridas por ratio 1:${ratioH}: ${manipuladorasRequeridas}). Si hubo inasistencia, verificar causa o reemplazo en tránsito.`
+            }
+        }
         alertaTecnica = {
             tipo: 'PERSONAL_MANIPULADOR',
             ratio: `1 manipuladora por cada ${ratioH} raciones servidas en el establecimiento`,
             racionesEstablecimiento,
             manipuladorasRequeridas,
+            dotacionOficial,
+            advertenciaDotacion,
             tolerancia: 'Posible defensa: No corresponde imputar falta si la inasistencia se debe a licencia médica imprevista con reemplazo acreditado en tránsito dentro de 2 horas.'
         }
     }

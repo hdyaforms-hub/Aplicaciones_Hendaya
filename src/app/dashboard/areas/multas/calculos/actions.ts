@@ -961,6 +961,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
 
         let parametrosConfig: any = null
         let moduloC2Activo = false
+        let c2DotacionActiva = false
+        let c2MinutaActiva = false
         if (paramLicitacion) {
             let tablaAqlParsed = undefined
             if (paramLicitacion.tablaAqlJson) {
@@ -993,6 +995,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                         const c2 = parsedMod.find((m: any) => m.codigo === 'C2')
                         if (c2 && c2.activo === true) {
                             moduloC2Activo = c2.submodulos?.estratosExcluidos === true
+                            c2DotacionActiva = c2.submodulos?.dotacionOficial === true
+                            c2MinutaActiva = c2.submodulos?.minutaPlanificada === true
                         }
                     }
                 } catch {
@@ -1274,6 +1278,49 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             esTotalPorDefecto = pmpaNiveles.length > 1
         }
 
+        // C2.3: Consultar dotación oficial de manipuladoras si el submódulo está activo
+        let dotacionOficialColegio: number | null = null
+        if (c2DotacionActiva && rbd && anho && mes) {
+            try {
+                const recDot = await prisma.multas_Manipuladora_Mes.findUnique({
+                    where: {
+                        licId_anio_mes_rbd: {
+                            licId: cab.licId || licId || 0,
+                            anio: anho,
+                            mes,
+                            rbd
+                        }
+                    }
+                })
+                if (recDot) {
+                    dotacionOficialColegio = recDot.total
+                }
+            } catch (errDot) {
+                console.warn('Error al consultar dotación oficial:', errDot)
+            }
+        }
+
+        // C2.4: Consultar minuta planificada del día si el submódulo está activo
+        let minutaDelDia: Array<{ servicio: string; preparacion: string }> = []
+        if (c2MinutaActiva && anho && mes && cab.fechaSupervision) {
+            try {
+                const dia = new Date(cab.fechaSupervision).getDate()
+                const recMin = await prisma.multas_Minuta_Mes.findFirst({
+                    where: {
+                        licId: cab.licId || licId || 0,
+                        anio: anho,
+                        mes
+                    }
+                })
+                if (recMin?.datosJson) {
+                    const parsed = JSON.parse(recMin.datosJson)
+                    minutaDelDia = parsed[dia] || parsed[String(dia)] || []
+                }
+            } catch (errMin) {
+                console.warn('Error al consultar minuta planificada:', errMin)
+            }
+        }
+
         const detallesConIT = detallesConFormula.map(d => {
             const itAspecto = itCab?.detalles?.find((det: any) => det.letra === d.letraAspecto)
 
@@ -1292,13 +1339,15 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     nivelDetectado: nivelDetectadoParaAql,
                     racionesTotal,
                     racionesNivel: racionesAspecto,
-                    esTotalPorDefecto: d.letraAspecto === 'G' && esTotalPorDefecto
+                    esTotalPorDefecto: d.letraAspecto === 'G' && esTotalPorDefecto,
+                    dotacionOficial: dotacionOficialColegio
                 },
                 parametrosConfig
             )
             return {
                 ...d,
-                itInfo
+                itInfo,
+                minutaPlanificadaDelDia: d.letraAspecto === 'A' ? minutaDelDia : undefined
             }
         })
 

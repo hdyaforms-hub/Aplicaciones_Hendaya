@@ -197,7 +197,65 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Estrato_Excluido" ("licId");
         `)
 
-        // 8. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
+        // 8. Tabla de Dotación Oficial de Manipuladoras por Mes (C2.3)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Manipuladora_Mes" (
+                "id" TEXT PRIMARY KEY,
+                "licId" INTEGER NOT NULL,
+                "anio" INTEGER NOT NULL,
+                "mes" INTEGER NOT NULL,
+                "rbd" INTEGER NOT NULL,
+                "establecimiento" VARCHAR(200),
+                "total" INTEGER NOT NULL,
+                "filename" VARCHAR(200),
+                "usuarioModif" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Manipuladora_Mes_licId_anio_mes_rbd_key"
+            ON "Multas_Manipuladora_Mes" ("licId", "anio", "mes", "rbd");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Manipuladora_Mes_licId_anio_mes_idx"
+            ON "Multas_Manipuladora_Mes" ("licId", "anio", "mes");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Manipuladora_Mes_rbd_idx"
+            ON "Multas_Manipuladora_Mes" ("rbd");
+        `)
+
+        // 9. Tabla de Minutas Planificadas por Mes (C2.4)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Minuta_Mes" (
+                "id" TEXT PRIMARY KEY,
+                "licId" INTEGER NOT NULL,
+                "anio" INTEGER NOT NULL,
+                "mes" INTEGER NOT NULL,
+                "nivel" VARCHAR(30) NOT NULL,
+                "datosJson" TEXT NOT NULL,
+                "filename" VARCHAR(200),
+                "usuarioModif" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Minuta_Mes_licId_anio_mes_nivel_key"
+            ON "Multas_Minuta_Mes" ("licId", "anio", "mes", "nivel");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Minuta_Mes_licId_anio_mes_idx"
+            ON "Multas_Minuta_Mes" ("licId", "anio", "mes");
+        `)
+
+        // 10. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
             DO $$ 
             BEGIN

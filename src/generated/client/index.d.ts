@@ -289,6 +289,16 @@ export type Multas_Horario_Servicio = $Result.DefaultSelection<Prisma.$Multas_Ho
  */
 export type Multas_Estrato_Excluido = $Result.DefaultSelection<Prisma.$Multas_Estrato_ExcluidoPayload>
 /**
+ * Model Multas_Manipuladora_Mes
+ * 
+ */
+export type Multas_Manipuladora_Mes = $Result.DefaultSelection<Prisma.$Multas_Manipuladora_MesPayload>
+/**
+ * Model Multas_Minuta_Mes
+ * 
+ */
+export type Multas_Minuta_Mes = $Result.DefaultSelection<Prisma.$Multas_Minuta_MesPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1396,6 +1406,26 @@ export class PrismaClient<
     * ```
     */
   get multas_Estrato_Excluido(): Prisma.Multas_Estrato_ExcluidoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Manipuladora_Mes`: Exposes CRUD operations for the **Multas_Manipuladora_Mes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Manipuladora_Mes
+    * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findMany()
+    * ```
+    */
+  get multas_Manipuladora_Mes(): Prisma.Multas_Manipuladora_MesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Minuta_Mes`: Exposes CRUD operations for the **Multas_Minuta_Mes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Minuta_Mes
+    * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findMany()
+    * ```
+    */
+  get multas_Minuta_Mes(): Prisma.Multas_Minuta_MesDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2762,6 +2792,8 @@ export namespace Prisma {
     Multas_Parametros_Licitacion: 'Multas_Parametros_Licitacion',
     Multas_Horario_Servicio: 'Multas_Horario_Servicio',
     Multas_Estrato_Excluido: 'Multas_Estrato_Excluido',
+    Multas_Manipuladora_Mes: 'Multas_Manipuladora_Mes',
+    Multas_Minuta_Mes: 'Multas_Minuta_Mes',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2864,7 +2896,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6715,6 +6747,146 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Estrato_ExcluidoCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Estrato_ExcluidoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Manipuladora_Mes: {
+        payload: Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>
+        fields: Prisma.Multas_Manipuladora_MesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Manipuladora_MesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Manipuladora_MesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Manipuladora_MesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Manipuladora_MesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Manipuladora_MesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Manipuladora_MesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Manipuladora_MesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Manipuladora_MesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Manipuladora_MesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          update: {
+            args: Prisma.Multas_Manipuladora_MesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Manipuladora_MesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Manipuladora_MesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Manipuladora_MesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Manipuladora_MesPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Manipuladora_MesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Manipuladora_Mes>
+          }
+          groupBy: {
+            args: Prisma.Multas_Manipuladora_MesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Manipuladora_MesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Manipuladora_MesCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Manipuladora_MesCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Minuta_Mes: {
+        payload: Prisma.$Multas_Minuta_MesPayload<ExtArgs>
+        fields: Prisma.Multas_Minuta_MesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Minuta_MesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Minuta_MesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Minuta_MesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Minuta_MesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Minuta_MesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Minuta_MesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Minuta_MesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Minuta_MesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Minuta_MesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          update: {
+            args: Prisma.Multas_Minuta_MesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Minuta_MesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Minuta_MesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Minuta_MesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Minuta_MesPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Minuta_MesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Minuta_Mes>
+          }
+          groupBy: {
+            args: Prisma.Multas_Minuta_MesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Minuta_MesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Minuta_MesCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Minuta_MesCountAggregateOutputType> | number
           }
         }
       }
@@ -71913,6 +72085,1986 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Estrato_Excluido
      */
     select?: Multas_Estrato_ExcluidoSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Manipuladora_Mes
+   */
+
+  export type AggregateMultas_Manipuladora_Mes = {
+    _count: Multas_Manipuladora_MesCountAggregateOutputType | null
+    _avg: Multas_Manipuladora_MesAvgAggregateOutputType | null
+    _sum: Multas_Manipuladora_MesSumAggregateOutputType | null
+    _min: Multas_Manipuladora_MesMinAggregateOutputType | null
+    _max: Multas_Manipuladora_MesMaxAggregateOutputType | null
+  }
+
+  export type Multas_Manipuladora_MesAvgAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    rbd: number | null
+    total: number | null
+  }
+
+  export type Multas_Manipuladora_MesSumAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    rbd: number | null
+    total: number | null
+  }
+
+  export type Multas_Manipuladora_MesMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    rbd: number | null
+    establecimiento: string | null
+    total: number | null
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Manipuladora_MesMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    rbd: number | null
+    establecimiento: string | null
+    total: number | null
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Manipuladora_MesCountAggregateOutputType = {
+    id: number
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento: number
+    total: number
+    filename: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Manipuladora_MesAvgAggregateInputType = {
+    licId?: true
+    anio?: true
+    mes?: true
+    rbd?: true
+    total?: true
+  }
+
+  export type Multas_Manipuladora_MesSumAggregateInputType = {
+    licId?: true
+    anio?: true
+    mes?: true
+    rbd?: true
+    total?: true
+  }
+
+  export type Multas_Manipuladora_MesMinAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    rbd?: true
+    establecimiento?: true
+    total?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Manipuladora_MesMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    rbd?: true
+    establecimiento?: true
+    total?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Manipuladora_MesCountAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    rbd?: true
+    establecimiento?: true
+    total?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Manipuladora_MesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Manipuladora_Mes to aggregate.
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Manipuladora_Mes to fetch.
+     */
+    orderBy?: Multas_Manipuladora_MesOrderByWithRelationInput | Multas_Manipuladora_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Manipuladora_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Manipuladora_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Manipuladora_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Manipuladora_Mes
+    **/
+    _count?: true | Multas_Manipuladora_MesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Manipuladora_MesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Manipuladora_MesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Manipuladora_MesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Manipuladora_MesMaxAggregateInputType
+  }
+
+  export type GetMultas_Manipuladora_MesAggregateType<T extends Multas_Manipuladora_MesAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Manipuladora_Mes]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Manipuladora_Mes[P]>
+      : GetScalarType<T[P], AggregateMultas_Manipuladora_Mes[P]>
+  }
+
+
+
+
+  export type Multas_Manipuladora_MesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Manipuladora_MesWhereInput
+    orderBy?: Multas_Manipuladora_MesOrderByWithAggregationInput | Multas_Manipuladora_MesOrderByWithAggregationInput[]
+    by: Multas_Manipuladora_MesScalarFieldEnum[] | Multas_Manipuladora_MesScalarFieldEnum
+    having?: Multas_Manipuladora_MesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Manipuladora_MesCountAggregateInputType | true
+    _avg?: Multas_Manipuladora_MesAvgAggregateInputType
+    _sum?: Multas_Manipuladora_MesSumAggregateInputType
+    _min?: Multas_Manipuladora_MesMinAggregateInputType
+    _max?: Multas_Manipuladora_MesMaxAggregateInputType
+  }
+
+  export type Multas_Manipuladora_MesGroupByOutputType = {
+    id: string
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento: string | null
+    total: number
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Manipuladora_MesCountAggregateOutputType | null
+    _avg: Multas_Manipuladora_MesAvgAggregateOutputType | null
+    _sum: Multas_Manipuladora_MesSumAggregateOutputType | null
+    _min: Multas_Manipuladora_MesMinAggregateOutputType | null
+    _max: Multas_Manipuladora_MesMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Manipuladora_MesGroupByPayload<T extends Multas_Manipuladora_MesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Manipuladora_MesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Manipuladora_MesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Manipuladora_MesGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Manipuladora_MesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Manipuladora_MesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    total?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Manipuladora_Mes"]>
+
+  export type Multas_Manipuladora_MesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    total?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Manipuladora_Mes"]>
+
+  export type Multas_Manipuladora_MesSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    total?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Manipuladora_MesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Manipuladora_Mes"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      anio: number
+      mes: number
+      rbd: number
+      establecimiento: string | null
+      total: number
+      filename: string | null
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Manipuladora_Mes"]>
+    composites: {}
+  }
+
+  type Multas_Manipuladora_MesGetPayload<S extends boolean | null | undefined | Multas_Manipuladora_MesDefaultArgs> = $Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload, S>
+
+  type Multas_Manipuladora_MesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Manipuladora_MesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Manipuladora_MesCountAggregateInputType | true
+    }
+
+  export interface Multas_Manipuladora_MesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Manipuladora_Mes'], meta: { name: 'Multas_Manipuladora_Mes' } }
+    /**
+     * Find zero or one Multas_Manipuladora_Mes that matches the filter.
+     * @param {Multas_Manipuladora_MesFindUniqueArgs} args - Arguments to find a Multas_Manipuladora_Mes
+     * @example
+     * // Get one Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Manipuladora_MesFindUniqueArgs>(args: SelectSubset<T, Multas_Manipuladora_MesFindUniqueArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Manipuladora_Mes that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Manipuladora_MesFindUniqueOrThrowArgs} args - Arguments to find a Multas_Manipuladora_Mes
+     * @example
+     * // Get one Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Manipuladora_MesFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Manipuladora_MesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Manipuladora_Mes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesFindFirstArgs} args - Arguments to find a Multas_Manipuladora_Mes
+     * @example
+     * // Get one Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Manipuladora_MesFindFirstArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesFindFirstArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Manipuladora_Mes that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesFindFirstOrThrowArgs} args - Arguments to find a Multas_Manipuladora_Mes
+     * @example
+     * // Get one Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Manipuladora_MesFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Manipuladora_Mes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findMany()
+     * 
+     * // Get first 10 Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Manipuladora_MesWithIdOnly = await prisma.multas_Manipuladora_Mes.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Manipuladora_MesFindManyArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesCreateArgs} args - Arguments to create a Multas_Manipuladora_Mes.
+     * @example
+     * // Create one Multas_Manipuladora_Mes
+     * const Multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.create({
+     *   data: {
+     *     // ... data to create a Multas_Manipuladora_Mes
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Manipuladora_MesCreateArgs>(args: SelectSubset<T, Multas_Manipuladora_MesCreateArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesCreateManyArgs} args - Arguments to create many Multas_Manipuladora_Mes.
+     * @example
+     * // Create many Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Manipuladora_MesCreateManyArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Manipuladora_Mes and returns the data saved in the database.
+     * @param {Multas_Manipuladora_MesCreateManyAndReturnArgs} args - Arguments to create many Multas_Manipuladora_Mes.
+     * @example
+     * // Create many Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Manipuladora_Mes and only return the `id`
+     * const multas_Manipuladora_MesWithIdOnly = await prisma.multas_Manipuladora_Mes.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Manipuladora_MesCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesDeleteArgs} args - Arguments to delete one Multas_Manipuladora_Mes.
+     * @example
+     * // Delete one Multas_Manipuladora_Mes
+     * const Multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Manipuladora_Mes
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Manipuladora_MesDeleteArgs>(args: SelectSubset<T, Multas_Manipuladora_MesDeleteArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesUpdateArgs} args - Arguments to update one Multas_Manipuladora_Mes.
+     * @example
+     * // Update one Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Manipuladora_MesUpdateArgs>(args: SelectSubset<T, Multas_Manipuladora_MesUpdateArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesDeleteManyArgs} args - Arguments to filter Multas_Manipuladora_Mes to delete.
+     * @example
+     * // Delete a few Multas_Manipuladora_Mes
+     * const { count } = await prisma.multas_Manipuladora_Mes.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Manipuladora_MesDeleteManyArgs>(args?: SelectSubset<T, Multas_Manipuladora_MesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Manipuladora_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Manipuladora_MesUpdateManyArgs>(args: SelectSubset<T, Multas_Manipuladora_MesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Manipuladora_Mes.
+     * @param {Multas_Manipuladora_MesUpsertArgs} args - Arguments to update or create a Multas_Manipuladora_Mes.
+     * @example
+     * // Update or create a Multas_Manipuladora_Mes
+     * const multas_Manipuladora_Mes = await prisma.multas_Manipuladora_Mes.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Manipuladora_Mes
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Manipuladora_Mes we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Manipuladora_MesUpsertArgs>(args: SelectSubset<T, Multas_Manipuladora_MesUpsertArgs<ExtArgs>>): Prisma__Multas_Manipuladora_MesClient<$Result.GetResult<Prisma.$Multas_Manipuladora_MesPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Manipuladora_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesCountArgs} args - Arguments to filter Multas_Manipuladora_Mes to count.
+     * @example
+     * // Count the number of Multas_Manipuladora_Mes
+     * const count = await prisma.multas_Manipuladora_Mes.count({
+     *   where: {
+     *     // ... the filter for the Multas_Manipuladora_Mes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Manipuladora_MesCountArgs>(
+      args?: Subset<T, Multas_Manipuladora_MesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Manipuladora_MesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Manipuladora_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Manipuladora_MesAggregateArgs>(args: Subset<T, Multas_Manipuladora_MesAggregateArgs>): Prisma.PrismaPromise<GetMultas_Manipuladora_MesAggregateType<T>>
+
+    /**
+     * Group by Multas_Manipuladora_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Manipuladora_MesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Manipuladora_MesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Manipuladora_MesGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Manipuladora_MesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Manipuladora_MesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Manipuladora_MesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Manipuladora_Mes model
+   */
+  readonly fields: Multas_Manipuladora_MesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Manipuladora_Mes.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Manipuladora_MesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Manipuladora_Mes model
+   */ 
+  interface Multas_Manipuladora_MesFieldRefs {
+    readonly id: FieldRef<"Multas_Manipuladora_Mes", 'String'>
+    readonly licId: FieldRef<"Multas_Manipuladora_Mes", 'Int'>
+    readonly anio: FieldRef<"Multas_Manipuladora_Mes", 'Int'>
+    readonly mes: FieldRef<"Multas_Manipuladora_Mes", 'Int'>
+    readonly rbd: FieldRef<"Multas_Manipuladora_Mes", 'Int'>
+    readonly establecimiento: FieldRef<"Multas_Manipuladora_Mes", 'String'>
+    readonly total: FieldRef<"Multas_Manipuladora_Mes", 'Int'>
+    readonly filename: FieldRef<"Multas_Manipuladora_Mes", 'String'>
+    readonly usuarioModif: FieldRef<"Multas_Manipuladora_Mes", 'String'>
+    readonly createdAt: FieldRef<"Multas_Manipuladora_Mes", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Manipuladora_Mes", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Manipuladora_Mes findUnique
+   */
+  export type Multas_Manipuladora_MesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Manipuladora_Mes to fetch.
+     */
+    where: Multas_Manipuladora_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes findUniqueOrThrow
+   */
+  export type Multas_Manipuladora_MesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Manipuladora_Mes to fetch.
+     */
+    where: Multas_Manipuladora_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes findFirst
+   */
+  export type Multas_Manipuladora_MesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Manipuladora_Mes to fetch.
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Manipuladora_Mes to fetch.
+     */
+    orderBy?: Multas_Manipuladora_MesOrderByWithRelationInput | Multas_Manipuladora_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Manipuladora_Mes.
+     */
+    cursor?: Multas_Manipuladora_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Manipuladora_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Manipuladora_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Manipuladora_Mes.
+     */
+    distinct?: Multas_Manipuladora_MesScalarFieldEnum | Multas_Manipuladora_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Manipuladora_Mes findFirstOrThrow
+   */
+  export type Multas_Manipuladora_MesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Manipuladora_Mes to fetch.
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Manipuladora_Mes to fetch.
+     */
+    orderBy?: Multas_Manipuladora_MesOrderByWithRelationInput | Multas_Manipuladora_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Manipuladora_Mes.
+     */
+    cursor?: Multas_Manipuladora_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Manipuladora_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Manipuladora_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Manipuladora_Mes.
+     */
+    distinct?: Multas_Manipuladora_MesScalarFieldEnum | Multas_Manipuladora_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Manipuladora_Mes findMany
+   */
+  export type Multas_Manipuladora_MesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Manipuladora_Mes to fetch.
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Manipuladora_Mes to fetch.
+     */
+    orderBy?: Multas_Manipuladora_MesOrderByWithRelationInput | Multas_Manipuladora_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Manipuladora_Mes.
+     */
+    cursor?: Multas_Manipuladora_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Manipuladora_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Manipuladora_Mes.
+     */
+    skip?: number
+    distinct?: Multas_Manipuladora_MesScalarFieldEnum | Multas_Manipuladora_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Manipuladora_Mes create
+   */
+  export type Multas_Manipuladora_MesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Manipuladora_Mes.
+     */
+    data: XOR<Multas_Manipuladora_MesCreateInput, Multas_Manipuladora_MesUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Manipuladora_Mes createMany
+   */
+  export type Multas_Manipuladora_MesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Manipuladora_Mes.
+     */
+    data: Multas_Manipuladora_MesCreateManyInput | Multas_Manipuladora_MesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Manipuladora_Mes createManyAndReturn
+   */
+  export type Multas_Manipuladora_MesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Manipuladora_Mes.
+     */
+    data: Multas_Manipuladora_MesCreateManyInput | Multas_Manipuladora_MesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Manipuladora_Mes update
+   */
+  export type Multas_Manipuladora_MesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Manipuladora_Mes.
+     */
+    data: XOR<Multas_Manipuladora_MesUpdateInput, Multas_Manipuladora_MesUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Manipuladora_Mes to update.
+     */
+    where: Multas_Manipuladora_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes updateMany
+   */
+  export type Multas_Manipuladora_MesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Manipuladora_Mes.
+     */
+    data: XOR<Multas_Manipuladora_MesUpdateManyMutationInput, Multas_Manipuladora_MesUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Manipuladora_Mes to update
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes upsert
+   */
+  export type Multas_Manipuladora_MesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Manipuladora_Mes to update in case it exists.
+     */
+    where: Multas_Manipuladora_MesWhereUniqueInput
+    /**
+     * In case the Multas_Manipuladora_Mes found by the `where` argument doesn't exist, create a new Multas_Manipuladora_Mes with this data.
+     */
+    create: XOR<Multas_Manipuladora_MesCreateInput, Multas_Manipuladora_MesUncheckedCreateInput>
+    /**
+     * In case the Multas_Manipuladora_Mes was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Manipuladora_MesUpdateInput, Multas_Manipuladora_MesUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Manipuladora_Mes delete
+   */
+  export type Multas_Manipuladora_MesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Manipuladora_Mes to delete.
+     */
+    where: Multas_Manipuladora_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes deleteMany
+   */
+  export type Multas_Manipuladora_MesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Manipuladora_Mes to delete
+     */
+    where?: Multas_Manipuladora_MesWhereInput
+  }
+
+  /**
+   * Multas_Manipuladora_Mes without action
+   */
+  export type Multas_Manipuladora_MesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Manipuladora_Mes
+     */
+    select?: Multas_Manipuladora_MesSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Minuta_Mes
+   */
+
+  export type AggregateMultas_Minuta_Mes = {
+    _count: Multas_Minuta_MesCountAggregateOutputType | null
+    _avg: Multas_Minuta_MesAvgAggregateOutputType | null
+    _sum: Multas_Minuta_MesSumAggregateOutputType | null
+    _min: Multas_Minuta_MesMinAggregateOutputType | null
+    _max: Multas_Minuta_MesMaxAggregateOutputType | null
+  }
+
+  export type Multas_Minuta_MesAvgAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    mes: number | null
+  }
+
+  export type Multas_Minuta_MesSumAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    mes: number | null
+  }
+
+  export type Multas_Minuta_MesMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    nivel: string | null
+    datosJson: string | null
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Minuta_MesMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    mes: number | null
+    nivel: string | null
+    datosJson: string | null
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Minuta_MesCountAggregateOutputType = {
+    id: number
+    licId: number
+    anio: number
+    mes: number
+    nivel: number
+    datosJson: number
+    filename: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Minuta_MesAvgAggregateInputType = {
+    licId?: true
+    anio?: true
+    mes?: true
+  }
+
+  export type Multas_Minuta_MesSumAggregateInputType = {
+    licId?: true
+    anio?: true
+    mes?: true
+  }
+
+  export type Multas_Minuta_MesMinAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    nivel?: true
+    datosJson?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Minuta_MesMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    nivel?: true
+    datosJson?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Minuta_MesCountAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    mes?: true
+    nivel?: true
+    datosJson?: true
+    filename?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Minuta_MesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Minuta_Mes to aggregate.
+     */
+    where?: Multas_Minuta_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Minuta_Mes to fetch.
+     */
+    orderBy?: Multas_Minuta_MesOrderByWithRelationInput | Multas_Minuta_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Minuta_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Minuta_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Minuta_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Minuta_Mes
+    **/
+    _count?: true | Multas_Minuta_MesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Minuta_MesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Minuta_MesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Minuta_MesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Minuta_MesMaxAggregateInputType
+  }
+
+  export type GetMultas_Minuta_MesAggregateType<T extends Multas_Minuta_MesAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Minuta_Mes]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Minuta_Mes[P]>
+      : GetScalarType<T[P], AggregateMultas_Minuta_Mes[P]>
+  }
+
+
+
+
+  export type Multas_Minuta_MesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Minuta_MesWhereInput
+    orderBy?: Multas_Minuta_MesOrderByWithAggregationInput | Multas_Minuta_MesOrderByWithAggregationInput[]
+    by: Multas_Minuta_MesScalarFieldEnum[] | Multas_Minuta_MesScalarFieldEnum
+    having?: Multas_Minuta_MesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Minuta_MesCountAggregateInputType | true
+    _avg?: Multas_Minuta_MesAvgAggregateInputType
+    _sum?: Multas_Minuta_MesSumAggregateInputType
+    _min?: Multas_Minuta_MesMinAggregateInputType
+    _max?: Multas_Minuta_MesMaxAggregateInputType
+  }
+
+  export type Multas_Minuta_MesGroupByOutputType = {
+    id: string
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+    datosJson: string
+    filename: string | null
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Minuta_MesCountAggregateOutputType | null
+    _avg: Multas_Minuta_MesAvgAggregateOutputType | null
+    _sum: Multas_Minuta_MesSumAggregateOutputType | null
+    _min: Multas_Minuta_MesMinAggregateOutputType | null
+    _max: Multas_Minuta_MesMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Minuta_MesGroupByPayload<T extends Multas_Minuta_MesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Minuta_MesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Minuta_MesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Minuta_MesGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Minuta_MesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Minuta_MesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    nivel?: boolean
+    datosJson?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Minuta_Mes"]>
+
+  export type Multas_Minuta_MesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    nivel?: boolean
+    datosJson?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Minuta_Mes"]>
+
+  export type Multas_Minuta_MesSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    mes?: boolean
+    nivel?: boolean
+    datosJson?: boolean
+    filename?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Minuta_MesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Minuta_Mes"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      anio: number
+      mes: number
+      nivel: string
+      datosJson: string
+      filename: string | null
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Minuta_Mes"]>
+    composites: {}
+  }
+
+  type Multas_Minuta_MesGetPayload<S extends boolean | null | undefined | Multas_Minuta_MesDefaultArgs> = $Result.GetResult<Prisma.$Multas_Minuta_MesPayload, S>
+
+  type Multas_Minuta_MesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Minuta_MesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Minuta_MesCountAggregateInputType | true
+    }
+
+  export interface Multas_Minuta_MesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Minuta_Mes'], meta: { name: 'Multas_Minuta_Mes' } }
+    /**
+     * Find zero or one Multas_Minuta_Mes that matches the filter.
+     * @param {Multas_Minuta_MesFindUniqueArgs} args - Arguments to find a Multas_Minuta_Mes
+     * @example
+     * // Get one Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Minuta_MesFindUniqueArgs>(args: SelectSubset<T, Multas_Minuta_MesFindUniqueArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Minuta_Mes that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Minuta_MesFindUniqueOrThrowArgs} args - Arguments to find a Multas_Minuta_Mes
+     * @example
+     * // Get one Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Minuta_MesFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Minuta_MesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Minuta_Mes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesFindFirstArgs} args - Arguments to find a Multas_Minuta_Mes
+     * @example
+     * // Get one Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Minuta_MesFindFirstArgs>(args?: SelectSubset<T, Multas_Minuta_MesFindFirstArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Minuta_Mes that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesFindFirstOrThrowArgs} args - Arguments to find a Multas_Minuta_Mes
+     * @example
+     * // Get one Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Minuta_MesFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Minuta_MesFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Minuta_Mes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findMany()
+     * 
+     * // Get first 10 Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Minuta_MesWithIdOnly = await prisma.multas_Minuta_Mes.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Minuta_MesFindManyArgs>(args?: SelectSubset<T, Multas_Minuta_MesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesCreateArgs} args - Arguments to create a Multas_Minuta_Mes.
+     * @example
+     * // Create one Multas_Minuta_Mes
+     * const Multas_Minuta_Mes = await prisma.multas_Minuta_Mes.create({
+     *   data: {
+     *     // ... data to create a Multas_Minuta_Mes
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Minuta_MesCreateArgs>(args: SelectSubset<T, Multas_Minuta_MesCreateArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesCreateManyArgs} args - Arguments to create many Multas_Minuta_Mes.
+     * @example
+     * // Create many Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Minuta_MesCreateManyArgs>(args?: SelectSubset<T, Multas_Minuta_MesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Minuta_Mes and returns the data saved in the database.
+     * @param {Multas_Minuta_MesCreateManyAndReturnArgs} args - Arguments to create many Multas_Minuta_Mes.
+     * @example
+     * // Create many Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Minuta_Mes and only return the `id`
+     * const multas_Minuta_MesWithIdOnly = await prisma.multas_Minuta_Mes.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Minuta_MesCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Minuta_MesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesDeleteArgs} args - Arguments to delete one Multas_Minuta_Mes.
+     * @example
+     * // Delete one Multas_Minuta_Mes
+     * const Multas_Minuta_Mes = await prisma.multas_Minuta_Mes.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Minuta_Mes
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Minuta_MesDeleteArgs>(args: SelectSubset<T, Multas_Minuta_MesDeleteArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesUpdateArgs} args - Arguments to update one Multas_Minuta_Mes.
+     * @example
+     * // Update one Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Minuta_MesUpdateArgs>(args: SelectSubset<T, Multas_Minuta_MesUpdateArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesDeleteManyArgs} args - Arguments to filter Multas_Minuta_Mes to delete.
+     * @example
+     * // Delete a few Multas_Minuta_Mes
+     * const { count } = await prisma.multas_Minuta_Mes.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Minuta_MesDeleteManyArgs>(args?: SelectSubset<T, Multas_Minuta_MesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Minuta_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Minuta_MesUpdateManyArgs>(args: SelectSubset<T, Multas_Minuta_MesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Minuta_Mes.
+     * @param {Multas_Minuta_MesUpsertArgs} args - Arguments to update or create a Multas_Minuta_Mes.
+     * @example
+     * // Update or create a Multas_Minuta_Mes
+     * const multas_Minuta_Mes = await prisma.multas_Minuta_Mes.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Minuta_Mes
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Minuta_Mes we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Minuta_MesUpsertArgs>(args: SelectSubset<T, Multas_Minuta_MesUpsertArgs<ExtArgs>>): Prisma__Multas_Minuta_MesClient<$Result.GetResult<Prisma.$Multas_Minuta_MesPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Minuta_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesCountArgs} args - Arguments to filter Multas_Minuta_Mes to count.
+     * @example
+     * // Count the number of Multas_Minuta_Mes
+     * const count = await prisma.multas_Minuta_Mes.count({
+     *   where: {
+     *     // ... the filter for the Multas_Minuta_Mes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Minuta_MesCountArgs>(
+      args?: Subset<T, Multas_Minuta_MesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Minuta_MesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Minuta_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Minuta_MesAggregateArgs>(args: Subset<T, Multas_Minuta_MesAggregateArgs>): Prisma.PrismaPromise<GetMultas_Minuta_MesAggregateType<T>>
+
+    /**
+     * Group by Multas_Minuta_Mes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Minuta_MesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Minuta_MesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Minuta_MesGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Minuta_MesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Minuta_MesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Minuta_MesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Minuta_Mes model
+   */
+  readonly fields: Multas_Minuta_MesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Minuta_Mes.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Minuta_MesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Minuta_Mes model
+   */ 
+  interface Multas_Minuta_MesFieldRefs {
+    readonly id: FieldRef<"Multas_Minuta_Mes", 'String'>
+    readonly licId: FieldRef<"Multas_Minuta_Mes", 'Int'>
+    readonly anio: FieldRef<"Multas_Minuta_Mes", 'Int'>
+    readonly mes: FieldRef<"Multas_Minuta_Mes", 'Int'>
+    readonly nivel: FieldRef<"Multas_Minuta_Mes", 'String'>
+    readonly datosJson: FieldRef<"Multas_Minuta_Mes", 'String'>
+    readonly filename: FieldRef<"Multas_Minuta_Mes", 'String'>
+    readonly usuarioModif: FieldRef<"Multas_Minuta_Mes", 'String'>
+    readonly createdAt: FieldRef<"Multas_Minuta_Mes", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Minuta_Mes", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Minuta_Mes findUnique
+   */
+  export type Multas_Minuta_MesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Minuta_Mes to fetch.
+     */
+    where: Multas_Minuta_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Minuta_Mes findUniqueOrThrow
+   */
+  export type Multas_Minuta_MesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Minuta_Mes to fetch.
+     */
+    where: Multas_Minuta_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Minuta_Mes findFirst
+   */
+  export type Multas_Minuta_MesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Minuta_Mes to fetch.
+     */
+    where?: Multas_Minuta_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Minuta_Mes to fetch.
+     */
+    orderBy?: Multas_Minuta_MesOrderByWithRelationInput | Multas_Minuta_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Minuta_Mes.
+     */
+    cursor?: Multas_Minuta_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Minuta_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Minuta_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Minuta_Mes.
+     */
+    distinct?: Multas_Minuta_MesScalarFieldEnum | Multas_Minuta_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Minuta_Mes findFirstOrThrow
+   */
+  export type Multas_Minuta_MesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Minuta_Mes to fetch.
+     */
+    where?: Multas_Minuta_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Minuta_Mes to fetch.
+     */
+    orderBy?: Multas_Minuta_MesOrderByWithRelationInput | Multas_Minuta_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Minuta_Mes.
+     */
+    cursor?: Multas_Minuta_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Minuta_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Minuta_Mes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Minuta_Mes.
+     */
+    distinct?: Multas_Minuta_MesScalarFieldEnum | Multas_Minuta_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Minuta_Mes findMany
+   */
+  export type Multas_Minuta_MesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Minuta_Mes to fetch.
+     */
+    where?: Multas_Minuta_MesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Minuta_Mes to fetch.
+     */
+    orderBy?: Multas_Minuta_MesOrderByWithRelationInput | Multas_Minuta_MesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Minuta_Mes.
+     */
+    cursor?: Multas_Minuta_MesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Minuta_Mes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Minuta_Mes.
+     */
+    skip?: number
+    distinct?: Multas_Minuta_MesScalarFieldEnum | Multas_Minuta_MesScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Minuta_Mes create
+   */
+  export type Multas_Minuta_MesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Minuta_Mes.
+     */
+    data: XOR<Multas_Minuta_MesCreateInput, Multas_Minuta_MesUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Minuta_Mes createMany
+   */
+  export type Multas_Minuta_MesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Minuta_Mes.
+     */
+    data: Multas_Minuta_MesCreateManyInput | Multas_Minuta_MesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Minuta_Mes createManyAndReturn
+   */
+  export type Multas_Minuta_MesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Minuta_Mes.
+     */
+    data: Multas_Minuta_MesCreateManyInput | Multas_Minuta_MesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Minuta_Mes update
+   */
+  export type Multas_Minuta_MesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Minuta_Mes.
+     */
+    data: XOR<Multas_Minuta_MesUpdateInput, Multas_Minuta_MesUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Minuta_Mes to update.
+     */
+    where: Multas_Minuta_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Minuta_Mes updateMany
+   */
+  export type Multas_Minuta_MesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Minuta_Mes.
+     */
+    data: XOR<Multas_Minuta_MesUpdateManyMutationInput, Multas_Minuta_MesUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Minuta_Mes to update
+     */
+    where?: Multas_Minuta_MesWhereInput
+  }
+
+  /**
+   * Multas_Minuta_Mes upsert
+   */
+  export type Multas_Minuta_MesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Minuta_Mes to update in case it exists.
+     */
+    where: Multas_Minuta_MesWhereUniqueInput
+    /**
+     * In case the Multas_Minuta_Mes found by the `where` argument doesn't exist, create a new Multas_Minuta_Mes with this data.
+     */
+    create: XOR<Multas_Minuta_MesCreateInput, Multas_Minuta_MesUncheckedCreateInput>
+    /**
+     * In case the Multas_Minuta_Mes was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Minuta_MesUpdateInput, Multas_Minuta_MesUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Minuta_Mes delete
+   */
+  export type Multas_Minuta_MesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Minuta_Mes to delete.
+     */
+    where: Multas_Minuta_MesWhereUniqueInput
+  }
+
+  /**
+   * Multas_Minuta_Mes deleteMany
+   */
+  export type Multas_Minuta_MesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Minuta_Mes to delete
+     */
+    where?: Multas_Minuta_MesWhereInput
+  }
+
+  /**
+   * Multas_Minuta_Mes without action
+   */
+  export type Multas_Minuta_MesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Minuta_Mes
+     */
+    select?: Multas_Minuta_MesSelect<ExtArgs> | null
   }
 
 
@@ -162090,6 +164242,39 @@ export namespace Prisma {
   export type Multas_Estrato_ExcluidoScalarFieldEnum = (typeof Multas_Estrato_ExcluidoScalarFieldEnum)[keyof typeof Multas_Estrato_ExcluidoScalarFieldEnum]
 
 
+  export const Multas_Manipuladora_MesScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    anio: 'anio',
+    mes: 'mes',
+    rbd: 'rbd',
+    establecimiento: 'establecimiento',
+    total: 'total',
+    filename: 'filename',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Manipuladora_MesScalarFieldEnum = (typeof Multas_Manipuladora_MesScalarFieldEnum)[keyof typeof Multas_Manipuladora_MesScalarFieldEnum]
+
+
+  export const Multas_Minuta_MesScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    anio: 'anio',
+    mes: 'mes',
+    nivel: 'nivel',
+    datosJson: 'datosJson',
+    filename: 'filename',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Minuta_MesScalarFieldEnum = (typeof Multas_Minuta_MesScalarFieldEnum)[keyof typeof Multas_Minuta_MesScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -168561,6 +170746,171 @@ export namespace Prisma {
     usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Estrato_Excluido"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Estrato_Excluido"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Estrato_Excluido"> | Date | string
+  }
+
+  export type Multas_Manipuladora_MesWhereInput = {
+    AND?: Multas_Manipuladora_MesWhereInput | Multas_Manipuladora_MesWhereInput[]
+    OR?: Multas_Manipuladora_MesWhereInput[]
+    NOT?: Multas_Manipuladora_MesWhereInput | Multas_Manipuladora_MesWhereInput[]
+    id?: StringFilter<"Multas_Manipuladora_Mes"> | string
+    licId?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    anio?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    mes?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    rbd?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    establecimiento?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    total?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    filename?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    usuarioModif?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Manipuladora_Mes"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Manipuladora_Mes"> | Date | string
+  }
+
+  export type Multas_Manipuladora_MesOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    total?: SortOrder
+    filename?: SortOrderInput | SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId_anio_mes_rbd?: Multas_Manipuladora_MesLicIdAnioMesRbdCompoundUniqueInput
+    AND?: Multas_Manipuladora_MesWhereInput | Multas_Manipuladora_MesWhereInput[]
+    OR?: Multas_Manipuladora_MesWhereInput[]
+    NOT?: Multas_Manipuladora_MesWhereInput | Multas_Manipuladora_MesWhereInput[]
+    licId?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    anio?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    mes?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    rbd?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    establecimiento?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    total?: IntFilter<"Multas_Manipuladora_Mes"> | number
+    filename?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    usuarioModif?: StringNullableFilter<"Multas_Manipuladora_Mes"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Manipuladora_Mes"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Manipuladora_Mes"> | Date | string
+  }, "id" | "licId_anio_mes_rbd">
+
+  export type Multas_Manipuladora_MesOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    total?: SortOrder
+    filename?: SortOrderInput | SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Manipuladora_MesCountOrderByAggregateInput
+    _avg?: Multas_Manipuladora_MesAvgOrderByAggregateInput
+    _max?: Multas_Manipuladora_MesMaxOrderByAggregateInput
+    _min?: Multas_Manipuladora_MesMinOrderByAggregateInput
+    _sum?: Multas_Manipuladora_MesSumOrderByAggregateInput
+  }
+
+  export type Multas_Manipuladora_MesScalarWhereWithAggregatesInput = {
+    AND?: Multas_Manipuladora_MesScalarWhereWithAggregatesInput | Multas_Manipuladora_MesScalarWhereWithAggregatesInput[]
+    OR?: Multas_Manipuladora_MesScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Manipuladora_MesScalarWhereWithAggregatesInput | Multas_Manipuladora_MesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Manipuladora_Mes"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Manipuladora_Mes"> | number
+    anio?: IntWithAggregatesFilter<"Multas_Manipuladora_Mes"> | number
+    mes?: IntWithAggregatesFilter<"Multas_Manipuladora_Mes"> | number
+    rbd?: IntWithAggregatesFilter<"Multas_Manipuladora_Mes"> | number
+    establecimiento?: StringNullableWithAggregatesFilter<"Multas_Manipuladora_Mes"> | string | null
+    total?: IntWithAggregatesFilter<"Multas_Manipuladora_Mes"> | number
+    filename?: StringNullableWithAggregatesFilter<"Multas_Manipuladora_Mes"> | string | null
+    usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Manipuladora_Mes"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Manipuladora_Mes"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Manipuladora_Mes"> | Date | string
+  }
+
+  export type Multas_Minuta_MesWhereInput = {
+    AND?: Multas_Minuta_MesWhereInput | Multas_Minuta_MesWhereInput[]
+    OR?: Multas_Minuta_MesWhereInput[]
+    NOT?: Multas_Minuta_MesWhereInput | Multas_Minuta_MesWhereInput[]
+    id?: StringFilter<"Multas_Minuta_Mes"> | string
+    licId?: IntFilter<"Multas_Minuta_Mes"> | number
+    anio?: IntFilter<"Multas_Minuta_Mes"> | number
+    mes?: IntFilter<"Multas_Minuta_Mes"> | number
+    nivel?: StringFilter<"Multas_Minuta_Mes"> | string
+    datosJson?: StringFilter<"Multas_Minuta_Mes"> | string
+    filename?: StringNullableFilter<"Multas_Minuta_Mes"> | string | null
+    usuarioModif?: StringNullableFilter<"Multas_Minuta_Mes"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Minuta_Mes"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Minuta_Mes"> | Date | string
+  }
+
+  export type Multas_Minuta_MesOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    nivel?: SortOrder
+    datosJson?: SortOrder
+    filename?: SortOrderInput | SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Minuta_MesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId_anio_mes_nivel?: Multas_Minuta_MesLicIdAnioMesNivelCompoundUniqueInput
+    AND?: Multas_Minuta_MesWhereInput | Multas_Minuta_MesWhereInput[]
+    OR?: Multas_Minuta_MesWhereInput[]
+    NOT?: Multas_Minuta_MesWhereInput | Multas_Minuta_MesWhereInput[]
+    licId?: IntFilter<"Multas_Minuta_Mes"> | number
+    anio?: IntFilter<"Multas_Minuta_Mes"> | number
+    mes?: IntFilter<"Multas_Minuta_Mes"> | number
+    nivel?: StringFilter<"Multas_Minuta_Mes"> | string
+    datosJson?: StringFilter<"Multas_Minuta_Mes"> | string
+    filename?: StringNullableFilter<"Multas_Minuta_Mes"> | string | null
+    usuarioModif?: StringNullableFilter<"Multas_Minuta_Mes"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Minuta_Mes"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Minuta_Mes"> | Date | string
+  }, "id" | "licId_anio_mes_nivel">
+
+  export type Multas_Minuta_MesOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    nivel?: SortOrder
+    datosJson?: SortOrder
+    filename?: SortOrderInput | SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Minuta_MesCountOrderByAggregateInput
+    _avg?: Multas_Minuta_MesAvgOrderByAggregateInput
+    _max?: Multas_Minuta_MesMaxOrderByAggregateInput
+    _min?: Multas_Minuta_MesMinOrderByAggregateInput
+    _sum?: Multas_Minuta_MesSumOrderByAggregateInput
+  }
+
+  export type Multas_Minuta_MesScalarWhereWithAggregatesInput = {
+    AND?: Multas_Minuta_MesScalarWhereWithAggregatesInput | Multas_Minuta_MesScalarWhereWithAggregatesInput[]
+    OR?: Multas_Minuta_MesScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Minuta_MesScalarWhereWithAggregatesInput | Multas_Minuta_MesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Minuta_Mes"> | string
+    licId?: IntWithAggregatesFilter<"Multas_Minuta_Mes"> | number
+    anio?: IntWithAggregatesFilter<"Multas_Minuta_Mes"> | number
+    mes?: IntWithAggregatesFilter<"Multas_Minuta_Mes"> | number
+    nivel?: StringWithAggregatesFilter<"Multas_Minuta_Mes"> | string
+    datosJson?: StringWithAggregatesFilter<"Multas_Minuta_Mes"> | string
+    filename?: StringNullableWithAggregatesFilter<"Multas_Minuta_Mes"> | string | null
+    usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Minuta_Mes"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Minuta_Mes"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Minuta_Mes"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -181581,6 +183931,195 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Manipuladora_MesCreateInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento?: string | null
+    total: number
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Manipuladora_MesUncheckedCreateInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento?: string | null
+    total: number
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Manipuladora_MesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Manipuladora_MesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Manipuladora_MesCreateManyInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento?: string | null
+    total: number
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Manipuladora_MesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Manipuladora_MesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    total?: IntFieldUpdateOperationsInput | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Minuta_MesCreateInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+    datosJson: string
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Minuta_MesUncheckedCreateInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+    datosJson: string
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Minuta_MesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    datosJson?: StringFieldUpdateOperationsInput | string
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Minuta_MesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    datosJson?: StringFieldUpdateOperationsInput | string
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Minuta_MesCreateManyInput = {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+    datosJson: string
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Minuta_MesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    datosJson?: StringFieldUpdateOperationsInput | string
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Minuta_MesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    datosJson?: StringFieldUpdateOperationsInput | string
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -193355,6 +195894,129 @@ export namespace Prisma {
 
   export type Multas_Estrato_ExcluidoSumOrderByAggregateInput = {
     licId?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesLicIdAnioMesRbdCompoundUniqueInput = {
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+  }
+
+  export type Multas_Manipuladora_MesCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    total?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    total?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    total?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    total?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Manipuladora_MesSumOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+    total?: SortOrder
+  }
+
+  export type Multas_Minuta_MesLicIdAnioMesNivelCompoundUniqueInput = {
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+  }
+
+  export type Multas_Minuta_MesCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    nivel?: SortOrder
+    datosJson?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Minuta_MesAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+  }
+
+  export type Multas_Minuta_MesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    nivel?: SortOrder
+    datosJson?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Minuta_MesMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
+    nivel?: SortOrder
+    datosJson?: SortOrder
+    filename?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Minuta_MesSumOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    mes?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -224645,6 +227307,14 @@ export namespace Prisma {
      * @deprecated Use Multas_Estrato_ExcluidoDefaultArgs instead
      */
     export type Multas_Estrato_ExcluidoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Estrato_ExcluidoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Manipuladora_MesDefaultArgs instead
+     */
+    export type Multas_Manipuladora_MesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Manipuladora_MesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Minuta_MesDefaultArgs instead
+     */
+    export type Multas_Minuta_MesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Minuta_MesDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

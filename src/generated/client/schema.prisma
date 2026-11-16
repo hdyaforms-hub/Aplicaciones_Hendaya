@@ -903,6 +903,40 @@ model Multas_Estrato_Excluido {
   @@index([licId])
 }
 
+model Multas_Manipuladora_Mes {
+  id              String   @id @default(uuid())
+  licId           Int
+  anio            Int
+  mes             Int
+  rbd             Int
+  establecimiento String?  @db.VarChar(200)
+  total           Int
+  filename        String?  @db.VarChar(200)
+  usuarioModif    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([licId, anio, mes, rbd])
+  @@index([licId, anio, mes])
+  @@index([rbd])
+}
+
+model Multas_Minuta_Mes {
+  id           String   @id @default(uuid())
+  licId        Int
+  anio         Int
+  mes          Int
+  nivel        String   @db.VarChar(30)
+  datosJson    String   @db.Text
+  filename     String?  @db.VarChar(200)
+  usuarioModif String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([licId, anio, mes, nivel])
+  @@index([licId, anio, mes])
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

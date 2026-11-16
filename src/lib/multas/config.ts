@@ -153,3 +153,30 @@ export interface EstratoExcluidoItem {
     updatedAt?: Date | string
 }
 
+export interface ManipuladoraMesItem {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    establecimiento?: string | null
+    total: number
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+}
+
+export interface MinutaMesItem {
+    id?: string
+    licId: number
+    anio: number
+    mes: number
+    nivel: string
+    datosJson: string
+    filename?: string | null
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+}
+

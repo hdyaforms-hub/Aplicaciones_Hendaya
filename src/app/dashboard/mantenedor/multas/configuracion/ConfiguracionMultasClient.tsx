@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import * as XLSX from 'xlsx'
 import {
     getParametrosLicitacion,
     guardarParametrosLicitacion,
@@ -12,7 +13,15 @@ import {
     guardarEstratoExcluido,
     toggleEstratoExcluido,
     eliminarEstratoExcluido,
-    cargarEstratosSugeridos
+    cargarEstratosSugeridos,
+    getDotacionManipuladoras,
+    guardarDotacionManipuladora,
+    importarDotacionMasiva,
+    eliminarDotacionManipuladora,
+    getMinutaMes,
+    guardarMinutaMes,
+    sincronizarMinutasDesdeSistema,
+    eliminarMinutaMes
 } from './actions'
 import {
     ModuloSistemaConfig,
@@ -20,7 +29,9 @@ import {
     SUBMODULOS_C5_DEFAULT,
     SubModuloCatalogosC2,
     SUBMODULOS_C2_DEFAULT,
-    HorarioServicioItem
+    HorarioServicioItem,
+    ManipuladoraMesItem,
+    MinutaMesItem
 } from './types'
 
 interface LicitacionOption {
@@ -35,7 +46,7 @@ interface Props {
 
 export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [selectedLicId, setSelectedLicId] = useState<number>(licitaciones[0]?.licId || 0)
-    const [activeTab, setActiveTab] = useState<'modulos' | 'horarios' | 'estratos' | 'parametros' | 'aql' | 'causas'>('modulos')
+    const [activeTab, setActiveTab] = useState<'modulos' | 'horarios' | 'estratos' | 'dotacion' | 'minutas' | 'parametros' | 'aql' | 'causas'>('modulos')
 
     // Estado de parámetros
     const [loading, setLoading] = useState<boolean>(false)
@@ -68,13 +79,83 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
     const [descEstrato, setDescEstrato] = useState('')
     const [savingEstrato, setSavingEstrato] = useState(false)
 
+    // Form data C2.3 Dotación Oficial de Manipuladoras
+    const [dotacionAnio, setDotacionAnio] = useState<number>(new Date().getFullYear())
+    const [dotacionMes, setDotacionMes] = useState<number>(new Date().getMonth() + 1)
+    const [dotaciones, setDotaciones] = useState<ManipuladoraMesItem[]>([])
+    const [dotacionSearch, setDotacionSearch] = useState('')
+    const [loadingDotacion, setLoadingDotacion] = useState(false)
+    const [importingDotacion, setImportingDotacion] = useState(false)
+    const [showModalDotacion, setShowModalDotacion] = useState(false)
+    const [nuevoRbdDotacion, setNuevoRbdDotacion] = useState<number | ''>('')
+    const [nuevoTotalDotacion, setNuevoTotalDotacion] = useState<number | ''>('')
+    const [nuevoEstablecimientoDotacion, setNuevoEstablecimientoDotacion] = useState('')
+
+    // Form data C2.4 Minutas Planificadas
+    const [minutaAnio, setMinutaAnio] = useState<number>(new Date().getFullYear())
+    const [minutaMes, setMinutaMes] = useState<number>(new Date().getMonth() + 1)
+    const [minutaNivel, setMinutaNivel] = useState<string>('B')
+    const [minutaActual, setMinutaActual] = useState<MinutaMesItem | null>(null)
+    const [diasMinutaMap, setDiasMinutaMap] = useState<Record<number, Array<{ servicio: string; preparacion: string }>>>({})
+    const [loadingMinuta, setLoadingMinuta] = useState(false)
+    const [syncingMinuta, setSyncingMinuta] = useState(false)
+
     // Cargar datos al seleccionar licitación
     useEffect(() => {
         if (!selectedLicId) return
         loadLicitacionConfig(selectedLicId)
         loadHorarios(selectedLicId)
         loadEstratos(selectedLicId)
+        loadDotaciones(selectedLicId, dotacionAnio, dotacionMes)
+        loadMinuta(selectedLicId, minutaAnio, minutaMes, minutaNivel)
     }, [selectedLicId])
+
+    useEffect(() => {
+        if (!selectedLicId) return
+        loadDotaciones(selectedLicId, dotacionAnio, dotacionMes)
+    }, [selectedLicId, dotacionAnio, dotacionMes])
+
+    useEffect(() => {
+        if (!selectedLicId) return
+        loadMinuta(selectedLicId, minutaAnio, minutaMes, minutaNivel)
+    }, [selectedLicId, minutaAnio, minutaMes, minutaNivel])
+
+    const loadDotaciones = async (licId: number, anio: number, mes: number) => {
+        setLoadingDotacion(true)
+        try {
+            const res = await getDotacionManipuladoras(licId, anio, mes)
+            if (res.dotaciones) {
+                setDotaciones(res.dotaciones)
+            }
+        } catch (e) {
+            console.error('Error al cargar dotaciones:', e)
+        } finally {
+            setLoadingDotacion(false)
+        }
+    }
+
+    const loadMinuta = async (licId: number, anio: number, mes: number, nivel: string) => {
+        setLoadingMinuta(true)
+        try {
+            const res = await getMinutaMes(licId, anio, mes, nivel)
+            if (res.minuta) {
+                setMinutaActual(res.minuta)
+                try {
+                    const parsed = JSON.parse(res.minuta.datosJson)
+                    setDiasMinutaMap(parsed)
+                } catch {
+                    setDiasMinutaMap({})
+                }
+            } else {
+                setMinutaActual(null)
+                setDiasMinutaMap({})
+            }
+        } catch (e) {
+            console.error('Error al cargar minuta:', e)
+        } finally {
+            setLoadingMinuta(false)
+        }
+    }
 
     const loadLicitacionConfig = async (licId: number) => {
         setLoading(true)
@@ -292,6 +373,158 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
         }
     }
 
+    // Handlers C2.3 Dotación Oficial de Manipuladoras
+    const handleFileUploadDotacion = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file || !selectedLicId) return
+        setImportingDotacion(true)
+        setError(null)
+        setSuccessMessage(null)
+
+        try {
+            const buffer = await file.arrayBuffer()
+            const workbook = XLSX.read(buffer, { type: 'array' })
+            const sheetName = workbook.SheetNames[0]
+            const worksheet = workbook.Sheets[sheetName]
+            const rawData = XLSX.utils.sheet_to_json<any>(worksheet, { header: 1 })
+
+            if (!rawData || rawData.length < 2) {
+                setError('El archivo Excel no contiene filas de datos.')
+                setImportingDotacion(false)
+                return
+            }
+
+            const headers = (rawData[0] as any[]).map(h => String(h || '').trim().toUpperCase())
+            const rbdIdx = headers.findIndex(h => h.includes('RBD'))
+            const totalIdx = headers.findIndex(h => h.includes('TOTAL') || h.includes('MANIPULADORA') || h.includes('DOTACION') || h.includes('CANTIDAD'))
+            const estabIdx = headers.findIndex(h => h.includes('ESTABLECIMIENTO') || h.includes('COLEGIO') || h.includes('NOMBRE'))
+
+            if (rbdIdx === -1 || totalIdx === -1) {
+                setError('El archivo debe tener al menos una columna con "RBD" y una columna con "TOTAL" o "MANIPULADORAS".')
+                setImportingDotacion(false)
+                return
+            }
+
+            const filas: Array<{ rbd: number; total: number; establecimiento?: string }> = []
+            for (let i = 1; i < rawData.length; i++) {
+                const row = rawData[i] as any[]
+                if (!row || row.length === 0) continue
+                const rbd = parseInt(row[rbdIdx], 10)
+                const total = parseInt(row[totalIdx], 10)
+                const establecimiento = estabIdx !== -1 ? String(row[estabIdx] || '').trim() : undefined
+                if (!isNaN(rbd) && rbd > 0 && !isNaN(total)) {
+                    filas.push({ rbd, total, establecimiento })
+                }
+            }
+
+            if (filas.length === 0) {
+                setError('No se encontraron filas con datos válidos en el archivo.')
+                setImportingDotacion(false)
+                return
+            }
+
+            const res = await importarDotacionMasiva(selectedLicId, dotacionAnio, dotacionMes, filas, file.name)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(`Se importaron ${res.count} dotaciones oficiales exitosamente para ${dotacionMes}/${dotacionAnio}.`)
+                await loadDotaciones(selectedLicId, dotacionAnio, dotacionMes)
+            }
+        } catch (err: any) {
+            console.error('Error al procesar archivo Excel:', err)
+            setError(err.message || 'Error al procesar archivo Excel.')
+        } finally {
+            setImportingDotacion(false)
+            if (e.target) e.target.value = ''
+        }
+    }
+
+    const handleSaveSingleDotacion = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!selectedLicId || !nuevoRbdDotacion || nuevoTotalDotacion === '') return
+        setLoadingDotacion(true)
+        setError(null)
+        try {
+            const res = await guardarDotacionManipuladora({
+                licId: selectedLicId,
+                anio: dotacionAnio,
+                mes: dotacionMes,
+                rbd: Number(nuevoRbdDotacion),
+                total: Number(nuevoTotalDotacion),
+                establecimiento: nuevoEstablecimientoDotacion.trim() || undefined
+            })
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(`Dotación para RBD ${nuevoRbdDotacion} guardada exitosamente.`)
+                setShowModalDotacion(false)
+                setNuevoRbdDotacion('')
+                setNuevoTotalDotacion('')
+                setNuevoEstablecimientoDotacion('')
+                await loadDotaciones(selectedLicId, dotacionAnio, dotacionMes)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al guardar dotación.')
+        } finally {
+            setLoadingDotacion(false)
+        }
+    }
+
+    const handleDeleteDotacion = async (id: string, rbd: number) => {
+        if (!confirm(`¿Estás seguro de eliminar la dotación oficial del RBD ${rbd}?`)) return
+        try {
+            const res = await eliminarDotacionManipuladora(id)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(`Dotación de RBD ${rbd} eliminada.`)
+                await loadDotaciones(selectedLicId, dotacionAnio, dotacionMes)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al eliminar dotación.')
+        }
+    }
+
+    // Handlers C2.4 Minutas Planificadas
+    const handleSyncMinutas = async () => {
+        if (!selectedLicId) return
+        setSyncingMinuta(true)
+        setError(null)
+        setSuccessMessage(null)
+        try {
+            const res = await sincronizarMinutasDesdeSistema(selectedLicId, minutaAnio, minutaMes)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(res.message || 'Minutas sincronizadas exitosamente desde el sistema.')
+                await loadMinuta(selectedLicId, minutaAnio, minutaMes, minutaNivel)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al sincronizar minutas.')
+        } finally {
+            setSyncingMinuta(false)
+        }
+    }
+
+    const handleDeleteMinuta = async () => {
+        if (!minutaActual?.id) return
+        if (!confirm(`¿Estás seguro de eliminar la minuta planificada de nivel ${minutaNivel} para ${minutaMes}/${minutaAnio}?`)) return
+        setLoadingMinuta(true)
+        try {
+            const res = await eliminarMinutaMes(minutaActual.id)
+            if (res.error) {
+                setError(res.error)
+            } else {
+                setSuccessMessage(`Minuta de nivel ${minutaNivel} eliminada.`)
+                await loadMinuta(selectedLicId, minutaAnio, minutaMes, minutaNivel)
+            }
+        } catch (err: any) {
+            setError(err.message || 'Error al eliminar minuta.')
+        } finally {
+            setLoadingMinuta(false)
+        }
+    }
+
     const handleToggleEstrato = async (id: string, activoActual: boolean) => {
         try {
             const res = await toggleEstratoExcluido(id, !activoActual)
@@ -490,6 +723,38 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                 </button>
 
                 <button
+                    onClick={() => setActiveTab('dotacion')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+                        activeTab === 'dotacion'
+                            ? 'bg-slate-900 text-white shadow-sm'
+                            : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                >
+                    <span>👩‍🍳</span>
+                    <span>Dotación Manipuladoras (C2.3)</span>
+                    <span className="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-500 text-white text-[10px]">
+                        {dotaciones.length}
+                    </span>
+                </button>
+
+                <button
+                    onClick={() => setActiveTab('minutas')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+                        activeTab === 'minutas'
+                            ? 'bg-slate-900 text-white shadow-sm'
+                            : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                >
+                    <span>📋</span>
+                    <span>Minutas Planificadas (C2.4)</span>
+                    {minutaActual && (
+                        <span className="ml-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[10px]">
+                            Activa
+                        </span>
+                    )}
+                </button>
+
+                <button
                     onClick={() => setActiveTab('parametros')}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                         activeTab === 'parametros'
@@ -608,6 +873,22 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                         >
                                             <span>🚫</span>
                                             <span>Estratos Excluidos</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveTab('dotacion')}
+                                            className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-[10px] font-bold transition-all shadow-sm flex items-center gap-1"
+                                        >
+                                            <span>👩‍🍳</span>
+                                            <span>Dotación</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveTab('minutas')}
+                                            className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-[10px] font-bold transition-all shadow-sm flex items-center gap-1"
+                                        >
+                                            <span>📋</span>
+                                            <span>Minutas</span>
                                         </button>
                                     </div>
                                 )}
@@ -901,6 +1182,398 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                 </div>
                             ))
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* TAB: DOTACION OFICIAL DE MANIPULADORAS (C2.3) */}
+            {activeTab === 'dotacion' && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded bg-amber-600 text-white text-[11px] font-black">C2.3</span>
+                                <h3 className="text-sm font-black text-slate-800">
+                                    Dotación Oficial de Manipuladoras por Mes
+                                </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Dotación contractual oficial por colegio (RBD). Permite validar el Aspecto H contrastando la dotación real contra la exigencia 1:70.
+                            </p>
+                        </div>
+
+                        {/* Controles de Periodo */}
+                        <div className="flex items-center gap-2">
+                            <select
+                                value={dotacionMes}
+                                onChange={e => setDotacionMes(Number(e.target.value))}
+                                className="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                            >
+                                {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].map((mName, mIdx) => (
+                                    <option key={mIdx + 1} value={mIdx + 1}>{mName}</option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={dotacionAnio}
+                                onChange={e => setDotacionAnio(Number(e.target.value))}
+                                className="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                            >
+                                {[2024, 2025, 2026, 2027].map(yr => (
+                                    <option key={yr} value={yr}>{yr}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Métricas Rápidas */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Colegios Registrados</span>
+                            <span className="text-2xl font-black text-slate-800">{dotaciones.length}</span>
+                        </div>
+                        <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                            <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider block">Total Manipuladoras Oficiales</span>
+                            <span className="text-2xl font-black text-amber-900">
+                                {dotaciones.reduce((acc, d) => acc + (d.total || 0), 0)}
+                            </span>
+                        </div>
+                        <div className="p-4 bg-cyan-50 border border-cyan-200 rounded-xl">
+                            <span className="text-[10px] font-bold text-cyan-700 uppercase tracking-wider block">Promedio Manipuladoras / Colegio</span>
+                            <span className="text-2xl font-black text-cyan-900">
+                                {dotaciones.length > 0
+                                    ? (dotaciones.reduce((acc, d) => acc + (d.total || 0), 0) / dotaciones.length).toFixed(1)
+                                    : '0'}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Barra de Acciones y Búsqueda */}
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div className="relative w-full sm:w-72">
+                            <input
+                                type="text"
+                                placeholder="Buscar por RBD o Establecimiento..."
+                                value={dotacionSearch}
+                                onChange={e => setDotacionSearch(e.target.value)}
+                                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                            />
+                            <span className="absolute left-2.5 top-2 text-xs text-slate-400">🔍</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                            <label className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
+                                <span>📥</span>
+                                <span>{importingDotacion ? 'Importando...' : 'Cargar Excel / CSV'}</span>
+                                <input
+                                    type="file"
+                                    accept=".xlsx,.xls,.csv"
+                                    onChange={handleFileUploadDotacion}
+                                    disabled={importingDotacion || loadingDotacion}
+                                    className="hidden"
+                                />
+                            </label>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowModalDotacion(true)}
+                                className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                            >
+                                <span>+</span>
+                                <span>Agregar Colegio</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Tabla de Dotaciones */}
+                    <div className="border border-slate-200 rounded-xl overflow-hidden">
+                        <div className="max-h-96 overflow-y-auto">
+                            <table className="w-full text-left border-collapse text-xs">
+                                <thead className="bg-slate-100 text-slate-700 font-bold sticky top-0 z-10 border-b border-slate-200">
+                                    <tr>
+                                        <th className="px-4 py-2.5">RBD</th>
+                                        <th className="px-4 py-2.5">Establecimiento</th>
+                                        <th className="px-4 py-2.5 text-center">Dotación Oficial</th>
+                                        <th className="px-4 py-2.5">Archivo Origen</th>
+                                        <th className="px-4 py-2.5 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100 text-slate-600">
+                                    {dotaciones
+                                        .filter(d => {
+                                            if (!dotacionSearch.trim()) return true
+                                            const term = dotacionSearch.toLowerCase()
+                                            return (
+                                                String(d.rbd).includes(term) ||
+                                                (d.establecimiento || '').toLowerCase().includes(term)
+                                            )
+                                        })
+                                        .map((d, i) => (
+                                            <tr key={d.id || i} className="hover:bg-slate-50 transition-colors">
+                                                <td className="px-4 py-2.5 font-mono font-bold text-cyan-800">{d.rbd}</td>
+                                                <td className="px-4 py-2.5 font-medium">{d.establecimiento || '—'}</td>
+                                                <td className="px-4 py-2.5 text-center font-bold text-slate-800">
+                                                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">
+                                                        {d.total} manipuladoras
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-2.5 text-slate-400 text-[11px] truncate max-w-xs">{d.filename || 'Ingreso Manual'}</td>
+                                                <td className="px-4 py-2.5 text-center">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeleteDotacion(d.id!, d.rbd)}
+                                                        className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1 rounded transition-colors"
+                                                        title="Eliminar registro"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    {dotaciones.length === 0 && (
+                                        <tr>
+                                            <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                                                No hay registros de dotación oficial para {dotacionMes}/{dotacionAnio}. Haz clic en <strong>Cargar Excel / CSV</strong> o agrega colegios manualmente.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* TAB: MINUTAS PLANIFICADAS POR MES (C2.4) */}
+            {activeTab === 'minutas' && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded bg-indigo-600 text-white text-[11px] font-black">C2.4</span>
+                                <h3 className="text-sm font-black text-slate-800">
+                                    Minutas Oficiales Planificadas por Mes
+                                </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Registro de preparaciones planificadas por jornada y nivel para contrastar el Aspecto A (servicio entregado vs. planificado).
+                            </p>
+                        </div>
+
+                        {/* Controles de Periodo */}
+                        <div className="flex flex-wrap items-center gap-2">
+                            <select
+                                value={minutaMes}
+                                onChange={e => setMinutaMes(Number(e.target.value))}
+                                className="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                            >
+                                {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].map((mName, mIdx) => (
+                                    <option key={mIdx + 1} value={mIdx + 1}>{mName}</option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={minutaAnio}
+                                onChange={e => setMinutaAnio(Number(e.target.value))}
+                                className="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                            >
+                                {[2024, 2025, 2026, 2027].map(yr => (
+                                    <option key={yr} value={yr}>{yr}</option>
+                                ))}
+                            </select>
+
+                            <button
+                                type="button"
+                                onClick={handleSyncMinutas}
+                                disabled={syncingMinuta || loadingMinuta}
+                                className="px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-700 hover:to-sky-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50"
+                                title="Sincroniza automáticamente desde las 188.000+ minutas y preparaciones existentes en el sistema para esta licitación"
+                            >
+                                <span>🔄</span>
+                                <span>{syncingMinuta ? 'Sincronizando...' : 'Sincronizar Minutas del Sistema'}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Selector de Nivel */}
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-2 overflow-x-auto">
+                        <span className="text-xs font-bold text-slate-500 mr-2">Nivel Educacional:</span>
+                        {[
+                            { key: 'B', label: 'Básica / NMMN' },
+                            { key: 'M', label: 'Media' },
+                            { key: 'T', label: 'Transición / Parvularia' },
+                            { key: 'GENERAL', label: 'General / Todos' }
+                        ].map(n => (
+                            <button
+                                key={n.key}
+                                type="button"
+                                onClick={() => setMinutaNivel(n.key)}
+                                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                                    minutaNivel === n.key
+                                        ? 'bg-indigo-900 text-white shadow-sm'
+                                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                }`}
+                            >
+                                {n.label}
+                            </button>
+                        ))}
+
+                        {minutaActual && (
+                            <button
+                                type="button"
+                                onClick={handleDeleteMinuta}
+                                className="ml-auto text-xs text-rose-600 hover:text-rose-800 font-bold transition-colors flex items-center gap-1"
+                            >
+                                <span>🗑️</span>
+                                <span>Limpiar Minuta del Nivel</span>
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Calendario / Grilla Mensual de Días */}
+                    {Object.keys(diasMinutaMap).length > 0 ? (
+                        <div className="space-y-3">
+                            <div className="flex items-center justify-between text-xs text-slate-500">
+                                <span>Días con preparaciones planificadas: <strong>{Object.keys(diasMinutaMap).length} días</strong></span>
+                                <span>Origen: <strong>{minutaActual?.filename || 'Sistema'}</strong></span>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-[500px] overflow-y-auto p-1">
+                                {Array.from({ length: 31 }, (_, i) => i + 1).map(dia => {
+                                    const preps = diasMinutaMap[dia] || []
+                                    const hasData = preps.length > 0
+                                    return (
+                                        <div
+                                            key={dia}
+                                            className={`p-3 rounded-xl border transition-all ${
+                                                hasData
+                                                    ? 'bg-slate-50/80 border-indigo-200 shadow-2xs hover:border-indigo-400'
+                                                    : 'bg-white border-slate-100 opacity-60'
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-between border-b border-slate-200/50 pb-1.5 mb-2">
+                                                <span className="text-xs font-black text-indigo-900">Día {dia}</span>
+                                                {hasData ? (
+                                                    <span className="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-1.5 py-0.2 rounded">
+                                                        {preps.length} prep.
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-[10px] text-slate-300">Sin minuta</span>
+                                                )}
+                                            </div>
+
+                                            {hasData ? (
+                                                <div className="space-y-1 max-h-24 overflow-y-auto text-[11px]">
+                                                    {preps.map((p, pIdx) => (
+                                                        <div key={pIdx} className="leading-tight">
+                                                            <span className="font-bold text-slate-700 text-[10px] block text-indigo-700">{p.servicio}:</span>
+                                                            <span className="text-slate-600 truncate block" title={p.preparacion}>{p.preparacion}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="py-2 text-center text-[10px] text-slate-300 italic">No planificado</div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                            <span className="text-3xl">📋</span>
+                            <h4 className="text-sm font-bold text-slate-800">No hay minuta planificada para este nivel y periodo</h4>
+                            <p className="text-xs text-slate-500 max-w-md mx-auto">
+                                Puedes hacer clic en <strong>Sincronizar Minutas del Sistema</strong> para importar automáticamente las preparaciones de la base de datos de esta licitación.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={handleSyncMinutas}
+                                disabled={syncingMinuta || loadingMinuta}
+                                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md inline-flex items-center gap-2"
+                            >
+                                <span>🔄</span>
+                                <span>{syncingMinuta ? 'Sincronizando...' : 'Sincronizar Ahora'}</span>
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Modal Agregar Colegio a Dotación */}
+            {showModalDotacion && (
+                <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 animate-scaleUp">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                            <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <span>👩‍🍳</span>
+                                <span>Registrar Dotación de Manipuladoras</span>
+                            </h3>
+                            <button
+                                type="button"
+                                onClick={() => setShowModalDotacion(false)}
+                                className="text-slate-400 hover:text-slate-600 text-sm font-bold"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSaveSingleDotacion} className="space-y-3">
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">RBD del Colegio *</label>
+                                <input
+                                    type="number"
+                                    required
+                                    placeholder="Ej: 1234"
+                                    value={nuevoRbdDotacion}
+                                    onChange={e => setNuevoRbdDotacion(e.target.value === '' ? '' : Number(e.target.value))}
+                                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none font-bold"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Dotación Oficial (Cantidad de Manipuladoras) *</label>
+                                <input
+                                    type="number"
+                                    required
+                                    min="0"
+                                    placeholder="Ej: 3"
+                                    value={nuevoTotalDotacion}
+                                    onChange={e => setNuevoTotalDotacion(e.target.value === '' ? '' : Number(e.target.value))}
+                                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none font-bold"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-slate-600 mb-1">Nombre Establecimiento (Opcional)</label>
+                                <input
+                                    type="text"
+                                    placeholder="Ej: Escuela República de Chile"
+                                    value={nuevoEstablecimientoDotacion}
+                                    onChange={e => setNuevoEstablecimientoDotacion(e.target.value)}
+                                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+                                />
+                            </div>
+
+                            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModalDotacion(false)}
+                                    className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-xl font-bold transition-all"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={loadingDotacion}
+                                    className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs rounded-xl font-bold shadow-md transition-all disabled:opacity-50"
+                                >
+                                    {loadingDotacion ? 'Guardando...' : 'Guardar Dotación'}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}

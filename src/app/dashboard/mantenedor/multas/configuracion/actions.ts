@@ -13,7 +13,9 @@ import {
     CAUSAS_NO_IMPUTABLES_DEFAULT,
     SUBMODULOS_C5_DEFAULT,
     SUBMODULOS_C2_DEFAULT,
-    HorarioServicioItem
+    HorarioServicioItem,
+    ManipuladoraMesItem,
+    MinutaMesItem
 } from './types'
 
 const PATH = '/dashboard/mantenedor/multas/configuracion'
@@ -730,6 +732,479 @@ export async function cargarEstratosSugeridos(licId: number) {
     } catch (error: any) {
         console.error('Error al cargar estratos sugeridos:', error)
         return { error: error.message || 'Error al cargar estratos sugeridos.' }
+    }
+}
+
+/**
+ * =======================================================================
+ * C2.3 DOTACIÓN OFICIAL DE MANIPULADORAS POR MES
+ * =======================================================================
+ */
+
+export async function getDotacionManipuladoras(licId: number, anio: number, mes: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para consultar la dotación oficial.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const dotaciones = await prisma.multas_Manipuladora_Mes.findMany({
+            where: { licId, anio, mes },
+            orderBy: { rbd: 'asc' }
+        })
+        return { dotaciones }
+    } catch (error: any) {
+        console.error('Error al obtener dotación de manipuladoras:', error)
+        return { error: error.message || 'Error al obtener dotación.' }
+    }
+}
+
+export async function guardarDotacionManipuladora(data: {
+    licId: number
+    anio: number
+    mes: number
+    rbd: number
+    total: number
+    establecimiento?: string
+}) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para guardar la dotación oficial.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const record = await prisma.multas_Manipuladora_Mes.upsert({
+            where: {
+                licId_anio_mes_rbd: {
+                    licId: data.licId,
+                    anio: data.anio,
+                    mes: data.mes,
+                    rbd: data.rbd
+                }
+            },
+            create: {
+                licId: data.licId,
+                anio: data.anio,
+                mes: data.mes,
+                rbd: data.rbd,
+                establecimiento: data.establecimiento || null,
+                total: Number(data.total) || 0,
+                usuarioModif: username
+            },
+            update: {
+                establecimiento: data.establecimiento || undefined,
+                total: Number(data.total) || 0,
+                usuarioModif: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'SAVE_DOTACION_MANIPULADORA',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Guardada dotación oficial para RBD ${data.rbd} (${data.total} manipuladoras) periodo ${data.mes}/${data.anio} licitación ${data.licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, record }
+    } catch (error: any) {
+        console.error('Error al guardar dotación de manipuladora:', error)
+        return { error: error.message || 'Error al guardar dotación.' }
+    }
+}
+
+export async function importarDotacionMasiva(
+    licId: number,
+    anio: number,
+    mes: number,
+    filas: Array<{ rbd: number; total: number; establecimiento?: string }>,
+    filename?: string
+) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para importar dotación de manipuladoras.' }
+    }
+
+    if (!Array.isArray(filas) || filas.length === 0) {
+        return { error: 'No se encontraron filas válidas para importar.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        let guardadas = 0
+        for (const fila of filas) {
+            const rbd = Number(fila.rbd)
+            const total = Number(fila.total)
+            if (!rbd || isNaN(rbd) || isNaN(total)) continue
+
+            await prisma.multas_Manipuladora_Mes.upsert({
+                where: {
+                    licId_anio_mes_rbd: {
+                        licId,
+                        anio,
+                        mes,
+                        rbd
+                    }
+                },
+                create: {
+                    licId,
+                    anio,
+                    mes,
+                    rbd,
+                    establecimiento: fila.establecimiento || null,
+                    total,
+                    filename: filename || null,
+                    usuarioModif: username
+                },
+                update: {
+                    establecimiento: fila.establecimiento || undefined,
+                    total,
+                    filename: filename || undefined,
+                    usuarioModif: username
+                }
+            })
+            guardadas++
+        }
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'IMPORT_DOTACION_MASIVA',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Importadas ${guardadas} dotaciones oficiales para periodo ${mes}/${anio} licitación ${licId} desde ${filename || 'Excel'}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, count: guardadas }
+    } catch (error: any) {
+        console.error('Error al importar dotación masiva:', error)
+        return { error: error.message || 'Error al importar dotación masiva.' }
+    }
+}
+
+export async function eliminarDotacionManipuladora(id: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para eliminar la dotación.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        await prisma.multas_Manipuladora_Mes.delete({
+            where: { id }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'DELETE_DOTACION_MANIPULADORA',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Eliminada dotación oficial ID: ${id}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al eliminar dotación:', error)
+        return { error: error.message || 'Error al eliminar dotación.' }
+    }
+}
+
+/**
+ * =======================================================================
+ * C2.4 MINUTAS PLANIFICADAS POR MES
+ * =======================================================================
+ */
+
+export async function getMinutaMes(licId: number, anio: number, mes: number, nivel: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para consultar minutas planificadas.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const minuta = await prisma.multas_Minuta_Mes.findUnique({
+            where: {
+                licId_anio_mes_nivel: {
+                    licId,
+                    anio,
+                    mes,
+                    nivel
+                }
+            }
+        })
+        return { minuta }
+    } catch (error: any) {
+        console.error('Error al obtener minuta del mes:', error)
+        return { error: error.message || 'Error al obtener minuta.' }
+    }
+}
+
+export async function guardarMinutaMes(
+    licId: number,
+    anio: number,
+    mes: number,
+    nivel: string,
+    datosJson: string,
+    filename?: string
+) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para guardar minutas planificadas.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        const record = await prisma.multas_Minuta_Mes.upsert({
+            where: {
+                licId_anio_mes_nivel: {
+                    licId,
+                    anio,
+                    mes,
+                    nivel
+                }
+            },
+            create: {
+                licId,
+                anio,
+                mes,
+                nivel,
+                datosJson,
+                filename: filename || null,
+                usuarioModif: username
+            },
+            update: {
+                datosJson,
+                filename: filename || undefined,
+                usuarioModif: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'SAVE_MINUTA_MES',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Guardada minuta planificada para nivel ${nivel} periodo ${mes}/${anio} licitación ${licId}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, record }
+    } catch (error: any) {
+        console.error('Error al guardar minuta del mes:', error)
+        return { error: error.message || 'Error al guardar minuta.' }
+    }
+}
+
+export async function sincronizarMinutasDesdeSistema(licId: number, anio: number, mes: number) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para sincronizar minutas.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        // Obtener licitación para calzar con tabla Minutas
+        const lic = await prisma.licitacion.findUnique({
+            where: { licId },
+            select: { licId: true, licitacionHomologada: true }
+        })
+
+        const licitacionCodes = [String(licId)]
+        if (lic?.licitacionHomologada) {
+            licitacionCodes.push(lic.licitacionHomologada.trim())
+        }
+
+        // Buscar minutas existentes en el sistema para ese periodo y licitación
+        const minutasRaw = await prisma.minutas.findMany({
+            where: {
+                licitacion: { in: licitacionCodes },
+                anio,
+                mes
+            },
+            select: {
+                dia: true,
+                codigoServicio: true,
+                nombreServicio: true,
+                numeroPreparacion: true,
+                programa: true
+            }
+        })
+
+        if (!minutasRaw || minutasRaw.length === 0) {
+            return {
+                error: `No se encontraron minutas registradas en el sistema para la licitación ${lic?.licitacionHomologada || licId} en el periodo ${mes}/${anio}.`
+            }
+        }
+
+        // Obtener nombres de preparaciones
+        const numPreps = Array.from(new Set(minutasRaw.map(m => Number(m.numeroPreparacion)).filter(n => !isNaN(n))))
+        const preps = await prisma.preparaciones.findMany({
+            where: {
+                numeroPreparacion: { in: numPreps }
+            },
+            select: {
+                numeroPreparacion: true,
+                nombrePreparacion: true,
+                nombreProducto: true
+            }
+        })
+
+        const prepMap = new Map<number, string>()
+        for (const p of preps) {
+            prepMap.set(p.numeroPreparacion, p.nombrePreparacion?.trim() || p.nombreProducto?.trim() || `Prep ${p.numeroPreparacion}`)
+        }
+
+        // Mapear por niveles comunes ('T' | 'B' | 'M' / GENERAL)
+        const diasPorNivel: Record<string, Record<number, Array<{ servicio: string; preparacion: string }>>> = {
+            'GENERAL': {},
+            'T': {},
+            'B': {},
+            'M': {}
+        }
+
+        for (const m of minutasRaw) {
+            const dia = m.dia
+            const numP = Number(m.numeroPreparacion)
+            const prepNombre = prepMap.get(numP) || `Prep ${numP}`
+            const item = { servicio: m.nombreServicio || m.codigoServicio || 'Servicio', preparacion: prepNombre }
+
+            // Guardar en GENERAL
+            if (!diasPorNivel['GENERAL'][dia]) diasPorNivel['GENERAL'][dia] = []
+            if (!diasPorNivel['GENERAL'][dia].some(x => x.preparacion === item.preparacion)) {
+                diasPorNivel['GENERAL'][dia].push(item)
+            }
+
+            // Si el programa indica nivel
+            const prog = (m.programa || '').toUpperCase()
+            let nivelKey = 'GENERAL'
+            if (prog.includes('PARV') || prog.includes('TRANS')) nivelKey = 'T'
+            else if (prog.includes('BASIC') || prog.includes('MEDIA') || prog.includes('NMMN')) {
+                nivelKey = prog.includes('MEDIA') ? 'M' : 'B'
+            }
+
+            if (nivelKey !== 'GENERAL') {
+                if (!diasPorNivel[nivelKey][dia]) diasPorNivel[nivelKey][dia] = []
+                if (!diasPorNivel[nivelKey][dia].some(x => x.preparacion === item.preparacion)) {
+                    diasPorNivel[nivelKey][dia].push(item)
+                }
+            }
+        }
+
+        let sincronizados = 0
+        for (const [nivel, diasObj] of Object.entries(diasPorNivel)) {
+            if (Object.keys(diasObj).length === 0) continue
+
+            await prisma.multas_Minuta_Mes.upsert({
+                where: {
+                    licId_anio_mes_nivel: {
+                        licId,
+                        anio,
+                        mes,
+                        nivel
+                    }
+                },
+                create: {
+                    licId,
+                    anio,
+                    mes,
+                    nivel,
+                    datosJson: JSON.stringify(diasObj),
+                    filename: 'Sincronizado desde Minutas del Sistema',
+                    usuarioModif: username
+                },
+                update: {
+                    datosJson: JSON.stringify(diasObj),
+                    filename: 'Sincronizado desde Minutas del Sistema',
+                    usuarioModif: username
+                }
+            })
+            sincronizados++
+        }
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'SYNC_MINUTAS_SISTEMA',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Sincronizadas ${sincronizados} minutas de niveles para periodo ${mes}/${anio} licitación ${licId} desde tabla Minutas.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return {
+            success: true,
+            count: sincronizados,
+            message: `Sincronización completada exitosamente (${sincronizados} niveles procesados).`
+        }
+    } catch (error: any) {
+        console.error('Error al sincronizar minutas:', error)
+        return { error: error.message || 'Error al sincronizar minutas.' }
+    }
+}
+
+export async function eliminarMinutaMes(id: string) {
+    if (!await checkPermission()) {
+        return { error: 'No tienes permisos para eliminar la minuta.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const session = await getSession()
+        const username = session?.user?.name || session?.user?.username || 'Usuario'
+
+        await prisma.multas_Minuta_Mes.delete({
+            where: { id }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session?.user?.id || null,
+                action: 'DELETE_MINUTA_MES',
+                modulo: 'MULTAS_CONFIGURACION',
+                detalle: `Eliminada minuta planificada ID: ${id}.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al eliminar minuta:', error)
+        return { error: error.message || 'Error al eliminar minuta.' }
     }
 }
 

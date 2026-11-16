@@ -680,16 +680,42 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
 
                                                                 {/* Aspecto H: Manipuladoras */}
                                                                 {d.itInfo.alertaTecnica?.tipo === 'PERSONAL_MANIPULADOR' && (
-                                                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed">
+                                                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed space-y-1.5">
                                                                         <span className="font-bold block text-[10px] uppercase text-slate-500 mb-0.5">
                                                                             Criterio de Dotación Manipuladora (1:70):
                                                                         </span>
+                                                                        {d.itInfo.alertaTecnica.advertenciaDotacion && (
+                                                                            <div className={`p-2 rounded-lg text-xs font-bold ${
+                                                                                d.itInfo.alertaTecnica.advertenciaDotacion.startsWith('⚠️')
+                                                                                    ? 'bg-amber-50 text-amber-900 border border-amber-200'
+                                                                                    : 'bg-emerald-50 text-emerald-900 border border-emerald-200'
+                                                                            }`}>
+                                                                                {d.itInfo.alertaTecnica.advertenciaDotacion}
+                                                                            </div>
+                                                                        )}
                                                                         <p>
                                                                             Ratio normativo: <strong>1 manipuladora cada 70 raciones</strong>{' '}
                                                                             {d.itInfo.alertaTecnica.manipuladorasRequeridas 
-                                                                                ? `(Exige ${d.itInfo.alertaTecnica.manipuladorasRequeridas} manipuladoras para ${d.itInfo.alertaTecnica.raciones || 'este servicio'})` 
+                                                                                ? `(Exige ${d.itInfo.alertaTecnica.manipuladorasRequeridas} manipuladoras para ${d.itInfo.alertaTecnica.racionesEstablecimiento || d.itInfo.alertaTecnica.raciones || 'este servicio'})` 
                                                                                 : ''}. {d.itInfo.alertaTecnica.tolerancia}
                                                                         </p>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Aspecto A: Minuta Planificada del Día */}
+                                                                {d.minutaPlanificadaDelDia && d.minutaPlanificadaDelDia.length > 0 && (
+                                                                    <div className="p-2.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-950 text-xs leading-relaxed">
+                                                                        <span className="font-bold block text-[10px] uppercase text-sky-700 mb-1 flex items-center gap-1">
+                                                                            <span>📋</span>
+                                                                            <span>Minuta Oficial Planificada para el Día:</span>
+                                                                        </span>
+                                                                        <div className="flex flex-wrap gap-1.5">
+                                                                            {d.minutaPlanificadaDelDia.map((mItem: any, mIdx: number) => (
+                                                                                <span key={mIdx} className="px-2 py-0.5 rounded-md bg-white border border-sky-200 text-[11px] font-semibold text-sky-900 shadow-2xs">
+                                                                                    <strong className="text-sky-700">{mItem.servicio}:</strong> {mItem.preparacion}
+                                                                                </span>
+                                                                            ))}
+                                                                        </div>
                                                                     </div>
                                                                 )}
 
