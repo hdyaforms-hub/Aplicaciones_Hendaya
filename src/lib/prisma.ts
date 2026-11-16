@@ -3,13 +3,37 @@ import { getSession } from './session'
 
 
 declare global {
-    var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>
-    var rawPrismaGlobal: undefined | PrismaClient
+    var prismaGlobal: undefined | any
+    var rawPrismaGlobal: undefined | any
 }
 
+function isClientValid(client: any): boolean {
+    if (!client) return false
+    return (
+        typeof client.multas_Parametros_Licitacion !== 'undefined' &&
+        typeof client.multas_Horario_Servicio !== 'undefined' &&
+        typeof client.multas_Estrato_Excluido !== 'undefined'
+    )
+}
 
-export const rawPrisma = globalThis.rawPrismaGlobal ?? new PrismaClient()
-globalThis.rawPrismaGlobal = rawPrisma
+function initRawPrisma(): PrismaClient {
+    if (!isClientValid(globalThis.rawPrismaGlobal)) {
+        globalThis.rawPrismaGlobal = new PrismaClient()
+        globalThis.prismaGlobal = undefined
+    }
+    return globalThis.rawPrismaGlobal
+}
+
+export const rawPrisma: PrismaClient = new Proxy({} as PrismaClient, {
+    get(_target, prop) {
+        const client = initRawPrisma() as any
+        const val = client[prop]
+        if (typeof val === 'function') {
+            return val.bind(client)
+        }
+        return val
+    }
+})
 
 async function getRoleBasedRbdFilter(): Promise<number[] | null> {
     try {
@@ -169,7 +193,8 @@ function withRbdFilter(rbdField: string) {
 }
 
 const prismaClientSingleton = () => {
-    return rawPrisma.$extends({
+    const raw = initRawPrisma()
+    return raw.$extends({
         query: {
             colegios: withRbdFilter('colRBD'),
             pMPA: withRbdFilter('rbd'),
@@ -181,5 +206,32 @@ const prismaClientSingleton = () => {
     })
 }
 
-export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
-globalThis.prismaGlobal = prisma
+function getExtendedPrisma(): ReturnType<typeof prismaClientSingleton> {
+    if (!isClientValid(globalThis.rawPrismaGlobal) || !globalThis.prismaGlobal) {
+        initRawPrisma()
+        globalThis.prismaGlobal = prismaClientSingleton()
+    }
+    return globalThis.prismaGlobal
+}
+
+export const prisma = new Proxy({} as ReturnType<typeof prismaClientSingleton>, {
+    get(_target, prop) {
+        const client = getExtendedPrisma() as any
+        let val = client[prop]
+        if (typeof val === 'undefined') {
+            // Check rawPrisma in case an extension hid a delegate
+            const raw = initRawPrisma() as any
+            val = raw[prop]
+            if (typeof val === 'undefined') {
+                // Force recreation if newly generated models
+                globalThis.rawPrismaGlobal = new PrismaClient()
+                globalThis.prismaGlobal = prismaClientSingleton()
+                val = (globalThis.prismaGlobal as any)[prop] ?? (globalThis.rawPrismaGlobal as any)[prop]
+            }
+        }
+        if (typeof val === 'function') {
+            return val.bind(client)
+        }
+        return val
+    }
+})
