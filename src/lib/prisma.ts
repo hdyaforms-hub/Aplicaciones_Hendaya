@@ -7,6 +7,12 @@ declare global {
     var rawPrismaGlobal: undefined | PrismaClient
 }
 
+// Auto-recovery: If schema was updated and new models were added, ensure cached client has them
+if (globalThis.rawPrismaGlobal && typeof (globalThis.rawPrismaGlobal as any).multas_Parametros_Licitacion === 'undefined') {
+    globalThis.rawPrismaGlobal = undefined
+    globalThis.prismaGlobal = undefined
+}
+
 export const rawPrisma = globalThis.rawPrismaGlobal ?? new PrismaClient()
 globalThis.rawPrismaGlobal = rawPrisma
 
