@@ -79,6 +79,8 @@ export function generarAlertasITAspecto(
         racionesNivel?: number
         esTotalPorDefecto?: boolean
         dotacionOficial?: number | null
+        bandejasEvaluadasManual?: number | null
+        bandejasRechazadasManual?: number | null
     } | null,
     parametrosConfig?: ParametrosITLicitacion | null
 ): AlertaITAspectoResult | null {
@@ -144,10 +146,16 @@ export function generarAlertasITAspecto(
     if (upperLetra === 'G' && c5Activo && submodulos.aqlPesaje) {
         const racionesEvaluadas = racionesNivel > 0 ? racionesNivel : (nivelInfo?.racionesTotal || 0)
 
-        // Detectar si la observación menciona bandejas pesadas
+        // Detectar si la observación menciona bandejas pesadas o si viene de C3
         const matchBandejas = obs.match(/(?:pesar|pesaje|pesaron|muestra|control|bandeja(?:s)?)[^\d]*(\d+)\s*bandeja/i) ||
                              obs.match(/(\d+)\s*(?:de\s*\d+\s*)?bandeja(?:s)?/i)
-        const bandejasPesadas = matchBandejas ? parseInt(matchBandejas[1], 10) : null
+        const bandejasPesadas = (nivelInfo?.bandejasEvaluadasManual !== undefined && nivelInfo?.bandejasEvaluadasManual !== null)
+            ? nivelInfo.bandejasEvaluadasManual
+            : (matchBandejas ? parseInt(matchBandejas[1], 10) : null)
+
+        const bandejasRechazadas = (nivelInfo?.bandejasRechazadasManual !== undefined && nivelInfo?.bandejasRechazadasManual !== null)
+            ? nivelInfo.bandejasRechazadasManual
+            : null
 
         if (racionesEvaluadas <= 0) {
             alertaTecnica = {
@@ -161,6 +169,7 @@ export function generarAlertasITAspecto(
                 criterioAceptacionRechazo: 'N/A',
                 tolerancia: '5% bajo el gramaje neto estipulado en la FEP',
                 bandejasPesadas,
+                bandejasRechazadas,
                 advertenciaMuestra: '⚠️ Sin raciones PMPA registradas; no es posible determinar la muestra mínima requerida según norma AQL.',
                 esDefensaGanable: false
             }
@@ -193,6 +202,13 @@ export function generarAlertasITAspecto(
             if (bandejasPesadas !== null && bandejasPesadas < muestraMinima) {
                 advertenciaMuestra = `⚠️ Posible defensa (Muestra Insuficiente): El supervisor pesó ${bandejasPesadas} bandeja(s). Para ${infoNivelTxt} (${rangoTexto}), el Anexo N°3 de la IT-DAE-SUP026 exige evaluar al menos ${muestraMinima} bandejas. Si la muestra no cumple la norma AQL 6,5, el procedimiento de pesaje es impugnable.`
                 esDefensaGanable = true
+            } else if (bandejasPesadas !== null && bandejasRechazadas !== null) {
+                if (bandejasRechazadas <= ac) {
+                    advertenciaMuestra = `✅ AQL Conforme: Se registraron ${bandejasRechazadas} bandeja(s) rechazada(s) de ${bandejasPesadas} evaluadas. Cumple criterio de aceptación (Ac = ${ac}). Si se cursó NC, el cobro es impugnable.`
+                    esDefensaGanable = true
+                } else if (bandejasRechazadas >= re) {
+                    advertenciaMuestra = `⚠️ AQL No Conforme: Se registraron ${bandejasRechazadas} bandeja(s) rechazada(s) (Re = ${re}). El lote no cumple la norma AQL 6,5.`
+                }
             } else if (bandejasPesadas === null) {
                 advertenciaMuestra = `Verificar en el acta o planilla de pesaje si el supervisor pesó al menos ${muestraMinima} bandejas (norma AQL 6,5 según Anexo 3 de la IT para ${infoNivelTxt}). Si evaluó menos de ${muestraMinima}, procede presentar descargo.`
             }
@@ -208,6 +224,7 @@ export function generarAlertasITAspecto(
                 criterioAceptacionRechazo: `Ac = ${ac}, Re = ${re}`,
                 tolerancia: '5% bajo el gramaje neto estipulado en la FEP',
                 bandejasPesadas,
+                bandejasRechazadas,
                 advertenciaMuestra,
                 esDefensaGanable
             }

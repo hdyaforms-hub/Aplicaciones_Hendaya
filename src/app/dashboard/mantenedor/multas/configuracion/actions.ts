@@ -14,6 +14,7 @@ import {
     CAUSAS_NO_IMPUTABLES_DEFAULT,
     SUBMODULOS_C5_DEFAULT,
     SUBMODULOS_C2_DEFAULT,
+    SUBMODULOS_C3_DEFAULT,
     HorarioServicioItem,
     ManipuladoraMesItem,
     MinutaMesItem
@@ -142,6 +143,8 @@ export async function getParametrosLicitacion(licId: number) {
                             submodulos = { ...SUBMODULOS_C5_DEFAULT, ...(found.submodulos || {}) }
                         } else if (def.codigo === 'C2') {
                             submodulos = { ...SUBMODULOS_C2_DEFAULT, ...(found.submodulos || {}) }
+                        } else if (def.codigo === 'C3') {
+                            submodulos = { ...SUBMODULOS_C3_DEFAULT, ...(found.submodulos || {}) }
                         }
                         return {
                             ...def,

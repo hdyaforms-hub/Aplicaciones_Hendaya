@@ -30,6 +30,20 @@ export const SUBMODULOS_C2_DEFAULT: SubModuloCatalogosC2 = {
     minutaPlanificada: false
 }
 
+export interface SubModuloDatosFolioC3 {
+    nivelSupervisado: boolean
+    bandejasAql: boolean
+    correccionManual: boolean
+    exigirMotivo: boolean
+}
+
+export const SUBMODULOS_C3_DEFAULT: SubModuloDatosFolioC3 = {
+    nivelSupervisado: true,
+    bandejasAql: true,
+    correccionManual: true,
+    exigirMotivo: true
+}
+
 export interface ModuloSistemaConfig {
     codigo: string
     nombre: string
@@ -60,7 +74,8 @@ export const MODULOS_C_DEFAULT: ModuloSistemaConfig[] = [
         nombre: 'Datos Complementarios por Folio (Nivel T/B/M, Bandejas y Ajustes Manuales)',
         descripcion: 'Captura de nivel supervisado, bandejas evaluadas/rechazadas y ajustes manuales auditados.',
         activo: false,
-        fase: 'Planificado'
+        fase: 'En Desarrollo',
+        submodulos: SUBMODULOS_C3_DEFAULT
     },
     {
         codigo: 'C4',
@@ -179,4 +194,30 @@ export interface MinutaMesItem {
     createdAt?: Date | string
     updatedAt?: Date | string
 }
+
+export interface FolioDatoItem {
+    id?: string
+    folio: string
+    nivelSupervisado?: string | null
+    bandejasEvaluadas?: number | null
+    bandejasRechazadas?: number | null
+    motivo?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+}
+
+export interface CantidadOverrideItem {
+    id?: string
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    valorOriginal?: number | null
+    motivo: string
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+}
+
 

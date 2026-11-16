@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  output   = "../src/generated/client_temp"
 }
 
 datasource db {
@@ -935,6 +935,36 @@ model Multas_Minuta_Mes {
 
   @@unique([licId, anio, mes, nivel])
   @@index([licId, anio, mes])
+}
+
+model Multas_Folio_Dato {
+  id                 String   @id @default(uuid())
+  folio              String   @unique
+  nivelSupervisado   String?  @db.VarChar(10) // 'T', 'B', 'M'
+  bandejasEvaluadas  Int?
+  bandejasRechazadas Int?
+  motivo             String?  @db.Text
+  updatedBy          String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([folio])
+}
+
+model Multas_Cantidad_Override {
+  id            String   @id @default(uuid())
+  folio         String
+  letraAspecto  String   @db.VarChar(5)
+  variable      String   @db.VarChar(50)
+  valor         Float
+  valorOriginal Float?
+  motivo        String   @db.Text
+  createdBy     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([folio, letraAspecto, variable], map: "multas_cant_override_unique")
+  @@index([folio])
 }
 
 model Descargos_Cab {

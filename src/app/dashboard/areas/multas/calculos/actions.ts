@@ -8,6 +8,9 @@ import { evaluarRestriccionAspecto } from '@/lib/multas/restricciones'
 import { generarAlertasITAspecto } from '@/lib/multas/it/alertas'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { getRacionesFolio } from '@/lib/multas/raciones'
+import { logAuditAction } from '@/lib/audit'
+import { resolverVariablesConPrioridad, OverrideInfo } from '@/lib/multas/variables'
+import { FolioDatoItem, CantidadOverrideItem } from '@/lib/multas/config'
 
 const dbEECab = () => getMultasDelegate('multas_Elementos_Esenciales_Cab')
 const dbEEDet = () => getMultasDelegate('multas_Elementos_Esenciales_Det')
@@ -16,6 +19,8 @@ const dbRestricciones = () => getMultasDelegate('multas_Aspecto_EE_Restriccion')
 const dbITCab = () => getMultasDelegate('multas_IT_Elementos_Esenciales_Cab')
 const dbManipuladoras = () => getMultasDelegate('multas_Manipuladora_Mes')
 const dbMinutas = () => getMultasDelegate('multas_Minuta_Mes')
+const dbFolioDato = () => getMultasDelegate('multas_Folio_Dato')
+const dbCantidadOverride = () => getMultasDelegate('multas_Cantidad_Override')
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -557,8 +562,10 @@ export async function calculateAll(params: {
         }
 
         const excluirEstratosPorLicId = new Map<number, boolean>()
+        const c3ActivoPorLicId = new Map<number, boolean>()
         for (const p of allParametrosLicitacion) {
             let excluir = false
+            let c3Activo = false
             if (p.modulosActivosJson) {
                 try {
                     const parsed = JSON.parse(p.modulosActivosJson)
@@ -567,18 +574,26 @@ export async function calculateAll(params: {
                         if (c2 && c2.activo === true) {
                             excluir = c2.submodulos?.estratosExcluidos === true
                         }
+                        const c3 = parsed.find((m: any) => m.codigo === 'C3')
+                        if (c3 && c3.activo === true) {
+                            c3Activo = true
+                        }
                     }
                 } catch {
                     // Ignorar error de parsing
                 }
             }
             excluirEstratosPorLicId.set(p.licId, excluir)
+            c3ActivoPorLicId.set(p.licId, c3Activo)
         }
 
-        const [allAspectos, allUtms, allServicios] = await Promise.all([
+        const validFoliosList = folios.map(f => f.folio).filter(Boolean) as string[]
+        const [allAspectos, allUtms, allServicios, allFolioDatos, allOverrides] = await Promise.all([
             prisma.aspectoEE.findMany({ where: { licId: { in: allLicIds } } }),
             prisma.uTM.findMany(),
-            prisma.multaServicio.findMany()
+            prisma.multaServicio.findMany(),
+            dbFolioDato().findMany({ where: { folio: { in: validFoliosList } } }),
+            dbCantidadOverride().findMany({ where: { folio: { in: validFoliosList } } })
         ])
 
         let count = 0
@@ -609,6 +624,23 @@ export async function calculateAll(params: {
                 const mes = fecha.getMonth() + 1
                 const utmVal = allUtms.find(u => u.anho === anho && u.mes === mes)?.monto || 0
                 
+                const c3Activo = c3ActivoPorLicId.get(licId) === true
+                const folioDato = (allFolioDatos as any[]).find((fd: any) => fd.folio === cab.folio)
+                const overridesForFolio = (allOverrides as any[]).filter((ov: any) => ov.folio === cab.folio)
+                const overridesMap: Record<string, Record<string, OverrideInfo>> = {}
+                for (const ov of overridesForFolio) {
+                    if (!overridesMap[ov.letraAspecto]) overridesMap[ov.letraAspecto] = {}
+                    overridesMap[ov.letraAspecto][ov.variable] = {
+                        id: ov.id,
+                        valor: ov.valor,
+                        valorOriginal: ov.valorOriginal,
+                        motivo: ov.motivo,
+                        createdBy: ov.createdBy,
+                        createdAt: ov.createdAt
+                    }
+                }
+
+                const nivelSupervisado = (c3Activo && folioDato?.nivelSupervisado) ? folioDato.nivelSupervisado : null
                 const excluirEstratos = excluirEstratosPorLicId.get(licId) || false
                 const racionesData = await getRacionesFolio({
                     rbd,
@@ -616,7 +648,8 @@ export async function calculateAll(params: {
                     mes,
                     licId,
                     servicioCodigo: serviceCode,
-                    excluirEstratos
+                    excluirEstratos,
+                    nivelSupervisado
                 })
                 const raciones = racionesData.racionesTotal
 
@@ -642,116 +675,21 @@ export async function calculateAll(params: {
                     console.error("Error loading existing in massive:", e)
                 }
 
-                // Try to automatically extract variables from observation if missing
+                // 2. Resolver variables con jerarquía centralizada (C3 Override > Guardado > Auto)
                 for (const d of cab.detalles) {
                     const letraMatch = d.aspecto?.match(/^([A-Z])\./)
                     const letra = letraMatch ? letraMatch[1] : null
                     const formula = formulasForLic.find(f => f.letra === letra)?.formula
-                    
-                    if (formula && d.observacionesOMedioDeVerificacion) {
-                        const obsText = d.observacionesOMedioDeVerificacion;
-                        const upperFormula = formula.toUpperCase();
-
-                        if (!savedVars['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
-                            const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad[\s\S]*?faltante(?:s)?)[^\d]*(\d+)/i;
-                            const matchRegex = obsText.match(regex);
-                            if (matchRegex) {
-                                savedVars['MANIPULADORA'] = matchRegex[1];
-                            } else {
-                                const matchLast = obsText.match(/(\d+)(?!.*\d)/);
-                                if (matchLast) {
-                                    savedVars['MANIPULADORA'] = matchLast[1];
-                                }
-                            }
-                        }
-
-                        if (!savedVars['MANIPULADORAAFECTADA'] && upperFormula.includes('MANIPULADORAAFECTADA')) {
-                            const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
-                            const matchRegex = obsText.match(regex);
-                            if (matchRegex) {
-                                let extractedVal = parseInt(matchRegex[1], 10);
-                                if (extractedVal === 0) extractedVal = 1;
-                                savedVars['MANIPULADORAAFECTADA'] = extractedVal.toString();
-                            } else if (!savedVars['MANIPULADORAAFECTADA']) {
-                                savedVars['MANIPULADORAAFECTADA'] = '1';
-                            }
-                        }
-
-                        if (!savedVars['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
-                            // Remove "Cantidad de manipuladoras afectadas: X" to exclude it from the count
-                            const textWithoutManipuladoras = obsText.replace(/cantidad[\s\S]*?manipuladoras[\s\S]*?afectadas[^\d]*\d+/gi, '');
-                            // Count how many times ":" followed by a number > 0 appears
-                            const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
-                            if (matches) {
-                                const validMatches = matches.filter(m => {
-                                    const numMatch = m.match(/\d+/);
-                                    return numMatch ? parseInt(numMatch[0], 10) > 0 : false;
-                                });
-                                savedVars['ELEMENTOS'] = validMatches.length.toString();
-                            }
-                        }
-
-                        if (!savedVars['MATERIAPRIMA'] && upperFormula.includes('MATERIAPRIMA')) {
-                            let sumMateriaPrima = 0;
-                            let foundMateriaPrima = false;
-
-                            const matchFrutas = Array.from(obsText.matchAll(/Cantidad\s+de\s+materias\s+primas\s+\(frutas\s+y\s+verduras\)\s+afectadas:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            for (const m of matchFrutas) {
-                                sumMateriaPrima += parseInt(m[1], 10);
-                                foundMateriaPrima = true;
-                            }
-
-                            const matchNoFrutas = Array.from(obsText.matchAll(/Mencionar\s+las\s+materias\s+primas\s+afectadas\s+que\s+no\s+son\s+frutas\s+y\s+verduras,\s+y\s+su\s+defecto:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            for (const m of matchNoFrutas) {
-                                sumMateriaPrima += parseInt(m[1], 10);
-                                foundMateriaPrima = true;
-                            }
-
-                            if (foundMateriaPrima) {
-                                savedVars['MATERIAPRIMA'] = sumMateriaPrima.toString();
-                            }
-                        }
-
-                        if (!savedVars['MATERIAPRIMATPMPAP'] && upperFormula.includes('MATERIAPRIMATPMPAP')) {
-                            const matchTpmpap = Array.from(obsText.matchAll(/Cantidad\s+de\s+la\s+materia\s+prima,\s+producto,\s+alimentos\s+y\/o\s+preparaciones\s+que\s+no\s+se\s+encuentra\s+en\s+su\s+TPMPAP[:.]?(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            let sumTpmpap = 0;
-                            let foundTpmpap = false;
-                            for (const m of matchTpmpap) {
-                                sumTpmpap += parseInt(m[1], 10);
-                                foundTpmpap = true;
-                            }
-                            if (foundTpmpap) {
-                                savedVars['MATERIAPRIMATPMPAP'] = sumTpmpap.toString();
-                            }
-                        }
-
-                        if (!savedVars['INSTRUMENTO'] && upperFormula.includes('INSTRUMENTO')) {
-                            let totalInstrumentos = 0;
-                            let foundAny = false;
-                            
-                            const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?)[^\d]*(\d+)/i);
-                            if (termometroMatch) {
-                                totalInstrumentos += parseInt(termometroMatch[1], 10);
-                                foundAny = true;
-                            }
-                            
-                            const balanzaMatch = obsText.match(/(?:balanza(?:s)?)[^\d]*(\d+)/i);
-                            if (balanzaMatch) {
-                                totalInstrumentos += parseInt(balanzaMatch[1], 10);
-                                foundAny = true;
-                            }
-                            
-                            if (foundAny) {
-                                savedVars['INSTRUMENTO'] = totalInstrumentos.toString();
-                            }
-                        }
-
-                        if (!savedVars['CANTSERVICIO'] && upperFormula.includes('CANTSERVICIO')) {
-                            const matchServicio = obsText.match(/(?:cantidad de )?servicio(?:s)? afectad(?:o|a)(?:s)?[^\d]*(\d+)/i);
-                            if (matchServicio) {
-                                savedVars['CANTSERVICIO'] = matchServicio[1];
-                            }
-                        }
+                    if (formula) {
+                        const { variablesFinales } = resolverVariablesConPrioridad({
+                            letraAspecto: letra || '?',
+                            formula,
+                            obsText: d.observacionesOMedioDeVerificacion,
+                            variablesGuardadas: savedVars,
+                            overridesPorAspecto: letra ? overridesMap[letra] : undefined,
+                            c3Activo
+                        })
+                        Object.assign(savedVars, variablesFinales)
                     }
                 }
 
@@ -972,6 +910,10 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         let moduloC2Activo = false
         let c2DotacionActiva = false
         let c2MinutaActiva = false
+        let moduloC3Activo = false
+        let c3NivelActivo = false
+        let c3BandejasActivo = false
+        let c3OverridesActivo = false
         if (paramLicitacion) {
             let tablaAqlParsed = undefined
             if (paramLicitacion.tablaAqlJson) {
@@ -1007,6 +949,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                             c2DotacionActiva = c2.submodulos?.dotacionOficial === true
                             c2MinutaActiva = c2.submodulos?.minutaPlanificada === true
                         }
+                        const c3 = parsedMod.find((m: any) => m.codigo === 'C3')
+                        if (c3 && c3.activo === true) {
+                            moduloC3Activo = true
+                            c3NivelActivo = c3.submodulos?.nivelSupervisado !== false
+                            c3BandejasActivo = c3.submodulos?.bandejasAql !== false
+                            c3OverridesActivo = c3.submodulos?.correccionManual !== false
+                        }
                     }
                 } catch {
                     // Ignorar error de parsing
@@ -1016,6 +965,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             parametrosConfig = {
                 moduloC5Activo,
                 submodulosActivos,
+                moduloC3Activo,
                 plazoCorreccionDias: paramLicitacion.plazoCorreccionDias,
                 ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
                 temperaturasK: {
@@ -1066,10 +1016,38 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         const anho = cab.fechaSupervision?.getFullYear()
         const mes = cab.fechaSupervision ? cab.fechaSupervision.getMonth() + 1 : 0
         const rbd = cab.rbd
+
+        // C3: Consultar datos complementarios del folio (nivel, bandejas) y overrides manuales
+        let folioDato: any = null
+        let overridesFolio: any[] = []
+        try {
+            const [fd, ov] = await Promise.all([
+                dbFolioDato().findUnique({ where: { folio } }),
+                dbCantidadOverride().findMany({ where: { folio }, orderBy: { letraAspecto: 'asc' } })
+            ])
+            folioDato = fd
+            overridesFolio = ov || []
+        } catch (e) {
+            console.warn('Advertencia al consultar datos de folio / overrides:', e)
+        }
+
+        const overridesMap: Record<string, Record<string, OverrideInfo>> = {}
+        for (const ov of overridesFolio) {
+            if (!overridesMap[ov.letraAspecto]) overridesMap[ov.letraAspecto] = {}
+            overridesMap[ov.letraAspecto][ov.variable] = {
+                id: ov.id,
+                valor: ov.valor,
+                valorOriginal: ov.valorOriginal,
+                motivo: ov.motivo,
+                createdBy: ov.createdBy,
+                createdAt: ov.createdAt
+            }
+        }
         
         let pmpaRecord: any = null
         let utmRecord: any = null
         let pmpaNiveles: { label: string, value: number }[] = []
+        let racionesDataResult: any = null
 
         if (anho && mes && rbd) {
             // 1. UTM
@@ -1091,14 +1069,20 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             }
 
             if (serviceCode) {
+                const nivelSupervisadoParam = (moduloC3Activo && c3NivelActivo && folioDato?.nivelSupervisado)
+                    ? folioDato.nivelSupervisado
+                    : null
+
                 const racionesData = await getRacionesFolio({
                     rbd,
                     anho,
                     mes,
                     licId: cab.licId || licId || 0,
                     servicioCodigo: serviceCode,
-                    excluirEstratos: moduloC2Activo
+                    excluirEstratos: moduloC2Activo,
+                    nivelSupervisado: nivelSupervisadoParam
                 })
+                racionesDataResult = racionesData
 
                 if (racionesData.racionesTotal > 0 || racionesData.recordsValidos.length > 0) {
                     pmpaRecord = {
@@ -1144,109 +1128,22 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             console.error("Error loading saved variables:", e)
         }
 
-        // Try to automatically extract variables from observation if missing
+        // Centralized variable resolution with priority (C3 Override > Guardado > Auto)
+        const detalleVariablesPorAspecto: Record<string, Record<string, any>> = {}
+
         for (const d of detallesConFormula) {
-            if (d.formulaAsignada && d.observacionesOMedioDeVerificacion) {
-                const obsText = d.observacionesOMedioDeVerificacion;
-                const upperFormula = d.formulaAsignada.toUpperCase();
-
-                if (!savedVariables['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
-                    const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad[\s\S]*?faltante(?:s)?)[^\d]*(\d+)/i;
-                    const matchRegex = obsText.match(regex);
-                    if (matchRegex) {
-                        savedVariables['MANIPULADORA'] = matchRegex[1];
-                    } else {
-                        const matchLast = obsText.match(/(\d+)(?!.*\d)/);
-                        if (matchLast) {
-                            savedVariables['MANIPULADORA'] = matchLast[1];
-                        }
-                    }
-                }
-
-                if (!savedVariables['MANIPULADORAAFECTADA'] && upperFormula.includes('MANIPULADORAAFECTADA')) {
-                    const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
-                    const matchRegex = obsText.match(regex);
-                    if (matchRegex) {
-                        let extractedVal = parseInt(matchRegex[1], 10);
-                        if (extractedVal === 0) extractedVal = 1;
-                        savedVariables['MANIPULADORAAFECTADA'] = extractedVal.toString();
-                    } else if (!savedVariables['MANIPULADORAAFECTADA']) {
-                        savedVariables['MANIPULADORAAFECTADA'] = '1';
-                    }
-                }
-
-                if (!savedVariables['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
-                    const textWithoutManipuladoras = obsText.replace(/cantidad[\s\S]*?manipuladoras[\s\S]*?afectadas[^\d]*\d+/gi, '');
-                    const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
-                    if (matches) {
-                        const validMatches = matches.filter(m => {
-                            const numMatch = m.match(/\d+/);
-                            return numMatch ? parseInt(numMatch[0], 10) > 0 : false;
-                        });
-                        savedVariables['ELEMENTOS'] = validMatches.length.toString();
-                    }
-                }
-
-                        if (!savedVariables['MATERIAPRIMA'] && upperFormula.includes('MATERIAPRIMA')) {
-                            let sumMateriaPrima = 0;
-                            let foundMateriaPrima = false;
-
-                            const matchFrutas = Array.from(obsText.matchAll(/Cantidad\s+de\s+materias\s+primas\s+\(frutas\s+y\s+verduras\)\s+afectadas:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            for (const m of matchFrutas) {
-                                sumMateriaPrima += parseInt(m[1], 10);
-                                foundMateriaPrima = true;
-                            }
-
-                            const matchNoFrutas = Array.from(obsText.matchAll(/Mencionar\s+las\s+materias\s+primas\s+afectadas\s+que\s+no\s+son\s+frutas\s+y\s+verduras,\s+y\s+su\s+defecto:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            for (const m of matchNoFrutas) {
-                                sumMateriaPrima += parseInt(m[1], 10);
-                                foundMateriaPrima = true;
-                            }
-
-                            if (foundMateriaPrima) {
-                                savedVariables['MATERIAPRIMA'] = sumMateriaPrima.toString();
-                            }
-                        }
-
-                        if (!savedVariables['MATERIAPRIMATPMPAP'] && upperFormula.includes('MATERIAPRIMATPMPAP')) {
-                            const matchTpmpap = Array.from(obsText.matchAll(/Cantidad\s+de\s+la\s+materia\s+prima,\s+producto,\s+alimentos\s+y\/o\s+preparaciones\s+que\s+no\s+se\s+encuentra\s+en\s+su\s+TPMPAP[:.]?(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
-                            let sumTpmpap = 0;
-                            let foundTpmpap = false;
-                            for (const m of matchTpmpap) {
-                                sumTpmpap += parseInt(m[1], 10);
-                                foundTpmpap = true;
-                            }
-                            if (foundTpmpap) {
-                                savedVariables['MATERIAPRIMATPMPAP'] = sumTpmpap.toString();
-                            }
-                        }
-
-                if (!savedVariables['INSTRUMENTO'] && upperFormula.includes('INSTRUMENTO')) {
-                    let totalInstrumentos = 0;
-                    let foundAny = false;
-                    
-                    const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?)[^\d]*(\d+)/i);
-                    if (termometroMatch) {
-                        totalInstrumentos += parseInt(termometroMatch[1], 10);
-                        foundAny = true;
-                    }
-                    
-                    const balanzaMatch = obsText.match(/(?:balanza(?:s)?)[^\d]*(\d+)/i);
-                    if (balanzaMatch) {
-                        totalInstrumentos += parseInt(balanzaMatch[1], 10);
-                        foundAny = true;
-                    }
-                    
-                    if (foundAny) {
-                        savedVariables['INSTRUMENTO'] = totalInstrumentos.toString();
-                    }
-                }
-
-                if (!savedVariables['CANTSERVICIO'] && upperFormula.includes('CANTSERVICIO')) {
-                    const matchServicio = obsText.match(/(?:cantidad de )?servicio(?:s)? afectad(?:o|a)(?:s)?[^\d]*(\d+)/i);
-                    if (matchServicio) {
-                        savedVariables['CANTSERVICIO'] = matchServicio[1];
-                    }
+            if (d.formulaAsignada) {
+                const { variablesFinales, detalleVariables } = resolverVariablesConPrioridad({
+                    letraAspecto: d.letraAspecto || '?',
+                    formula: d.formulaAsignada,
+                    obsText: d.observacionesOMedioDeVerificacion,
+                    variablesGuardadas: savedVariables,
+                    overridesPorAspecto: d.letraAspecto ? overridesMap[d.letraAspecto] : undefined,
+                    c3Activo: moduloC3Activo && c3OverridesActivo
+                })
+                Object.assign(savedVariables, variablesFinales)
+                if (d.letraAspecto) {
+                    detalleVariablesPorAspecto[d.letraAspecto] = detalleVariables
                 }
             }
         }
@@ -1258,12 +1155,19 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         const racionesTotal = pmpaRecord?.raceqJunaeb || 0
 
         // Resolver nivel supervisado y raciones para el AQL (Aspecto G)
-        // Jerarquía: 1) Variable NIVELCONTROLADO; 2) Nivel único del RBD; 3) Raciones totales con aviso
+        // Jerarquía C3: 1) Nivel supervisado C3 (folioDato?.nivelSupervisado); 2) Variable NIVELCONTROLADO; 3) Nivel único del RBD; 4) Total con aviso
         let racionesParaAql = racionesTotal
         let nivelDetectadoParaAql: string | null = null
         let esTotalPorDefecto = false
 
-        if (savedVariables['NIVELCONTROLADO']) {
+        if (moduloC3Activo && c3NivelActivo && folioDato?.nivelSupervisado) {
+            if (racionesDataResult?.racionesNivelSupervisado !== undefined && racionesDataResult?.racionesNivelSupervisado !== null) {
+                racionesParaAql = racionesDataResult.racionesNivelSupervisado
+                nivelDetectadoParaAql = `Nivel ${folioDato.nivelSupervisado} (Datos de Folio C3)`
+            }
+        }
+
+        if (!nivelDetectadoParaAql && savedVariables['NIVELCONTROLADO']) {
             const nivInput = String(savedVariables['NIVELCONTROLADO']).trim()
             const foundNivel = pmpaNiveles.find(n => n.label.toLowerCase() === nivInput.toLowerCase())
             if (foundNivel && foundNivel.value > 0) {
@@ -1337,6 +1241,10 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             // Para H (1:70) se usan siempre las raciones totales del establecimiento
             const racionesAspecto = d.letraAspecto === 'H' ? racionesTotal : racionesParaAql
 
+            // C3.1: Si bandejas evaluadas/rechazadas están configuradas en C3, tienen prioridad
+            const bandejasC3Evaluadas = (moduloC3Activo && c3BandejasActivo && folioDato?.bandejasEvaluadas) ? folioDato.bandejasEvaluadas : undefined
+            const bandejasC3Rechazadas = (moduloC3Activo && c3BandejasActivo && folioDato?.bandejasRechazadas !== null && folioDato?.bandejasRechazadas !== undefined) ? folioDato.bandejasRechazadas : undefined
+
             const itInfo = generarAlertasITAspecto(
                 d.letraAspecto,
                 racionesAspecto,
@@ -1349,14 +1257,17 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     racionesTotal,
                     racionesNivel: racionesAspecto,
                     esTotalPorDefecto: d.letraAspecto === 'G' && esTotalPorDefecto,
-                    dotacionOficial: dotacionOficialColegio
+                    dotacionOficial: dotacionOficialColegio,
+                    bandejasEvaluadasManual: bandejasC3Evaluadas,
+                    bandejasRechazadasManual: bandejasC3Rechazadas
                 },
                 parametrosConfig
             )
             return {
                 ...d,
                 itInfo,
-                minutaPlanificadaDelDia: d.letraAspecto === 'A' ? minutaDelDia : undefined
+                minutaPlanificadaDelDia: d.letraAspecto === 'A' ? minutaDelDia : undefined,
+                detalleVariables: d.letraAspecto ? (detalleVariablesPorAspecto[d.letraAspecto] || {}) : {}
             }
         })
 
@@ -1373,6 +1284,14 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             pmpaNiveles,
             savedVariables,
             serviciosDisponibles,
+            folioDato,
+            overrides: overridesFolio,
+            moduloC3Activo,
+            c3Submodulos: {
+                nivelSupervisado: c3NivelActivo,
+                bandejasAql: c3BandejasActivo,
+                correccionManual: c3OverridesActivo
+            },
             parametrosLicitacion: paramLicitacion ? {
                 ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
                 plazoCorreccionDias: paramLicitacion.plazoCorreccionDias,
@@ -1581,5 +1500,228 @@ export async function reversarAnulacionFolio(folio: string) {
     } catch (e: any) {
         console.error('Error en reversarAnulacionFolio:', e)
         return { error: 'Error al reversar anulación.' }
+    }
+}
+
+/**
+ * =======================================================================
+ * C3. DATOS COMPLEMENTARIOS POR FOLIO Y CORRECCIONES MANUALES
+ * =======================================================================
+ */
+
+export async function getDatosFolio(folio: string) {
+    if (!folio) return { error: 'Folio no proporcionado.' }
+
+    try {
+        await ensureMultasEETables()
+        const [folioDato, overrides] = await Promise.all([
+            dbFolioDato().findUnique({
+                where: { folio }
+            }),
+            dbCantidadOverride().findMany({
+                where: { folio },
+                orderBy: { letraAspecto: 'asc' }
+            })
+        ])
+
+        return {
+            folioDato: folioDato || null,
+            overrides: overrides || []
+        }
+    } catch (err: any) {
+        console.error('Error al obtener datos complementarios del folio:', err)
+        return { error: err.message || 'Error al obtener datos de folio.' }
+    }
+}
+
+export async function guardarDatosFolio(params: {
+    folio: string
+    nivelSupervisado?: string | null
+    bandejasEvaluadas?: number | null
+    bandejasRechazadas?: number | null
+    motivo?: string | null
+}) {
+    const { folio, nivelSupervisado, bandejasEvaluadas, bandejasRechazadas, motivo } = params
+    if (!folio) return { error: 'Folio no proporcionado.' }
+
+    const session = await getSession()
+    if (!session?.user) return { error: 'No autorizado.' }
+    const username = session.user.name || session.user.username || 'Usuario'
+
+    // Validar nivel si viene informado
+    let cleanNivel: string | null = null
+    if (nivelSupervisado && nivelSupervisado !== 'AUTO') {
+        const n = nivelSupervisado.trim().toUpperCase()
+        if (['T', 'B', 'M', 'TRANSICION', 'BASICA', 'MEDIA'].includes(n)) {
+            cleanNivel = n[0] // Normalizar a 'T', 'B', 'M'
+        }
+    }
+
+    // Validar bandejas
+    let evaluadasNum: number | null = null
+    let rechazadasNum: number | null = null
+
+    if (bandejasEvaluadas !== undefined && bandejasEvaluadas !== null && bandejasEvaluadas !== ('' as any)) {
+        evaluadasNum = Number(bandejasEvaluadas)
+        if (isNaN(evaluadasNum) || evaluadasNum < 1 || evaluadasNum > 50) {
+            return { error: 'Las bandejas evaluadas deben estar entre 1 y 50.' }
+        }
+    }
+
+    if (bandejasRechazadas !== undefined && bandejasRechazadas !== null && bandejasRechazadas !== ('' as any)) {
+        rechazadasNum = Number(bandejasRechazadas)
+        if (isNaN(rechazadasNum) || rechazadasNum < 0) {
+            return { error: 'Las bandejas rechazadas no pueden ser negativas.' }
+        }
+        if (evaluadasNum !== null && rechazadasNum > evaluadasNum) {
+            return { error: 'Las bandejas rechazadas no pueden ser mayores a las evaluadas.' }
+        }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const saved = await dbFolioDato().upsert({
+            where: { folio },
+            create: {
+                folio,
+                nivelSupervisado: cleanNivel,
+                bandejasEvaluadas: evaluadasNum,
+                bandejasRechazadas: rechazadasNum,
+                motivo: motivo?.trim() || null,
+                updatedBy: username
+            },
+            update: {
+                nivelSupervisado: cleanNivel,
+                bandejasEvaluadas: evaluadasNum,
+                bandejasRechazadas: rechazadasNum,
+                motivo: motivo?.trim() || null,
+                updatedBy: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session.user.id || null,
+                action: 'SAVE_MULTAS_FOLIO_DATO',
+                modulo: 'MULTAS_CALCULOS',
+                detalle: `Guardados datos complementarios para folio ${folio}: Nivel=${cleanNivel || 'Auto'}, Evaluadas=${evaluadasNum ?? 'N/A'}, Rechazadas=${rechazadasNum ?? 'N/A'}. Motivo: ${motivo || 'Sin motivo'}`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        return { success: true, folioDato: saved }
+    } catch (err: any) {
+        console.error('Error al guardar datos de folio:', err)
+        return { error: err.message || 'Error al guardar datos de folio.' }
+    }
+}
+
+export async function guardarCantidadOverride(params: {
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    motivo: string
+    valorOriginal?: number | null
+}) {
+    const { folio, letraAspecto, variable, valor, motivo, valorOriginal } = params
+    if (!folio || !letraAspecto || !variable) {
+        return { error: 'Folio, aspecto y variable son obligatorios.' }
+    }
+
+    const cleanMotivo = motivo?.trim()
+    if (!cleanMotivo) {
+        return { error: 'El motivo de la corrección manual es obligatorio.' }
+    }
+
+    const numVal = Number(valor)
+    if (isNaN(numVal) || numVal < 0) {
+        return { error: 'El valor de la corrección debe ser un número mayor o igual a 0.' }
+    }
+
+    const session = await getSession()
+    if (!session?.user) return { error: 'No autorizado.' }
+    const username = session.user.name || session.user.username || 'Usuario'
+
+    const cleanVariable = variable.trim().toUpperCase()
+    const cleanLetra = letraAspecto.trim().toUpperCase()
+
+    try {
+        await ensureMultasEETables()
+        const saved = await dbCantidadOverride().upsert({
+            where: {
+                folio_letraAspecto_variable: {
+                    folio,
+                    letraAspecto: cleanLetra,
+                    variable: cleanVariable
+                }
+            },
+            create: {
+                folio,
+                letraAspecto: cleanLetra,
+                variable: cleanVariable,
+                valor: numVal,
+                valorOriginal: valorOriginal !== undefined && valorOriginal !== null ? Number(valorOriginal) : null,
+                motivo: cleanMotivo,
+                createdBy: username
+            },
+            update: {
+                valor: numVal,
+                valorOriginal: valorOriginal !== undefined && valorOriginal !== null ? Number(valorOriginal) : undefined,
+                motivo: cleanMotivo,
+                createdBy: username
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session.user.id || null,
+                action: 'SAVE_MULTAS_CANTIDAD_OVERRIDE',
+                modulo: 'MULTAS_CALCULOS',
+                detalle: `Corrección manual en folio ${folio} [Aspecto ${cleanLetra}, ${cleanVariable}]: ${valorOriginal ?? 'N/A'} -> ${numVal}. Motivo: ${cleanMotivo}`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        return { success: true, override: saved }
+    } catch (err: any) {
+        console.error('Error al guardar corrección de cantidad:', err)
+        return { error: err.message || 'Error al guardar corrección.' }
+    }
+}
+
+export async function eliminarCantidadOverride(id: string) {
+    if (!id) return { error: 'ID no proporcionado.' }
+
+    const session = await getSession()
+    if (!session?.user) return { error: 'No autorizado.' }
+    const username = session.user.name || session.user.username || 'Usuario'
+
+    try {
+        await ensureMultasEETables()
+        const deleted = await dbCantidadOverride().delete({
+            where: { id }
+        })
+
+        try {
+            await logAuditAction({
+                username,
+                userId: session.user.id || null,
+                action: 'DELETE_MULTAS_CANTIDAD_OVERRIDE',
+                modulo: 'MULTAS_CALCULOS',
+                detalle: `Revertida corrección manual en folio ${deleted.folio} [Aspecto ${deleted.letraAspecto}, ${deleted.variable}]. Volvió a valor original.`
+            })
+        } catch (auditErr) {
+            console.warn('Error en logAuditAction:', auditErr)
+        }
+
+        return { success: true }
+    } catch (err: any) {
+        console.error('Error al revertir corrección de cantidad:', err)
+        return { error: err.message || 'Error al revertir corrección.' }
     }
 }

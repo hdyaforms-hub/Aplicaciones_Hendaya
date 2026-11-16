@@ -299,6 +299,16 @@ export type Multas_Manipuladora_Mes = $Result.DefaultSelection<Prisma.$Multas_Ma
  */
 export type Multas_Minuta_Mes = $Result.DefaultSelection<Prisma.$Multas_Minuta_MesPayload>
 /**
+ * Model Multas_Folio_Dato
+ * 
+ */
+export type Multas_Folio_Dato = $Result.DefaultSelection<Prisma.$Multas_Folio_DatoPayload>
+/**
+ * Model Multas_Cantidad_Override
+ * 
+ */
+export type Multas_Cantidad_Override = $Result.DefaultSelection<Prisma.$Multas_Cantidad_OverridePayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1426,6 +1436,26 @@ export class PrismaClient<
     * ```
     */
   get multas_Minuta_Mes(): Prisma.Multas_Minuta_MesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Folio_Dato`: Exposes CRUD operations for the **Multas_Folio_Dato** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Folio_Datoes
+    * const multas_Folio_Datoes = await prisma.multas_Folio_Dato.findMany()
+    * ```
+    */
+  get multas_Folio_Dato(): Prisma.Multas_Folio_DatoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Cantidad_Override`: Exposes CRUD operations for the **Multas_Cantidad_Override** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Cantidad_Overrides
+    * const multas_Cantidad_Overrides = await prisma.multas_Cantidad_Override.findMany()
+    * ```
+    */
+  get multas_Cantidad_Override(): Prisma.Multas_Cantidad_OverrideDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2794,6 +2824,8 @@ export namespace Prisma {
     Multas_Estrato_Excluido: 'Multas_Estrato_Excluido',
     Multas_Manipuladora_Mes: 'Multas_Manipuladora_Mes',
     Multas_Minuta_Mes: 'Multas_Minuta_Mes',
+    Multas_Folio_Dato: 'Multas_Folio_Dato',
+    Multas_Cantidad_Override: 'Multas_Cantidad_Override',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2896,7 +2928,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6887,6 +6919,146 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Minuta_MesCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Minuta_MesCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Folio_Dato: {
+        payload: Prisma.$Multas_Folio_DatoPayload<ExtArgs>
+        fields: Prisma.Multas_Folio_DatoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Folio_DatoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Folio_DatoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Folio_DatoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Folio_DatoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Folio_DatoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Folio_DatoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Folio_DatoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Folio_DatoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Folio_DatoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          update: {
+            args: Prisma.Multas_Folio_DatoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Folio_DatoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Folio_DatoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Folio_DatoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Folio_DatoPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Folio_DatoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Folio_Dato>
+          }
+          groupBy: {
+            args: Prisma.Multas_Folio_DatoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Folio_DatoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Folio_DatoCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Folio_DatoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Cantidad_Override: {
+        payload: Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>
+        fields: Prisma.Multas_Cantidad_OverrideFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Cantidad_OverrideFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Cantidad_OverrideFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Cantidad_OverrideFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Cantidad_OverrideFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Cantidad_OverrideFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Cantidad_OverrideCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Cantidad_OverrideCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Cantidad_OverrideCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Cantidad_OverrideDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          update: {
+            args: Prisma.Multas_Cantidad_OverrideUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Cantidad_OverrideDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Cantidad_OverrideUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Cantidad_OverrideUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Cantidad_OverridePayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Cantidad_OverrideAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Cantidad_Override>
+          }
+          groupBy: {
+            args: Prisma.Multas_Cantidad_OverrideGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Cantidad_OverrideGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Cantidad_OverrideCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Cantidad_OverrideCountAggregateOutputType> | number
           }
         }
       }
@@ -74065,6 +74237,1946 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Minuta_Mes
      */
     select?: Multas_Minuta_MesSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Folio_Dato
+   */
+
+  export type AggregateMultas_Folio_Dato = {
+    _count: Multas_Folio_DatoCountAggregateOutputType | null
+    _avg: Multas_Folio_DatoAvgAggregateOutputType | null
+    _sum: Multas_Folio_DatoSumAggregateOutputType | null
+    _min: Multas_Folio_DatoMinAggregateOutputType | null
+    _max: Multas_Folio_DatoMaxAggregateOutputType | null
+  }
+
+  export type Multas_Folio_DatoAvgAggregateOutputType = {
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+  }
+
+  export type Multas_Folio_DatoSumAggregateOutputType = {
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+  }
+
+  export type Multas_Folio_DatoMinAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    nivelSupervisado: string | null
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+    motivo: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Folio_DatoMaxAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    nivelSupervisado: string | null
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+    motivo: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Folio_DatoCountAggregateOutputType = {
+    id: number
+    folio: number
+    nivelSupervisado: number
+    bandejasEvaluadas: number
+    bandejasRechazadas: number
+    motivo: number
+    updatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Folio_DatoAvgAggregateInputType = {
+    bandejasEvaluadas?: true
+    bandejasRechazadas?: true
+  }
+
+  export type Multas_Folio_DatoSumAggregateInputType = {
+    bandejasEvaluadas?: true
+    bandejasRechazadas?: true
+  }
+
+  export type Multas_Folio_DatoMinAggregateInputType = {
+    id?: true
+    folio?: true
+    nivelSupervisado?: true
+    bandejasEvaluadas?: true
+    bandejasRechazadas?: true
+    motivo?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Folio_DatoMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    nivelSupervisado?: true
+    bandejasEvaluadas?: true
+    bandejasRechazadas?: true
+    motivo?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Folio_DatoCountAggregateInputType = {
+    id?: true
+    folio?: true
+    nivelSupervisado?: true
+    bandejasEvaluadas?: true
+    bandejasRechazadas?: true
+    motivo?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Folio_DatoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Folio_Dato to aggregate.
+     */
+    where?: Multas_Folio_DatoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Folio_Datoes to fetch.
+     */
+    orderBy?: Multas_Folio_DatoOrderByWithRelationInput | Multas_Folio_DatoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Folio_DatoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Folio_Datoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Folio_Datoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Folio_Datoes
+    **/
+    _count?: true | Multas_Folio_DatoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Folio_DatoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Folio_DatoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Folio_DatoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Folio_DatoMaxAggregateInputType
+  }
+
+  export type GetMultas_Folio_DatoAggregateType<T extends Multas_Folio_DatoAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Folio_Dato]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Folio_Dato[P]>
+      : GetScalarType<T[P], AggregateMultas_Folio_Dato[P]>
+  }
+
+
+
+
+  export type Multas_Folio_DatoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Folio_DatoWhereInput
+    orderBy?: Multas_Folio_DatoOrderByWithAggregationInput | Multas_Folio_DatoOrderByWithAggregationInput[]
+    by: Multas_Folio_DatoScalarFieldEnum[] | Multas_Folio_DatoScalarFieldEnum
+    having?: Multas_Folio_DatoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Folio_DatoCountAggregateInputType | true
+    _avg?: Multas_Folio_DatoAvgAggregateInputType
+    _sum?: Multas_Folio_DatoSumAggregateInputType
+    _min?: Multas_Folio_DatoMinAggregateInputType
+    _max?: Multas_Folio_DatoMaxAggregateInputType
+  }
+
+  export type Multas_Folio_DatoGroupByOutputType = {
+    id: string
+    folio: string
+    nivelSupervisado: string | null
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+    motivo: string | null
+    updatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Folio_DatoCountAggregateOutputType | null
+    _avg: Multas_Folio_DatoAvgAggregateOutputType | null
+    _sum: Multas_Folio_DatoSumAggregateOutputType | null
+    _min: Multas_Folio_DatoMinAggregateOutputType | null
+    _max: Multas_Folio_DatoMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Folio_DatoGroupByPayload<T extends Multas_Folio_DatoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Folio_DatoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Folio_DatoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Folio_DatoGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Folio_DatoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Folio_DatoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    nivelSupervisado?: boolean
+    bandejasEvaluadas?: boolean
+    bandejasRechazadas?: boolean
+    motivo?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Folio_Dato"]>
+
+  export type Multas_Folio_DatoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    nivelSupervisado?: boolean
+    bandejasEvaluadas?: boolean
+    bandejasRechazadas?: boolean
+    motivo?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Folio_Dato"]>
+
+  export type Multas_Folio_DatoSelectScalar = {
+    id?: boolean
+    folio?: boolean
+    nivelSupervisado?: boolean
+    bandejasEvaluadas?: boolean
+    bandejasRechazadas?: boolean
+    motivo?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Folio_DatoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Folio_Dato"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folio: string
+      nivelSupervisado: string | null
+      bandejasEvaluadas: number | null
+      bandejasRechazadas: number | null
+      motivo: string | null
+      updatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Folio_Dato"]>
+    composites: {}
+  }
+
+  type Multas_Folio_DatoGetPayload<S extends boolean | null | undefined | Multas_Folio_DatoDefaultArgs> = $Result.GetResult<Prisma.$Multas_Folio_DatoPayload, S>
+
+  type Multas_Folio_DatoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Folio_DatoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Folio_DatoCountAggregateInputType | true
+    }
+
+  export interface Multas_Folio_DatoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Folio_Dato'], meta: { name: 'Multas_Folio_Dato' } }
+    /**
+     * Find zero or one Multas_Folio_Dato that matches the filter.
+     * @param {Multas_Folio_DatoFindUniqueArgs} args - Arguments to find a Multas_Folio_Dato
+     * @example
+     * // Get one Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Folio_DatoFindUniqueArgs>(args: SelectSubset<T, Multas_Folio_DatoFindUniqueArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Folio_Dato that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Folio_DatoFindUniqueOrThrowArgs} args - Arguments to find a Multas_Folio_Dato
+     * @example
+     * // Get one Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Folio_DatoFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Folio_DatoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Folio_Dato that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoFindFirstArgs} args - Arguments to find a Multas_Folio_Dato
+     * @example
+     * // Get one Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Folio_DatoFindFirstArgs>(args?: SelectSubset<T, Multas_Folio_DatoFindFirstArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Folio_Dato that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoFindFirstOrThrowArgs} args - Arguments to find a Multas_Folio_Dato
+     * @example
+     * // Get one Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Folio_DatoFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Folio_DatoFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Folio_Datoes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Folio_Datoes
+     * const multas_Folio_Datoes = await prisma.multas_Folio_Dato.findMany()
+     * 
+     * // Get first 10 Multas_Folio_Datoes
+     * const multas_Folio_Datoes = await prisma.multas_Folio_Dato.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Folio_DatoWithIdOnly = await prisma.multas_Folio_Dato.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Folio_DatoFindManyArgs>(args?: SelectSubset<T, Multas_Folio_DatoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Folio_Dato.
+     * @param {Multas_Folio_DatoCreateArgs} args - Arguments to create a Multas_Folio_Dato.
+     * @example
+     * // Create one Multas_Folio_Dato
+     * const Multas_Folio_Dato = await prisma.multas_Folio_Dato.create({
+     *   data: {
+     *     // ... data to create a Multas_Folio_Dato
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Folio_DatoCreateArgs>(args: SelectSubset<T, Multas_Folio_DatoCreateArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Folio_Datoes.
+     * @param {Multas_Folio_DatoCreateManyArgs} args - Arguments to create many Multas_Folio_Datoes.
+     * @example
+     * // Create many Multas_Folio_Datoes
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Folio_DatoCreateManyArgs>(args?: SelectSubset<T, Multas_Folio_DatoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Folio_Datoes and returns the data saved in the database.
+     * @param {Multas_Folio_DatoCreateManyAndReturnArgs} args - Arguments to create many Multas_Folio_Datoes.
+     * @example
+     * // Create many Multas_Folio_Datoes
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Folio_Datoes and only return the `id`
+     * const multas_Folio_DatoWithIdOnly = await prisma.multas_Folio_Dato.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Folio_DatoCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Folio_DatoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Folio_Dato.
+     * @param {Multas_Folio_DatoDeleteArgs} args - Arguments to delete one Multas_Folio_Dato.
+     * @example
+     * // Delete one Multas_Folio_Dato
+     * const Multas_Folio_Dato = await prisma.multas_Folio_Dato.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Folio_Dato
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Folio_DatoDeleteArgs>(args: SelectSubset<T, Multas_Folio_DatoDeleteArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Folio_Dato.
+     * @param {Multas_Folio_DatoUpdateArgs} args - Arguments to update one Multas_Folio_Dato.
+     * @example
+     * // Update one Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Folio_DatoUpdateArgs>(args: SelectSubset<T, Multas_Folio_DatoUpdateArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Folio_Datoes.
+     * @param {Multas_Folio_DatoDeleteManyArgs} args - Arguments to filter Multas_Folio_Datoes to delete.
+     * @example
+     * // Delete a few Multas_Folio_Datoes
+     * const { count } = await prisma.multas_Folio_Dato.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Folio_DatoDeleteManyArgs>(args?: SelectSubset<T, Multas_Folio_DatoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Folio_Datoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Folio_Datoes
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Folio_DatoUpdateManyArgs>(args: SelectSubset<T, Multas_Folio_DatoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Folio_Dato.
+     * @param {Multas_Folio_DatoUpsertArgs} args - Arguments to update or create a Multas_Folio_Dato.
+     * @example
+     * // Update or create a Multas_Folio_Dato
+     * const multas_Folio_Dato = await prisma.multas_Folio_Dato.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Folio_Dato
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Folio_Dato we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Folio_DatoUpsertArgs>(args: SelectSubset<T, Multas_Folio_DatoUpsertArgs<ExtArgs>>): Prisma__Multas_Folio_DatoClient<$Result.GetResult<Prisma.$Multas_Folio_DatoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Folio_Datoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoCountArgs} args - Arguments to filter Multas_Folio_Datoes to count.
+     * @example
+     * // Count the number of Multas_Folio_Datoes
+     * const count = await prisma.multas_Folio_Dato.count({
+     *   where: {
+     *     // ... the filter for the Multas_Folio_Datoes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Folio_DatoCountArgs>(
+      args?: Subset<T, Multas_Folio_DatoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Folio_DatoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Folio_Dato.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Folio_DatoAggregateArgs>(args: Subset<T, Multas_Folio_DatoAggregateArgs>): Prisma.PrismaPromise<GetMultas_Folio_DatoAggregateType<T>>
+
+    /**
+     * Group by Multas_Folio_Dato.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Folio_DatoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Folio_DatoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Folio_DatoGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Folio_DatoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Folio_DatoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Folio_DatoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Folio_Dato model
+   */
+  readonly fields: Multas_Folio_DatoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Folio_Dato.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Folio_DatoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Folio_Dato model
+   */ 
+  interface Multas_Folio_DatoFieldRefs {
+    readonly id: FieldRef<"Multas_Folio_Dato", 'String'>
+    readonly folio: FieldRef<"Multas_Folio_Dato", 'String'>
+    readonly nivelSupervisado: FieldRef<"Multas_Folio_Dato", 'String'>
+    readonly bandejasEvaluadas: FieldRef<"Multas_Folio_Dato", 'Int'>
+    readonly bandejasRechazadas: FieldRef<"Multas_Folio_Dato", 'Int'>
+    readonly motivo: FieldRef<"Multas_Folio_Dato", 'String'>
+    readonly updatedBy: FieldRef<"Multas_Folio_Dato", 'String'>
+    readonly createdAt: FieldRef<"Multas_Folio_Dato", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Folio_Dato", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Folio_Dato findUnique
+   */
+  export type Multas_Folio_DatoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Folio_Dato to fetch.
+     */
+    where: Multas_Folio_DatoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Folio_Dato findUniqueOrThrow
+   */
+  export type Multas_Folio_DatoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Folio_Dato to fetch.
+     */
+    where: Multas_Folio_DatoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Folio_Dato findFirst
+   */
+  export type Multas_Folio_DatoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Folio_Dato to fetch.
+     */
+    where?: Multas_Folio_DatoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Folio_Datoes to fetch.
+     */
+    orderBy?: Multas_Folio_DatoOrderByWithRelationInput | Multas_Folio_DatoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Folio_Datoes.
+     */
+    cursor?: Multas_Folio_DatoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Folio_Datoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Folio_Datoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Folio_Datoes.
+     */
+    distinct?: Multas_Folio_DatoScalarFieldEnum | Multas_Folio_DatoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Folio_Dato findFirstOrThrow
+   */
+  export type Multas_Folio_DatoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Folio_Dato to fetch.
+     */
+    where?: Multas_Folio_DatoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Folio_Datoes to fetch.
+     */
+    orderBy?: Multas_Folio_DatoOrderByWithRelationInput | Multas_Folio_DatoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Folio_Datoes.
+     */
+    cursor?: Multas_Folio_DatoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Folio_Datoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Folio_Datoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Folio_Datoes.
+     */
+    distinct?: Multas_Folio_DatoScalarFieldEnum | Multas_Folio_DatoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Folio_Dato findMany
+   */
+  export type Multas_Folio_DatoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Folio_Datoes to fetch.
+     */
+    where?: Multas_Folio_DatoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Folio_Datoes to fetch.
+     */
+    orderBy?: Multas_Folio_DatoOrderByWithRelationInput | Multas_Folio_DatoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Folio_Datoes.
+     */
+    cursor?: Multas_Folio_DatoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Folio_Datoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Folio_Datoes.
+     */
+    skip?: number
+    distinct?: Multas_Folio_DatoScalarFieldEnum | Multas_Folio_DatoScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Folio_Dato create
+   */
+  export type Multas_Folio_DatoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Folio_Dato.
+     */
+    data: XOR<Multas_Folio_DatoCreateInput, Multas_Folio_DatoUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Folio_Dato createMany
+   */
+  export type Multas_Folio_DatoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Folio_Datoes.
+     */
+    data: Multas_Folio_DatoCreateManyInput | Multas_Folio_DatoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Folio_Dato createManyAndReturn
+   */
+  export type Multas_Folio_DatoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Folio_Datoes.
+     */
+    data: Multas_Folio_DatoCreateManyInput | Multas_Folio_DatoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Folio_Dato update
+   */
+  export type Multas_Folio_DatoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Folio_Dato.
+     */
+    data: XOR<Multas_Folio_DatoUpdateInput, Multas_Folio_DatoUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Folio_Dato to update.
+     */
+    where: Multas_Folio_DatoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Folio_Dato updateMany
+   */
+  export type Multas_Folio_DatoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Folio_Datoes.
+     */
+    data: XOR<Multas_Folio_DatoUpdateManyMutationInput, Multas_Folio_DatoUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Folio_Datoes to update
+     */
+    where?: Multas_Folio_DatoWhereInput
+  }
+
+  /**
+   * Multas_Folio_Dato upsert
+   */
+  export type Multas_Folio_DatoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Folio_Dato to update in case it exists.
+     */
+    where: Multas_Folio_DatoWhereUniqueInput
+    /**
+     * In case the Multas_Folio_Dato found by the `where` argument doesn't exist, create a new Multas_Folio_Dato with this data.
+     */
+    create: XOR<Multas_Folio_DatoCreateInput, Multas_Folio_DatoUncheckedCreateInput>
+    /**
+     * In case the Multas_Folio_Dato was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Folio_DatoUpdateInput, Multas_Folio_DatoUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Folio_Dato delete
+   */
+  export type Multas_Folio_DatoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Folio_Dato to delete.
+     */
+    where: Multas_Folio_DatoWhereUniqueInput
+  }
+
+  /**
+   * Multas_Folio_Dato deleteMany
+   */
+  export type Multas_Folio_DatoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Folio_Datoes to delete
+     */
+    where?: Multas_Folio_DatoWhereInput
+  }
+
+  /**
+   * Multas_Folio_Dato without action
+   */
+  export type Multas_Folio_DatoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Folio_Dato
+     */
+    select?: Multas_Folio_DatoSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Cantidad_Override
+   */
+
+  export type AggregateMultas_Cantidad_Override = {
+    _count: Multas_Cantidad_OverrideCountAggregateOutputType | null
+    _avg: Multas_Cantidad_OverrideAvgAggregateOutputType | null
+    _sum: Multas_Cantidad_OverrideSumAggregateOutputType | null
+    _min: Multas_Cantidad_OverrideMinAggregateOutputType | null
+    _max: Multas_Cantidad_OverrideMaxAggregateOutputType | null
+  }
+
+  export type Multas_Cantidad_OverrideAvgAggregateOutputType = {
+    valor: number | null
+    valorOriginal: number | null
+  }
+
+  export type Multas_Cantidad_OverrideSumAggregateOutputType = {
+    valor: number | null
+    valorOriginal: number | null
+  }
+
+  export type Multas_Cantidad_OverrideMinAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    letraAspecto: string | null
+    variable: string | null
+    valor: number | null
+    valorOriginal: number | null
+    motivo: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Cantidad_OverrideMaxAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    letraAspecto: string | null
+    variable: string | null
+    valor: number | null
+    valorOriginal: number | null
+    motivo: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Cantidad_OverrideCountAggregateOutputType = {
+    id: number
+    folio: number
+    letraAspecto: number
+    variable: number
+    valor: number
+    valorOriginal: number
+    motivo: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Cantidad_OverrideAvgAggregateInputType = {
+    valor?: true
+    valorOriginal?: true
+  }
+
+  export type Multas_Cantidad_OverrideSumAggregateInputType = {
+    valor?: true
+    valorOriginal?: true
+  }
+
+  export type Multas_Cantidad_OverrideMinAggregateInputType = {
+    id?: true
+    folio?: true
+    letraAspecto?: true
+    variable?: true
+    valor?: true
+    valorOriginal?: true
+    motivo?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Cantidad_OverrideMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    letraAspecto?: true
+    variable?: true
+    valor?: true
+    valorOriginal?: true
+    motivo?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Cantidad_OverrideCountAggregateInputType = {
+    id?: true
+    folio?: true
+    letraAspecto?: true
+    variable?: true
+    valor?: true
+    valorOriginal?: true
+    motivo?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Cantidad_OverrideAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Cantidad_Override to aggregate.
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Cantidad_Overrides to fetch.
+     */
+    orderBy?: Multas_Cantidad_OverrideOrderByWithRelationInput | Multas_Cantidad_OverrideOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Cantidad_OverrideWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Cantidad_Overrides from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Cantidad_Overrides.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Cantidad_Overrides
+    **/
+    _count?: true | Multas_Cantidad_OverrideCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Cantidad_OverrideAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Cantidad_OverrideSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Cantidad_OverrideMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Cantidad_OverrideMaxAggregateInputType
+  }
+
+  export type GetMultas_Cantidad_OverrideAggregateType<T extends Multas_Cantidad_OverrideAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Cantidad_Override]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Cantidad_Override[P]>
+      : GetScalarType<T[P], AggregateMultas_Cantidad_Override[P]>
+  }
+
+
+
+
+  export type Multas_Cantidad_OverrideGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Cantidad_OverrideWhereInput
+    orderBy?: Multas_Cantidad_OverrideOrderByWithAggregationInput | Multas_Cantidad_OverrideOrderByWithAggregationInput[]
+    by: Multas_Cantidad_OverrideScalarFieldEnum[] | Multas_Cantidad_OverrideScalarFieldEnum
+    having?: Multas_Cantidad_OverrideScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Cantidad_OverrideCountAggregateInputType | true
+    _avg?: Multas_Cantidad_OverrideAvgAggregateInputType
+    _sum?: Multas_Cantidad_OverrideSumAggregateInputType
+    _min?: Multas_Cantidad_OverrideMinAggregateInputType
+    _max?: Multas_Cantidad_OverrideMaxAggregateInputType
+  }
+
+  export type Multas_Cantidad_OverrideGroupByOutputType = {
+    id: string
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    valorOriginal: number | null
+    motivo: string
+    createdBy: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Cantidad_OverrideCountAggregateOutputType | null
+    _avg: Multas_Cantidad_OverrideAvgAggregateOutputType | null
+    _sum: Multas_Cantidad_OverrideSumAggregateOutputType | null
+    _min: Multas_Cantidad_OverrideMinAggregateOutputType | null
+    _max: Multas_Cantidad_OverrideMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Cantidad_OverrideGroupByPayload<T extends Multas_Cantidad_OverrideGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Cantidad_OverrideGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Cantidad_OverrideGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Cantidad_OverrideGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Cantidad_OverrideGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Cantidad_OverrideSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    letraAspecto?: boolean
+    variable?: boolean
+    valor?: boolean
+    valorOriginal?: boolean
+    motivo?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Cantidad_Override"]>
+
+  export type Multas_Cantidad_OverrideSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    letraAspecto?: boolean
+    variable?: boolean
+    valor?: boolean
+    valorOriginal?: boolean
+    motivo?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Cantidad_Override"]>
+
+  export type Multas_Cantidad_OverrideSelectScalar = {
+    id?: boolean
+    folio?: boolean
+    letraAspecto?: boolean
+    variable?: boolean
+    valor?: boolean
+    valorOriginal?: boolean
+    motivo?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Cantidad_OverridePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Cantidad_Override"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folio: string
+      letraAspecto: string
+      variable: string
+      valor: number
+      valorOriginal: number | null
+      motivo: string
+      createdBy: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Cantidad_Override"]>
+    composites: {}
+  }
+
+  type Multas_Cantidad_OverrideGetPayload<S extends boolean | null | undefined | Multas_Cantidad_OverrideDefaultArgs> = $Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload, S>
+
+  type Multas_Cantidad_OverrideCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Cantidad_OverrideFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Cantidad_OverrideCountAggregateInputType | true
+    }
+
+  export interface Multas_Cantidad_OverrideDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Cantidad_Override'], meta: { name: 'Multas_Cantidad_Override' } }
+    /**
+     * Find zero or one Multas_Cantidad_Override that matches the filter.
+     * @param {Multas_Cantidad_OverrideFindUniqueArgs} args - Arguments to find a Multas_Cantidad_Override
+     * @example
+     * // Get one Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Cantidad_OverrideFindUniqueArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideFindUniqueArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Cantidad_Override that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Cantidad_OverrideFindUniqueOrThrowArgs} args - Arguments to find a Multas_Cantidad_Override
+     * @example
+     * // Get one Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Cantidad_OverrideFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Cantidad_Override that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideFindFirstArgs} args - Arguments to find a Multas_Cantidad_Override
+     * @example
+     * // Get one Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Cantidad_OverrideFindFirstArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideFindFirstArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Cantidad_Override that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideFindFirstOrThrowArgs} args - Arguments to find a Multas_Cantidad_Override
+     * @example
+     * // Get one Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Cantidad_OverrideFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Cantidad_Overrides that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Cantidad_Overrides
+     * const multas_Cantidad_Overrides = await prisma.multas_Cantidad_Override.findMany()
+     * 
+     * // Get first 10 Multas_Cantidad_Overrides
+     * const multas_Cantidad_Overrides = await prisma.multas_Cantidad_Override.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Cantidad_OverrideWithIdOnly = await prisma.multas_Cantidad_Override.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Cantidad_OverrideFindManyArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Cantidad_Override.
+     * @param {Multas_Cantidad_OverrideCreateArgs} args - Arguments to create a Multas_Cantidad_Override.
+     * @example
+     * // Create one Multas_Cantidad_Override
+     * const Multas_Cantidad_Override = await prisma.multas_Cantidad_Override.create({
+     *   data: {
+     *     // ... data to create a Multas_Cantidad_Override
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Cantidad_OverrideCreateArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideCreateArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Cantidad_Overrides.
+     * @param {Multas_Cantidad_OverrideCreateManyArgs} args - Arguments to create many Multas_Cantidad_Overrides.
+     * @example
+     * // Create many Multas_Cantidad_Overrides
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Cantidad_OverrideCreateManyArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Cantidad_Overrides and returns the data saved in the database.
+     * @param {Multas_Cantidad_OverrideCreateManyAndReturnArgs} args - Arguments to create many Multas_Cantidad_Overrides.
+     * @example
+     * // Create many Multas_Cantidad_Overrides
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Cantidad_Overrides and only return the `id`
+     * const multas_Cantidad_OverrideWithIdOnly = await prisma.multas_Cantidad_Override.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Cantidad_OverrideCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Cantidad_Override.
+     * @param {Multas_Cantidad_OverrideDeleteArgs} args - Arguments to delete one Multas_Cantidad_Override.
+     * @example
+     * // Delete one Multas_Cantidad_Override
+     * const Multas_Cantidad_Override = await prisma.multas_Cantidad_Override.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Cantidad_Override
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Cantidad_OverrideDeleteArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideDeleteArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Cantidad_Override.
+     * @param {Multas_Cantidad_OverrideUpdateArgs} args - Arguments to update one Multas_Cantidad_Override.
+     * @example
+     * // Update one Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Cantidad_OverrideUpdateArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideUpdateArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Cantidad_Overrides.
+     * @param {Multas_Cantidad_OverrideDeleteManyArgs} args - Arguments to filter Multas_Cantidad_Overrides to delete.
+     * @example
+     * // Delete a few Multas_Cantidad_Overrides
+     * const { count } = await prisma.multas_Cantidad_Override.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Cantidad_OverrideDeleteManyArgs>(args?: SelectSubset<T, Multas_Cantidad_OverrideDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Cantidad_Overrides.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Cantidad_Overrides
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Cantidad_OverrideUpdateManyArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Cantidad_Override.
+     * @param {Multas_Cantidad_OverrideUpsertArgs} args - Arguments to update or create a Multas_Cantidad_Override.
+     * @example
+     * // Update or create a Multas_Cantidad_Override
+     * const multas_Cantidad_Override = await prisma.multas_Cantidad_Override.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Cantidad_Override
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Cantidad_Override we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Cantidad_OverrideUpsertArgs>(args: SelectSubset<T, Multas_Cantidad_OverrideUpsertArgs<ExtArgs>>): Prisma__Multas_Cantidad_OverrideClient<$Result.GetResult<Prisma.$Multas_Cantidad_OverridePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Cantidad_Overrides.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideCountArgs} args - Arguments to filter Multas_Cantidad_Overrides to count.
+     * @example
+     * // Count the number of Multas_Cantidad_Overrides
+     * const count = await prisma.multas_Cantidad_Override.count({
+     *   where: {
+     *     // ... the filter for the Multas_Cantidad_Overrides we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Cantidad_OverrideCountArgs>(
+      args?: Subset<T, Multas_Cantidad_OverrideCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Cantidad_OverrideCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Cantidad_Override.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Cantidad_OverrideAggregateArgs>(args: Subset<T, Multas_Cantidad_OverrideAggregateArgs>): Prisma.PrismaPromise<GetMultas_Cantidad_OverrideAggregateType<T>>
+
+    /**
+     * Group by Multas_Cantidad_Override.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Cantidad_OverrideGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Cantidad_OverrideGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Cantidad_OverrideGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Cantidad_OverrideGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Cantidad_OverrideGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Cantidad_OverrideGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Cantidad_Override model
+   */
+  readonly fields: Multas_Cantidad_OverrideFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Cantidad_Override.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Cantidad_OverrideClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Cantidad_Override model
+   */ 
+  interface Multas_Cantidad_OverrideFieldRefs {
+    readonly id: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly folio: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly letraAspecto: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly variable: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly valor: FieldRef<"Multas_Cantidad_Override", 'Float'>
+    readonly valorOriginal: FieldRef<"Multas_Cantidad_Override", 'Float'>
+    readonly motivo: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly createdBy: FieldRef<"Multas_Cantidad_Override", 'String'>
+    readonly createdAt: FieldRef<"Multas_Cantidad_Override", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Cantidad_Override", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Cantidad_Override findUnique
+   */
+  export type Multas_Cantidad_OverrideFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Cantidad_Override to fetch.
+     */
+    where: Multas_Cantidad_OverrideWhereUniqueInput
+  }
+
+  /**
+   * Multas_Cantidad_Override findUniqueOrThrow
+   */
+  export type Multas_Cantidad_OverrideFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Cantidad_Override to fetch.
+     */
+    where: Multas_Cantidad_OverrideWhereUniqueInput
+  }
+
+  /**
+   * Multas_Cantidad_Override findFirst
+   */
+  export type Multas_Cantidad_OverrideFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Cantidad_Override to fetch.
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Cantidad_Overrides to fetch.
+     */
+    orderBy?: Multas_Cantidad_OverrideOrderByWithRelationInput | Multas_Cantidad_OverrideOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Cantidad_Overrides.
+     */
+    cursor?: Multas_Cantidad_OverrideWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Cantidad_Overrides from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Cantidad_Overrides.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Cantidad_Overrides.
+     */
+    distinct?: Multas_Cantidad_OverrideScalarFieldEnum | Multas_Cantidad_OverrideScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Cantidad_Override findFirstOrThrow
+   */
+  export type Multas_Cantidad_OverrideFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Cantidad_Override to fetch.
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Cantidad_Overrides to fetch.
+     */
+    orderBy?: Multas_Cantidad_OverrideOrderByWithRelationInput | Multas_Cantidad_OverrideOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Cantidad_Overrides.
+     */
+    cursor?: Multas_Cantidad_OverrideWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Cantidad_Overrides from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Cantidad_Overrides.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Cantidad_Overrides.
+     */
+    distinct?: Multas_Cantidad_OverrideScalarFieldEnum | Multas_Cantidad_OverrideScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Cantidad_Override findMany
+   */
+  export type Multas_Cantidad_OverrideFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Cantidad_Overrides to fetch.
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Cantidad_Overrides to fetch.
+     */
+    orderBy?: Multas_Cantidad_OverrideOrderByWithRelationInput | Multas_Cantidad_OverrideOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Cantidad_Overrides.
+     */
+    cursor?: Multas_Cantidad_OverrideWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Cantidad_Overrides from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Cantidad_Overrides.
+     */
+    skip?: number
+    distinct?: Multas_Cantidad_OverrideScalarFieldEnum | Multas_Cantidad_OverrideScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Cantidad_Override create
+   */
+  export type Multas_Cantidad_OverrideCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Cantidad_Override.
+     */
+    data: XOR<Multas_Cantidad_OverrideCreateInput, Multas_Cantidad_OverrideUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Cantidad_Override createMany
+   */
+  export type Multas_Cantidad_OverrideCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Cantidad_Overrides.
+     */
+    data: Multas_Cantidad_OverrideCreateManyInput | Multas_Cantidad_OverrideCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Cantidad_Override createManyAndReturn
+   */
+  export type Multas_Cantidad_OverrideCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Cantidad_Overrides.
+     */
+    data: Multas_Cantidad_OverrideCreateManyInput | Multas_Cantidad_OverrideCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Cantidad_Override update
+   */
+  export type Multas_Cantidad_OverrideUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Cantidad_Override.
+     */
+    data: XOR<Multas_Cantidad_OverrideUpdateInput, Multas_Cantidad_OverrideUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Cantidad_Override to update.
+     */
+    where: Multas_Cantidad_OverrideWhereUniqueInput
+  }
+
+  /**
+   * Multas_Cantidad_Override updateMany
+   */
+  export type Multas_Cantidad_OverrideUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Cantidad_Overrides.
+     */
+    data: XOR<Multas_Cantidad_OverrideUpdateManyMutationInput, Multas_Cantidad_OverrideUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Cantidad_Overrides to update
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+  }
+
+  /**
+   * Multas_Cantidad_Override upsert
+   */
+  export type Multas_Cantidad_OverrideUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Cantidad_Override to update in case it exists.
+     */
+    where: Multas_Cantidad_OverrideWhereUniqueInput
+    /**
+     * In case the Multas_Cantidad_Override found by the `where` argument doesn't exist, create a new Multas_Cantidad_Override with this data.
+     */
+    create: XOR<Multas_Cantidad_OverrideCreateInput, Multas_Cantidad_OverrideUncheckedCreateInput>
+    /**
+     * In case the Multas_Cantidad_Override was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Cantidad_OverrideUpdateInput, Multas_Cantidad_OverrideUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Cantidad_Override delete
+   */
+  export type Multas_Cantidad_OverrideDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Cantidad_Override to delete.
+     */
+    where: Multas_Cantidad_OverrideWhereUniqueInput
+  }
+
+  /**
+   * Multas_Cantidad_Override deleteMany
+   */
+  export type Multas_Cantidad_OverrideDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Cantidad_Overrides to delete
+     */
+    where?: Multas_Cantidad_OverrideWhereInput
+  }
+
+  /**
+   * Multas_Cantidad_Override without action
+   */
+  export type Multas_Cantidad_OverrideDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Cantidad_Override
+     */
+    select?: Multas_Cantidad_OverrideSelect<ExtArgs> | null
   }
 
 
@@ -164275,6 +166387,37 @@ export namespace Prisma {
   export type Multas_Minuta_MesScalarFieldEnum = (typeof Multas_Minuta_MesScalarFieldEnum)[keyof typeof Multas_Minuta_MesScalarFieldEnum]
 
 
+  export const Multas_Folio_DatoScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    nivelSupervisado: 'nivelSupervisado',
+    bandejasEvaluadas: 'bandejasEvaluadas',
+    bandejasRechazadas: 'bandejasRechazadas',
+    motivo: 'motivo',
+    updatedBy: 'updatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Folio_DatoScalarFieldEnum = (typeof Multas_Folio_DatoScalarFieldEnum)[keyof typeof Multas_Folio_DatoScalarFieldEnum]
+
+
+  export const Multas_Cantidad_OverrideScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    letraAspecto: 'letraAspecto',
+    variable: 'variable',
+    valor: 'valor',
+    valorOriginal: 'valorOriginal',
+    motivo: 'motivo',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Cantidad_OverrideScalarFieldEnum = (typeof Multas_Cantidad_OverrideScalarFieldEnum)[keyof typeof Multas_Cantidad_OverrideScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -170911,6 +173054,160 @@ export namespace Prisma {
     usuarioModif?: StringNullableWithAggregatesFilter<"Multas_Minuta_Mes"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Minuta_Mes"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Minuta_Mes"> | Date | string
+  }
+
+  export type Multas_Folio_DatoWhereInput = {
+    AND?: Multas_Folio_DatoWhereInput | Multas_Folio_DatoWhereInput[]
+    OR?: Multas_Folio_DatoWhereInput[]
+    NOT?: Multas_Folio_DatoWhereInput | Multas_Folio_DatoWhereInput[]
+    id?: StringFilter<"Multas_Folio_Dato"> | string
+    folio?: StringFilter<"Multas_Folio_Dato"> | string
+    nivelSupervisado?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    bandejasEvaluadas?: IntNullableFilter<"Multas_Folio_Dato"> | number | null
+    bandejasRechazadas?: IntNullableFilter<"Multas_Folio_Dato"> | number | null
+    motivo?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    updatedBy?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Folio_Dato"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Folio_Dato"> | Date | string
+  }
+
+  export type Multas_Folio_DatoOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    nivelSupervisado?: SortOrderInput | SortOrder
+    bandejasEvaluadas?: SortOrderInput | SortOrder
+    bandejasRechazadas?: SortOrderInput | SortOrder
+    motivo?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Folio_DatoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folio?: string
+    AND?: Multas_Folio_DatoWhereInput | Multas_Folio_DatoWhereInput[]
+    OR?: Multas_Folio_DatoWhereInput[]
+    NOT?: Multas_Folio_DatoWhereInput | Multas_Folio_DatoWhereInput[]
+    nivelSupervisado?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    bandejasEvaluadas?: IntNullableFilter<"Multas_Folio_Dato"> | number | null
+    bandejasRechazadas?: IntNullableFilter<"Multas_Folio_Dato"> | number | null
+    motivo?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    updatedBy?: StringNullableFilter<"Multas_Folio_Dato"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Folio_Dato"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Folio_Dato"> | Date | string
+  }, "id" | "folio">
+
+  export type Multas_Folio_DatoOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    nivelSupervisado?: SortOrderInput | SortOrder
+    bandejasEvaluadas?: SortOrderInput | SortOrder
+    bandejasRechazadas?: SortOrderInput | SortOrder
+    motivo?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Folio_DatoCountOrderByAggregateInput
+    _avg?: Multas_Folio_DatoAvgOrderByAggregateInput
+    _max?: Multas_Folio_DatoMaxOrderByAggregateInput
+    _min?: Multas_Folio_DatoMinOrderByAggregateInput
+    _sum?: Multas_Folio_DatoSumOrderByAggregateInput
+  }
+
+  export type Multas_Folio_DatoScalarWhereWithAggregatesInput = {
+    AND?: Multas_Folio_DatoScalarWhereWithAggregatesInput | Multas_Folio_DatoScalarWhereWithAggregatesInput[]
+    OR?: Multas_Folio_DatoScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Folio_DatoScalarWhereWithAggregatesInput | Multas_Folio_DatoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Folio_Dato"> | string
+    folio?: StringWithAggregatesFilter<"Multas_Folio_Dato"> | string
+    nivelSupervisado?: StringNullableWithAggregatesFilter<"Multas_Folio_Dato"> | string | null
+    bandejasEvaluadas?: IntNullableWithAggregatesFilter<"Multas_Folio_Dato"> | number | null
+    bandejasRechazadas?: IntNullableWithAggregatesFilter<"Multas_Folio_Dato"> | number | null
+    motivo?: StringNullableWithAggregatesFilter<"Multas_Folio_Dato"> | string | null
+    updatedBy?: StringNullableWithAggregatesFilter<"Multas_Folio_Dato"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Folio_Dato"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Folio_Dato"> | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideWhereInput = {
+    AND?: Multas_Cantidad_OverrideWhereInput | Multas_Cantidad_OverrideWhereInput[]
+    OR?: Multas_Cantidad_OverrideWhereInput[]
+    NOT?: Multas_Cantidad_OverrideWhereInput | Multas_Cantidad_OverrideWhereInput[]
+    id?: StringFilter<"Multas_Cantidad_Override"> | string
+    folio?: StringFilter<"Multas_Cantidad_Override"> | string
+    letraAspecto?: StringFilter<"Multas_Cantidad_Override"> | string
+    variable?: StringFilter<"Multas_Cantidad_Override"> | string
+    valor?: FloatFilter<"Multas_Cantidad_Override"> | number
+    valorOriginal?: FloatNullableFilter<"Multas_Cantidad_Override"> | number | null
+    motivo?: StringFilter<"Multas_Cantidad_Override"> | string
+    createdBy?: StringFilter<"Multas_Cantidad_Override"> | string
+    createdAt?: DateTimeFilter<"Multas_Cantidad_Override"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Cantidad_Override"> | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    letraAspecto?: SortOrder
+    variable?: SortOrder
+    valor?: SortOrder
+    valorOriginal?: SortOrderInput | SortOrder
+    motivo?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folio_letraAspecto_variable?: Multas_Cantidad_OverrideFolioLetraAspectoVariableCompoundUniqueInput
+    AND?: Multas_Cantidad_OverrideWhereInput | Multas_Cantidad_OverrideWhereInput[]
+    OR?: Multas_Cantidad_OverrideWhereInput[]
+    NOT?: Multas_Cantidad_OverrideWhereInput | Multas_Cantidad_OverrideWhereInput[]
+    folio?: StringFilter<"Multas_Cantidad_Override"> | string
+    letraAspecto?: StringFilter<"Multas_Cantidad_Override"> | string
+    variable?: StringFilter<"Multas_Cantidad_Override"> | string
+    valor?: FloatFilter<"Multas_Cantidad_Override"> | number
+    valorOriginal?: FloatNullableFilter<"Multas_Cantidad_Override"> | number | null
+    motivo?: StringFilter<"Multas_Cantidad_Override"> | string
+    createdBy?: StringFilter<"Multas_Cantidad_Override"> | string
+    createdAt?: DateTimeFilter<"Multas_Cantidad_Override"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Cantidad_Override"> | Date | string
+  }, "id" | "folio_letraAspecto_variable">
+
+  export type Multas_Cantidad_OverrideOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    letraAspecto?: SortOrder
+    variable?: SortOrder
+    valor?: SortOrder
+    valorOriginal?: SortOrderInput | SortOrder
+    motivo?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Cantidad_OverrideCountOrderByAggregateInput
+    _avg?: Multas_Cantidad_OverrideAvgOrderByAggregateInput
+    _max?: Multas_Cantidad_OverrideMaxOrderByAggregateInput
+    _min?: Multas_Cantidad_OverrideMinOrderByAggregateInput
+    _sum?: Multas_Cantidad_OverrideSumOrderByAggregateInput
+  }
+
+  export type Multas_Cantidad_OverrideScalarWhereWithAggregatesInput = {
+    AND?: Multas_Cantidad_OverrideScalarWhereWithAggregatesInput | Multas_Cantidad_OverrideScalarWhereWithAggregatesInput[]
+    OR?: Multas_Cantidad_OverrideScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Cantidad_OverrideScalarWhereWithAggregatesInput | Multas_Cantidad_OverrideScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    folio?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    letraAspecto?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    variable?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    valor?: FloatWithAggregatesFilter<"Multas_Cantidad_Override"> | number
+    valorOriginal?: FloatNullableWithAggregatesFilter<"Multas_Cantidad_Override"> | number | null
+    motivo?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    createdBy?: StringWithAggregatesFilter<"Multas_Cantidad_Override"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Cantidad_Override"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Cantidad_Override"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -184120,6 +186417,181 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Folio_DatoCreateInput = {
+    id?: string
+    folio: string
+    nivelSupervisado?: string | null
+    bandejasEvaluadas?: number | null
+    bandejasRechazadas?: number | null
+    motivo?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Folio_DatoUncheckedCreateInput = {
+    id?: string
+    folio: string
+    nivelSupervisado?: string | null
+    bandejasEvaluadas?: number | null
+    bandejasRechazadas?: number | null
+    motivo?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Folio_DatoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    nivelSupervisado?: NullableStringFieldUpdateOperationsInput | string | null
+    bandejasEvaluadas?: NullableIntFieldUpdateOperationsInput | number | null
+    bandejasRechazadas?: NullableIntFieldUpdateOperationsInput | number | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Folio_DatoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    nivelSupervisado?: NullableStringFieldUpdateOperationsInput | string | null
+    bandejasEvaluadas?: NullableIntFieldUpdateOperationsInput | number | null
+    bandejasRechazadas?: NullableIntFieldUpdateOperationsInput | number | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Folio_DatoCreateManyInput = {
+    id?: string
+    folio: string
+    nivelSupervisado?: string | null
+    bandejasEvaluadas?: number | null
+    bandejasRechazadas?: number | null
+    motivo?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Folio_DatoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    nivelSupervisado?: NullableStringFieldUpdateOperationsInput | string | null
+    bandejasEvaluadas?: NullableIntFieldUpdateOperationsInput | number | null
+    bandejasRechazadas?: NullableIntFieldUpdateOperationsInput | number | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Folio_DatoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    nivelSupervisado?: NullableStringFieldUpdateOperationsInput | string | null
+    bandejasEvaluadas?: NullableIntFieldUpdateOperationsInput | number | null
+    bandejasRechazadas?: NullableIntFieldUpdateOperationsInput | number | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideCreateInput = {
+    id?: string
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    valorOriginal?: number | null
+    motivo: string
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Cantidad_OverrideUncheckedCreateInput = {
+    id?: string
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    valorOriginal?: number | null
+    motivo: string
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Cantidad_OverrideUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    variable?: StringFieldUpdateOperationsInput | string
+    valor?: FloatFieldUpdateOperationsInput | number
+    valorOriginal?: NullableFloatFieldUpdateOperationsInput | number | null
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    variable?: StringFieldUpdateOperationsInput | string
+    valor?: FloatFieldUpdateOperationsInput | number
+    valorOriginal?: NullableFloatFieldUpdateOperationsInput | number | null
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideCreateManyInput = {
+    id?: string
+    folio: string
+    letraAspecto: string
+    variable: string
+    valor: number
+    valorOriginal?: number | null
+    motivo: string
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Cantidad_OverrideUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    variable?: StringFieldUpdateOperationsInput | string
+    valor?: FloatFieldUpdateOperationsInput | number
+    valorOriginal?: NullableFloatFieldUpdateOperationsInput | number | null
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Cantidad_OverrideUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    variable?: StringFieldUpdateOperationsInput | string
+    valor?: FloatFieldUpdateOperationsInput | number
+    valorOriginal?: NullableFloatFieldUpdateOperationsInput | number | null
+    motivo?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -196017,6 +198489,107 @@ export namespace Prisma {
     licId?: SortOrder
     anio?: SortOrder
     mes?: SortOrder
+  }
+
+  export type Multas_Folio_DatoCountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    nivelSupervisado?: SortOrder
+    bandejasEvaluadas?: SortOrder
+    bandejasRechazadas?: SortOrder
+    motivo?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Folio_DatoAvgOrderByAggregateInput = {
+    bandejasEvaluadas?: SortOrder
+    bandejasRechazadas?: SortOrder
+  }
+
+  export type Multas_Folio_DatoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    nivelSupervisado?: SortOrder
+    bandejasEvaluadas?: SortOrder
+    bandejasRechazadas?: SortOrder
+    motivo?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Folio_DatoMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    nivelSupervisado?: SortOrder
+    bandejasEvaluadas?: SortOrder
+    bandejasRechazadas?: SortOrder
+    motivo?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Folio_DatoSumOrderByAggregateInput = {
+    bandejasEvaluadas?: SortOrder
+    bandejasRechazadas?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideFolioLetraAspectoVariableCompoundUniqueInput = {
+    folio: string
+    letraAspecto: string
+    variable: string
+  }
+
+  export type Multas_Cantidad_OverrideCountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    letraAspecto?: SortOrder
+    variable?: SortOrder
+    valor?: SortOrder
+    valorOriginal?: SortOrder
+    motivo?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideAvgOrderByAggregateInput = {
+    valor?: SortOrder
+    valorOriginal?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    letraAspecto?: SortOrder
+    variable?: SortOrder
+    valor?: SortOrder
+    valorOriginal?: SortOrder
+    motivo?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    letraAspecto?: SortOrder
+    variable?: SortOrder
+    valor?: SortOrder
+    valorOriginal?: SortOrder
+    motivo?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Cantidad_OverrideSumOrderByAggregateInput = {
+    valor?: SortOrder
+    valorOriginal?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -227315,6 +229888,14 @@ export namespace Prisma {
      * @deprecated Use Multas_Minuta_MesDefaultArgs instead
      */
     export type Multas_Minuta_MesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Minuta_MesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Folio_DatoDefaultArgs instead
+     */
+    export type Multas_Folio_DatoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Folio_DatoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Cantidad_OverrideDefaultArgs instead
+     */
+    export type Multas_Cantidad_OverrideArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Cantidad_OverrideDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

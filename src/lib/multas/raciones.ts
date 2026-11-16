@@ -6,12 +6,25 @@ export interface RacionesFolioResult {
     estratosExcluidosAplicados: string[]
     niveles: { label: string; value: number }[]
     recordsValidos: any[]
+    racionesNivelSupervisado?: number | null
+}
+
+function matchesNivel(pmpNivel: string | null | undefined, target: string): boolean {
+    if (!pmpNivel) return false
+    const n = pmpNivel.trim().toUpperCase()
+    const t = target.trim().toUpperCase()
+    if (n === t) return true
+    if (t === 'T' && (n === 'PARVULOS' || n === 'TRANSICION' || n === 'P' || n === 'K')) return true
+    if (t === 'B' && (n === 'BASICA' || n === 'PRIMARIA' || n === 'E')) return true
+    if (t === 'M' && (n === 'MEDIA' || n === 'SECUNDARIA')) return true
+    return false
 }
 
 /**
  * Obtiene y centraliza el cálculo de raciones PMPA de un establecimiento, mes y servicio.
  * Si excluirEstratos es true (módulo C2 activo para la licitación), filtra los estratos activos configurados.
  * Si es false (por defecto), incluye todas las raciones sin alteración de montos históricos.
+ * Si nivelSupervisado ('T', 'B', 'M') viene informado (módulo C3 activo), calcula las raciones específicas de ese nivel.
  */
 export async function getRacionesFolio(params: {
     rbd: number
@@ -20,8 +33,9 @@ export async function getRacionesFolio(params: {
     licId: number
     servicioCodigo?: string | null
     excluirEstratos?: boolean
+    nivelSupervisado?: string | null
 }): Promise<RacionesFolioResult> {
-    const { rbd, anho, mes, licId, servicioCodigo, excluirEstratos = false } = params
+    const { rbd, anho, mes, licId, servicioCodigo, excluirEstratos = false, nivelSupervisado } = params
 
     if (!rbd || !anho || !mes) {
         return {
@@ -101,11 +115,20 @@ export async function getRacionesFolio(params: {
         value
     }))
 
+    let racionesNivelSupervisado: number | null = null
+    if (nivelSupervisado) {
+        const matching = recordsValidos.filter(p => matchesNivel(p.nivel, nivelSupervisado))
+        if (matching.length > 0) {
+            racionesNivelSupervisado = matching.reduce((sum, p) => sum + (p.raceqJunaeb || 0), 0)
+        }
+    }
+
     return {
         racionesTotal,
         racionesExcluidas,
         estratosExcluidosAplicados: Array.from(estratosAplicadosSet),
         niveles,
-        recordsValidos
+        recordsValidos,
+        racionesNivelSupervisado
     }
 }

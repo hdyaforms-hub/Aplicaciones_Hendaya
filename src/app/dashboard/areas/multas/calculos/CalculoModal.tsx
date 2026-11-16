@@ -1,7 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getDetalleFolioParaCalculo, saveCalculo, guardarServicioManual } from './actions'
+import { 
+    getDetalleFolioParaCalculo, 
+    saveCalculo, 
+    guardarServicioManual,
+    guardarDatosFolio,
+    guardarCantidadOverride,
+    eliminarCantidadOverride
+} from './actions'
 import { testFormula } from '@/app/dashboard/mantenedor/multas/aspectos-ee/actions'
 
 interface CalculoModalProps {
@@ -29,6 +36,39 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [observacionManualServicio, setObservacionManualServicio] = useState('')
     const [guardandoServicioManual, setGuardandoServicioManual] = useState(false)
     const [isEditServicioModalOpen, setIsEditServicioModalOpen] = useState(false)
+
+    // C3 States: Datos Complementarios de Folio & Overrides
+    const [moduloC3Activo, setModuloC3Activo] = useState(false)
+    const [c3Submodulos, setC3Submodulos] = useState<{
+        nivelSupervisado?: boolean
+        bandejasAql?: boolean
+        correccionManual?: boolean
+    }>({})
+    const [folioDato, setFolioDato] = useState<any>(null)
+    const [overrides, setOverrides] = useState<any[]>([])
+
+    // C3.1: Form States Folio Dato
+    const [nivelSupervisadoState, setNivelSupervisadoState] = useState<string>('AUTO')
+    const [bandejasEvaluadasState, setBandejasEvaluadasState] = useState<string | number>('')
+    const [bandejasRechazadasState, setBandejasRechazadasState] = useState<string | number>('')
+    const [motivoFolioDatoState, setMotivoFolioDatoState] = useState('')
+    const [savingFolioDato, setSavingFolioDato] = useState(false)
+
+    // C3.2: Form States Override Manual
+    const [overrideModalOpen, setOverrideModalOpen] = useState(false)
+    const [overrideTarget, setOverrideTarget] = useState<{
+        letraAspecto: string
+        aspectoDesc?: string
+        variable: string
+        valorActual: number
+        valorOriginal?: number | null
+        overrideId?: string
+        motivo?: string
+    } | null>(null)
+    const [overrideNuevoValor, setOverrideNuevoValor] = useState('')
+    const [overrideMotivo, setOverrideMotivo] = useState('')
+    const [savingOverride, setSavingOverride] = useState(false)
+    const [deletingOverride, setDeletingOverride] = useState(false)
 
     useEffect(() => {
         if (isOpen && folio) {
@@ -107,8 +147,104 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             }
             
             setCustomValues(loadedValues)
+
+            // C3 Data & Submodulos
+            setModuloC3Activo(res.moduloC3Activo || false)
+            setC3Submodulos(res.c3Submodulos || {})
+            setFolioDato(res.folioDato || null)
+            setOverrides(res.overrides || [])
+
+            // Initialize Folio Dato form inputs
+            setNivelSupervisadoState(res.folioDato?.nivelSupervisado || 'AUTO')
+            setBandejasEvaluadasState(res.folioDato?.bandejasEvaluadas !== null && res.folioDato?.bandejasEvaluadas !== undefined ? res.folioDato.bandejasEvaluadas : '')
+            setBandejasRechazadasState(res.folioDato?.bandejasRechazadas !== null && res.folioDato?.bandejasRechazadas !== undefined ? res.folioDato.bandejasRechazadas : '')
+            setMotivoFolioDatoState(res.folioDato?.motivo || '')
         }
         setLoading(false)
+    }
+
+    const handleGuardarDatosFolio = async () => {
+        setSavingFolioDato(true)
+        setError('')
+        try {
+            const res = await guardarDatosFolio({
+                folio,
+                nivelSupervisado: nivelSupervisadoState === 'AUTO' ? null : nivelSupervisadoState,
+                bandejasEvaluadas: bandejasEvaluadasState === '' ? null : Number(bandejasEvaluadasState),
+                bandejasRechazadas: bandejasRechazadasState === '' ? null : Number(bandejasRechazadasState),
+                motivo: motivoFolioDatoState
+            })
+            if (res.error) {
+                alert(res.error)
+            } else {
+                await fetchData()
+                onCalculated()
+            }
+        } catch (e: any) {
+            alert('Error al guardar datos complementarios del folio.')
+        } finally {
+            setSavingFolioDato(false)
+        }
+    }
+
+    const handleGuardarOverride = async () => {
+        if (!overrideTarget) return
+        const cleanMotivo = overrideMotivo.trim()
+        if (!cleanMotivo) {
+            alert('El motivo de la corrección manual es obligatorio.')
+            return
+        }
+        const valNum = Number(overrideNuevoValor)
+        if (isNaN(valNum) || valNum < 0) {
+            alert('El valor ingresado debe ser un número válido mayor o igual a 0.')
+            return
+        }
+
+        setSavingOverride(true)
+        try {
+            const res = await guardarCantidadOverride({
+                folio,
+                letraAspecto: overrideTarget.letraAspecto,
+                variable: overrideTarget.variable,
+                valor: valNum,
+                motivo: cleanMotivo,
+                valorOriginal: overrideTarget.valorOriginal ?? overrideTarget.valorActual
+            })
+            if (res.error) {
+                alert(res.error)
+            } else {
+                setOverrideModalOpen(false)
+                setOverrideTarget(null)
+                await fetchData()
+                onCalculated()
+            }
+        } catch (e: any) {
+            alert('Error al guardar corrección manual.')
+        } finally {
+            setSavingOverride(false)
+        }
+    }
+
+    const handleEliminarOverride = async () => {
+        if (!overrideTarget?.overrideId) return
+        if (!confirm('¿Desea revertir esta corrección manual y restablecer el valor original?')) return
+
+        setDeletingOverride(true)
+        try {
+            const res = await eliminarCantidadOverride(overrideTarget.overrideId)
+            if (res.error) {
+                alert(res.error)
+            } else {
+                setOverrideModalOpen(false)
+                setOverrideTarget(null)
+                await fetchData()
+                onCalculated()
+            }
+        } catch (e: any) {
+            alert('Error al revertir corrección.')
+        } finally {
+            setDeletingOverride(false)
+        }
     }
 
     const evaluateFormulaLocal = (formula: string, customVals: Record<string, string>) => {
@@ -171,6 +307,16 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
         for (const d of detalles) {
             if (!d.formulaAsignada) continue
 
+            // Build aspect-specific variables using priority overrides if available
+            const aspectCustomValues: Record<string, string> = { ...customValues }
+            if (d.detalleVariables) {
+                for (const [vKey, vInfo] of Object.entries(d.detalleVariables)) {
+                    if ((vInfo as any)?.valor !== undefined && (vInfo as any)?.valor !== null) {
+                        aspectCustomValues[vKey] = String((vInfo as any).valor)
+                    }
+                }
+            }
+
             // Si el aspecto tiene una restricción activa aplicada (ej: Aspecto M año 2024 = $0)
             if (d.restriccionAplicada) {
                 const r = d.restriccionAplicada
@@ -185,13 +331,13 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                     descripcion: d.observacionesOMedioDeVerificacion,
                     formulaAplicada: glosaR,
                     montoMulta: montoR,
-                    variablesUsadas: customValues,
+                    variablesUsadas: aspectCustomValues,
                     restriccionAplicada: r
                 })
                 continue
             }
 
-            const evalRes = evaluateFormulaLocal(d.formulaAsignada, customValues)
+            const evalRes = evaluateFormulaLocal(d.formulaAsignada, aspectCustomValues)
             if (evalRes.error) {
                 hasError = true
                 continue
@@ -203,7 +349,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                 descripcion: d.observacionesOMedioDeVerificacion,
                 formulaAplicada: evalRes.formulaEvaluada,
                 montoMulta: evalRes.resultado || 0,
-                variablesUsadas: customValues
+                variablesUsadas: aspectCustomValues
             })
         }
 
@@ -404,6 +550,122 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                             </div>
                         </div>
 
+                        {/* C3.1: Datos Complementarios del Folio (Nivel Supervisado y Bandejas AQL) */}
+                        {moduloC3Activo && (c3Submodulos?.nivelSupervisado || c3Submodulos?.bandejasAql) && (
+                            <div className="p-4 bg-gradient-to-br from-cyan-50/70 via-sky-50/40 to-slate-50 rounded-2xl border border-cyan-200/80 shadow-xs space-y-3.5">
+                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-base">📑</span>
+                                        <span className="text-xs font-black text-cyan-950 uppercase tracking-wider">
+                                            Datos Complementarios del Folio (Módulo C3)
+                                        </span>
+                                    </div>
+                                    {folioDato?.updatedBy && (
+                                        <span className="text-[10px] text-cyan-800 bg-white/80 px-2.5 py-0.5 rounded-full font-semibold border border-cyan-200">
+                                            Última mod.: <strong>{folioDato.updatedBy}</strong>
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+                                    {c3Submodulos?.nivelSupervisado && (
+                                        <div className={c3Submodulos?.bandejasAql ? "md:col-span-6" : "md:col-span-12"}>
+                                            <label className="block text-[10px] font-black text-cyan-900 uppercase tracking-wider mb-1.5">
+                                                Nivel Supervisado en Terreno:
+                                            </label>
+                                            <div className="grid grid-cols-4 gap-1.5">
+                                                {[
+                                                    { id: 'AUTO', label: 'Auto (Todos)' },
+                                                    { id: 'T', label: 'Transición (T)' },
+                                                    { id: 'B', label: 'Básica (B)' },
+                                                    { id: 'M', label: 'Media (M)' }
+                                                ].map(opt => (
+                                                    <button
+                                                        key={opt.id}
+                                                        type="button"
+                                                        onClick={() => setNivelSupervisadoState(opt.id)}
+                                                        className={`px-2 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                                                            nivelSupervisadoState === opt.id
+                                                                ? 'bg-cyan-700 text-white border-cyan-800 shadow-xs ring-1 ring-cyan-700'
+                                                                : 'bg-white text-cyan-950 border-cyan-200 hover:bg-cyan-100/60'
+                                                        }`}
+                                                    >
+                                                        {opt.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                            <p className="text-[10px] text-cyan-700 mt-1 leading-tight">
+                                                Filtra las raciones del PMPA al nivel educativo evaluado en terreno.
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {c3Submodulos?.bandejasAql && (
+                                        <>
+                                            <div className="md:col-span-3">
+                                                <label className="block text-[10px] font-black text-cyan-900 uppercase tracking-wider mb-1.5">
+                                                    Bandejas Evaluadas:
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    max="50"
+                                                    placeholder="Ej: 8"
+                                                    value={bandejasEvaluadasState}
+                                                    onChange={e => setBandejasEvaluadasState(e.target.value)}
+                                                    className="w-full px-3 py-1.5 rounded-xl border border-cyan-200 bg-white text-xs font-bold text-gray-800 focus:ring-2 focus:ring-cyan-500 outline-none"
+                                                />
+                                                <p className="text-[10px] text-cyan-700 mt-1 leading-tight">
+                                                    Muestra AQL 6.5 (Anexo N°1).
+                                                </p>
+                                            </div>
+
+                                            <div className="md:col-span-3">
+                                                <label className="block text-[10px] font-black text-cyan-900 uppercase tracking-wider mb-1.5">
+                                                    Bandejas Rechazadas:
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    placeholder="Ej: 0"
+                                                    value={bandejasRechazadasState}
+                                                    onChange={e => setBandejasRechazadasState(e.target.value)}
+                                                    className="w-full px-3 py-1.5 rounded-xl border border-cyan-200 bg-white text-xs font-bold text-gray-800 focus:ring-2 focus:ring-cyan-500 outline-none"
+                                                />
+                                                <p className="text-[10px] text-cyan-700 mt-1 leading-tight">
+                                                    Rechazos bajo norma (-5%).
+                                                </p>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-2 border-t border-cyan-200/60">
+                                    <div className="flex-1">
+                                        <input
+                                            type="text"
+                                            placeholder="Motivo u observación del folio en terreno (opcional)..."
+                                            value={motivoFolioDatoState}
+                                            onChange={e => setMotivoFolioDatoState(e.target.value)}
+                                            className="w-full px-3 py-1.5 rounded-xl border border-cyan-200 bg-white text-xs text-gray-700 focus:ring-2 focus:ring-cyan-500 outline-none"
+                                        />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        disabled={savingFolioDato}
+                                        onClick={handleGuardarDatosFolio}
+                                        className="px-4 py-1.5 bg-cyan-700 hover:bg-cyan-800 text-white rounded-xl text-xs font-black transition-all shadow-xs flex items-center justify-center gap-1.5 shrink-0 disabled:opacity-50 cursor-pointer"
+                                    >
+                                        {savingFolioDato ? (
+                                            <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            <>💾 Guardar Datos Folio</>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {!hasPmpa && (
                             <div className="p-4 bg-red-50 text-red-700 rounded-xl border border-red-200 text-sm font-bold flex items-center gap-2">
                                 <span>⚠️</span> No se encontró información del PMPA para este RBD y Periodo. El cálculo no se puede realizar.
@@ -554,7 +816,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                         )}
                                                                     </span>
                                                                 )}
-                                                                {d.formulaAsignada.toUpperCase().includes('NIVELCONTROLADO') && (() => {
+                                                                 {d.formulaAsignada.toUpperCase().includes('NIVELCONTROLADO') && (() => {
                                                                     const selectedLevelLabel = customValues['NIVELCONTROLADO'] || ''
                                                                     if (selectedLevelLabel === 'No Aplica (0 Raciones)' || selectedLevelLabel === 'No Aplica' || selectedLevelLabel === '0') {
                                                                         return <span>⚖️ NIVEL CONTROLADO: No Aplica (0 raciones)</span>
@@ -568,27 +830,83 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                         <span className="text-amber-700 italic">⚖️ NIVEL CONTROLADO: Sin seleccionar (Raciones generales: {data?.racionesValue})</span>
                                                                     )
                                                                 })()}
-                                                                {/\bMATERIAPRIMATPMPAP\b/.test(d.formulaAsignada.toUpperCase()) && (
-                                                                    <span>📦 MATERIAPRIMATPMPAP: {customValues['MATERIAPRIMATPMPAP'] || 1}</span>
-                                                                )}
-                                                                {/\bMATERIAPRIMA\b/.test(d.formulaAsignada.toUpperCase()) && (
-                                                                    <span>📦 MATERIAPRIMA: {customValues['MATERIAPRIMA'] || 1}</span>
-                                                                )}
-                                                                {d.formulaAsignada.toUpperCase().includes('INSTRUMENTO') && (
-                                                                    <span>🔧 INSTRUMENTO: {customValues['INSTRUMENTO'] || 1}</span>
-                                                                )}
-                                                                {/\bMANIPULADORAAFECTADA\b/.test(d.formulaAsignada.toUpperCase()) && (
-                                                                    <span>👩‍🍳 MANIPULADORA AFECTADA: {customValues['MANIPULADORAAFECTADA'] || 1}</span>
-                                                                )}
-                                                                {/\bMANIPULADORA\b/.test(d.formulaAsignada.toUpperCase()) && (
-                                                                    <span>👩‍🍳 MANIPULADORA: {customValues['MANIPULADORA'] || 1}</span>
-                                                                )}
-                                                                {d.formulaAsignada.toUpperCase().includes('CANTSERVICIO') && (
-                                                                    <span>🍽️ CANTSERVICIO: {customValues['CANTSERVICIO'] || 1}</span>
-                                                                )}
-                                                                {d.formulaAsignada.toUpperCase().includes('ELEMENTOS') && (
-                                                                    <span>🧩 ELEMENTOS: {customValues['ELEMENTOS'] || 1}</span>
-                                                                )}
+                                                                {(() => {
+                                                                    const renderVariableBadge = (varKey: string, label: string, icon: string) => {
+                                                                        const varInfo = d.detalleVariables?.[varKey]
+                                                                        const val = (varInfo?.valor !== undefined && varInfo?.valor !== null) ? varInfo.valor : (customValues[varKey] || 1)
+                                                                        const isOverride = varInfo?.origen === 'OVERRIDE_MANUAL'
+                                                                        const isAuto = varInfo?.origen === 'EXTRACCION_AUTO'
+
+                                                                        return (
+                                                                            <span
+                                                                                key={varKey}
+                                                                                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg border text-[10px] transition-colors ${
+                                                                                    isOverride
+                                                                                        ? 'bg-amber-100 text-amber-950 border-amber-300 font-black shadow-2xs'
+                                                                                        : isAuto
+                                                                                            ? 'bg-sky-100/70 text-sky-950 border-sky-300 font-bold'
+                                                                                            : 'bg-white/80 text-amber-900 border-amber-200/80 font-bold'
+                                                                                }`}
+                                                                            >
+                                                                                <span>{icon} {label}: <strong className="font-mono text-[11px]">{val}</strong></span>
+
+                                                                                {isOverride && (
+                                                                                    <span
+                                                                                        className="px-1.5 py-0.2 rounded-md bg-amber-200 text-amber-950 text-[9px] uppercase font-black cursor-help border border-amber-300"
+                                                                                        title={`Corregido manualmente por ${varInfo.autor || 'Usuario'}: "${varInfo.motivo || 'Sin motivo'}"`}
+                                                                                    >
+                                                                                        Corregido
+                                                                                    </span>
+                                                                                )}
+
+                                                                                {isAuto && (
+                                                                                    <span
+                                                                                        className="px-1.5 py-0.2 rounded-md bg-sky-200 text-sky-950 text-[9px] uppercase font-bold cursor-help border border-sky-300"
+                                                                                        title="Extraído automáticamente del texto de la observación del acta"
+                                                                                    >
+                                                                                        Auto
+                                                                                    </span>
+                                                                                )}
+
+                                                                                {moduloC3Activo && c3Submodulos?.correccionManual && (
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        onClick={() => {
+                                                                                            setOverrideTarget({
+                                                                                                letraAspecto: d.letraAspecto,
+                                                                                                aspectoDesc: d.aspecto,
+                                                                                                variable: varKey,
+                                                                                                valorActual: Number(val),
+                                                                                                valorOriginal: varInfo?.valorOriginal,
+                                                                                                overrideId: varInfo?.overrideId,
+                                                                                                motivo: varInfo?.motivo
+                                                                                            })
+                                                                                            setOverrideNuevoValor(String(val))
+                                                                                            setOverrideMotivo(varInfo?.motivo || '')
+                                                                                            setOverrideModalOpen(true)
+                                                                                        }}
+                                                                                        title="Modificar cantidad de este aspecto con motivo obligatorio (C3.2)"
+                                                                                        className="ml-0.5 hover:scale-125 transition-transform text-cyan-800 hover:text-cyan-950 font-bold cursor-pointer"
+                                                                                    >
+                                                                                        ✏️
+                                                                                    </button>
+                                                                                )}
+                                                                            </span>
+                                                                        )
+                                                                    }
+
+                                                                    return (
+                                                                        <>
+                                                                            {/\bMATERIAPRIMATPMPAP\b/.test(d.formulaAsignada.toUpperCase()) && renderVariableBadge('MATERIAPRIMATPMPAP', 'MATERIAPRIMATPMPAP', '📦')}
+                                                                            {/\bMATERIAPRIMA\b/.test(d.formulaAsignada.toUpperCase()) && renderVariableBadge('MATERIAPRIMA', 'MATERIAPRIMA', '📦')}
+                                                                            {d.formulaAsignada.toUpperCase().includes('INSTRUMENTO') && renderVariableBadge('INSTRUMENTO', 'INSTRUMENTO', '🔧')}
+                                                                            {/\bMANIPULADORAAFECTADA\b/.test(d.formulaAsignada.toUpperCase()) && renderVariableBadge('MANIPULADORAAFECTADA', 'MANIPULADORA AFECTADA', '👩‍🍳')}
+                                                                            {/\bMANIPULADORA\b/.test(d.formulaAsignada.toUpperCase()) && renderVariableBadge('MANIPULADORA', 'MANIPULADORA', '👩‍🍳')}
+                                                                            {d.formulaAsignada.toUpperCase().includes('CANTSERVICIO') && renderVariableBadge('CANTSERVICIO', 'CANTSERVICIO', '🍽️')}
+                                                                            {d.formulaAsignada.toUpperCase().includes('ELEMENTOS') && renderVariableBadge('ELEMENTOS', 'ELEMENTOS', '🧩')}
+                                                                        </>
+                                                                    )
+                                                                })()}
                                                             </div>
                                                         )}
                                                     </div>
@@ -915,6 +1233,103 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                             >
                                 {guardandoServicioManual ? 'Guardando...' : 'Guardar Servicio'}
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Sub-modal C3.2: Corrección Manual de Cantidad */}
+            {overrideModalOpen && overrideTarget && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-[60] p-4">
+                    <div className="bg-white rounded-3xl p-6 sm:p-7 w-full max-w-md shadow-2xl border border-gray-100 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                        <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                            <h4 className="text-base font-black text-gray-900 flex items-center gap-2">
+                                <span>✏️</span> Corrección Manual de Cantidad (C3.2)
+                            </h4>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setOverrideModalOpen(false)
+                                    setOverrideTarget(null)
+                                }}
+                                className="text-gray-400 hover:text-gray-700 font-bold text-lg cursor-pointer"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <div className="space-y-3">
+                            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs space-y-1">
+                                <p className="text-gray-500 font-semibold">Folio: <span className="font-bold text-slate-800">{folio}</span></p>
+                                <p className="text-gray-500 font-semibold">
+                                    Aspecto: <span className="font-bold text-cyan-800">{overrideTarget.letraAspecto}</span>
+                                    {overrideTarget.aspectoDesc ? <span className="text-gray-600 block text-[11px] mt-0.5">{overrideTarget.aspectoDesc}</span> : null}
+                                </p>
+                                <p className="text-gray-500 font-semibold">Variable: <span className="font-mono font-bold text-amber-800">{overrideTarget.variable}</span></p>
+                                <p className="text-gray-500 font-semibold">Valor Actual: <span className="font-bold text-gray-800 font-mono">{overrideTarget.valorActual}</span></p>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider">
+                                    Nuevo Valor de la Cantidad (*):
+                                </label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-white text-xs font-bold text-gray-800 outline-none"
+                                    value={overrideNuevoValor}
+                                    onChange={e => setOverrideNuevoValor(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="block text-[11px] font-black text-gray-700 uppercase tracking-wider flex items-center justify-between">
+                                    <span>Motivo Obligatorio de la Corrección (*):</span>
+                                    <span className="text-[10px] text-rose-600 font-bold">Obligatorio</span>
+                                </label>
+                                <textarea
+                                    rows={3}
+                                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-white text-xs text-gray-700 font-medium leading-normal outline-none"
+                                    placeholder="Explique el motivo por el cual se rectifica la cantidad (ej: acta rectificatoria, error de digitación del supervisor)..."
+                                    value={overrideMotivo}
+                                    onChange={e => setOverrideMotivo(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-2 border-t border-gray-100">
+                            <div>
+                                {overrideTarget.overrideId ? (
+                                    <button
+                                        type="button"
+                                        disabled={deletingOverride}
+                                        onClick={handleEliminarOverride}
+                                        className="px-3 py-2 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-bold transition-all border border-rose-200 disabled:opacity-50 cursor-pointer"
+                                    >
+                                        {deletingOverride ? 'Revirtiendo...' : 'Revertir al Original'}
+                                    </button>
+                                ) : <div />}
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setOverrideModalOpen(false)
+                                        setOverrideTarget(null)
+                                    }}
+                                    className="px-4 py-2 rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 text-xs font-bold transition-all cursor-pointer"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="button"
+                                    disabled={!overrideMotivo.trim() || overrideNuevoValor === '' || savingOverride}
+                                    onClick={handleGuardarOverride}
+                                    className="px-5 py-2 rounded-xl text-white bg-cyan-700 hover:bg-cyan-800 text-xs font-bold transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                                >
+                                    {savingOverride ? 'Guardando...' : 'Aplicar Corrección'}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

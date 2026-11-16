@@ -949,6 +949,31 @@ exports.Prisma.Multas_Minuta_MesScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Folio_DatoScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  nivelSupervisado: 'nivelSupervisado',
+  bandejasEvaluadas: 'bandejasEvaluadas',
+  bandejasRechazadas: 'bandejasRechazadas',
+  motivo: 'motivo',
+  updatedBy: 'updatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Cantidad_OverrideScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  letraAspecto: 'letraAspecto',
+  variable: 'variable',
+  valor: 'valor',
+  valorOriginal: 'valorOriginal',
+  motivo: 'motivo',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2166,6 +2191,8 @@ exports.Prisma.ModelName = {
   Multas_Estrato_Excluido: 'Multas_Estrato_Excluido',
   Multas_Manipuladora_Mes: 'Multas_Manipuladora_Mes',
   Multas_Minuta_Mes: 'Multas_Minuta_Mes',
+  Multas_Folio_Dato: 'Multas_Folio_Dato',
+  Multas_Cantidad_Override: 'Multas_Cantidad_Override',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

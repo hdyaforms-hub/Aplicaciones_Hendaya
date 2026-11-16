@@ -255,7 +255,58 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Minuta_Mes" ("licId", "anio", "mes");
         `)
 
-        // 10. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
+        // 10. Tabla de Datos Complementarios por Folio (C3.1)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Folio_Dato" (
+                "id" TEXT PRIMARY KEY,
+                "folio" VARCHAR(50) NOT NULL,
+                "nivelSupervisado" VARCHAR(10),
+                "bandejasEvaluadas" INTEGER,
+                "bandejasRechazadas" INTEGER,
+                "motivo" TEXT,
+                "updatedBy" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Multas_Folio_Dato_folio_key"
+            ON "Multas_Folio_Dato" ("folio");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Folio_Dato_folio_idx"
+            ON "Multas_Folio_Dato" ("folio");
+        `)
+
+        // 11. Tabla de Correcciones Manuales de Cantidad con Motivo Obligatorio (C3.2)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Multas_Cantidad_Override" (
+                "id" TEXT PRIMARY KEY,
+                "folio" VARCHAR(50) NOT NULL,
+                "letraAspecto" VARCHAR(5) NOT NULL,
+                "variable" VARCHAR(50) NOT NULL,
+                "valor" DOUBLE PRECISION NOT NULL,
+                "valorOriginal" DOUBLE PRECISION,
+                "motivo" TEXT NOT NULL,
+                "createdBy" TEXT NOT NULL,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "multas_cant_override_unique"
+            ON "Multas_Cantidad_Override" ("folio", "letraAspecto", "variable");
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Multas_Cantidad_Override_folio_idx"
+            ON "Multas_Cantidad_Override" ("folio");
+        `)
+
+        // 12. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
             DO $$ 
             BEGIN

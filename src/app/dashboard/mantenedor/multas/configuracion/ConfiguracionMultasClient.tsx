@@ -29,6 +29,8 @@ import {
     SUBMODULOS_C5_DEFAULT,
     SubModuloCatalogosC2,
     SUBMODULOS_C2_DEFAULT,
+    SubModuloDatosFolioC3,
+    SUBMODULOS_C3_DEFAULT,
     HorarioServicioItem,
     ManipuladoraMesItem,
     MinutaMesItem
@@ -236,6 +238,22 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
             prev.map(m => {
                 if (m.codigo !== 'C2') return m
                 const currentSub = m.submodulos || { ...SUBMODULOS_C2_DEFAULT }
+                return {
+                    ...m,
+                    submodulos: {
+                        ...currentSub,
+                        [subKey]: !currentSub[subKey]
+                    }
+                }
+            })
+        )
+    }
+
+    const handleToggleSubmoduloC3 = (subKey: keyof SubModuloDatosFolioC3) => {
+        setModulos(prev =>
+            prev.map(m => {
+                if (m.codigo !== 'C3') return m
+                const currentSub = m.submodulos || { ...SUBMODULOS_C3_DEFAULT }
                 return {
                     ...m,
                     submodulos: {
@@ -916,6 +934,38 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                                             type="checkbox"
                                                             checked={isSubActive}
                                                             onChange={() => handleToggleSubmoduloC2(sub.key as keyof SubModuloCatalogosC2)}
+                                                            className="rounded text-cyan-600 focus:ring-cyan-500 w-3.5 h-3.5 border-slate-300"
+                                                        />
+                                                    </label>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Sub-reglas granulares para el Módulo C3 (Datos del Folio) */}
+                                {m.codigo === 'C3' && m.activo && (
+                                    <div className="mt-3 pt-3 border-t border-cyan-200/60 space-y-2">
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-cyan-900 flex items-center justify-between">
+                                            <span>Capacidades de Folio:</span>
+                                            <span className="text-[9px] text-cyan-600 font-normal">Granulares</span>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            {[
+                                                { key: 'nivelSupervisado', label: 'Nivel Supervisado T/B/M (C3.1)' },
+                                                { key: 'bandejasAql', label: 'Bandejas Evaluadas/Rechazadas (C3.1)' },
+                                                { key: 'correccionManual', label: 'Corrección Manual Cantidades (C3.2)' },
+                                                { key: 'exigirMotivo', label: 'Exigir Motivo Obligatorio' }
+                                            ].map(sub => {
+                                                const currentSub = (m.submodulos as SubModuloDatosFolioC3) || { ...SUBMODULOS_C3_DEFAULT }
+                                                const isSubActive = currentSub[sub.key as keyof SubModuloDatosFolioC3] !== false
+                                                return (
+                                                    <label key={sub.key} className="flex items-center justify-between text-[11px] font-semibold text-slate-700 cursor-pointer hover:text-cyan-900">
+                                                        <span>{sub.label}</span>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isSubActive}
+                                                            onChange={() => handleToggleSubmoduloC3(sub.key as keyof SubModuloDatosFolioC3)}
                                                             className="rounded text-cyan-600 focus:ring-cyan-500 w-3.5 h-3.5 border-slate-300"
                                                         />
                                                     </label>
