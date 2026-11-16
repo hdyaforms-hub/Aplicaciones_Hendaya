@@ -12,6 +12,14 @@ import { logAuditAction } from '@/lib/audit'
 import { resolverVariablesConPrioridad, extraerVariablesDeObservacion, OverrideInfo } from '@/lib/multas/variables'
 import { extraerVariablesRobustas } from '@/lib/multas/extractor'
 import { FolioDatoItem, CantidadOverrideItem } from '@/lib/multas/config'
+import {
+    evaluarYGuardarHallazgosFolio,
+    obtenerHallazgosFolio,
+    actualizarEstadoHallazgo,
+    obtenerHallazgosLicitacion,
+    obtenerResumenMetricasNC
+} from '@/lib/multas/reglas/servicio'
+import { EstadoHallazgo } from '@/lib/multas/reglas/definiciones'
 
 const dbEECab = () => getMultasDelegate('multas_Elementos_Esenciales_Cab')
 const dbEEDet = () => getMultasDelegate('multas_Elementos_Esenciales_Det')
@@ -2041,15 +2049,6 @@ export async function getComparacionExtraccionLicitacion(params: {
 // ----------------------------------------------------------------------
 // ETAPA 5 (C5): Acciones del Motor de Reglas NC y Hallazgos Auditados
 // ----------------------------------------------------------------------
-
-import {
-    evaluarYGuardarHallazgosFolio,
-    obtenerHallazgosFolio,
-    actualizarEstadoHallazgo,
-    obtenerHallazgosLicitacion,
-    obtenerResumenMetricasNC
-} from '@/lib/multas/reglas/servicio'
-import { EstadoHallazgo } from '@/lib/multas/reglas/definiciones'
 
 /**
  * Obtiene o evalúa los hallazgos NC para un folio específico, preservando descartes previos.
