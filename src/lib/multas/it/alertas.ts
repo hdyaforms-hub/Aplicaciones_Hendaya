@@ -5,7 +5,7 @@
  */
 
 import { fechaToChileCalendarStr } from '../restricciones'
-import { SubModuloReglasC5, SUBMODULOS_C5_DEFAULT } from '@/app/dashboard/mantenedor/multas/configuracion/types'
+import { SubModuloReglasC5, SUBMODULOS_C5_DEFAULT } from '../config'
 
 /**
  * Escapa caracteres especiales de expresiones regulares para evitar errores sintácticos.
@@ -42,6 +42,7 @@ export interface ParametrosITLicitacion {
 
 export interface AlertaITAspectoResult {
     letra: string
+    subsanabilidadHabilitada: boolean
     tienePeriodoCorreccion: boolean
     periodoCorreccionTexto: string
     plazoDias: number
@@ -165,7 +166,11 @@ export function generarAlertasITAspecto(
         } else {
             let filaAQL = tablaAQL.find((f: any) => racionesEvaluadas >= f.min && racionesEvaluadas <= f.max)
             if (!filaAQL) {
-                filaAQL = tablaAQL[tablaAQL.length - 1] || { muestra: 13, ac: 2, re: 3, rangoTexto: 'Más de 500 raciones' }
+                if (racionesEvaluadas < tablaAQL[0].min) {
+                    filaAQL = tablaAQL[0] // Raciones bajo el mínimo de la tabla (ej. 1 ración) -> usa el primer tramo
+                } else {
+                    filaAQL = tablaAQL[tablaAQL.length - 1] || { muestra: 13, ac: 2, re: 3, rangoTexto: 'Más de 500 raciones' }
+                }
             }
 
             const muestraMinima = filaAQL.muestra
@@ -336,6 +341,7 @@ export function generarAlertasITAspecto(
 
     return {
         letra: upperLetra,
+        subsanabilidadHabilitada,
         tienePeriodoCorreccion,
         periodoCorreccionTexto,
         plazoDias: tienePeriodoCorreccion ? plazoDiasConfig : 0,

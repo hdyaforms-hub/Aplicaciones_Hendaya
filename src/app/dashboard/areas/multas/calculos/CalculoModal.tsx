@@ -589,7 +589,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                         <div className="mt-3.5 rounded-xl border border-slate-200 overflow-hidden bg-white text-xs shadow-sm">
                                                             {/* Encabezado IT */}
                                                             <div className={`px-3.5 py-2 flex flex-wrap items-center justify-between gap-2 border-b ${
-                                                                d.itInfo.tienePeriodoCorreccion 
+                                                                d.itInfo.subsanabilidadHabilitada && d.itInfo.tienePeriodoCorreccion 
                                                                     ? 'bg-emerald-50/80 border-emerald-100 text-emerald-950' 
                                                                     : 'bg-slate-50 border-slate-200 text-slate-800'
                                                             }`}>
@@ -599,17 +599,19 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                     </span>
                                                                     <span className="text-[10px] text-slate-500 font-medium">({d.itInfo.itDocumento})</span>
                                                                 </div>
-                                                                <div>
-                                                                    {d.itInfo.tienePeriodoCorreccion ? (
-                                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                                                            🟢 Subsanable — Plazo: 5 Días Hábiles
-                                                                        </span>
-                                                                    ) : (
-                                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700">
-                                                                            ⚪ No Subsanable en Visita
-                                                                        </span>
-                                                                    )}
-                                                                </div>
+                                                                {d.itInfo.subsanabilidadHabilitada && (
+                                                                    <div>
+                                                                        {d.itInfo.tienePeriodoCorreccion ? (
+                                                                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                                                                🟢 Subsanable — Plazo: {d.itInfo.plazoDias || 5} Días Hábiles
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700">
+                                                                                ⚪ No Subsanable en Visita
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                )}
                                                             </div>
 
                                                             <div className="p-3.5 space-y-2.5">
