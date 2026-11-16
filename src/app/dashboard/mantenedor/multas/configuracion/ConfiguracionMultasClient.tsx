@@ -18,6 +18,8 @@ import {
     ModuloSistemaConfig,
     SubModuloReglasC5,
     SUBMODULOS_C5_DEFAULT,
+    SubModuloCatalogosC2,
+    SUBMODULOS_C2_DEFAULT,
     HorarioServicioItem
 } from './types'
 
@@ -137,6 +139,22 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
             prev.map(m => {
                 if (m.codigo !== 'C5') return m
                 const currentSub = m.submodulos || { ...SUBMODULOS_C5_DEFAULT }
+                return {
+                    ...m,
+                    submodulos: {
+                        ...currentSub,
+                        [subKey]: !currentSub[subKey]
+                    }
+                }
+            })
+        )
+    }
+
+    const handleToggleSubmoduloC2 = (subKey: keyof SubModuloCatalogosC2) => {
+        setModulos(prev =>
+            prev.map(m => {
+                if (m.codigo !== 'C2') return m
+                const currentSub = m.submodulos || { ...SUBMODULOS_C2_DEFAULT }
                 return {
                     ...m,
                     submodulos: {
@@ -591,6 +609,38 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                             <span>🚫</span>
                                             <span>Estratos Excluidos</span>
                                         </button>
+                                    </div>
+                                )}
+
+                                {/* Sub-reglas granulares para el Módulo C2 */}
+                                {m.codigo === 'C2' && m.activo && (
+                                    <div className="mt-3 pt-3 border-t border-cyan-200/60 space-y-2">
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-cyan-900 flex items-center justify-between">
+                                            <span>Funcionalidades de Validación:</span>
+                                            <span className="text-[9px] text-cyan-600 font-normal">Granulares</span>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            {[
+                                                { key: 'horariosServicio', label: 'Validar Horarios por Servicio (C2.1)' },
+                                                { key: 'estratosExcluidos', label: 'Excluir Estratos en Raciones (C2.2)' },
+                                                { key: 'dotacionOficial', label: 'Dotación Oficial Manipuladoras (C2.3)' },
+                                                { key: 'minutaPlanificada', label: 'Minuta Planificada Aspecto A (C2.4)' }
+                                            ].map(sub => {
+                                                const currentSub = (m.submodulos as SubModuloCatalogosC2) || { ...SUBMODULOS_C2_DEFAULT }
+                                                const isSubActive = currentSub[sub.key as keyof SubModuloCatalogosC2] === true
+                                                return (
+                                                    <label key={sub.key} className="flex items-center justify-between text-[11px] font-semibold text-slate-700 cursor-pointer hover:text-cyan-900">
+                                                        <span>{sub.label}</span>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isSubActive}
+                                                            onChange={() => handleToggleSubmoduloC2(sub.key as keyof SubModuloCatalogosC2)}
+                                                            className="rounded text-cyan-600 focus:ring-cyan-500 w-3.5 h-3.5 border-slate-300"
+                                                        />
+                                                    </label>
+                                                )
+                                            })}
+                                        </div>
                                     </div>
                                 )}
 

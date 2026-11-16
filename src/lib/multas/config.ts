@@ -16,13 +16,27 @@ export const SUBMODULOS_C5_DEFAULT: SubModuloReglasC5 = {
     subsanabilidad: true
 }
 
+export interface SubModuloCatalogosC2 {
+    horariosServicio: boolean
+    estratosExcluidos: boolean
+    dotacionOficial: boolean
+    minutaPlanificada: boolean
+}
+
+export const SUBMODULOS_C2_DEFAULT: SubModuloCatalogosC2 = {
+    horariosServicio: true,
+    estratosExcluidos: false,
+    dotacionOficial: false,
+    minutaPlanificada: false
+}
+
 export interface ModuloSistemaConfig {
     codigo: string
     nombre: string
     descripcion: string
     activo: boolean
     fase: 'Operativo' | 'En Desarrollo' | 'Planificado'
-    submodulos?: SubModuloReglasC5
+    submodulos?: SubModuloReglasC5 | SubModuloCatalogosC2 | any
 }
 
 export const MODULOS_C_DEFAULT: ModuloSistemaConfig[] = [
@@ -38,7 +52,8 @@ export const MODULOS_C_DEFAULT: ModuloSistemaConfig[] = [
         nombre: 'Catálogos de Validación de Terreno (Horarios, Estratos, Dotación)',
         descripcion: 'Validación de actas fuera de horario, estratos excluidos (206, 208, 209) y dotación oficial.',
         activo: false,
-        fase: 'Planificado'
+        fase: 'En Desarrollo',
+        submodulos: SUBMODULOS_C2_DEFAULT
     },
     {
         codigo: 'C3',

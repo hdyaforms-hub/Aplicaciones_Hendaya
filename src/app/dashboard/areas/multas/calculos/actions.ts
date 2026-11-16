@@ -537,6 +537,35 @@ export async function calculateAll(params: {
             console.warn('Advertencia al consultar restricciones masivas:', rErr)
         }
 
+        // 3. Consultar parámetros de configuración por licitación para determinar si exclusión de estratos está activa
+        let allParametrosLicitacion: any[] = []
+        try {
+            allParametrosLicitacion = allLicIds.length > 0 ? await prisma.multas_Parametros_Licitacion.findMany({
+                where: { licId: { in: allLicIds }, activo: true }
+            }) : []
+        } catch (pErr) {
+            console.warn('Advertencia al consultar parametros masivos de licitacion:', pErr)
+        }
+
+        const excluirEstratosPorLicId = new Map<number, boolean>()
+        for (const p of allParametrosLicitacion) {
+            let excluir = false
+            if (p.modulosActivosJson) {
+                try {
+                    const parsed = JSON.parse(p.modulosActivosJson)
+                    if (Array.isArray(parsed)) {
+                        const c2 = parsed.find((m: any) => m.codigo === 'C2')
+                        if (c2 && c2.activo === true) {
+                            excluir = c2.submodulos?.estratosExcluidos === true
+                        }
+                    }
+                } catch {
+                    // Ignorar error de parsing
+                }
+            }
+            excluirEstratosPorLicId.set(p.licId, excluir)
+        }
+
         const [allAspectos, allUtms, allServicios] = await Promise.all([
             prisma.aspectoEE.findMany({ where: { licId: { in: allLicIds } } }),
             prisma.uTM.findMany(),
@@ -571,13 +600,14 @@ export async function calculateAll(params: {
                 const mes = fecha.getMonth() + 1
                 const utmVal = allUtms.find(u => u.anho === anho && u.mes === mes)?.monto || 0
                 
+                const excluirEstratos = excluirEstratosPorLicId.get(licId) || false
                 const racionesData = await getRacionesFolio({
                     rbd,
                     anho,
                     mes,
                     licId,
                     servicioCodigo: serviceCode,
-                    excluirEstratos: false
+                    excluirEstratos
                 })
                 const raciones = racionesData.racionesTotal
 
@@ -961,8 +991,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                             submodulosActivos = c5.submodulos
                         }
                         const c2 = parsedMod.find((m: any) => m.codigo === 'C2')
-                        if (c2) {
-                            moduloC2Activo = c2.activo === true
+                        if (c2 && c2.activo === true) {
+                            moduloC2Activo = c2.submodulos?.estratosExcluidos === true
                         }
                     }
                 } catch {

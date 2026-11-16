@@ -39,6 +39,10 @@ export async function getRacionesFolio(params: {
         mes
     }
 
+    if (licId && !isNaN(Number(licId)) && Number(licId) > 0) {
+        whereClause.licitacion = Number(licId)
+    }
+
     if (servicioCodigo) {
         whereClause.servicio = servicioCodigo
     }

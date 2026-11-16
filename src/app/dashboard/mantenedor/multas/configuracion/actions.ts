@@ -12,6 +12,7 @@ import {
     MODULOS_C_DEFAULT,
     CAUSAS_NO_IMPUTABLES_DEFAULT,
     SUBMODULOS_C5_DEFAULT,
+    SUBMODULOS_C2_DEFAULT,
     HorarioServicioItem
 } from './types'
 
@@ -127,12 +128,16 @@ export async function getParametrosLicitacion(licId: number) {
                     modulos = MODULOS_C_DEFAULT.map(def => {
                         const found = parsedModulos.find((m: any) => m.codigo === def.codigo)
                         if (!found) return def
+                        let submodulos = undefined
+                        if (def.codigo === 'C5') {
+                            submodulos = { ...SUBMODULOS_C5_DEFAULT, ...(found.submodulos || {}) }
+                        } else if (def.codigo === 'C2') {
+                            submodulos = { ...SUBMODULOS_C2_DEFAULT, ...(found.submodulos || {}) }
+                        }
                         return {
                             ...def,
                             activo: found.activo,
-                            submodulos: def.codigo === 'C5'
-                                ? { ...SUBMODULOS_C5_DEFAULT, ...(found.submodulos || {}) }
-                                : undefined
+                            submodulos
                         }
                     })
                 }
