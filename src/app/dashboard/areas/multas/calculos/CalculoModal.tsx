@@ -7,7 +7,8 @@ import {
     guardarServicioManual,
     guardarDatosFolio,
     guardarCantidadOverride,
-    eliminarCantidadOverride
+    eliminarCantidadOverride,
+    getDiagnosticoFolio
 } from './actions'
 import { testFormula } from '@/app/dashboard/mantenedor/multas/aspectos-ee/actions'
 
@@ -69,6 +70,28 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [overrideMotivo, setOverrideMotivo] = useState('')
     const [savingOverride, setSavingOverride] = useState(false)
     const [deletingOverride, setDeletingOverride] = useState(false)
+
+    // C4 States: Diagnóstico de Extracción
+    const [isDiagnosticoOpen, setIsDiagnosticoOpen] = useState(false)
+    const [diagnosticoData, setDiagnosticoData] = useState<any>(null)
+    const [loadingDiagnostico, setLoadingDiagnostico] = useState(false)
+
+    const handleOpenDiagnostico = async () => {
+        setIsDiagnosticoOpen(true)
+        setLoadingDiagnostico(true)
+        try {
+            const res = await getDiagnosticoFolio(folio)
+            if (res.error) {
+                alert(res.error)
+            } else {
+                setDiagnosticoData(res)
+            }
+        } catch (e: any) {
+            alert('Error al cargar diagnóstico de extracción.')
+        } finally {
+            setLoadingDiagnostico(false)
+        }
+    }
 
     useEffect(() => {
         if (isOpen && folio) {
@@ -431,9 +454,19 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                     ✕
                 </button>
 
-                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight flex items-center gap-2">
-                    <span>🧮</span> Cálculo de Multas: Folio {folio}
-                </h3>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pr-10">
+                    <h3 className="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                        <span>🧮</span> Cálculo de Multas: Folio {folio}
+                    </h3>
+                    <button
+                        type="button"
+                        onClick={handleOpenDiagnostico}
+                        className="px-3.5 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    >
+                        <span>🔍</span>
+                        <span>Diagnóstico C4</span>
+                    </button>
+                </div>
 
                 {loading ? (
                     <div className="py-12 text-center text-gray-500">Cargando información del folio...</div>
@@ -1330,6 +1363,137 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                     {savingOverride ? 'Guardando...' : 'Aplicar Corrección'}
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Sub-modal C4: Diagnóstico de Extracción */}
+            {isDiagnosticoOpen && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-[70] p-4">
+                    <div className="bg-white rounded-3xl p-6 sm:p-7 w-full max-w-3xl shadow-2xl border border-gray-100 space-y-4 animate-in fade-in zoom-in-95 duration-150 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                        <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                            <div>
+                                <h4 className="text-base font-black text-gray-900 flex items-center gap-2">
+                                    <span>🔍</span> Diagnóstico de Extracción de Variables (Módulo C4)
+                                </h4>
+                                <p className="text-xs text-gray-500 mt-0.5">
+                                    Folio: <strong className="text-gray-800">{folio}</strong> | RBD: <strong className="text-gray-800">{data?.rbd}</strong> | Licitación: <strong className="text-gray-800">{data?.licitacion}</strong>
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setIsDiagnosticoOpen(false)}
+                                className="text-gray-400 hover:text-gray-700 font-bold text-lg cursor-pointer"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {loadingDiagnostico ? (
+                            <div className="py-12 text-center text-gray-500 text-xs">
+                                <div className="w-6 h-6 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                                Analizando texto de observaciones y ejecutando algoritmos de extracción...
+                            </div>
+                        ) : diagnosticoData?.aspectos && diagnosticoData.aspectos.length > 0 ? (
+                            <div className="space-y-4">
+                                {diagnosticoData.aspectos.map((asp: any) => (
+                                    <div key={asp.letraAspecto} className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-3">
+                                        <div className="flex flex-wrap items-center justify-between gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <span className="w-7 h-7 rounded-lg bg-cyan-700 text-white font-black text-xs flex items-center justify-center">
+                                                    {asp.letraAspecto}
+                                                </span>
+                                                <span className="font-bold text-slate-800">{asp.aspecto}</span>
+                                            </div>
+                                            {asp.formulaAsignada && (
+                                                <span className="font-mono text-[10px] bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-600">
+                                                    Fórmula: {asp.formulaAsignada}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* Observación textual */}
+                                        <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 text-[11px] text-slate-700 leading-relaxed">
+                                            <span className="font-bold text-slate-500 uppercase tracking-wider text-[9px] block mb-0.5">
+                                                Texto de la Observación (Acta):
+                                            </span>
+                                            <p className="italic">{asp.observacion}</p>
+                                        </div>
+
+                                        {/* Alertas Técnicas */}
+                                        {asp.alertas && asp.alertas.length > 0 && (
+                                            <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-[11px] space-y-1">
+                                                <span className="font-bold uppercase tracking-wider text-[9px] block text-amber-800">
+                                                    Alertas de Extracción:
+                                                </span>
+                                                {asp.alertas.map((al: string, alIdx: number) => (
+                                                    <p key={alIdx} className="flex items-start gap-1.5 font-medium">
+                                                        <span>⚠️</span>
+                                                        <span>{al}</span>
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Tabla Comparativa de Variables */}
+                                        {Object.keys(asp.comparacionVariables || {}).length > 0 ? (
+                                            <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                                                <table className="w-full text-left text-xs">
+                                                    <thead className="bg-slate-50 text-[10px] font-black uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                                                        <tr>
+                                                            <th className="p-2">Variable</th>
+                                                            <th className="p-2 text-center">Clásica</th>
+                                                            <th className="p-2 text-center">Robusta C4</th>
+                                                            <th className="p-2 text-center">Estado</th>
+                                                            <th className="p-2">Fuente Detectada</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-slate-100 text-[11px]">
+                                                        {Object.entries(asp.comparacionVariables).map(([vKey, vComp]: [string, any]) => (
+                                                            <tr key={vKey} className={!vComp.coincide ? 'bg-amber-50/50' : ''}>
+                                                                <td className="p-2 font-mono font-bold text-slate-800">{vKey}</td>
+                                                                <td className="p-2 text-center font-mono text-slate-600">{vComp.clasico}</td>
+                                                                <td className="p-2 text-center font-mono font-bold text-cyan-800">{vComp.robusto}</td>
+                                                                <td className="p-2 text-center">
+                                                                    {vComp.coincide ? (
+                                                                        <span className="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold text-[9px]">
+                                                                            Coincide
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 font-black text-[9px]">
+                                                                            Difiere ⚠️
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="p-2 text-slate-500 text-[10px]">
+                                                                    {asp.fuentes?.[vKey] || 'conteo general'}
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ) : (
+                                            <p className="text-[11px] text-slate-400 italic">No requiere variables específicas de conteo.</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="py-8 text-center text-slate-400 text-xs">
+                                No se encontraron aspectos con incumplimiento (NC) para diagnosticar en este folio.
+                            </div>
+                        )}
+
+                        <div className="flex justify-end pt-3 border-t border-gray-100">
+                            <button
+                                type="button"
+                                onClick={() => setIsDiagnosticoOpen(false)}
+                                className="px-5 py-2 rounded-xl text-white bg-slate-900 hover:bg-black text-xs font-bold transition-all shadow-md cursor-pointer"
+                            >
+                                Cerrar Diagnóstico
+                            </button>
                         </div>
                     </div>
                 </div>

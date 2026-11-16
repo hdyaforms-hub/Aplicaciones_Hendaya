@@ -44,6 +44,18 @@ export const SUBMODULOS_C3_DEFAULT: SubModuloDatosFolioC3 = {
     exigirMotivo: true
 }
 
+export interface SubModuloExtraccionC4 {
+    extraccionRobusta: boolean
+    alertasSubcontada: boolean
+    tipoInstrumentoJ: boolean
+}
+
+export const SUBMODULOS_C4_DEFAULT: SubModuloExtraccionC4 = {
+    extraccionRobusta: false, // Invarianza: apagado por defecto para no alterar montos históricos
+    alertasSubcontada: true,
+    tipoInstrumentoJ: true
+}
+
 export interface ModuloSistemaConfig {
     codigo: string
     nombre: string
@@ -82,7 +94,8 @@ export const MODULOS_C_DEFAULT: ModuloSistemaConfig[] = [
         nombre: 'Extracción Robusta Multiaspecto (Modo Comparación F, J, K, D, E, L)',
         descripcion: 'Conteo y comparación automatizada de materias primas, instrumentos y uniformes en actas.',
         activo: false,
-        fase: 'Planificado'
+        fase: 'En Desarrollo',
+        submodulos: SUBMODULOS_C4_DEFAULT
     },
     {
         codigo: 'C5',

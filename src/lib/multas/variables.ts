@@ -13,6 +13,8 @@
  *    automáticamente a partir del texto de observaciones del acta.
  */
 
+import { extraerVariablesRobustas } from './extractor'
+
 export const RESERVED_FORMULA_KEYWORDS = [
     'MATERIAPRIMA',
     'MATERIAPRIMATPMPAP',
@@ -40,6 +42,8 @@ export interface VariableResuelta {
     valor: string
     origen: 'OVERRIDE' | 'GUARDADO' | 'AUTO'
     overrideInfo?: OverrideInfo
+    fuente?: string
+    alertas?: string[]
 }
 
 /**
@@ -175,23 +179,38 @@ export function resolverVariablesConPrioridad(params: {
     variablesGuardadas?: Record<string, any>
     overridesPorAspecto?: Record<string, OverrideInfo> // variable -> OverrideInfo
     c3Activo?: boolean
+    c4Activo?: boolean
 }): {
     variablesFinales: Record<string, string>
     detalleVariables: Record<string, VariableResuelta>
+    alertasAspecto: string[]
 } {
     const {
+        letraAspecto,
         formula,
         obsText,
         variablesGuardadas = {},
         overridesPorAspecto = {},
-        c3Activo = false
+        c3Activo = false,
+        c4Activo = false
     } = params
 
     const variablesFinales: Record<string, string> = {}
     const detalleVariables: Record<string, VariableResuelta> = {}
+    const alertasAspecto: string[] = []
 
-    // 1. Extraer automáticas
-    const extraidasAuto = extraerVariablesDeObservacion(obsText, formula)
+    // 1. Extraer automáticas (Robusto C4 si está activo, de lo contrario clásico)
+    let extraidasAuto: Record<string, string> = {}
+    let fuentesAuto: Record<string, string> = {}
+
+    if (c4Activo) {
+        const rob = extraerVariablesRobustas(obsText, letraAspecto, formula)
+        extraidasAuto = rob.variables
+        fuentesAuto = rob.fuentes
+        alertasAspecto.push(...rob.alertas)
+    } else {
+        extraidasAuto = extraerVariablesDeObservacion(obsText, formula)
+    }
 
     // 2. Identificar qué variables aplican para esta fórmula
     const upperFormula = formula ? formula.toUpperCase() : ''
@@ -230,10 +249,12 @@ export function resolverVariablesConPrioridad(params: {
             detalleVariables[variable] = {
                 variable,
                 valor: valStr,
-                origen: 'AUTO'
+                origen: 'AUTO',
+                fuente: fuentesAuto[variable],
+                alertas: alertasAspecto.length > 0 ? [...alertasAspecto] : undefined
             }
         }
     }
 
-    return { variablesFinales, detalleVariables }
+    return { variablesFinales, detalleVariables, alertasAspecto }
 }

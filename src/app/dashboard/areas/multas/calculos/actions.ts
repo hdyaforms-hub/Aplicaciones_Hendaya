@@ -9,7 +9,8 @@ import { generarAlertasITAspecto } from '@/lib/multas/it/alertas'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { getRacionesFolio } from '@/lib/multas/raciones'
 import { logAuditAction } from '@/lib/audit'
-import { resolverVariablesConPrioridad, OverrideInfo } from '@/lib/multas/variables'
+import { resolverVariablesConPrioridad, extraerVariablesDeObservacion, OverrideInfo } from '@/lib/multas/variables'
+import { extraerVariablesRobustas } from '@/lib/multas/extractor'
 import { FolioDatoItem, CantidadOverrideItem } from '@/lib/multas/config'
 
 const dbEECab = () => getMultasDelegate('multas_Elementos_Esenciales_Cab')
@@ -563,9 +564,11 @@ export async function calculateAll(params: {
 
         const excluirEstratosPorLicId = new Map<number, boolean>()
         const c3ActivoPorLicId = new Map<number, boolean>()
+        const c4ActivoPorLicId = new Map<number, boolean>()
         for (const p of allParametrosLicitacion) {
             let excluir = false
             let c3Activo = false
+            let c4Activo = false
             if (p.modulosActivosJson) {
                 try {
                     const parsed = JSON.parse(p.modulosActivosJson)
@@ -578,6 +581,10 @@ export async function calculateAll(params: {
                         if (c3 && c3.activo === true) {
                             c3Activo = true
                         }
+                        const c4 = parsed.find((m: any) => m.codigo === 'C4')
+                        if (c4 && c4.activo === true) {
+                            c4Activo = c4.submodulos?.extraccionRobusta === true
+                        }
                     }
                 } catch {
                     // Ignorar error de parsing
@@ -585,6 +592,7 @@ export async function calculateAll(params: {
             }
             excluirEstratosPorLicId.set(p.licId, excluir)
             c3ActivoPorLicId.set(p.licId, c3Activo)
+            c4ActivoPorLicId.set(p.licId, c4Activo)
         }
 
         const validFoliosList = folios.map(f => f.folio).filter(Boolean) as string[]
@@ -687,7 +695,8 @@ export async function calculateAll(params: {
                             obsText: d.observacionesOMedioDeVerificacion,
                             variablesGuardadas: savedVars,
                             overridesPorAspecto: letra ? overridesMap[letra] : undefined,
-                            c3Activo
+                            c3Activo,
+                            c4Activo: c4ActivoPorLicId.get(cab.licId || 0) || false
                         })
                         Object.assign(savedVars, variablesFinales)
                     }
@@ -914,6 +923,10 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         let c3NivelActivo = false
         let c3BandejasActivo = false
         let c3OverridesActivo = false
+        let moduloC4Activo = false
+        let c4ExtraccionRobustaActiva = false
+        let c4AlertasSubcontadaActiva = true
+        let c4TipoInstrumentoJActivo = true
         if (paramLicitacion) {
             let tablaAqlParsed = undefined
             if (paramLicitacion.tablaAqlJson) {
@@ -955,6 +968,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                             c3NivelActivo = c3.submodulos?.nivelSupervisado !== false
                             c3BandejasActivo = c3.submodulos?.bandejasAql !== false
                             c3OverridesActivo = c3.submodulos?.correccionManual !== false
+                        }
+                        const c4 = parsedMod.find((m: any) => m.codigo === 'C4')
+                        if (c4 && c4.activo === true) {
+                            moduloC4Activo = true
+                            c4ExtraccionRobustaActiva = c4.submodulos?.extraccionRobusta === true
+                            c4AlertasSubcontadaActiva = c4.submodulos?.alertasSubcontada !== false
+                            c4TipoInstrumentoJActivo = c4.submodulos?.tipoInstrumentoJ !== false
                         }
                     }
                 } catch {
@@ -1139,7 +1159,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     obsText: d.observacionesOMedioDeVerificacion,
                     variablesGuardadas: savedVariables,
                     overridesPorAspecto: d.letraAspecto ? overridesMap[d.letraAspecto] : undefined,
-                    c3Activo: moduloC3Activo && c3OverridesActivo
+                    c3Activo: moduloC3Activo && c3OverridesActivo,
+                    c4Activo: moduloC4Activo && c4ExtraccionRobustaActiva
                 })
                 Object.assign(savedVariables, variablesFinales)
                 if (d.letraAspecto) {
@@ -1291,6 +1312,12 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 nivelSupervisado: c3NivelActivo,
                 bandejasAql: c3BandejasActivo,
                 correccionManual: c3OverridesActivo
+            },
+            moduloC4Activo,
+            c4Submodulos: {
+                extraccionRobusta: c4ExtraccionRobustaActiva,
+                alertasSubcontada: c4AlertasSubcontadaActiva,
+                tipoInstrumentoJ: c4TipoInstrumentoJActivo
             },
             parametrosLicitacion: paramLicitacion ? {
                 ratioManipuladorasH: paramLicitacion.ratioManipuladorasH,
@@ -1723,5 +1750,290 @@ export async function eliminarCantidadOverride(id: string) {
     } catch (err: any) {
         console.error('Error al revertir corrección de cantidad:', err)
         return { error: err.message || 'Error al revertir corrección.' }
+    }
+}
+
+/**
+ * =======================================================================
+ * C4. DIAGNÓSTICO DE EXTRACCIÓN Y MODO COMPARACIÓN
+ * =======================================================================
+ */
+
+function evaluateFormulaForComparison(
+    formula: string,
+    variables: Record<string, string>,
+    utmVal: number,
+    totalRaciones: number
+): number {
+    try {
+        const cleanFormula = formula.toUpperCase()
+        const materiaPrimaVal = variables['MATERIAPRIMA'] !== undefined && variables['MATERIAPRIMA'] !== '' ? Number(variables['MATERIAPRIMA']) : 1
+        const materiaPrimaTpmpapVal = variables['MATERIAPRIMATPMPAP'] !== undefined && variables['MATERIAPRIMATPMPAP'] !== '' ? Number(variables['MATERIAPRIMATPMPAP']) : 1
+        const instrumentoVal = Number(variables['INSTRUMENTO'] || 1)
+        const manipuladoraVal = Number(variables['MANIPULADORA'] || 1)
+        let manipuladoraAfectadaVal = Number(variables['MANIPULADORAAFECTADA'] || 1)
+        if (manipuladoraAfectadaVal === 0) manipuladoraAfectadaVal = 1
+        const cantServicioVal = Number(variables['CANTSERVICIO'] || 1)
+        const elementosVal = Number(variables['ELEMENTOS'] || 1)
+
+        let evalForm = cleanFormula
+            .replace(/UTM/g, utmVal.toString())
+            .replace(/RACIONES/g, totalRaciones.toString())
+            .replace(/NIVELCONTROLADO/g, totalRaciones.toString())
+            .replace(/MATERIAPRIMATPMPAP/g, materiaPrimaTpmpapVal.toString())
+            .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
+            .replace(/INSTRUMENTO/g, instrumentoVal.toString())
+            .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaVal.toString())
+            .replace(/MANIPULADORA/g, manipuladoraVal.toString())
+            .replace(/CANTSERVICIO/g, cantServicioVal.toString())
+            .replace(/ELEMENTOS/g, elementosVal.toString())
+
+        const sanitized = evalForm.replace(/[^0-9+\-*/().]/g, '')
+        const resultValue = new Function(`return ${sanitized}`)()
+        return Number(resultValue) || 0
+    } catch {
+        return 0
+    }
+}
+
+/**
+ * C4: Diagnóstico de extracción detallado para un folio.
+ * Compara aspecto por aspecto lo que extrae el método clásico vs el método robusto C4.
+ */
+export async function getDiagnosticoFolio(folio: string) {
+    if (!folio) return { error: 'Folio no proporcionado.' }
+
+    try {
+        await ensureMultasEETables()
+        const cab = await prisma.elementosEsenciales_Cab.findFirst({
+            where: { folio },
+            include: {
+                detalles: {
+                    where: { nc: 'X' }
+                }
+            }
+        })
+
+        if (!cab) return { error: 'Folio no encontrado.' }
+
+        // Consultar fórmulas asignadas para la licitación
+        const aspectosLicitacion = cab.licId ? await prisma.aspectoEE.findMany({
+            where: { licId: cab.licId }
+        }) : []
+
+        const overrides = await dbCantidadOverride().findMany({
+            where: { folio }
+        })
+        const overridesMap: Record<string, Record<string, any>> = {}
+        for (const o of overrides) {
+            if (!overridesMap[o.letraAspecto]) overridesMap[o.letraAspecto] = {}
+            overridesMap[o.letraAspecto][o.variable] = o
+        }
+
+        const aspectosDiagnostico = []
+
+        for (const d of cab.detalles) {
+            const letra = d.aspecto?.match(/^([A-Z])\./)?.[1] || '?'
+            const aspObj = aspectosLicitacion.find(a => a.letra === letra)
+            const formula = aspObj?.formula || null
+
+            // 1. Extracción Clásica
+            const clasico = extraerVariablesDeObservacion(d.observacionesOMedioDeVerificacion, formula || undefined)
+
+            // 2. Extracción Robusta C4
+            const robusto = extraerVariablesRobustas(d.observacionesOMedioDeVerificacion, letra, formula || undefined)
+
+            // 3. Comparación detallada de variables
+            const allKeys = Array.from(new Set([...Object.keys(clasico), ...Object.keys(robusto.variables)]))
+            let hayDiferencia = false
+            const comparacionVariables: Record<string, { clasico: string; robusto: string; coincide: boolean }> = {}
+
+            for (const k of allKeys) {
+                const cVal = clasico[k] || '1'
+                const rVal = robusto.variables[k] || '1'
+                const coincide = cVal === rVal
+                if (!coincide) hayDiferencia = true
+                comparacionVariables[k] = { clasico: cVal, robusto: rVal, coincide }
+            }
+
+            aspectosDiagnostico.push({
+                letraAspecto: letra,
+                aspecto: d.aspecto,
+                observacion: d.observacionesOMedioDeVerificacion || 'Sin observaciones',
+                formulaAsignada: formula,
+                variablesClasicas: clasico,
+                variablesRobustas: robusto.variables,
+                fuentes: robusto.fuentes,
+                alertas: robusto.alertas,
+                comparacionVariables,
+                hayDiferencia,
+                overridesActivos: overridesMap[letra] || null
+            })
+        }
+
+        return {
+            folio: cab.folio,
+            rbd: cab.rbd,
+            licitacion: cab.licitacion,
+            fechaSupervision: cab.fechaSupervision,
+            servicio: cab.esServicioManual ? cab.servicioManual : cab.servicio,
+            aspectos: aspectosDiagnostico
+        }
+
+    } catch (e: any) {
+        console.error('Error en getDiagnosticoFolio:', e)
+        return { error: e.message || 'Error al obtener diagnóstico del folio.' }
+    }
+}
+
+/**
+ * C4: Modo Comparación para una licitación / período.
+ * Genera la matriz comparativa de montos actuales vs montos proyectados con C4.
+ */
+export async function getComparacionExtraccionLicitacion(params: {
+    licId: number
+    mes?: string
+    anho?: number
+    limit?: number
+}) {
+    const { licId, mes, anho, limit = 50 } = params
+    if (!licId) return { error: 'Licitación requerida.' }
+
+    try {
+        await ensureMultasEETables()
+
+        const whereClause: any = { licId, anulado: { not: true } }
+        let folios = await prisma.elementosEsenciales_Cab.findMany({
+            where: whereClause,
+            include: {
+                detalles: { where: { nc: 'X' } }
+            },
+            take: limit * 2,
+            orderBy: { fechaSupervision: 'desc' }
+        })
+
+        if (mes && mes !== 'Todos los meses') {
+            const mesIdx = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].indexOf(mes) + 1
+            if (mesIdx > 0) folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getMonth() + 1 === mesIdx)
+        }
+        if (anho) {
+            folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getFullYear() === anho)
+        }
+
+        // Slice a límite establecido
+        folios = folios.slice(0, limit)
+
+        if (folios.length === 0) {
+            return {
+                data: [],
+                totalMontoActual: 0,
+                totalMontoRobusto: 0,
+                diferenciaNeta: 0,
+                conDiferencia: 0,
+                totalEvaluados: 0
+            }
+        }
+
+        const [aspectosLic, utms] = await Promise.all([
+            prisma.aspectoEE.findMany({ where: { licId } }),
+            prisma.uTM.findMany()
+        ])
+
+        const itemsComparacion = []
+        let totalMontoActual = 0
+        let totalMontoRobusto = 0
+        let countConDiferencia = 0
+
+        for (const f of folios) {
+            if (!f.folio || f.detalles.length === 0) continue
+
+            const fFecha = f.fechaSupervision ? new Date(f.fechaSupervision) : null
+            const fAnho = fFecha ? fFecha.getFullYear() : 2024
+            const fMes = fFecha ? fFecha.getMonth() + 1 : 1
+
+            const utmRec = utms.find(u => u.anho === fAnho && u.mes === fMes)
+            const utmVal = utmRec?.monto || 65000
+
+            // Consultar raciones generales
+            const racionesData = await getRacionesFolio({
+                rbd: f.rbd || 0,
+                anho: fAnho,
+                mes: fMes,
+                licId,
+                servicioCodigo: null
+            })
+            const totalRaciones = racionesData.racionesTotal || 0
+
+            let montoActual = 0
+            let montoRobusto = 0
+            let tieneDiferenciaFolio = false
+            const aspectosDiff: any[] = []
+            const alertasFolio: string[] = []
+
+            for (const d of f.detalles) {
+                const letra = d.aspecto?.match(/^([A-Z])\./)?.[1] || '?'
+                const aspObj = aspectosLic.find(a => a.letra === letra)
+                const formula = aspObj?.formula
+                if (!formula) continue
+
+                // Variables Clásicas
+                const varsClasicas = extraerVariablesDeObservacion(d.observacionesOMedioDeVerificacion, formula)
+                // Variables Robustas C4
+                const rob = extraerVariablesRobustas(d.observacionesOMedioDeVerificacion, letra, formula)
+                if (rob.alertas.length > 0) alertasFolio.push(...rob.alertas)
+
+                // Evaluar fórmula clásica
+                const montoC = evaluateFormulaForComparison(formula, varsClasicas, utmVal, totalRaciones)
+                // Evaluar fórmula robusta C4
+                const montoR = evaluateFormulaForComparison(formula, rob.variables, utmVal, totalRaciones)
+
+                montoActual += montoC
+                montoRobusto += montoR
+
+                if (Math.round(montoC) !== Math.round(montoR)) {
+                    tieneDiferenciaFolio = true
+                    aspectosDiff.push({
+                        letra,
+                        montoClasico: Math.round(montoC),
+                        montoRobusto: Math.round(montoR),
+                        diferencia: Math.round(montoR - montoC),
+                        variablesClasicas: varsClasicas,
+                        variablesRobustas: rob.variables,
+                        fuentes: rob.fuentes
+                    })
+                }
+            }
+
+            if (tieneDiferenciaFolio) countConDiferencia++
+            totalMontoActual += montoActual
+            totalMontoRobusto += montoRobusto
+
+            itemsComparacion.push({
+                folio: f.folio,
+                rbd: f.rbd,
+                fechaSupervision: f.fechaSupervision,
+                servicio: f.servicio,
+                ncCount: f.detalles.length,
+                montoActual: Math.round(montoActual),
+                montoRobusto: Math.round(montoRobusto),
+                diferencia: Math.round(montoRobusto - montoActual),
+                tieneDiferencia: tieneDiferenciaFolio,
+                aspectosConDiferencia: aspectosDiff,
+                alertas: Array.from(new Set(alertasFolio))
+            })
+        }
+
+        return {
+            data: itemsComparacion,
+            totalMontoActual: Math.round(totalMontoActual),
+            totalMontoRobusto: Math.round(totalMontoRobusto),
+            diferenciaNeta: Math.round(totalMontoRobusto - totalMontoActual),
+            conDiferencia: countConDiferencia,
+            totalEvaluados: itemsComparacion.length
+        }
+
+    } catch (e: any) {
+        console.error('Error en getComparacionExtraccionLicitacion:', e)
+        return { error: e.message || 'Error al generar comparación de extracción.' }
     }
 }
