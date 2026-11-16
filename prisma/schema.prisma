@@ -138,7 +138,7 @@ model ListaCorreo {
   para           String
   cc             String?
   sucursalId     String?
-  porSucursal    String?                // JSON estructurado con destinatarios específicos por sucursal: { [sucursalId]: { para: string[], cc: string[] } }
+  porSucursal    String? // JSON estructurado con destinatarios específicos por sucursal: { [sucursalId]: { para: string[], cc: string[] } }
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
   sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
@@ -172,18 +172,18 @@ model MultaServicio {
 }
 
 model Licitacion {
-  licId                Int                        @id @default(autoincrement())
-  licitacionHomologada String?                    @db.VarChar(20)
-  estado               Int                        @default(1)
-  createdAt            DateTime                   @default(now())
-  updatedAt            DateTime                   @updatedAt
-  uts                  UT[]
-  aspectosEE           AspectoEE[]
-  jefesZonales         JefeZonalLicitacion[]
-  vehiculos            Vehiculo[]
-  matrices             MatrizT_Cabecera[]
-  actasPlantillas      ActaSupervisionPlantilla[]
-  users                User[]                     @relation("UserLicitaciones")
+  licId                 Int                                 @id @default(autoincrement())
+  licitacionHomologada  String?                             @db.VarChar(20)
+  estado                Int                                 @default(1)
+  createdAt             DateTime                            @default(now())
+  updatedAt             DateTime                            @updatedAt
+  uts                   UT[]
+  aspectosEE            AspectoEE[]
+  jefesZonales          JefeZonalLicitacion[]
+  vehiculos             Vehiculo[]
+  matrices              MatrizT_Cabecera[]
+  actasPlantillas       ActaSupervisionPlantilla[]
+  users                 User[]                              @relation("UserLicitaciones")
   itElementosEsenciales Multas_IT_Elementos_Esenciales_Cab?
 }
 
@@ -1268,26 +1268,26 @@ model AuditLog {
 }
 
 model ActaSupervisionPlantilla {
-  id            String   @id @default(uuid())
-  nombre        String
-  licitacionId  Int?
-  anio          Int      @default(2026)
-  instituciones String?  @db.Text
-  rolesPerfiles String?  @db.Text
-  estado        Boolean  @default(true)
-  logoUrl       String?  @db.Text
-  instrucciones String?  @db.Text
-  campos        String   @db.Text
-  codigo                String?
-  version               String?
-  fecha                 String?
-  codigoAdicional       String?
-  mostrarCodigoAdicional Boolean @default(false)
-  correlativoAutomatico  Boolean @default(false)
-  mostrarCodigoVersionFecha Boolean @default(true)
-  createdBy     String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                        String   @id @default(uuid())
+  nombre                    String
+  licitacionId              Int?
+  anio                      Int      @default(2026)
+  instituciones             String?  @db.Text
+  rolesPerfiles             String?  @db.Text
+  estado                    Boolean  @default(true)
+  logoUrl                   String?  @db.Text
+  instrucciones             String?  @db.Text
+  campos                    String   @db.Text
+  codigo                    String?
+  version                   String?
+  fecha                     String?
+  codigoAdicional           String?
+  mostrarCodigoAdicional    Boolean  @default(false)
+  correlativoAutomatico     Boolean  @default(false)
+  mostrarCodigoVersionFecha Boolean  @default(true)
+  createdBy                 String
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
 
   licitacion Licitacion?                @relation(fields: [licitacionId], references: [licId])
   respuestas ActaSupervisionRespuesta[]
@@ -1318,69 +1318,69 @@ model ActaSupervisionRespuesta {
 }
 
 model VTCamara {
-  idCamara          Int       @id @default(autoincrement()) @map("id_camara")
-  nombreCamara      String    @map("nombre_camara")
-  tipoCamara        String    @map("tipo_camara")
-  temperaturaMinima Float?    @default(0.0) @map("temperatura_minima")
-  temperaturaMaxima Float     @map("temperatura_maxima")
-  activo            Boolean   @default(true)
+  idCamara          Int     @id @default(autoincrement()) @map("id_camara")
+  nombreCamara      String  @map("nombre_camara")
+  tipoCamara        String  @map("tipo_camara")
+  temperaturaMinima Float?  @default(0.0) @map("temperatura_minima")
+  temperaturaMaxima Float   @map("temperatura_maxima")
+  activo            Boolean @default(true)
 
-  configuraciones   VTConfiguracionCamara[]
+  configuraciones VTConfiguracionCamara[]
 
   @@map("vt_camara")
 }
 
 model VTConfiguracionCamara {
-  idConfig            Int                 @id @default(autoincrement()) @map("id_config")
-  idRegistroCabecera  Int                 @map("id_registro_cabecera")
-  idCamara            Int                 @map("id_camara")
-  mes                 Int
-  numeroCamaraMes     Int                 @map("numero_camara_mes")
-  nombreCamara        String?             @map("nombre_camara")
-  temperaturaMinima   Float?              @default(0.0) @map("temperatura_minima")
-  temperaturaMaxima   Float?              @map("temperatura_maxima")
+  idConfig           Int     @id @default(autoincrement()) @map("id_config")
+  idRegistroCabecera Int     @map("id_registro_cabecera")
+  idCamara           Int     @map("id_camara")
+  mes                Int
+  numeroCamaraMes    Int     @map("numero_camara_mes")
+  nombreCamara       String? @map("nombre_camara")
+  temperaturaMinima  Float?  @default(0.0) @map("temperatura_minima")
+  temperaturaMaxima  Float?  @map("temperatura_maxima")
 
-  registro            VTRegistroCabecera  @relation(fields: [idRegistroCabecera], references: [idRegistro], onDelete: Cascade)
-  camara              VTCamara            @relation(fields: [idCamara], references: [idCamara], onDelete: Cascade)
+  registro VTRegistroCabecera @relation(fields: [idRegistroCabecera], references: [idRegistro], onDelete: Cascade)
+  camara   VTCamara           @relation(fields: [idCamara], references: [idCamara], onDelete: Cascade)
 
   @@map("vt_configuracion_camara")
 }
 
 model VTRegistroCabecera {
-  idRegistro            Int                     @id @default(autoincrement()) @map("id_registro")
-  tipoEntidad           String                  @map("tipo_entidad")
-  idEntidad             String                  @map("id_entidad")
-  nombreEntidad         String                  @map("nombre_entidad")
-  anio                  Int
-  fechaRegistro         DateTime?               @map("fecha_registro")
-  monitorResponsable    String                  @map("monitor_responsable")
-  tipoCamara            String                  @map("tipo_camara")
-  descripcionCamaras    String?                 @map("descripcion_camaras")
-  fechaCreacion         DateTime                @default(now()) @map("fecha_creacion")
-  usuarioCreacion       String                  @map("usuario_creacion")
+  idRegistro         Int       @id @default(autoincrement()) @map("id_registro")
+  tipoEntidad        String    @map("tipo_entidad")
+  idEntidad          String    @map("id_entidad")
+  nombreEntidad      String    @map("nombre_entidad")
+  anio               Int
+  fechaRegistro      DateTime? @map("fecha_registro")
+  monitorResponsable String    @map("monitor_responsable")
+  tipoCamara         String    @map("tipo_camara")
+  descripcionCamaras String?   @map("descripcion_camaras")
+  fechaCreacion      DateTime  @default(now()) @map("fecha_creacion")
+  usuarioCreacion    String    @map("usuario_creacion")
 
-  configuraciones       VTConfiguracionCamara[]
-  detalles              VTRegistroDetalle[]
-  verificacionesDiarias VTVerificacionDiaria[]
+  configuraciones         VTConfiguracionCamara[]
+  detalles                VTRegistroDetalle[]
+  verificacionesDiarias   VTVerificacionDiaria[]
   verificacionesSemanales VTVerificacionSemanal[]
 
   @@map("vt_registro_cabecera")
 }
 
 model VTRegistroDetalle {
-  idDetalle         Int                @id @default(autoincrement()) @map("id_detalle")
-  idRegistro        Int                @map("id_registro")
-  numeroCorrelativo Int                @map("numero_correlativo")
-  dia               Int                @default(1)
-  tipoProducto      String             @map("tipo_producto")
-  nombreProducto    String?            @map("nombre_producto")
+  idDetalle         Int      @id @default(autoincrement()) @map("id_detalle")
+  idRegistro        Int      @map("id_registro")
+  numeroCorrelativo Int      @map("numero_correlativo")
+  dia               Int      @default(1)
+  tipoProducto      String   @map("tipo_producto")
+  nombreProducto    String?  @map("nombre_producto")
   mes               Int
-  numeroCamara      Int                @map("numero_camara")
+  numeroCamara      Int      @map("numero_camara")
   temperatura       Float?
-  fechaRegistro     DateTime           @default(now()) @map("fecha_registro")
-  usuarioRegistro   String             @map("usuario_registro")
+  fechaRegistro     DateTime @default(now()) @map("fecha_registro")
+  usuarioRegistro   String   @map("usuario_registro")
 
-  registro          VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
 
   @@map("vt_registro_detalle")
 }
@@ -1394,39 +1394,39 @@ model VTProductoCatalogo {
 }
 
 model VTVerificacionDiaria {
-  idVerificacion    Int                @id @default(autoincrement()) @map("id_verificacion")
-  idRegistro        Int                @map("id_registro")
-  mes               Int
-  dia               Int
-  fechaVerificacion DateTime           @default(now()) @map("fecha_verificacion")
-  firmadoPor        String             @map("firmado_por")
-  usuarioId         String?            @map("usuario_id")
-  firma             String?
-  firmado           Boolean            @default(true)
-  observaciones     String?
-  accionesCorrectivas String?          @map("acciones_correctivas")
+  idVerificacion      Int      @id @default(autoincrement()) @map("id_verificacion")
+  idRegistro          Int      @map("id_registro")
+  mes                 Int
+  dia                 Int
+  fechaVerificacion   DateTime @default(now()) @map("fecha_verificacion")
+  firmadoPor          String   @map("firmado_por")
+  usuarioId           String?  @map("usuario_id")
+  firma               String?
+  firmado             Boolean  @default(true)
+  observaciones       String?
+  accionesCorrectivas String?  @map("acciones_correctivas")
 
-  registro          VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
 
   @@unique([idRegistro, mes, dia])
   @@map("vt_verificacion_diaria")
 }
 
 model VTVerificacionSemanal {
-  idVerificacionSemanal Int                @id @default(autoincrement()) @map("id_verificacion_semanal")
-  idRegistro            Int                @map("id_registro")
+  idVerificacionSemanal Int       @id @default(autoincrement()) @map("id_verificacion_semanal")
+  idRegistro            Int       @map("id_registro")
   mes                   Int
   semana                Int
-  firmadoJefeBodega     Boolean            @default(false) @map("firmado_jefe_bodega")
-  fechaFirmaJefeBodega  DateTime?          @map("fecha_firma_jefe_bodega")
-  usuarioJefeBodega     String?            @map("usuario_jefe_bodega")
-  firmaJefeBodega       String?            @map("firma_jefe_bodega")
-  firmadoJefeZonal      Boolean            @default(false) @map("firmado_jefe_zonal")
-  fechaFirmaJefeZonal   DateTime?          @map("fecha_firma_jefe_zonal")
-  usuarioJefeZonal      String?            @map("usuario_jefe_zonal")
-  firmaJefeZonal        String?            @map("firma_jefe_zonal")
+  firmadoJefeBodega     Boolean   @default(false) @map("firmado_jefe_bodega")
+  fechaFirmaJefeBodega  DateTime? @map("fecha_firma_jefe_bodega")
+  usuarioJefeBodega     String?   @map("usuario_jefe_bodega")
+  firmaJefeBodega       String?   @map("firma_jefe_bodega")
+  firmadoJefeZonal      Boolean   @default(false) @map("firmado_jefe_zonal")
+  fechaFirmaJefeZonal   DateTime? @map("fecha_firma_jefe_zonal")
+  usuarioJefeZonal      String?   @map("usuario_jefe_zonal")
+  firmaJefeZonal        String?   @map("firma_jefe_zonal")
 
-  registro              VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
 
   @@unique([idRegistro, mes, semana])
   @@map("vt_verificacion_semanal")
@@ -1437,55 +1437,55 @@ model VTVerificacionSemanal {
 // ==========================================
 
 model CollabConversation {
-  id             String          @id @default(uuid())
-  type           String          @default("direct") // "direct" | "group" | "project"
-  title          String?
-  projectId      String?
-  participants   String          @db.Text // JSON array: ["username1", "username2"]
-  lastMessage    String?         @db.Text // Texto/payload cifrado
-  lastMessageAt  DateTime?
-  isEncrypted    Boolean         @default(true)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id            String    @id @default(uuid())
+  type          String    @default("direct") // "direct" | "group" | "project"
+  title         String?
+  projectId     String?
+  participants  String    @db.Text // JSON array: ["username1", "username2"]
+  lastMessage   String?   @db.Text // Texto/payload cifrado
+  lastMessageAt DateTime?
+  isEncrypted   Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  messages       CollabMessage[]
+  messages CollabMessage[]
 
   @@map("collab_conversations")
 }
 
 model CollabMessage {
-  id              String             @id @default(uuid())
+  id              String   @id @default(uuid())
   conversationId  String
   senderUsername  String
   senderName      String?
-  content         String             @db.Text // Cifrado E2E en cliente/servidor
-  isEncrypted     Boolean            @default(true)
-  isDecision      Boolean            @default(false) // Marcado como decisión formal
-  decisionSummary String?            @db.Text
-  attachments     String?            @db.Text // JSON array de adjuntos
-  readBy          String?            @db.Text // JSON array de usernames que lo leyeron
-  createdAt       DateTime           @default(now())
+  content         String   @db.Text // Cifrado E2E en cliente/servidor
+  isEncrypted     Boolean  @default(true)
+  isDecision      Boolean  @default(false) // Marcado como decisión formal
+  decisionSummary String?  @db.Text
+  attachments     String?  @db.Text // JSON array de adjuntos
+  readBy          String?  @db.Text // JSON array de usernames que lo leyeron
+  createdAt       DateTime @default(now())
 
-  conversation    CollabConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  reactions       CollabMessageReaction[]
-  polls           CollabPoll[]
+  conversation CollabConversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  reactions    CollabMessageReaction[]
+  polls        CollabPoll[]
 
   @@map("collab_messages")
 }
 
 model CollabProject {
-  id           String              @id @default(uuid())
-  title        String
-  description  String?             @db.Text
-  status       String              @default("EN_PROGRESO") // "PLANIFICADO" | "EN_PROGRESO" | "PAUSADO" | "COMPLETADO"
-  priority     String              @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
-  startDate    DateTime?
-  endDate      DateTime?
-  createdBy    String
-  members      String              @db.Text // JSON array: ["username1", "username2"]
-  color        String?             @default("cyan")
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
+  id          String    @id @default(uuid())
+  title       String
+  description String?   @db.Text
+  status      String    @default("EN_PROGRESO") // "PLANIFICADO" | "EN_PROGRESO" | "PAUSADO" | "COMPLETADO"
+  priority    String    @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
+  startDate   DateTime?
+  endDate     DateTime?
+  createdBy   String
+  members     String    @db.Text // JSON array: ["username1", "username2"]
+  color       String?   @default("cyan")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   tasks        CollabTask[]
   appointments CollabAppointment[]
@@ -1496,45 +1496,45 @@ model CollabProject {
 }
 
 model CollabTask {
-  id              String         @id @default(uuid())
+  id              String    @id @default(uuid())
   projectId       String?
   sourceMessageId String?
   title           String
-  description     String?        @db.Text
-  status          String         @default("PENDIENTE") // "PENDIENTE" | "EN_PROGRESO" | "REVISION" | "COMPLETADA"
-  priority        String         @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
-  columnOrder     Int            @default(0)
+  description     String?   @db.Text
+  status          String    @default("PENDIENTE") // "PENDIENTE" | "EN_PROGRESO" | "REVISION" | "COMPLETADA"
+  priority        String    @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
+  columnOrder     Int       @default(0)
   dueDate         DateTime?
   assignedTo      String? // username
   tags            String? // JSON array: ["Frontend", "Urgente"]
-  checklists      String?        @db.Text // JSON array de sub-tareas: [{id, text, done}]
-  attachments     String?        @db.Text // JSON array
+  checklists      String?   @db.Text // JSON array de sub-tareas: [{id, text, done}]
+  attachments     String?   @db.Text // JSON array
   createdBy       String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  project         CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  project CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
 
   @@map("collab_tasks")
 }
 
 model CollabAppointment {
-  id           String         @id @default(uuid())
+  id           String   @id @default(uuid())
   projectId    String?
   sourceNoteId String?
   title        String
-  description  String?        @db.Text
+  description  String?  @db.Text
   startDate    DateTime
   endDate      DateTime
   location     String?
   meetLink     String?
-  participants String         @db.Text // JSON array de usernames
-  status       String         @default("PROGRAMADA") // "PROGRAMADA" | "CONFIRMADA" | "REALIZADA" | "CANCELADA"
+  participants String   @db.Text // JSON array de usernames
+  status       String   @default("PROGRAMADA") // "PROGRAMADA" | "CONFIRMADA" | "REALIZADA" | "CANCELADA"
   createdBy    String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  project      CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  project CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
 
   @@map("collab_appointments")
 }
@@ -1559,7 +1559,7 @@ model CollabNote {
   color      String   @default("yellow") // yellow, pink, cyan, green, purple, orange
   isPinned   Boolean  @default(false)
   rotation   Int      @default(0) // Grados de rotación visual (-3 a 3)
-  tags       String?  // JSON array
+  tags       String? // JSON array
   isPublic   Boolean  @default(false)
   sharedWith String?  @db.Text // JSON array de usernames específicos
   createdBy  String
@@ -1570,45 +1570,45 @@ model CollabNote {
 }
 
 model CollabGanttChart {
-  id          String                @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
-  description String?               @db.Text
+  description String?  @db.Text
   projectId   String?
   createdBy   String
-  isShared    Boolean               @default(true) // Compartido en modo lectura
-  sharedWith  String?               @db.Text // JSON array de usernames o "ALL"
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @updatedAt
+  isShared    Boolean  @default(true) // Compartido en modo lectura
+  sharedWith  String?  @db.Text // JSON array de usernames o "ALL"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  items       CollabGanttItem[]
-  baselines   CollabGanttBaseline[]
+  items     CollabGanttItem[]
+  baselines CollabGanttBaseline[]
 
   @@map("collab_gantt_charts")
 }
 
 model CollabGanttItem {
-  id            String            @id @default(uuid())
+  id            String    @id @default(uuid())
   ganttId       String
-  taskId        String?           // Enlace a CollabTask para sync bidireccional
-  parentId      String?           // Jerarquía WBS (Tarea Padre)
-  isMilestone   Boolean           @default(false) // Hito (duración 0 días, renderizado como rombo ◆)
+  taskId        String? // Enlace a CollabTask para sync bidireccional
+  parentId      String? // Jerarquía WBS (Tarea Padre)
+  isMilestone   Boolean   @default(false) // Hito (duración 0 días, renderizado como rombo ◆)
   title         String
   startDate     DateTime
   endDate       DateTime
-  progress      Int               @default(0) // 0 - 100
-  color         String?           @default("cyan")
+  progress      Int       @default(0) // 0 - 100
+  color         String?   @default("cyan")
   assignedTo    String?
-  collaborators String?           @db.Text // JSON array de colaboradores adicionales
-  dependencies  String?           @db.Text // JSON array: [{"predecessorId":"id","type":"FS"|"SS"|"FF"|"SF","lag":0}]
+  collaborators String?   @db.Text // JSON array de colaboradores adicionales
+  dependencies  String?   @db.Text // JSON array: [{"predecessorId":"id","type":"FS"|"SS"|"FF"|"SF","lag":0}]
   earlyStart    DateTime?
   earlyFinish   DateTime?
   lateStart     DateTime?
   lateFinish    DateTime?
-  totalFloat    Int?              @default(0) // Holgura (Slack) en días
-  isCritical    Boolean           @default(false) // Flag de Ruta Crítica (CPM)
-  order         Int               @default(0)
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  totalFloat    Int?      @default(0) // Holgura (Slack) en días
+  isCritical    Boolean   @default(false) // Flag de Ruta Crítica (CPM)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   gantt           CollabGanttChart          @relation(fields: [ganttId], references: [id], onDelete: Cascade)
   parent          CollabGanttItem?          @relation("GanttHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -1625,8 +1625,8 @@ model CollabGanttBaseline {
   createdBy String
   createdAt DateTime @default(now())
 
-  gantt     CollabGanttChart          @relation(fields: [ganttId], references: [id], onDelete: Cascade)
-  items     CollabGanttBaselineItem[]
+  gantt CollabGanttChart          @relation(fields: [ganttId], references: [id], onDelete: Cascade)
+  items CollabGanttBaselineItem[]
 
   @@map("collab_gantt_baselines")
 }
@@ -1642,25 +1642,25 @@ model CollabGanttBaselineItem {
   progress     Int      @default(0)
   createdAt    DateTime @default(now())
 
-  baseline     CollabGanttBaseline @relation(fields: [baselineId], references: [id], onDelete: Cascade)
-  item         CollabGanttItem     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  baseline CollabGanttBaseline @relation(fields: [baselineId], references: [id], onDelete: Cascade)
+  item     CollabGanttItem     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@unique([baselineId, itemId])
   @@map("collab_gantt_baseline_items")
 }
 
 model CollabProjectActivityLog {
-  id          String         @id @default(uuid())
-  projectId   String
-  type        String         // "CHAT" | "TASK" | "GANTT" | "DECISION" | "WHITEBOARD" | "NOTE"
-  title       String
-  description String?        @db.Text
-  metadata    String?        @db.Text // JSON metadata extra
-  username    String
+  id           String   @id @default(uuid())
+  projectId    String
+  type         String // "CHAT" | "TASK" | "GANTT" | "DECISION" | "WHITEBOARD" | "NOTE"
+  title        String
+  description  String?  @db.Text
+  metadata     String?  @db.Text // JSON metadata extra
+  username     String
   userFullName String?
-  createdAt   DateTime       @default(now())
+  createdAt    DateTime @default(now())
 
-  project     CollabProject  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project CollabProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId, createdAt])
   @@index([type])
@@ -1669,7 +1669,7 @@ model CollabProjectActivityLog {
 
 model CollabMention {
   id                String    @id @default(uuid())
-  sourceType        String    // "chat" | "task" | "note" | "kudo" | "decision"
+  sourceType        String // "chat" | "task" | "note" | "kudo" | "decision"
   sourceId          String
   projectId         String?
   mentionedUsername String
@@ -1685,39 +1685,39 @@ model CollabMention {
 }
 
 model CollabWhiteboard {
-  id          String                   @id @default(uuid())
-  projectId   String
-  title       String                   @default("Pizarra Principal")
-  createdBy   String
-  createdAt   DateTime                 @default(now())
-  updatedAt   DateTime                 @updatedAt
+  id        String   @id @default(uuid())
+  projectId String
+  title     String   @default("Pizarra Principal")
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  project     CollabProject            @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  elements    CollabWhiteboardElement[]
+  project  CollabProject             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  elements CollabWhiteboardElement[]
 
   @@map("collab_whiteboards")
 }
 
 model CollabWhiteboardElement {
-  id          String           @id @default(uuid())
-  boardId     String
-  type        String           // "rect" | "circle" | "note" | "text" | "arrow" | "draw"
-  data        String           @db.Text // JSON con coordenadas, dimensiones, contenido, colores, etc.
-  updatedBy   String
-  updatedAt   DateTime         @updatedAt
+  id        String   @id @default(uuid())
+  boardId   String
+  type      String // "rect" | "circle" | "note" | "text" | "arrow" | "draw"
+  data      String   @db.Text // JSON con coordenadas, dimensiones, contenido, colores, etc.
+  updatedBy String
+  updatedAt DateTime @updatedAt
 
-  board       CollabWhiteboard @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  board CollabWhiteboard @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
   @@map("collab_whiteboard_elements")
 }
 
 model CollabPresence {
-  id          String   @id @default(uuid())
-  room        String   // "project:id" | "task:id" | "note:id" | "gantt:id" | "whiteboard:id"
-  username    String
-  fullName    String?
-  color       String   @default("#06b6d4")
-  lastSeen    DateTime @default(now())
+  id       String   @id @default(uuid())
+  room     String // "project:id" | "task:id" | "note:id" | "gantt:id" | "whiteboard:id"
+  username String
+  fullName String?
+  color    String   @default("#06b6d4")
+  lastSeen DateTime @default(now())
 
   @@unique([room, username])
   @@index([room, lastSeen])
@@ -1725,46 +1725,46 @@ model CollabPresence {
 }
 
 model CollabMessageReaction {
-  id          String        @id @default(uuid())
-  messageId   String
-  username    String
-  fullName    String?
-  emoji       String        // "👍", "❤️", "🚀", "🎉", "👀", "✅"
-  createdAt   DateTime      @default(now())
+  id        String   @id @default(uuid())
+  messageId String
+  username  String
+  fullName  String?
+  emoji     String // "👍", "❤️", "🚀", "🎉", "👀", "✅"
+  createdAt DateTime @default(now())
 
-  message     CollabMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  message CollabMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@unique([messageId, username, emoji])
   @@map("collab_message_reactions")
 }
 
 model CollabPoll {
-  id             String           @id @default(uuid())
+  id             String    @id @default(uuid())
   conversationId String
   messageId      String?
   question       String
-  options        String           @db.Text // JSON array: [{"id": 0, "text": "Opción A"}, ...]
-  allowMultiple  Boolean          @default(false)
-  isAnonymous    Boolean          @default(false)
+  options        String    @db.Text // JSON array: [{"id": 0, "text": "Opción A"}, ...]
+  allowMultiple  Boolean   @default(false)
+  isAnonymous    Boolean   @default(false)
   expiresAt      DateTime?
   createdBy      String
-  createdAt      DateTime         @default(now())
+  createdAt      DateTime  @default(now())
 
-  message        CollabMessage?   @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  votes          CollabPollVote[]
+  message CollabMessage?   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  votes   CollabPollVote[]
 
   @@map("collab_polls")
 }
 
 model CollabPollVote {
-  id          String     @id @default(uuid())
+  id          String   @id @default(uuid())
   pollId      String
   username    String
   fullName    String?
   optionIndex Int
-  createdAt   DateTime   @default(now())
+  createdAt   DateTime @default(now())
 
-  poll        CollabPoll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  poll CollabPoll @relation(fields: [pollId], references: [id], onDelete: Cascade)
 
   @@unique([pollId, username, optionIndex])
   @@map("collab_poll_votes")
@@ -1794,12 +1794,12 @@ model CollabKudo {
 // Configuración global del gestor documental (una sola fila con credenciales cifradas)
 model ConfiguracionDocumental {
   id                String   @id @default(cuid())
-  tenantId          String   // AZURE_TENANT_ID cifrado
-  clientId          String   // AZURE_CLIENT_ID cifrado
-  clientSecret      String   // AZURE_CLIENT_SECRET cifrado
-  onedriveUserEmail String   // Email del usuario dueño del OneDrive
-  rootFolderId      String?  // ID de la carpeta raíz en OneDrive
-  rootFolderName    String?  // Nombre visible de la carpeta raíz
+  tenantId          String // AZURE_TENANT_ID cifrado
+  clientId          String // AZURE_CLIENT_ID cifrado
+  clientSecret      String // AZURE_CLIENT_SECRET cifrado
+  onedriveUserEmail String // Email del usuario dueño del OneDrive
+  rootFolderId      String? // ID de la carpeta raíz en OneDrive
+  rootFolderName    String? // Nombre visible de la carpeta raíz
   activo            Boolean  @default(true)
   creadoEn          DateTime @default(now())
   actualizadoEn     DateTime @updatedAt
@@ -1809,18 +1809,18 @@ model ConfiguracionDocumental {
 
 // Carpetas del gestor (reflejo de la estructura en OneDrive)
 model CarpetaDocumental {
-  id              String                 @id @default(cuid())
-  onedriveId      String                 @unique // ID real en OneDrive (opaco para usuarios)
-  nombre          String
-  descripcion     String?
-  parentId        String?                // ID interno de la carpeta padre (null = raíz)
-  rutaCompleta    String                 // Ej: "Calidad/Manuales/2026"
-  icono           String                 @default("📁")
-  orden           Int                    @default(0)
-  activa          Boolean                @default(true)
-  creadoEn        DateTime               @default(now())
-  actualizadoEn   DateTime               @updatedAt
-  privilegios     PrivilegioDocumental[]
+  id            String                 @id @default(cuid())
+  onedriveId    String                 @unique // ID real en OneDrive (opaco para usuarios)
+  nombre        String
+  descripcion   String?
+  parentId      String? // ID interno de la carpeta padre (null = raíz)
+  rutaCompleta  String // Ej: "Calidad/Manuales/2026"
+  icono         String                 @default("📁")
+  orden         Int                    @default(0)
+  activa        Boolean                @default(true)
+  creadoEn      DateTime               @default(now())
+  actualizadoEn DateTime               @updatedAt
+  privilegios   PrivilegioDocumental[]
 
   @@map("carpeta_documental")
 }
@@ -1830,9 +1830,9 @@ model PrivilegioDocumental {
   id           String            @id @default(cuid())
   carpetaId    String
   carpeta      CarpetaDocumental @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
-  tipo         String            // 'rol' | 'usuario'
-  referenciaId String            // ID del rol o ID del usuario
-  permiso      String            // 'ver' | 'descargar' | 'subir' | 'administrar'
+  tipo         String // 'rol' | 'usuario'
+  referenciaId String // ID del rol o ID del usuario
+  permiso      String // 'ver' | 'descargar' | 'subir' | 'administrar'
   creadoEn     DateTime          @default(now())
 
   @@unique([carpetaId, tipo, referenciaId, permiso])
@@ -1851,7 +1851,7 @@ model UserWidgetLayout {
   userId      String?
   isDefault   Boolean  @default(false)
   isPublic    Boolean  @default(false)
-  layoutType  String   // "grid-2x2" | "hero-1-3" | "analytics-kpi" | "grid-3x2" | "asymmetric" | "free"
+  layoutType  String // "grid-2x2" | "hero-1-3" | "analytics-kpi" | "grid-3x2" | "asymmetric" | "free"
   configJson  String   @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -1866,21 +1866,21 @@ model UserWidgetLayout {
 // ============================================================================
 
 model ReservaSala {
-  id               String   @id @default(uuid())
+  id               String    @id @default(uuid())
   solicitante      String
   email            String
   userId           String?
-  fecha            String   // YYYY-MM-DD
-  horaInicio       String   // HH:MM
-  horaFin          String   // HH:MM
-  motivo           String   @db.Text
-  estado           String   @default("CONFIRMADA") // CONFIRMADA | CANCELADA
-  tokenCancelacion String   @unique @default(uuid())
+  fecha            String // YYYY-MM-DD
+  horaInicio       String // HH:MM
+  horaFin          String // HH:MM
+  motivo           String    @db.Text
+  estado           String    @default("CONFIRMADA") // CONFIRMADA | CANCELADA
+  tokenCancelacion String    @unique @default(uuid())
   sucursalId       String?
   sucursalNombre   String?
   sucursal         Sucursal? @relation(fields: [sucursalId], references: [id])
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   @@index([fecha])
   @@index([estado])
@@ -1905,51 +1905,51 @@ model NoticiaAlimentacion {
 // ============================================================================
 
 model LogBodega {
-  id          String   @id @default(uuid())
-  codigo      String   @unique
-  nombre      String
-  sucursalId  String?
-  direccion   String?  @db.Text
-  activa      Boolean  @default(true)
-  orden       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(uuid())
+  codigo     String   @unique
+  nombre     String
+  sucursalId String?
+  direccion  String?  @db.Text
+  activa     Boolean  @default(true)
+  orden      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  andenes     LogAnden[]
-  rutas       LogRuta[]
-  usuarios    LogUsuarioBodega[]
-  parametros  LogParametro[]
+  andenes    LogAnden[]
+  rutas      LogRuta[]
+  usuarios   LogUsuarioBodega[]
+  parametros LogParametro[]
 
   @@map("log_bodegas")
 }
 
 model LogUsuarioBodega {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   usuarioId String
   bodegaId  String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  bodega    LogBodega @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  bodega LogBodega @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
 
   @@unique([usuarioId, bodegaId])
   @@map("log_usuario_bodegas")
 }
 
 model LogAnden {
-  id              String      @id @default(uuid())
+  id              String   @id @default(uuid())
   bodegaId        String
   codigo          String
   nombre          String
-  tipoCarga       String      @default("GENERAL") // GENERAL, REFRIGERADO, CONGELADO, EXCLUSIVO
-  estadoOperativo String      @default("DISPONIBLE") // DISPONIBLE, OCUPADO, BLOQUEADO, MANTENCION
-  orden           Int         @default(0)
-  activo          Boolean     @default(true)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  tipoCarga       String   @default("GENERAL") // GENERAL, REFRIGERADO, CONGELADO, EXCLUSIVO
+  estadoOperativo String   @default("DISPONIBLE") // DISPONIBLE, OCUPADO, BLOQUEADO, MANTENCION
+  orden           Int      @default(0)
+  activo          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  bodega          LogBodega   @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
-  rutas           LogRuta[]
-  eventos         LogEventoRuta[]
+  bodega  LogBodega       @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  rutas   LogRuta[]
+  eventos LogEventoRuta[]
 
   @@unique([bodegaId, codigo])
   @@index([bodegaId])
@@ -1958,37 +1958,37 @@ model LogAnden {
 }
 
 model LogTransportista {
-  id          String       @id @default(uuid())
-  rut         String       @unique
+  id          String   @id @default(uuid())
+  rut         String   @unique
   razonSocial String
   contacto    String?
   telefono    String?
   email       String?
-  activo      Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  activo      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  choferes    LogChofer[]
-  camiones    LogCamion[]
-  rutas       LogRuta[]
+  choferes LogChofer[]
+  camiones LogCamion[]
+  rutas    LogRuta[]
 
   @@map("log_transportistas")
 }
 
 model LogChofer {
-  id              String            @id @default(uuid())
-  rut             String            @unique
+  id              String   @id @default(uuid())
+  rut             String   @unique
   nombre          String
-  telefono        String            // Formato E.164 ej +569...
+  telefono        String // Formato E.164 ej +569...
   email           String?
   telegramChatId  String?
   transportistaId String?
-  activo          Boolean           @default(true)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  activo          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  transportista   LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
-  rutas           LogRuta[]
+  transportista LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
+  rutas         LogRuta[]
 
   @@index([telefono])
   @@index([telegramChatId])
@@ -1996,18 +1996,18 @@ model LogChofer {
 }
 
 model LogCamion {
-  id              String            @id @default(uuid())
-  patente         String            @unique
-  tipoVehiculo    String            @default("RAMPLA") // 3/4, RAMPLA, CAMION_SIMPLE, FURGON
-  capacidadKg     Decimal?          @db.Decimal(10, 2)
-  capacidadM3     Decimal?          @db.Decimal(10, 2)
+  id              String   @id @default(uuid())
+  patente         String   @unique
+  tipoVehiculo    String   @default("RAMPLA") // 3/4, RAMPLA, CAMION_SIMPLE, FURGON
+  capacidadKg     Decimal? @db.Decimal(10, 2)
+  capacidadM3     Decimal? @db.Decimal(10, 2)
   transportistaId String?
-  activo          Boolean           @default(true)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  activo          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  transportista   LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
-  rutas           LogRuta[]
+  transportista LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
+  rutas         LogRuta[]
 
   @@map("log_camiones")
 }
@@ -2023,46 +2023,46 @@ model LogCliente {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  rutas       LogRuta[]
+  rutas LogRuta[]
 
   @@map("log_clientes")
 }
 
 model LogRuta {
-  id                  String            @id @default(uuid())
-  numeroRuta          String            @unique // Generado automáticamente ej: RUT-2026-0001
-  bodegaId            String
-  transportistaId     String?
-  choferId            String
-  camionId            String
-  clienteId           String?
-  estado              String            @default("PROGRAMADA") 
+  id                String    @id @default(uuid())
+  numeroRuta        String    @unique // Generado automáticamente ej: RUT-2026-0001
+  bodegaId          String
+  transportistaId   String?
+  choferId          String
+  camionId          String
+  clienteId         String?
+  estado            String    @default("PROGRAMADA")
   // Estados: BORRADOR, PROGRAMADA, NOTIFICADA, EN_PORTON, EN_ANDEN, EN_PROCESO, DESPACHADA, CANCELADA, REPROGRAMADA
-  andenId             String?
-  fechaRuta           String            // YYYY-MM-DD
-  horaProgramada      String            // HH:MM
-  horaLlegadaPorton   DateTime?
-  horaEntradaAnden    DateTime?
-  horaSalidaAnden     DateTime?
-  selloSalida         String?
-  totalBultos         Int?              @default(0)
-  totalKilos          Decimal?          @db.Decimal(10, 2)
-  observaciones       String?           @db.Text
-  telegramMessageId   String?
-  tokenRuta           String            @unique @default(uuid()) // Token de seguimiento para chofer
-  creadaPorId         String?
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
+  andenId           String?
+  fechaRuta         String // YYYY-MM-DD
+  horaProgramada    String // HH:MM
+  horaLlegadaPorton DateTime?
+  horaEntradaAnden  DateTime?
+  horaSalidaAnden   DateTime?
+  selloSalida       String?
+  totalBultos       Int?      @default(0)
+  totalKilos        Decimal?  @db.Decimal(10, 2)
+  observaciones     String?   @db.Text
+  telegramMessageId String?
+  tokenRuta         String    @unique @default(uuid()) // Token de seguimiento para chofer
+  creadaPorId       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  bodega              LogBodega         @relation(fields: [bodegaId], references: [id])
-  transportista       LogTransportista? @relation(fields: [transportistaId], references: [id])
-  chofer              LogChofer         @relation(fields: [choferId], references: [id])
-  camion              LogCamion         @relation(fields: [camionId], references: [id])
-  cliente             LogCliente?       @relation(fields: [clienteId], references: [id])
-  anden               LogAnden?         @relation(fields: [andenId], references: [id])
+  bodega        LogBodega         @relation(fields: [bodegaId], references: [id])
+  transportista LogTransportista? @relation(fields: [transportistaId], references: [id])
+  chofer        LogChofer         @relation(fields: [choferId], references: [id])
+  camion        LogCamion         @relation(fields: [camionId], references: [id])
+  cliente       LogCliente?       @relation(fields: [clienteId], references: [id])
+  anden         LogAnden?         @relation(fields: [andenId], references: [id])
 
-  eventos             LogEventoRuta[]
-  integracionLogs     LogIntegracionLog[]
+  eventos         LogEventoRuta[]
+  integracionLogs LogIntegracionLog[]
 
   @@index([bodegaId])
   @@index([fechaRuta])
@@ -2074,19 +2074,19 @@ model LogRuta {
 }
 
 model LogEventoRuta {
-  id            String    @id @default(uuid())
-  rutaId        String
+  id             String   @id @default(uuid())
+  rutaId         String
   estadoAnterior String?
-  estadoNuevo   String
-  andenId       String?
-  origenCambio  String    @default("SISTEMA") // SISTEMA, DESPACHADOR, TELEGRAM_CHOFER, N8N_WEBHOOK, PORTON
-  notas         String?   @db.Text
-  metadataJson  String?   @db.Text
-  usuarioId     String?
-  createdAt     DateTime  @default(now())
+  estadoNuevo    String
+  andenId        String?
+  origenCambio   String   @default("SISTEMA") // SISTEMA, DESPACHADOR, TELEGRAM_CHOFER, N8N_WEBHOOK, PORTON
+  notas          String?  @db.Text
+  metadataJson   String?  @db.Text
+  usuarioId      String?
+  createdAt      DateTime @default(now())
 
-  ruta          LogRuta   @relation(fields: [rutaId], references: [id], onDelete: Cascade)
-  anden         LogAnden? @relation(fields: [andenId], references: [id])
+  ruta  LogRuta   @relation(fields: [rutaId], references: [id], onDelete: Cascade)
+  anden LogAnden? @relation(fields: [andenId], references: [id])
 
   @@index([rutaId])
   @@index([createdAt])
@@ -2094,37 +2094,37 @@ model LogEventoRuta {
 }
 
 model LogIntegracionConfig {
-  id               String              @id @default(uuid())
-  nombre           String              @default("N8N Despacho & Telegram")
-  provider         String              @default("N8N") // N8N, GENERIC_WEBHOOK
-  webhookUrl       String              @db.Text
-  secretToken      String?             // Token seguro para firma HMAC o Bearer
-  activo           Boolean             @default(true)
-  eventosSuscritos String              @default("[\"RUTA_CREADA\",\"CHOFER_NOTIFICADO\",\"ANDEN_ASIGNADO\",\"DESPACHO_COMPLETO\"]") @db.Text
-  headersJson      String?             @db.Text
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
+  id               String   @id @default(uuid())
+  nombre           String   @default("N8N Despacho & Telegram")
+  provider         String   @default("N8N") // N8N, GENERIC_WEBHOOK
+  webhookUrl       String   @db.Text
+  secretToken      String? // Token seguro para firma HMAC o Bearer
+  activo           Boolean  @default(true)
+  eventosSuscritos String   @default("[\"RUTA_CREADA\",\"CHOFER_NOTIFICADO\",\"ANDEN_ASIGNADO\",\"DESPACHO_COMPLETO\"]") @db.Text
+  headersJson      String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  logs             LogIntegracionLog[]
+  logs LogIntegracionLog[]
 
   @@map("log_integracion_configs")
 }
 
 model LogIntegracionLog {
-  id                  String                @id @default(uuid())
+  id                  String   @id @default(uuid())
   integracionConfigId String?
-  evento              String                // RUTA_CREADA, CHOFER_NOTIFICADO, etc.
+  evento              String // RUTA_CREADA, CHOFER_NOTIFICADO, etc.
   rutaId              String?
-  payloadEnviado      String?               @db.Text
+  payloadEnviado      String?  @db.Text
   respuestaCodigo     Int?
-  respuestaCuerpo     String?               @db.Text
-  estado              String                @default("PENDIENTE") // EXITO, ERROR, REINTENTO, PENDIENTE
-  intentos            Int                   @default(1)
-  errorDetalle        String?               @db.Text
-  createdAt           DateTime              @default(now())
+  respuestaCuerpo     String?  @db.Text
+  estado              String   @default("PENDIENTE") // EXITO, ERROR, REINTENTO, PENDIENTE
+  intentos            Int      @default(1)
+  errorDetalle        String?  @db.Text
+  createdAt           DateTime @default(now())
 
-  integracionConfig   LogIntegracionConfig? @relation(fields: [integracionConfigId], references: [id], onDelete: SetNull)
-  ruta                LogRuta?              @relation(fields: [rutaId], references: [id], onDelete: Cascade)
+  integracionConfig LogIntegracionConfig? @relation(fields: [integracionConfigId], references: [id], onDelete: SetNull)
+  ruta              LogRuta?              @relation(fields: [rutaId], references: [id], onDelete: Cascade)
 
   @@index([evento])
   @@index([estado])
@@ -2134,15 +2134,15 @@ model LogIntegracionLog {
 }
 
 model LogParametro {
-  id          String     @id @default(uuid())
+  id          String   @id @default(uuid())
   bodegaId    String?
-  clave       String     @unique
-  valor       String     @db.Text
-  descripcion String?    @db.Text
-  tipo        String     @default("NUMERO") // NUMERO, TEXTO, BOOLEANO
-  updatedAt   DateTime   @updatedAt
+  clave       String   @unique
+  valor       String   @db.Text
+  descripcion String?  @db.Text
+  tipo        String   @default("NUMERO") // NUMERO, TEXTO, BOOLEANO
+  updatedAt   DateTime @updatedAt
 
-  bodega      LogBodega? @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  bodega LogBodega? @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
 
   @@map("log_parametros")
 }
@@ -2169,26 +2169,26 @@ model PrevGravedadPreparacion {
 }
 
 model Cal_PlanillaTransporte {
-  id                     String                   @id @default(uuid())
+  id                     String    @id @default(uuid())
   sucursalId             String
   fecha                  DateTime
-  fechaTexto             String                   @db.VarChar(10) // YYYY-MM-DD
-  estado                 String                   @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
-  firmaCalidadUser       String?                  @db.VarChar(150)
+  fechaTexto             String    @db.VarChar(10) // YYYY-MM-DD
+  estado                 String    @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
+  firmaCalidadUser       String?   @db.VarChar(150)
   firmaCalidadUserId     String?
   firmaCalidadFecha      DateTime?
-  firmaCalidadDiasAtraso Int                      @default(0)
-  firmaCalidadImg        String?                  @db.Text
-  firmaBodegaUser        String?                  @db.VarChar(150)
+  firmaCalidadDiasAtraso Int       @default(0)
+  firmaCalidadImg        String?   @db.Text
+  firmaBodegaUser        String?   @db.VarChar(150)
   firmaBodegaUserId      String?
   firmaBodegaFecha       DateTime?
-  firmaBodegaImg         String?                  @db.Text
-  observacionesGenerales String?                  @db.Text
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  firmaBodegaImg         String?   @db.Text
+  observacionesGenerales String?   @db.Text
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
-  sucursal               Sucursal                 @relation(fields: [sucursalId], references: [id])
-  registros              Cal_RegistroTransporte[]
+  sucursal  Sucursal                 @relation(fields: [sucursalId], references: [id])
+  registros Cal_RegistroTransporte[]
 
   @@unique([sucursalId, fechaTexto])
   @@index([sucursalId])
@@ -2198,48 +2198,48 @@ model Cal_PlanillaTransporte {
 }
 
 model Cal_RegistroTransporte {
-  id                  String                 @id @default(uuid())
+  id                  String   @id @default(uuid())
   planillaId          String
-  patenteEncriptada   String                 @db.Text
-  limpiezaInterior    String                 @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  limpiezaExterior    String                 @default("Cumple") @db.VarChar(20)
-  puertaCamara        String                 @default("Cumple") @db.VarChar(20)
-  piezasSinOxidacion  String                 @default("Cumple") @db.VarChar(20)
-  equipoCongelacion   String                 @default("Cumple") @db.VarChar(20)
-  equipoRefrigeracion String                 @default("Cumple") @db.VarChar(20)
-  observacion         String?                @db.Text
-  accionCorrectiva    String?                @db.Text
-  creadoPor           String                 @db.VarChar(150)
-  createdAt           DateTime               @default(now())
-  updatedAt           DateTime               @updatedAt
+  patenteEncriptada   String   @db.Text
+  limpiezaInterior    String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  limpiezaExterior    String   @default("Cumple") @db.VarChar(20)
+  puertaCamara        String   @default("Cumple") @db.VarChar(20)
+  piezasSinOxidacion  String   @default("Cumple") @db.VarChar(20)
+  equipoCongelacion   String   @default("Cumple") @db.VarChar(20)
+  equipoRefrigeracion String   @default("Cumple") @db.VarChar(20)
+  observacion         String?  @db.Text
+  accionCorrectiva    String?  @db.Text
+  creadoPor           String   @db.VarChar(150)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
-  planilla            Cal_PlanillaTransporte @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+  planilla Cal_PlanillaTransporte @relation(fields: [planillaId], references: [id], onDelete: Cascade)
 
   @@index([planillaId])
   @@map("Cal_RegistroTransporte")
 }
 
 model Cal_PlanillaHigienePersonal {
-  id                     String                        @id @default(uuid())
+  id                     String    @id @default(uuid())
   sucursalId             String
   fecha                  DateTime
-  fechaTexto             String                        @db.VarChar(10) // YYYY-MM-DD
-  estado                 String                        @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
-  firmaCalidadUser       String?                       @db.VarChar(150)
+  fechaTexto             String    @db.VarChar(10) // YYYY-MM-DD
+  estado                 String    @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
+  firmaCalidadUser       String?   @db.VarChar(150)
   firmaCalidadUserId     String?
   firmaCalidadFecha      DateTime?
-  firmaCalidadDiasAtraso Int                           @default(0)
-  firmaCalidadImg        String?                       @db.Text
-  firmaBodegaUser        String?                       @db.VarChar(150)
+  firmaCalidadDiasAtraso Int       @default(0)
+  firmaCalidadImg        String?   @db.Text
+  firmaBodegaUser        String?   @db.VarChar(150)
   firmaBodegaUserId      String?
   firmaBodegaFecha       DateTime?
-  firmaBodegaImg         String?                       @db.Text
-  observacionesGenerales String?                       @db.Text
-  createdAt              DateTime                      @default(now())
-  updatedAt              DateTime                      @updatedAt
+  firmaBodegaImg         String?   @db.Text
+  observacionesGenerales String?   @db.Text
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
-  sucursal               Sucursal                      @relation(fields: [sucursalId], references: [id])
-  registros              Cal_RegistroHigienePersonal[]
+  sucursal  Sucursal                      @relation(fields: [sucursalId], references: [id])
+  registros Cal_RegistroHigienePersonal[]
 
   @@unique([sucursalId, fechaTexto])
   @@index([sucursalId])
@@ -2249,50 +2249,50 @@ model Cal_PlanillaHigienePersonal {
 }
 
 model Cal_RegistroHigienePersonal {
-  id                 String                      @id @default(uuid())
-  planillaId         String
-  nombreEncriptado   String                      @db.Text
-  uniformeLimpio     String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  zapatosSeguridad   String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  peloCorto          String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  usoJockey          String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  sinJoyas           String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  unasCortas         String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  rasurado           String                      @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
-  estadoSalud        String                      @default("No Aplica") @db.VarChar(50) // No Aplica, Diarrea, Vómitos, Fiebre, Resfrio, Lesión en la piel
-  habitosCorrectos   String                      @default("No Aplica") @db.VarChar(50) // No Aplica, Telefono, Audifonos, Mascar Chicle, Estornudar, Escupir, Hálito alcoholico
-  heridas            String                      @default("Ausencia") @db.VarChar(30) // Ausencia, Presencia
-  observacion        String?                     @db.Text
-  accionCorrectiva   String?                     @db.Text
-  creadoPor          String                      @db.VarChar(150)
-  createdAt          DateTime                    @default(now())
-  updatedAt          DateTime                    @updatedAt
+  id               String   @id @default(uuid())
+  planillaId       String
+  nombreEncriptado String   @db.Text
+  uniformeLimpio   String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  zapatosSeguridad String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  peloCorto        String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  usoJockey        String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  sinJoyas         String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  unasCortas       String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  rasurado         String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  estadoSalud      String   @default("No Aplica") @db.VarChar(50) // No Aplica, Diarrea, Vómitos, Fiebre, Resfrio, Lesión en la piel
+  habitosCorrectos String   @default("No Aplica") @db.VarChar(50) // No Aplica, Telefono, Audifonos, Mascar Chicle, Estornudar, Escupir, Hálito alcoholico
+  heridas          String   @default("Ausencia") @db.VarChar(30) // Ausencia, Presencia
+  observacion      String?  @db.Text
+  accionCorrectiva String?  @db.Text
+  creadoPor        String   @db.VarChar(150)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  planilla           Cal_PlanillaHigienePersonal @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+  planilla Cal_PlanillaHigienePersonal @relation(fields: [planillaId], references: [id], onDelete: Cascade)
 
   @@index([planillaId])
   @@map("Cal_RegistroHigienePersonal")
 }
 
 model RegCap_Capacitacion {
-  id             String                @id @default(uuid())
-  fecha          DateTime              @default(now())
-  instalacion    String                @db.Text
-  licitacion     String?               @db.Text
-  sucursal       String?               @db.Text
-  horaDesde      String                @db.VarChar(10)
-  horaHasta      String                @db.VarChar(10)
-  horario        String                @db.VarChar(50)
-  relatorNombre  String                @db.Text
-  relatorCargo   String                @db.Text
-  tema           String                @db.Text
-  firmaRelator   String?               @db.Text
-  creadoPor      String?               @db.VarChar(150)
-  creadoPorId    String?
-  createdAt      DateTime              @default(now())
-  updatedAt      DateTime              @updatedAt
+  id            String   @id @default(uuid())
+  fecha         DateTime @default(now())
+  instalacion   String   @db.Text
+  licitacion    String?  @db.Text
+  sucursal      String?  @db.Text
+  horaDesde     String   @db.VarChar(10)
+  horaHasta     String   @db.VarChar(10)
+  horario       String   @db.VarChar(50)
+  relatorNombre String   @db.Text
+  relatorCargo  String   @db.Text
+  tema          String   @db.Text
+  firmaRelator  String?  @db.Text
+  creadoPor     String?  @db.VarChar(150)
+  creadoPorId   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  participantes  RegCap_Participante[]
+  participantes RegCap_Participante[]
 
   @@index([fecha])
   @@index([licitacion])
@@ -2301,23 +2301,23 @@ model RegCap_Capacitacion {
 }
 
 model RegCap_Participante {
-  id         String              @id @default(uuid())
+  id         String   @id @default(uuid())
   registroId String
   numero     Int
-  nombre     String              @db.Text
-  cargo      String              @db.Text
-  rut        String              @db.Text
-  firma      String?             @db.Text
-  createdAt  DateTime            @default(now())
+  nombre     String   @db.Text
+  cargo      String   @db.Text
+  rut        String   @db.Text
+  firma      String?  @db.Text
+  createdAt  DateTime @default(now())
 
-  registro   RegCap_Capacitacion @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registro RegCap_Capacitacion @relation(fields: [registroId], references: [id], onDelete: Cascade)
 
   @@index([registroId])
   @@map("RegCap_Participante")
 }
 
 model Cal_ResSan_Registro {
-  id                    String   @id @default(uuid())
+  id                    String    @id @default(uuid())
   licitacion            String?
   licId                 Int?
   anio                  Int
@@ -2334,10 +2334,10 @@ model Cal_ResSan_Registro {
   documentoUrl          String?   @db.Text
   documentoNombre       String?
   documentoSubidoPor    String?
-  observaciones         String?  @db.Text
+  observaciones         String?   @db.Text
   updatedBy             String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@unique([rbd, anio])
   @@index([anio])
@@ -2350,39 +2350,39 @@ model Cal_ResSan_Registro {
 }
 
 model Pers_Asis_Criterio {
-  id                 String   @id @default(uuid())
-  nombre             String   @unique
-  descripcion        String?
-  color              String?  @default("#0891b2")
-  activo             Boolean  @default(true)
-  solicitaDocumento  Boolean  @default(false)
-  orden              Int      @default(0)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  registros          Pers_Asis_Registro[]
+  id                String               @id @default(uuid())
+  nombre            String               @unique
+  descripcion       String?
+  color             String?              @default("#0891b2")
+  activo            Boolean              @default(true)
+  solicitaDocumento Boolean              @default(false)
+  orden             Int                  @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  registros         Pers_Asis_Registro[]
 
   @@map("Pers_Asis_Criterio")
 }
 
 model Pers_Asis_Carga {
-  id                    String   @id @default(uuid())
+  id                    String               @id @default(uuid())
   nombreArchivo         String
-  totalRegistros        Int      @default(0)
-  nuevosRegistros       Int      @default(0)
-  actualizadosRegistros Int      @default(0)
-  erroresRegistros      Int      @default(0)
-  estado                String   @default("ABIERTO")
+  totalRegistros        Int                  @default(0)
+  nuevosRegistros       Int                  @default(0)
+  actualizadosRegistros Int                  @default(0)
+  erroresRegistros      Int                  @default(0)
+  estado                String               @default("ABIERTO")
   cerradoPor            String?
   cerradoAt             DateTime?
   cargadoPor            String
   cargadoPorId          String?
-  fechaCarga            DateTime @default(now())
+  fechaCarga            DateTime             @default(now())
   actualizadoPor        String?
   actualizadoPorId      String?
-  ultimaActualizacion   DateTime @default(now())
-  observaciones         String?  @db.Text
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  ultimaActualizacion   DateTime             @default(now())
+  observaciones         String?              @db.Text
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
   registros             Pers_Asis_Registro[]
 
   @@index([estado], map: "pers_asis_carga_estado_idx")
@@ -2390,12 +2390,12 @@ model Pers_Asis_Carga {
 }
 
 model Pers_Asis_Registro {
-  id                       String               @id @default(uuid())
+  id                       String    @id @default(uuid())
   cargaId                  String?
-  rutEnc                   String               @db.Text
+  rutEnc                   String    @db.Text
   rutHash                  String
-  apellidosEnc             String               @db.Text
-  nombreEnc                String               @db.Text
+  apellidosEnc             String    @db.Text
+  nombreEnc                String    @db.Text
   fecha                    String
   rbd                      Int
   establecimiento          String
@@ -2404,29 +2404,29 @@ model Pers_Asis_Registro {
   permisoParcial           String?
   criterioId               String?
   criterioNombre           String?
-  criterioObservacion      String?              @db.Text
+  criterioObservacion      String?   @db.Text
   criterioAsignadoPor      String?
   criterioAsignadoAt       DateTime?
   documentoUrl             String?
   documentoNombre          String?
   documentoSubidoAt        DateTime?
   documentoSubidoPor       String?
-  estado                   String               @default("ABIERTO")
+  estado                   String    @default("ABIERTO")
   cerradoPor               String?
   cerradoAt                DateTime?
   creadoPor                String
   creadoPorId              String?
-  fechaCreacion            DateTime             @default(now())
+  fechaCreacion            DateTime  @default(now())
   actualizadoPor           String?
   actualizadoPorId         String?
   fechaActualizacion       DateTime?
-  numActualizaciones       Int                  @default(0)
-  historialActualizaciones String?              @db.Text
-  createdAt                DateTime             @default(now())
-  updatedAt                DateTime             @updatedAt
+  numActualizaciones       Int       @default(0)
+  historialActualizaciones String?   @db.Text
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
 
-  carga                    Pers_Asis_Carga?     @relation(fields: [cargaId], references: [id])
-  criterio                 Pers_Asis_Criterio?  @relation(fields: [criterioId], references: [id])
+  carga    Pers_Asis_Carga?    @relation(fields: [cargaId], references: [id])
+  criterio Pers_Asis_Criterio? @relation(fields: [criterioId], references: [id])
 
   @@unique([rutHash, fecha, rbd], map: "pers_asis_reg_unique_rut_fecha_rbd")
   @@index([rbd], map: "pers_asis_reg_rbd_idx")
@@ -2436,4 +2436,3 @@ model Pers_Asis_Registro {
   @@index([estado], map: "pers_asis_reg_estado_idx")
   @@map("Pers_Asis_Registro")
 }
-

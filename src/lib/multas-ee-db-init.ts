@@ -119,33 +119,65 @@ export async function ensureMultasEETables(): Promise<void> {
             ON "Multas_Aspecto_EE_Restriccion" ("licId", "letra");
         `)
 
-        // 5. Seed inicial idempotente: Aspecto M para el año 2024 -> Valor $0 (SQL Puro y Atómico)
+        // 5. Claves Foráneas con ON DELETE CASCADE (Idempotentes)
         await rawPrisma.$executeRawUnsafe(`
-            INSERT INTO "Multas_Aspecto_EE_Restriccion" (
-                "id", "licId", "letra", "tipo", "anho", "accion", "valorFijo", "descripcion", "activo", "creadoPor", "createdAt", "updatedAt"
-            )
-            SELECT 
-                gen_random_uuid()::text,
-                "licId",
-                'M',
-                'ANHO',
-                2024,
-                'VALOR_CERO',
-                0,
-                'Restricción normativa: Documentos del año 2024 tienen valor de cálculo $0',
-                true,
-                'SISTEMA',
-                CURRENT_TIMESTAMP,
-                CURRENT_TIMESTAMP
-            FROM "AspectoEE"
-            WHERE UPPER("letra") = 'M'
-              AND NOT EXISTS (
-                  SELECT 1 FROM "Multas_Aspecto_EE_Restriccion" r 
-                  WHERE r."licId" = "AspectoEE"."licId" 
-                    AND UPPER(r."letra") = 'M' 
-                    AND r."tipo" = 'ANHO' 
-                    AND r."anho" = 2024
-              );
+            DO $$ 
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.table_constraints 
+                    WHERE constraint_name = 'fk_multas_privilegio_user' 
+                      AND table_name = 'Multas_Privilegio_EE'
+                ) THEN
+                    ALTER TABLE "Multas_Privilegio_EE" 
+                    ADD CONSTRAINT fk_multas_privilegio_user 
+                    FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE;
+                END IF;
+            END $$;
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            DO $$ 
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.table_constraints 
+                    WHERE constraint_name = 'fk_multas_it_cab_lic' 
+                      AND table_name = 'Multas_IT_Elementos_Esenciales_Cab'
+                ) THEN
+                    ALTER TABLE "Multas_IT_Elementos_Esenciales_Cab" 
+                    ADD CONSTRAINT fk_multas_it_cab_lic 
+                    FOREIGN KEY ("licId") REFERENCES "Licitacion"("licId") ON DELETE CASCADE;
+                END IF;
+            END $$;
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            DO $$ 
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.table_constraints 
+                    WHERE constraint_name = 'fk_multas_it_det_cab' 
+                      AND table_name = 'Multas_IT_Elementos_Esenciales_Det'
+                ) THEN
+                    ALTER TABLE "Multas_IT_Elementos_Esenciales_Det" 
+                    ADD CONSTRAINT fk_multas_it_det_cab 
+                    FOREIGN KEY ("cabId") REFERENCES "Multas_IT_Elementos_Esenciales_Cab"("id") ON DELETE CASCADE;
+                END IF;
+            END $$;
+        `)
+
+        await rawPrisma.$executeRawUnsafe(`
+            DO $$ 
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.table_constraints 
+                    WHERE constraint_name = 'fk_multas_restr_lic' 
+                      AND table_name = 'Multas_Aspecto_EE_Restriccion'
+                ) THEN
+                    ALTER TABLE "Multas_Aspecto_EE_Restriccion" 
+                    ADD CONSTRAINT fk_multas_restr_lic 
+                    FOREIGN KEY ("licId") REFERENCES "Licitacion"("licId") ON DELETE CASCADE;
+                END IF;
+            END $$;
         `)
 
         isInitialized = true

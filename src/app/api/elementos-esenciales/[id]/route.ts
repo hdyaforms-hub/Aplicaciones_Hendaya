@@ -70,16 +70,21 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
             )
         }
 
-        // Eliminar multas asociadas al folio si existe
-        if (acta.folio) {
-            await prisma.multas_Elementos_Esenciales_Cab.deleteMany({
-                where: { folioOriginal: acta.folio }
-            })
-        }
+        // Eliminar atómicamente multas, descargos y acta en una sola transacción
+        await prisma.$transaction(async (tx) => {
+            if (acta.folio) {
+                await tx.multas_Elementos_Esenciales_Cab.deleteMany({
+                    where: { folioOriginal: acta.folio }
+                })
+                await tx.descargos_Cab.deleteMany({
+                    where: { folio: acta.folio }
+                })
+            }
 
-        // Eliminar de la base de datos (Cascade borrará los detalles de ElementosEsenciales_Det)
-        await prisma.elementosEsenciales_Cab.delete({
-            where: { id }
+            // Eliminar de la base de datos (Cascade borrará los detalles de ElementosEsenciales_Det)
+            await tx.elementosEsenciales_Cab.delete({
+                where: { id }
+            })
         })
 
         // Intentar eliminar el archivo físico si existe el link

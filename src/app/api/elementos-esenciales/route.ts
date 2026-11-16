@@ -204,16 +204,21 @@ export async function DELETE(request: Request) {
 
         const folios = actas.map(a => a.folio).filter(Boolean) as string[];
 
-        // Eliminar multas asociadas a los folios
-        if (folios.length > 0) {
-            await prisma.multas_Elementos_Esenciales_Cab.deleteMany({
-                where: { folioOriginal: { in: folios } }
-            });
-        }
+        // Eliminar atómicamente multas, descargos y actas en una sola transacción
+        await prisma.$transaction(async (tx) => {
+            if (folios.length > 0) {
+                await tx.multas_Elementos_Esenciales_Cab.deleteMany({
+                    where: { folioOriginal: { in: folios } }
+                });
+                await tx.descargos_Cab.deleteMany({
+                    where: { folio: { in: folios } }
+                });
+            }
 
-        // Eliminar de la DB (Cascade borrará los detalles de ElementosEsenciales_Det)
-        await prisma.elementosEsenciales_Cab.deleteMany({
-            where: { id: { in: ids } }
+            // Eliminar de la DB (Cascade borrará los detalles de ElementosEsenciales_Det)
+            await tx.elementosEsenciales_Cab.deleteMany({
+                where: { id: { in: ids } }
+            });
         });
 
         // Eliminar archivos físicos

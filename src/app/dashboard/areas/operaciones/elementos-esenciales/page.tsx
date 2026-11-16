@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import UploadModal from './UploadModal'
 import { useDebounce } from '@/hooks/use-debounce'
 import { searchColegios } from '../captura-certificacion/actions'
-import { getUserEEPrivileges } from './actions'
+import { getUserEEPrivileges, getDescargosImpactoBorrado } from './actions'
 
 export default function ElementosEsencialesPage() {
     const [registros, setRegistros] = useState<any[]>([])
@@ -146,11 +146,18 @@ export default function ElementosEsencialesPage() {
             console.error('ID is undefined');
             return;
         }
-        if (!window.confirm('¿Estás seguro de que deseas eliminar este registro? Esta acción también eliminará el archivo PDF asociado.')) {
-            return
-        }
 
         try {
+            const { descargosCount, folios } = await getDescargosImpactoBorrado([id])
+            const folioTexto = folios.length > 0 ? ` (Folio: ${folios.join(', ')})` : ''
+            const descargoTexto = descargosCount > 0 
+                ? `\n\n⚠️ ADVERTENCIA: Esta acta tiene ${descargosCount} descargo(s) asociado(s). Al eliminarla, también se eliminarán de forma definitiva sus descargos y multas calculadas.`
+                : '\n\nEsta acción también eliminará el archivo PDF asociado.'
+
+            if (!window.confirm(`¿Estás seguro de que deseas eliminar este registro${folioTexto}?${descargoTexto}`)) {
+                return
+            }
+
             const res = await fetch(`/api/elementos-esenciales/${id}`, {
                 method: 'DELETE',
             })
@@ -171,12 +178,17 @@ export default function ElementosEsencialesPage() {
     const handleDeleteSelected = async () => {
         if (selectedIds.length === 0) return;
         
-        if (!window.confirm(`¿Estás seguro de que deseas eliminar los ${selectedIds.length} registros seleccionados? Esta acción también eliminará los archivos PDF asociados.`)) {
-            return
-        }
-
-        setLoading(true);
         try {
+            const { descargosCount } = await getDescargosImpactoBorrado(selectedIds)
+            const descargoTexto = descargosCount > 0 
+                ? `\n\n⚠️ ADVERTENCIA: Entre las actas seleccionadas se detectaron ${descargosCount} descargo(s) asociado(s) que también serán eliminados de forma definitiva.`
+                : '\n\nEsta acción también eliminará los archivos PDF asociados.'
+
+            if (!window.confirm(`¿Estás seguro de que deseas eliminar los ${selectedIds.length} registros seleccionados?${descargoTexto}`)) {
+                return
+            }
+
+            setLoading(true);
             const res = await fetch('/api/elementos-esenciales', {
                 method: 'DELETE',
                 body: JSON.stringify({ ids: selectedIds }),

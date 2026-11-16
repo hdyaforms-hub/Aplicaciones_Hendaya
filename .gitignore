@@ -40,7 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# generated and engines
 /src/generated/prisma
+/src/generated/client_temp
+*.node
+prisma/*.node
 
 # database
 *.db

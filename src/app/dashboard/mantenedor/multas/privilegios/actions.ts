@@ -50,8 +50,18 @@ export async function getUsuariosConPrivilegios(): Promise<{
     error?: string
 }> {
     try {
-        await checkPermission()
+        const session = await checkPermission()
         await ensureMultasEETables()
+
+        const roleName = session.user.role?.name?.toLowerCase().trim() || ''
+        const isGlobalAdmin =
+            roleName === 'administrador' ||
+            roleName === 'admin' ||
+            roleName === 'super admin' ||
+            roleName === 'superadministrador'
+
+        // Obtener los RBDs asignados al usuario conectado
+        const userRbds = (session.user.rbds || []).map(Number).filter((n: number) => !isNaN(n) && n >= 0)
 
         const users = await rawPrisma.user.findMany({
             where: { isDeleted: false },
@@ -67,7 +77,16 @@ export async function getUsuariosConPrivilegios(): Promise<{
             ]
         })
 
-        const data: UsuarioPrivilegioEE[] = users.map(u => {
+        // Filtrar usuarios: Administrador ve todos; usuario no administrador solo ve usuarios
+        // cuyos RBDs intersecten con los asignados a su propio perfil
+        const filteredUsers = isGlobalAdmin
+            ? users
+            : users.filter(u => {
+                const targetRbds = (u.rbds || []).map(Number)
+                return targetRbds.some(r => userRbds.includes(r))
+            })
+
+        const data: UsuarioPrivilegioEE[] = filteredUsers.map(u => {
             const isAdmin = u.role?.name?.toLowerCase().trim() === 'administrador' ||
                             u.role?.name?.toLowerCase().trim() === 'admin' ||
                             u.role?.name?.toLowerCase().trim() === 'super admin'
@@ -103,6 +122,15 @@ export async function updatePrivilegioUsuario(
         const session = await checkPermission()
         await ensureMultasEETables()
 
+        const roleName = session.user.role?.name?.toLowerCase().trim() || ''
+        const isGlobalAdmin =
+            roleName === 'administrador' ||
+            roleName === 'admin' ||
+            roleName === 'super admin' ||
+            roleName === 'superadministrador'
+
+        const userRbds = (session.user.rbds || []).map(Number).filter((n: number) => !isNaN(n) && n >= 0)
+
         const targetUser = await rawPrisma.user.findUnique({
             where: { id: targetUserId },
             include: { role: true }
@@ -110,6 +138,18 @@ export async function updatePrivilegioUsuario(
 
         if (!targetUser) {
             return { success: false, error: 'Usuario no encontrado' }
+        }
+
+        // Restricción por RBD si no es administrador
+        if (!isGlobalAdmin) {
+            const targetRbds = (targetUser.rbds || []).map(Number)
+            const hasCommonRbd = targetRbds.some(r => userRbds.includes(r))
+            if (!hasCommonRbd) {
+                return {
+                    success: false,
+                    error: 'No tienes autorización para gestionar privilegios de un usuario que no comparte tus RBDs asignados'
+                }
+            }
         }
 
         const operatorName = session.user.username || session.user.name || 'Admin'

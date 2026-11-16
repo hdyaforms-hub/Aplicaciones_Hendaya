@@ -5,7 +5,8 @@ import {
     getRestriccionesAspecto,
     saveRestriccionAspecto,
     toggleRestriccionAspecto,
-    deleteRestriccionAspecto
+    deleteRestriccionAspecto,
+    cargarRestriccionesSugeridas
 } from './actions'
 
 interface RestriccionesAspectoModalProps {
@@ -142,9 +143,15 @@ export default function RestriccionesAspectoModal({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        setSaving(true)
         setError('')
         setSuccess('')
+
+        if (formData.tipo === 'RANGO_FECHAS' && !formData.fechaDesde && !formData.fechaHasta) {
+            setError('Para una restricción por rango de fechas debe ingresar al menos la fecha de inicio o de término.')
+            return
+        }
+
+        setSaving(true)
 
         const res = await saveRestriccionAspecto({
             id: editingId || undefined,
@@ -170,6 +177,29 @@ export default function RestriccionesAspectoModal({
             if (onUpdated) onUpdated()
         }
         setSaving(false)
+    }
+
+    const handleCargarSugeridas = async () => {
+        if (!aspecto) return
+        setSaving(true)
+        setError('')
+        setSuccess('')
+        try {
+            const res = await cargarRestriccionesSugeridas(aspecto.licId, aspecto.letra)
+            if (res.error) {
+                setError(res.error)
+            } else if (res.warning) {
+                setSuccess(res.warning)
+            } else {
+                setSuccess(res.message || 'Restricciones sugeridas cargadas con éxito.')
+                await loadRestricciones()
+                if (onUpdated) onUpdated()
+            }
+        } catch (e: any) {
+            setError(e?.message || 'Error al cargar sugeridas')
+        } finally {
+            setSaving(false)
+        }
     }
 
     const handleToggleActive = async (item: RestriccionItem) => {
@@ -255,18 +285,30 @@ export default function RestriccionesAspectoModal({
 
                     {/* Action Bar (Top) */}
                     {!isFormOpen && (
-                        <div className="flex items-center justify-between pb-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2">
                             <div>
                                 <h4 className="text-sm font-bold text-gray-800">Reglas Activas y Configuradas</h4>
                                 <p className="text-xs text-gray-500">Total: {restricciones.length} regla(s)</p>
                             </div>
-                            <button
-                                onClick={handleOpenCreate}
-                                className="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-bold shadow-md shadow-cyan-600/20 transition-all flex items-center gap-1.5"
-                            >
-                                <span>➕</span>
-                                <span>Nueva Restricción</span>
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={handleCargarSugeridas}
+                                    disabled={saving}
+                                    className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                                    title="Cargar reglas sugeridas por normativa oficial (ej: M hasta mayo 2025 = $0)"
+                                >
+                                    <span>💡</span>
+                                    <span>Cargar sugeridas</span>
+                                </button>
+                                <button
+                                    onClick={handleOpenCreate}
+                                    className="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-bold shadow-md shadow-cyan-600/20 transition-all flex items-center gap-1.5"
+                                >
+                                    <span>➕</span>
+                                    <span>Nueva Restricción</span>
+                                </button>
+                            </div>
                         </div>
                     )}
 
@@ -324,7 +366,6 @@ export default function RestriccionesAspectoModal({
                                                 value={formData.fechaDesde}
                                                 onChange={(e) => setFormData({ ...formData, fechaDesde: e.target.value })}
                                                 className="w-full bg-white border border-gray-300 rounded-xl px-2.5 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 shadow-sm"
-                                                required={formData.tipo === 'RANGO_FECHAS'}
                                             />
                                         </div>
                                         <div>
@@ -334,7 +375,6 @@ export default function RestriccionesAspectoModal({
                                                 value={formData.fechaHasta}
                                                 onChange={(e) => setFormData({ ...formData, fechaHasta: e.target.value })}
                                                 className="w-full bg-white border border-gray-300 rounded-xl px-2.5 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 shadow-sm"
-                                                required={formData.tipo === 'RANGO_FECHAS'}
                                             />
                                         </div>
                                     </div>

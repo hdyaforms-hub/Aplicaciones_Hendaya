@@ -64,11 +64,10 @@ export async function getAspectosEE(licId?: number) {
         // 2. Consultar restricciones de manera desacoplada
         let restricciones: any[] = []
         try {
-            restricciones = await rawPrisma.$queryRawUnsafe(`
-                SELECT "licId", UPPER(letra) as letra, activo
-                FROM "Multas_Aspecto_EE_Restriccion"
-                ${licId ? 'WHERE "licId" = ' + Number(licId) : ''}
-            `)
+            restricciones = await prisma.multas_Aspecto_EE_Restriccion.findMany({
+                where: licId ? { licId: Number(licId) } : {},
+                select: { licId: true, letra: true, activo: true }
+            })
         } catch (rErr) {
             console.warn('Advertencia al consultar restricciones:', rErr)
         }
@@ -323,26 +322,17 @@ export async function getRestriccionesAspecto(licId: number, letra: string) {
 
     try {
         await ensureMultasEETables()
-        const rows: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT 
-                id, 
-                "licId", 
-                letra, 
-                tipo, 
-                anho, 
-                "fechaDesde", 
-                "fechaHasta", 
-                accion, 
-                "valorFijo", 
-                descripcion, 
-                activo, 
-                "creadoPor", 
-                "createdAt", 
-                "updatedAt"
-            FROM "Multas_Aspecto_EE_Restriccion"
-            WHERE "licId" = $1 AND UPPER(letra) = UPPER($2)
-            ORDER BY activo DESC, anho DESC, "createdAt" DESC
-        `, Number(licId), letra.trim().toUpperCase())
+        const rows = await prisma.multas_Aspecto_EE_Restriccion.findMany({
+            where: {
+                licId: Number(licId),
+                letra: letra.trim().toUpperCase()
+            },
+            orderBy: [
+                { activo: 'desc' },
+                { anho: 'desc' },
+                { createdAt: 'desc' }
+            ]
+        })
 
         return { restricciones: rows }
     } catch (e: any) {
@@ -382,51 +372,41 @@ export async function saveRestriccionAspecto(data: {
         const parsedFechaHasta = !isAnho && isValidDate(data.fechaHasta) ? new Date(data.fechaHasta!) : null
         const parsedValorFijo = data.valorFijo !== undefined ? Number(data.valorFijo) : 0
 
+        // Validación: en RANGO_FECHAS debe venir al menos una fecha
+        if (!isAnho && !parsedFechaDesde && !parsedFechaHasta) {
+            return { error: 'Para una restricción por rango de fechas debe ingresar al menos la fecha de inicio o de término.' }
+        }
+
         if (data.id) {
-            await rawPrisma.$executeRawUnsafe(`
-                UPDATE "Multas_Aspecto_EE_Restriccion"
-                SET 
-                    tipo = $1,
-                    anho = $2,
-                    "fechaDesde" = $3,
-                    "fechaHasta" = $4,
-                    accion = $5,
-                    "valorFijo" = $6,
-                    descripcion = $7,
-                    activo = $8,
-                    "updatedAt" = CURRENT_TIMESTAMP
-                WHERE id = $9
-            `,
-                data.tipo || 'ANHO',
-                parsedAnho,
-                parsedFechaDesde,
-                parsedFechaHasta,
-                data.accion || 'VALOR_CERO',
-                parsedValorFijo,
-                data.descripcion?.trim() || null,
-                Boolean(data.activo),
-                data.id
-            )
+            await prisma.multas_Aspecto_EE_Restriccion.update({
+                where: { id: data.id },
+                data: {
+                    tipo: data.tipo || 'ANHO',
+                    anho: parsedAnho,
+                    fechaDesde: parsedFechaDesde,
+                    fechaHasta: parsedFechaHasta,
+                    accion: data.accion || 'VALOR_CERO',
+                    valorFijo: parsedValorFijo,
+                    descripcion: data.descripcion?.trim() || null,
+                    activo: Boolean(data.activo)
+                }
+            })
         } else {
-            await rawPrisma.$executeRawUnsafe(`
-                INSERT INTO "Multas_Aspecto_EE_Restriccion" (
-                    id, "licId", letra, tipo, anho, "fechaDesde", "fechaHasta", accion, "valorFijo", descripcion, activo, "creadoPor", "createdAt", "updatedAt"
-                ) VALUES (
-                    gen_random_uuid()::text, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-                )
-            `,
-                licIdNum,
-                letraClean,
-                data.tipo || 'ANHO',
-                parsedAnho,
-                parsedFechaDesde,
-                parsedFechaHasta,
-                data.accion || 'VALOR_CERO',
-                parsedValorFijo,
-                data.descripcion?.trim() || null,
-                Boolean(data.activo),
-                session.user.username || session.user.name || 'ADMIN'
-            )
+            await prisma.multas_Aspecto_EE_Restriccion.create({
+                data: {
+                    licId: licIdNum,
+                    letra: letraClean,
+                    tipo: data.tipo || 'ANHO',
+                    anho: parsedAnho,
+                    fechaDesde: parsedFechaDesde,
+                    fechaHasta: parsedFechaHasta,
+                    accion: data.accion || 'VALOR_CERO',
+                    valorFijo: parsedValorFijo,
+                    descripcion: data.descripcion?.trim() || null,
+                    activo: Boolean(data.activo),
+                    creadoPor: session.user.username || session.user.name || 'ADMIN'
+                }
+            })
         }
 
         try {
@@ -435,7 +415,7 @@ export async function saveRestriccionAspecto(data: {
                 userId: session.user.id,
                 action: data.id ? 'UPDATE' : 'CREATE',
                 modulo: 'MANTENEDOR_MULTAS',
-                detalle: `Restricción aspecto EE ${data.id ? 'actualizada' : 'creada'}: Lic ${licIdNum} Aspecto ${letraClean} Año ${parsedAnho || 'N/A'}`
+                detalle: `Restricción aspecto EE ${data.id ? 'actualizada' : 'creada'}: Lic ${licIdNum} Aspecto ${letraClean} Tipo ${data.tipo || 'ANHO'}`
             })
         } catch (auditErr) {
             console.warn('Advertencia al registrar auditoría:', auditErr)
@@ -456,11 +436,10 @@ export async function toggleRestriccionAspecto(id: string, activo: boolean) {
     }
 
     try {
-        await rawPrisma.$executeRawUnsafe(`
-            UPDATE "Multas_Aspecto_EE_Restriccion"
-            SET activo = $1, "updatedAt" = CURRENT_TIMESTAMP
-            WHERE id = $2
-        `, Boolean(activo), id)
+        await prisma.multas_Aspecto_EE_Restriccion.update({
+            where: { id },
+            data: { activo: Boolean(activo) }
+        })
 
         try {
             await logAuditAction({
@@ -489,10 +468,9 @@ export async function deleteRestriccionAspecto(id: string) {
     }
 
     try {
-        await rawPrisma.$executeRawUnsafe(`
-            DELETE FROM "Multas_Aspecto_EE_Restriccion"
-            WHERE id = $1
-        `, id)
+        await prisma.multas_Aspecto_EE_Restriccion.delete({
+            where: { id }
+        })
 
         try {
             await logAuditAction({
@@ -511,5 +489,72 @@ export async function deleteRestriccionAspecto(id: string) {
     } catch (e: any) {
         console.error('Error al eliminar restricción:', e)
         return { error: 'Error al eliminar la restricción: ' + (e?.message || 'Error en base de datos') }
+    }
+}
+
+/**
+ * Carga las restricciones normativas sugeridas para la licitación.
+ * Por ejemplo para el Aspecto M: "M hasta el 31-05-2025 = $0" (IT-DAE-SUP026 pp. 12 y 15).
+ * No duplica restricciones si ya existe una activa para ese aspecto y rango.
+ */
+export async function cargarRestriccionesSugeridas(licId: number, letra?: string) {
+    const session = await getSession()
+    if (!session || !await checkPermission()) {
+        return { error: 'No tienes permisos para cargar restricciones sugeridas.' }
+    }
+
+    try {
+        await ensureMultasEETables()
+        const targetLetra = (letra || 'M').trim().toUpperCase()
+        const licIdNum = Number(licId)
+
+        // Verificar si ya existe una restricción activa para el aspecto M en esta licitación
+        const existente = await prisma.multas_Aspecto_EE_Restriccion.findFirst({
+            where: {
+                licId: licIdNum,
+                letra: targetLetra,
+                activo: true
+            }
+        })
+
+        if (existente) {
+            return {
+                warning: `El Aspecto ${targetLetra} ya cuenta con una restricción activa en esta licitación (${existente.descripcion || existente.tipo}). No se duplicó.`
+            }
+        }
+
+        // Crear la restricción sugerida oficial
+        await prisma.multas_Aspecto_EE_Restriccion.create({
+            data: {
+                licId: licIdNum,
+                letra: targetLetra,
+                tipo: 'RANGO_FECHAS',
+                fechaDesde: new Date('2024-01-01T00:00:00'),
+                fechaHasta: new Date('2025-05-31T23:59:59.999'),
+                accion: 'VALOR_CERO',
+                valorFijo: 0,
+                descripcion: 'Normativa IT-DAE-SUP026 pp. 12 y 15: Aspecto M exigible desde junio 2025 (supervisiones previas exentas a $0)',
+                activo: true,
+                creadoPor: session.user.username || session.user.name || 'ADMIN'
+            }
+        })
+
+        try {
+            await logAuditAction({
+                username: session.user.username || session.user.name || 'ADMIN',
+                userId: session.user.id,
+                action: 'CREATE',
+                modulo: 'MANTENEDOR_MULTAS',
+                detalle: `Carga de restricciones sugeridas: Creada restricción de Aspecto ${targetLetra} hasta 31-05-2025 = $0 para Licitación ${licIdNum}`
+            })
+        } catch (auditErr) {
+            console.warn('Advertencia auditoría:', auditErr)
+        }
+
+        revalidatePath(PATH)
+        return { success: true, message: `Restricción sugerida para Aspecto ${targetLetra} cargada exitosamente.` }
+    } catch (e: any) {
+        console.error('Error al cargar restricciones sugeridas:', e)
+        return { error: 'Error al cargar restricciones sugeridas: ' + (e?.message || 'Error en base de datos') }
     }
 }
