@@ -1198,6 +1198,33 @@ model Multas_Proceso_Judicial {
   @@map("Multas_Proceso_Judicial")
 }
 
+model Multas_Argumento_Biblioteca {
+  id                  String    @id @default(uuid())
+  aspecto             String    @db.VarChar(10) // 'A'..'M', 'GENERAL'
+  reglaId             String?   @db.VarChar(50) // ej: 'G-J-1', 'G-MUESTRA-1', 'K-MARGEN-1'
+  titulo              String    @db.VarChar(200)
+  argumentoTexto      String    @db.Text
+  fundamentoLegal     String?   @db.Text // Citas de Bases, Pauta Anexo 3 o IT
+  folioEjemplo        String?   @db.VarChar(50)
+  numeroRexPrecedente String?   @db.VarChar(100)
+  resultadoHistorico  String    @default("ACEPTADO") @db.VarChar(30) 
+  // 'ACEPTADO' | 'PARCIAL' | 'PLANTILLA_OFICIAL' | 'EN_REVISION'
+  
+  montoRebajadoUtm    Float     @default(0.0)
+  vecesUtilizado      Int       @default(0)
+  etiquetas           String?   @db.Text // Tags separados por comas: "pesaje, aql, balanza"
+  esPlantillaOficial  Boolean   @default(false)
+  autor               String    @db.VarChar(100)
+  activo              Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([aspecto, resultadoHistorico])
+  @@index([reglaId])
+  @@index([esPlantillaOficial])
+  @@map("Multas_Argumento_Biblioteca")
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

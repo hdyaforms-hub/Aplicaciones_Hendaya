@@ -1132,6 +1132,26 @@ exports.Prisma.Multas_Proceso_JudicialScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Argumento_BibliotecaScalarFieldEnum = {
+  id: 'id',
+  aspecto: 'aspecto',
+  reglaId: 'reglaId',
+  titulo: 'titulo',
+  argumentoTexto: 'argumentoTexto',
+  fundamentoLegal: 'fundamentoLegal',
+  folioEjemplo: 'folioEjemplo',
+  numeroRexPrecedente: 'numeroRexPrecedente',
+  resultadoHistorico: 'resultadoHistorico',
+  montoRebajadoUtm: 'montoRebajadoUtm',
+  vecesUtilizado: 'vecesUtilizado',
+  etiquetas: 'etiquetas',
+  esPlantillaOficial: 'esPlantillaOficial',
+  autor: 'autor',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2359,6 +2379,7 @@ exports.Prisma.ModelName = {
   Multas_Resuelve: 'Multas_Resuelve',
   Multas_Recurso_Admin: 'Multas_Recurso_Admin',
   Multas_Proceso_Judicial: 'Multas_Proceso_Judicial',
+  Multas_Argumento_Biblioteca: 'Multas_Argumento_Biblioteca',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

@@ -28,6 +28,7 @@ import {
     Filter,
     ChevronRight,
     ExternalLink,
+    BookOpen,
     X,
     FileText,
     History,
@@ -313,6 +314,17 @@ export default function DetalleDescargoClient({
                     <Gavel className="w-4 h-4" />
                     <span>Proceso Judicial ({procesos.length})</span>
                 </button>
+
+                <Link
+                    href="/dashboard/areas/multas/biblioteca"
+                    target="_blank"
+                    className="ml-auto px-3.5 py-2 rounded-xl text-xs font-bold text-cyan-800 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 transition flex items-center gap-1.5"
+                    title="Consultar biblioteca de argumentos y precedentes exitosos"
+                >
+                    <BookOpen className="w-3.5 h-3.5 text-cyan-600" />
+                    <span>Biblioteca de Argumentos</span>
+                    <ExternalLink className="w-3 h-3 text-cyan-500" />
+                </Link>
             </div>
 
             {/* CONTENIDO DE PESTAÑAS */}

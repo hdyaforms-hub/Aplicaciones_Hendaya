@@ -119,6 +119,8 @@ export default async function RolesPage() {
         { id: 'manage_notificaciones_junaeb', name: 'Notificaciones JUNAEB (Gestionar)', description: 'Permite cargar nuevas REX, ejecutar conciliaciones automáticas, clasificar discrepancias y exportar Anexo 1.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_ciclo_legal_multas', name: 'Ciclo Legal de Multas (Ver)', description: 'Permite consultar los descargos formales, resuelves, recursos y expedientes de multas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_ciclo_legal_multas', name: 'Ciclo Legal de Multas (Gestionar)', description: 'Permite registrar descargos formales, ingresar resuelves de JUNAEB, interponer recursos y gestionar causas judiciales.', category: 'ÁREAS -> MULTAS' },
+        { id: 'view_biblioteca_argumentos', name: 'Biblioteca de Argumentos (Ver)', description: 'Permite consultar las plantillas jurídicas oficiales y precedentes exitosos ante multas JUNAEB.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_biblioteca_argumentos', name: 'Biblioteca de Argumentos (Gestionar)', description: 'Permite crear, editar, eliminar e importar planillas Excel de argumentos y precedentes.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },

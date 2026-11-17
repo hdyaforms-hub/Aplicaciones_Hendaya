@@ -200,7 +200,13 @@ export async function getSession() {
                 'view_tablero_firmas_pendientes',
                 'manage_tablero_firmas_pendientes',
                 'view_tablero_supervision_firmas',
-                'manage_tablero_supervision_firmas'
+                'manage_tablero_supervision_firmas',
+                'view_notificaciones_junaeb',
+                'manage_notificaciones_junaeb',
+                'view_ciclo_legal_multas',
+                'manage_ciclo_legal_multas',
+                'view_biblioteca_argumentos',
+                'manage_biblioteca_argumentos'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

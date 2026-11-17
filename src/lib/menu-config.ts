@@ -319,6 +319,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Ciclo Legal y Expediente',
                         href: '/dashboard/areas/multas/ciclo-legal',
                         requiredPermission: ['view_ciclo_legal_multas', 'manage_ciclo_legal_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Biblioteca de Argumentos',
+                        href: '/dashboard/areas/multas/biblioteca',
+                        requiredPermission: ['view_biblioteca_argumentos', 'manage_biblioteca_argumentos', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },
