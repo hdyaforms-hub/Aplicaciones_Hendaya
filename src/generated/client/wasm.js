@@ -997,6 +997,50 @@ exports.Prisma.Multas_Hallazgo_NCScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Notificacion_REXScalarFieldEnum = {
+  id: 'id',
+  numeroResolucion: 'numeroResolucion',
+  fechaResolucion: 'fechaResolucion',
+  periodoMes: 'periodoMes',
+  periodoAnio: 'periodoAnio',
+  licitacionId: 'licitacionId',
+  licitacionNombre: 'licitacionNombre',
+  nombreArchivo: 'nombreArchivo',
+  totalFilasNotif: 'totalFilasNotif',
+  totalFoliosNotif: 'totalFoliosNotif',
+  montoTotalNotificado: 'montoTotalNotificado',
+  montoTotalCalculado: 'montoTotalCalculado',
+  montoTotalDiferencia: 'montoTotalDiferencia',
+  estado: 'estado',
+  cargadoPor: 'cargadoPor',
+  observaciones: 'observaciones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Notificacion_ItemScalarFieldEnum = {
+  id: 'id',
+  notificacionId: 'notificacionId',
+  folio: 'folio',
+  rbd: 'rbd',
+  establecimiento: 'establecimiento',
+  sucursal: 'sucursal',
+  fechaSupervision: 'fechaSupervision',
+  aspecto: 'aspecto',
+  infraccionDetalle: 'infraccionDetalle',
+  montoNotificado: 'montoNotificado',
+  montoCalculado: 'montoCalculado',
+  diferenciaMonto: 'diferenciaMonto',
+  estadoConciliacion: 'estadoConciliacion',
+  clasificacionError: 'clasificacionError',
+  motivoClasificacion: 'motivoClasificacion',
+  resolucionAnterior: 'resolucionAnterior',
+  clasificadoPor: 'clasificadoPor',
+  clasificadoEn: 'clasificadoEn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2217,6 +2261,8 @@ exports.Prisma.ModelName = {
   Multas_Folio_Dato: 'Multas_Folio_Dato',
   Multas_Cantidad_Override: 'Multas_Cantidad_Override',
   Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
+  Multas_Notificacion_REX: 'Multas_Notificacion_REX',
+  Multas_Notificacion_Item: 'Multas_Notificacion_Item',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

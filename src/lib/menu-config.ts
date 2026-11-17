@@ -309,6 +309,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Análisis de No Conformidades (NC)',
                         href: '/dashboard/areas/multas/analisis-nc',
                         requiredPermission: ['manage_analisis_nc', 'view_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Notificaciones JUNAEB (REX)',
+                        href: '/dashboard/areas/multas/notificaciones',
+                        requiredPermission: ['view_notificaciones_junaeb', 'manage_notificaciones_junaeb', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

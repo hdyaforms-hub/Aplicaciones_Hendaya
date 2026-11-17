@@ -314,6 +314,16 @@ export type Multas_Cantidad_Override = $Result.DefaultSelection<Prisma.$Multas_C
  */
 export type Multas_Hallazgo_NC = $Result.DefaultSelection<Prisma.$Multas_Hallazgo_NCPayload>
 /**
+ * Model Multas_Notificacion_REX
+ * 
+ */
+export type Multas_Notificacion_REX = $Result.DefaultSelection<Prisma.$Multas_Notificacion_REXPayload>
+/**
+ * Model Multas_Notificacion_Item
+ * 
+ */
+export type Multas_Notificacion_Item = $Result.DefaultSelection<Prisma.$Multas_Notificacion_ItemPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1471,6 +1481,26 @@ export class PrismaClient<
     * ```
     */
   get multas_Hallazgo_NC(): Prisma.Multas_Hallazgo_NCDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Notificacion_REX`: Exposes CRUD operations for the **Multas_Notificacion_REX** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Notificacion_REXES
+    * const multas_Notificacion_REXES = await prisma.multas_Notificacion_REX.findMany()
+    * ```
+    */
+  get multas_Notificacion_REX(): Prisma.Multas_Notificacion_REXDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Notificacion_Item`: Exposes CRUD operations for the **Multas_Notificacion_Item** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Notificacion_Items
+    * const multas_Notificacion_Items = await prisma.multas_Notificacion_Item.findMany()
+    * ```
+    */
+  get multas_Notificacion_Item(): Prisma.Multas_Notificacion_ItemDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2842,6 +2872,8 @@ export namespace Prisma {
     Multas_Folio_Dato: 'Multas_Folio_Dato',
     Multas_Cantidad_Override: 'Multas_Cantidad_Override',
     Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
+    Multas_Notificacion_REX: 'Multas_Notificacion_REX',
+    Multas_Notificacion_Item: 'Multas_Notificacion_Item',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2944,7 +2976,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7145,6 +7177,146 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Hallazgo_NCCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Hallazgo_NCCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Notificacion_REX: {
+        payload: Prisma.$Multas_Notificacion_REXPayload<ExtArgs>
+        fields: Prisma.Multas_Notificacion_REXFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Notificacion_REXFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Notificacion_REXFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Notificacion_REXFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Notificacion_REXFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Notificacion_REXFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Notificacion_REXCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Notificacion_REXCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Notificacion_REXCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Notificacion_REXDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          update: {
+            args: Prisma.Multas_Notificacion_REXUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Notificacion_REXDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Notificacion_REXUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Notificacion_REXUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_REXPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Notificacion_REXAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Notificacion_REX>
+          }
+          groupBy: {
+            args: Prisma.Multas_Notificacion_REXGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Notificacion_REXGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Notificacion_REXCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Notificacion_REXCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Notificacion_Item: {
+        payload: Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>
+        fields: Prisma.Multas_Notificacion_ItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Notificacion_ItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Notificacion_ItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Notificacion_ItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Notificacion_ItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Notificacion_ItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Notificacion_ItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Notificacion_ItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Notificacion_ItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Notificacion_ItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          update: {
+            args: Prisma.Multas_Notificacion_ItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Notificacion_ItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Notificacion_ItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Notificacion_ItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Notificacion_ItemPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Notificacion_ItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Notificacion_Item>
+          }
+          groupBy: {
+            args: Prisma.Multas_Notificacion_ItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Notificacion_ItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Notificacion_ItemCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Notificacion_ItemCountAggregateOutputType> | number
           }
         }
       }
@@ -14068,6 +14240,37 @@ export namespace Prisma {
    */
   export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Multas_IT_Elementos_Esenciales_DetWhereInput
+  }
+
+
+  /**
+   * Count Type Multas_Notificacion_REXCountOutputType
+   */
+
+  export type Multas_Notificacion_REXCountOutputType = {
+    items: number
+  }
+
+  export type Multas_Notificacion_REXCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | Multas_Notificacion_REXCountOutputTypeCountItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Multas_Notificacion_REXCountOutputType without action
+   */
+  export type Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REXCountOutputType
+     */
+    select?: Multas_Notificacion_REXCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Notificacion_REXCountOutputType without action
+   */
+  export type Multas_Notificacion_REXCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Notificacion_ItemWhereInput
   }
 
 
@@ -77359,6 +77562,2331 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Hallazgo_NC
      */
     select?: Multas_Hallazgo_NCSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Notificacion_REX
+   */
+
+  export type AggregateMultas_Notificacion_REX = {
+    _count: Multas_Notificacion_REXCountAggregateOutputType | null
+    _avg: Multas_Notificacion_REXAvgAggregateOutputType | null
+    _sum: Multas_Notificacion_REXSumAggregateOutputType | null
+    _min: Multas_Notificacion_REXMinAggregateOutputType | null
+    _max: Multas_Notificacion_REXMaxAggregateOutputType | null
+  }
+
+  export type Multas_Notificacion_REXAvgAggregateOutputType = {
+    periodoMes: number | null
+    periodoAnio: number | null
+    licitacionId: number | null
+    totalFilasNotif: number | null
+    totalFoliosNotif: number | null
+    montoTotalNotificado: number | null
+    montoTotalCalculado: number | null
+    montoTotalDiferencia: number | null
+  }
+
+  export type Multas_Notificacion_REXSumAggregateOutputType = {
+    periodoMes: number | null
+    periodoAnio: number | null
+    licitacionId: number | null
+    totalFilasNotif: number | null
+    totalFoliosNotif: number | null
+    montoTotalNotificado: number | null
+    montoTotalCalculado: number | null
+    montoTotalDiferencia: number | null
+  }
+
+  export type Multas_Notificacion_REXMinAggregateOutputType = {
+    id: string | null
+    numeroResolucion: string | null
+    fechaResolucion: Date | null
+    periodoMes: number | null
+    periodoAnio: number | null
+    licitacionId: number | null
+    licitacionNombre: string | null
+    nombreArchivo: string | null
+    totalFilasNotif: number | null
+    totalFoliosNotif: number | null
+    montoTotalNotificado: number | null
+    montoTotalCalculado: number | null
+    montoTotalDiferencia: number | null
+    estado: string | null
+    cargadoPor: string | null
+    observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Notificacion_REXMaxAggregateOutputType = {
+    id: string | null
+    numeroResolucion: string | null
+    fechaResolucion: Date | null
+    periodoMes: number | null
+    periodoAnio: number | null
+    licitacionId: number | null
+    licitacionNombre: string | null
+    nombreArchivo: string | null
+    totalFilasNotif: number | null
+    totalFoliosNotif: number | null
+    montoTotalNotificado: number | null
+    montoTotalCalculado: number | null
+    montoTotalDiferencia: number | null
+    estado: string | null
+    cargadoPor: string | null
+    observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Notificacion_REXCountAggregateOutputType = {
+    id: number
+    numeroResolucion: number
+    fechaResolucion: number
+    periodoMes: number
+    periodoAnio: number
+    licitacionId: number
+    licitacionNombre: number
+    nombreArchivo: number
+    totalFilasNotif: number
+    totalFoliosNotif: number
+    montoTotalNotificado: number
+    montoTotalCalculado: number
+    montoTotalDiferencia: number
+    estado: number
+    cargadoPor: number
+    observaciones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Notificacion_REXAvgAggregateInputType = {
+    periodoMes?: true
+    periodoAnio?: true
+    licitacionId?: true
+    totalFilasNotif?: true
+    totalFoliosNotif?: true
+    montoTotalNotificado?: true
+    montoTotalCalculado?: true
+    montoTotalDiferencia?: true
+  }
+
+  export type Multas_Notificacion_REXSumAggregateInputType = {
+    periodoMes?: true
+    periodoAnio?: true
+    licitacionId?: true
+    totalFilasNotif?: true
+    totalFoliosNotif?: true
+    montoTotalNotificado?: true
+    montoTotalCalculado?: true
+    montoTotalDiferencia?: true
+  }
+
+  export type Multas_Notificacion_REXMinAggregateInputType = {
+    id?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    periodoMes?: true
+    periodoAnio?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    nombreArchivo?: true
+    totalFilasNotif?: true
+    totalFoliosNotif?: true
+    montoTotalNotificado?: true
+    montoTotalCalculado?: true
+    montoTotalDiferencia?: true
+    estado?: true
+    cargadoPor?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Notificacion_REXMaxAggregateInputType = {
+    id?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    periodoMes?: true
+    periodoAnio?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    nombreArchivo?: true
+    totalFilasNotif?: true
+    totalFoliosNotif?: true
+    montoTotalNotificado?: true
+    montoTotalCalculado?: true
+    montoTotalDiferencia?: true
+    estado?: true
+    cargadoPor?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Notificacion_REXCountAggregateInputType = {
+    id?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    periodoMes?: true
+    periodoAnio?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    nombreArchivo?: true
+    totalFilasNotif?: true
+    totalFoliosNotif?: true
+    montoTotalNotificado?: true
+    montoTotalCalculado?: true
+    montoTotalDiferencia?: true
+    estado?: true
+    cargadoPor?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Notificacion_REXAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Notificacion_REX to aggregate.
+     */
+    where?: Multas_Notificacion_REXWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_REXES to fetch.
+     */
+    orderBy?: Multas_Notificacion_REXOrderByWithRelationInput | Multas_Notificacion_REXOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Notificacion_REXWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_REXES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_REXES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Notificacion_REXES
+    **/
+    _count?: true | Multas_Notificacion_REXCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Notificacion_REXAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Notificacion_REXSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Notificacion_REXMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Notificacion_REXMaxAggregateInputType
+  }
+
+  export type GetMultas_Notificacion_REXAggregateType<T extends Multas_Notificacion_REXAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Notificacion_REX]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Notificacion_REX[P]>
+      : GetScalarType<T[P], AggregateMultas_Notificacion_REX[P]>
+  }
+
+
+
+
+  export type Multas_Notificacion_REXGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Notificacion_REXWhereInput
+    orderBy?: Multas_Notificacion_REXOrderByWithAggregationInput | Multas_Notificacion_REXOrderByWithAggregationInput[]
+    by: Multas_Notificacion_REXScalarFieldEnum[] | Multas_Notificacion_REXScalarFieldEnum
+    having?: Multas_Notificacion_REXScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Notificacion_REXCountAggregateInputType | true
+    _avg?: Multas_Notificacion_REXAvgAggregateInputType
+    _sum?: Multas_Notificacion_REXSumAggregateInputType
+    _min?: Multas_Notificacion_REXMinAggregateInputType
+    _max?: Multas_Notificacion_REXMaxAggregateInputType
+  }
+
+  export type Multas_Notificacion_REXGroupByOutputType = {
+    id: string
+    numeroResolucion: string
+    fechaResolucion: Date | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId: number | null
+    licitacionNombre: string | null
+    nombreArchivo: string
+    totalFilasNotif: number
+    totalFoliosNotif: number
+    montoTotalNotificado: number
+    montoTotalCalculado: number
+    montoTotalDiferencia: number
+    estado: string
+    cargadoPor: string
+    observaciones: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Notificacion_REXCountAggregateOutputType | null
+    _avg: Multas_Notificacion_REXAvgAggregateOutputType | null
+    _sum: Multas_Notificacion_REXSumAggregateOutputType | null
+    _min: Multas_Notificacion_REXMinAggregateOutputType | null
+    _max: Multas_Notificacion_REXMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Notificacion_REXGroupByPayload<T extends Multas_Notificacion_REXGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Notificacion_REXGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Notificacion_REXGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Notificacion_REXGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Notificacion_REXGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Notificacion_REXSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    periodoMes?: boolean
+    periodoAnio?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    nombreArchivo?: boolean
+    totalFilasNotif?: boolean
+    totalFoliosNotif?: boolean
+    montoTotalNotificado?: boolean
+    montoTotalCalculado?: boolean
+    montoTotalDiferencia?: boolean
+    estado?: boolean
+    cargadoPor?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    items?: boolean | Multas_Notificacion_REX$itemsArgs<ExtArgs>
+    _count?: boolean | Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Notificacion_REX"]>
+
+  export type Multas_Notificacion_REXSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    periodoMes?: boolean
+    periodoAnio?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    nombreArchivo?: boolean
+    totalFilasNotif?: boolean
+    totalFoliosNotif?: boolean
+    montoTotalNotificado?: boolean
+    montoTotalCalculado?: boolean
+    montoTotalDiferencia?: boolean
+    estado?: boolean
+    cargadoPor?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Notificacion_REX"]>
+
+  export type Multas_Notificacion_REXSelectScalar = {
+    id?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    periodoMes?: boolean
+    periodoAnio?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    nombreArchivo?: boolean
+    totalFilasNotif?: boolean
+    totalFoliosNotif?: boolean
+    montoTotalNotificado?: boolean
+    montoTotalCalculado?: boolean
+    montoTotalDiferencia?: boolean
+    estado?: boolean
+    cargadoPor?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Notificacion_REXInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | Multas_Notificacion_REX$itemsArgs<ExtArgs>
+    _count?: boolean | Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Multas_Notificacion_REXIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Multas_Notificacion_REXPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Notificacion_REX"
+    objects: {
+      items: Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      numeroResolucion: string
+      fechaResolucion: Date | null
+      periodoMes: number
+      periodoAnio: number
+      licitacionId: number | null
+      licitacionNombre: string | null
+      nombreArchivo: string
+      totalFilasNotif: number
+      totalFoliosNotif: number
+      montoTotalNotificado: number
+      montoTotalCalculado: number
+      montoTotalDiferencia: number
+      estado: string
+      cargadoPor: string
+      observaciones: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Notificacion_REX"]>
+    composites: {}
+  }
+
+  type Multas_Notificacion_REXGetPayload<S extends boolean | null | undefined | Multas_Notificacion_REXDefaultArgs> = $Result.GetResult<Prisma.$Multas_Notificacion_REXPayload, S>
+
+  type Multas_Notificacion_REXCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Notificacion_REXFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Notificacion_REXCountAggregateInputType | true
+    }
+
+  export interface Multas_Notificacion_REXDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Notificacion_REX'], meta: { name: 'Multas_Notificacion_REX' } }
+    /**
+     * Find zero or one Multas_Notificacion_REX that matches the filter.
+     * @param {Multas_Notificacion_REXFindUniqueArgs} args - Arguments to find a Multas_Notificacion_REX
+     * @example
+     * // Get one Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Notificacion_REXFindUniqueArgs>(args: SelectSubset<T, Multas_Notificacion_REXFindUniqueArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Notificacion_REX that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Notificacion_REXFindUniqueOrThrowArgs} args - Arguments to find a Multas_Notificacion_REX
+     * @example
+     * // Get one Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Notificacion_REXFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Notificacion_REXFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Notificacion_REX that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXFindFirstArgs} args - Arguments to find a Multas_Notificacion_REX
+     * @example
+     * // Get one Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Notificacion_REXFindFirstArgs>(args?: SelectSubset<T, Multas_Notificacion_REXFindFirstArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Notificacion_REX that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXFindFirstOrThrowArgs} args - Arguments to find a Multas_Notificacion_REX
+     * @example
+     * // Get one Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Notificacion_REXFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Notificacion_REXFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Notificacion_REXES that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Notificacion_REXES
+     * const multas_Notificacion_REXES = await prisma.multas_Notificacion_REX.findMany()
+     * 
+     * // Get first 10 Multas_Notificacion_REXES
+     * const multas_Notificacion_REXES = await prisma.multas_Notificacion_REX.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Notificacion_REXWithIdOnly = await prisma.multas_Notificacion_REX.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Notificacion_REXFindManyArgs>(args?: SelectSubset<T, Multas_Notificacion_REXFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Notificacion_REX.
+     * @param {Multas_Notificacion_REXCreateArgs} args - Arguments to create a Multas_Notificacion_REX.
+     * @example
+     * // Create one Multas_Notificacion_REX
+     * const Multas_Notificacion_REX = await prisma.multas_Notificacion_REX.create({
+     *   data: {
+     *     // ... data to create a Multas_Notificacion_REX
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Notificacion_REXCreateArgs>(args: SelectSubset<T, Multas_Notificacion_REXCreateArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Notificacion_REXES.
+     * @param {Multas_Notificacion_REXCreateManyArgs} args - Arguments to create many Multas_Notificacion_REXES.
+     * @example
+     * // Create many Multas_Notificacion_REXES
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Notificacion_REXCreateManyArgs>(args?: SelectSubset<T, Multas_Notificacion_REXCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Notificacion_REXES and returns the data saved in the database.
+     * @param {Multas_Notificacion_REXCreateManyAndReturnArgs} args - Arguments to create many Multas_Notificacion_REXES.
+     * @example
+     * // Create many Multas_Notificacion_REXES
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Notificacion_REXES and only return the `id`
+     * const multas_Notificacion_REXWithIdOnly = await prisma.multas_Notificacion_REX.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Notificacion_REXCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Notificacion_REXCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Notificacion_REX.
+     * @param {Multas_Notificacion_REXDeleteArgs} args - Arguments to delete one Multas_Notificacion_REX.
+     * @example
+     * // Delete one Multas_Notificacion_REX
+     * const Multas_Notificacion_REX = await prisma.multas_Notificacion_REX.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Notificacion_REX
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Notificacion_REXDeleteArgs>(args: SelectSubset<T, Multas_Notificacion_REXDeleteArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Notificacion_REX.
+     * @param {Multas_Notificacion_REXUpdateArgs} args - Arguments to update one Multas_Notificacion_REX.
+     * @example
+     * // Update one Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Notificacion_REXUpdateArgs>(args: SelectSubset<T, Multas_Notificacion_REXUpdateArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Notificacion_REXES.
+     * @param {Multas_Notificacion_REXDeleteManyArgs} args - Arguments to filter Multas_Notificacion_REXES to delete.
+     * @example
+     * // Delete a few Multas_Notificacion_REXES
+     * const { count } = await prisma.multas_Notificacion_REX.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Notificacion_REXDeleteManyArgs>(args?: SelectSubset<T, Multas_Notificacion_REXDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Notificacion_REXES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Notificacion_REXES
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Notificacion_REXUpdateManyArgs>(args: SelectSubset<T, Multas_Notificacion_REXUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Notificacion_REX.
+     * @param {Multas_Notificacion_REXUpsertArgs} args - Arguments to update or create a Multas_Notificacion_REX.
+     * @example
+     * // Update or create a Multas_Notificacion_REX
+     * const multas_Notificacion_REX = await prisma.multas_Notificacion_REX.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Notificacion_REX
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Notificacion_REX we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Notificacion_REXUpsertArgs>(args: SelectSubset<T, Multas_Notificacion_REXUpsertArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Notificacion_REXES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXCountArgs} args - Arguments to filter Multas_Notificacion_REXES to count.
+     * @example
+     * // Count the number of Multas_Notificacion_REXES
+     * const count = await prisma.multas_Notificacion_REX.count({
+     *   where: {
+     *     // ... the filter for the Multas_Notificacion_REXES we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Notificacion_REXCountArgs>(
+      args?: Subset<T, Multas_Notificacion_REXCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Notificacion_REXCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Notificacion_REX.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Notificacion_REXAggregateArgs>(args: Subset<T, Multas_Notificacion_REXAggregateArgs>): Prisma.PrismaPromise<GetMultas_Notificacion_REXAggregateType<T>>
+
+    /**
+     * Group by Multas_Notificacion_REX.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_REXGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Notificacion_REXGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Notificacion_REXGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Notificacion_REXGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Notificacion_REXGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Notificacion_REXGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Notificacion_REX model
+   */
+  readonly fields: Multas_Notificacion_REXFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Notificacion_REX.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Notificacion_REXClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends Multas_Notificacion_REX$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Notificacion_REX$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Notificacion_REX model
+   */ 
+  interface Multas_Notificacion_REXFieldRefs {
+    readonly id: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly numeroResolucion: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly fechaResolucion: FieldRef<"Multas_Notificacion_REX", 'DateTime'>
+    readonly periodoMes: FieldRef<"Multas_Notificacion_REX", 'Int'>
+    readonly periodoAnio: FieldRef<"Multas_Notificacion_REX", 'Int'>
+    readonly licitacionId: FieldRef<"Multas_Notificacion_REX", 'Int'>
+    readonly licitacionNombre: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly nombreArchivo: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly totalFilasNotif: FieldRef<"Multas_Notificacion_REX", 'Int'>
+    readonly totalFoliosNotif: FieldRef<"Multas_Notificacion_REX", 'Int'>
+    readonly montoTotalNotificado: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly montoTotalCalculado: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly montoTotalDiferencia: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly estado: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly cargadoPor: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly observaciones: FieldRef<"Multas_Notificacion_REX", 'String'>
+    readonly createdAt: FieldRef<"Multas_Notificacion_REX", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Notificacion_REX", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Notificacion_REX findUnique
+   */
+  export type Multas_Notificacion_REXFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_REX to fetch.
+     */
+    where: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_REX findUniqueOrThrow
+   */
+  export type Multas_Notificacion_REXFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_REX to fetch.
+     */
+    where: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_REX findFirst
+   */
+  export type Multas_Notificacion_REXFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_REX to fetch.
+     */
+    where?: Multas_Notificacion_REXWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_REXES to fetch.
+     */
+    orderBy?: Multas_Notificacion_REXOrderByWithRelationInput | Multas_Notificacion_REXOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Notificacion_REXES.
+     */
+    cursor?: Multas_Notificacion_REXWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_REXES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_REXES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Notificacion_REXES.
+     */
+    distinct?: Multas_Notificacion_REXScalarFieldEnum | Multas_Notificacion_REXScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_REX findFirstOrThrow
+   */
+  export type Multas_Notificacion_REXFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_REX to fetch.
+     */
+    where?: Multas_Notificacion_REXWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_REXES to fetch.
+     */
+    orderBy?: Multas_Notificacion_REXOrderByWithRelationInput | Multas_Notificacion_REXOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Notificacion_REXES.
+     */
+    cursor?: Multas_Notificacion_REXWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_REXES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_REXES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Notificacion_REXES.
+     */
+    distinct?: Multas_Notificacion_REXScalarFieldEnum | Multas_Notificacion_REXScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_REX findMany
+   */
+  export type Multas_Notificacion_REXFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_REXES to fetch.
+     */
+    where?: Multas_Notificacion_REXWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_REXES to fetch.
+     */
+    orderBy?: Multas_Notificacion_REXOrderByWithRelationInput | Multas_Notificacion_REXOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Notificacion_REXES.
+     */
+    cursor?: Multas_Notificacion_REXWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_REXES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_REXES.
+     */
+    skip?: number
+    distinct?: Multas_Notificacion_REXScalarFieldEnum | Multas_Notificacion_REXScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_REX create
+   */
+  export type Multas_Notificacion_REXCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Notificacion_REX.
+     */
+    data: XOR<Multas_Notificacion_REXCreateInput, Multas_Notificacion_REXUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Notificacion_REX createMany
+   */
+  export type Multas_Notificacion_REXCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Notificacion_REXES.
+     */
+    data: Multas_Notificacion_REXCreateManyInput | Multas_Notificacion_REXCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Notificacion_REX createManyAndReturn
+   */
+  export type Multas_Notificacion_REXCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Notificacion_REXES.
+     */
+    data: Multas_Notificacion_REXCreateManyInput | Multas_Notificacion_REXCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Notificacion_REX update
+   */
+  export type Multas_Notificacion_REXUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Notificacion_REX.
+     */
+    data: XOR<Multas_Notificacion_REXUpdateInput, Multas_Notificacion_REXUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Notificacion_REX to update.
+     */
+    where: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_REX updateMany
+   */
+  export type Multas_Notificacion_REXUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Notificacion_REXES.
+     */
+    data: XOR<Multas_Notificacion_REXUpdateManyMutationInput, Multas_Notificacion_REXUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Notificacion_REXES to update
+     */
+    where?: Multas_Notificacion_REXWhereInput
+  }
+
+  /**
+   * Multas_Notificacion_REX upsert
+   */
+  export type Multas_Notificacion_REXUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Notificacion_REX to update in case it exists.
+     */
+    where: Multas_Notificacion_REXWhereUniqueInput
+    /**
+     * In case the Multas_Notificacion_REX found by the `where` argument doesn't exist, create a new Multas_Notificacion_REX with this data.
+     */
+    create: XOR<Multas_Notificacion_REXCreateInput, Multas_Notificacion_REXUncheckedCreateInput>
+    /**
+     * In case the Multas_Notificacion_REX was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Notificacion_REXUpdateInput, Multas_Notificacion_REXUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Notificacion_REX delete
+   */
+  export type Multas_Notificacion_REXDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Notificacion_REX to delete.
+     */
+    where: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_REX deleteMany
+   */
+  export type Multas_Notificacion_REXDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Notificacion_REXES to delete
+     */
+    where?: Multas_Notificacion_REXWhereInput
+  }
+
+  /**
+   * Multas_Notificacion_REX.items
+   */
+  export type Multas_Notificacion_REX$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    where?: Multas_Notificacion_ItemWhereInput
+    orderBy?: Multas_Notificacion_ItemOrderByWithRelationInput | Multas_Notificacion_ItemOrderByWithRelationInput[]
+    cursor?: Multas_Notificacion_ItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Notificacion_ItemScalarFieldEnum | Multas_Notificacion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_REX without action
+   */
+  export type Multas_Notificacion_REXDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_REX
+     */
+    select?: Multas_Notificacion_REXSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_REXInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Notificacion_Item
+   */
+
+  export type AggregateMultas_Notificacion_Item = {
+    _count: Multas_Notificacion_ItemCountAggregateOutputType | null
+    _avg: Multas_Notificacion_ItemAvgAggregateOutputType | null
+    _sum: Multas_Notificacion_ItemSumAggregateOutputType | null
+    _min: Multas_Notificacion_ItemMinAggregateOutputType | null
+    _max: Multas_Notificacion_ItemMaxAggregateOutputType | null
+  }
+
+  export type Multas_Notificacion_ItemAvgAggregateOutputType = {
+    rbd: number | null
+    montoNotificado: number | null
+    montoCalculado: number | null
+    diferenciaMonto: number | null
+  }
+
+  export type Multas_Notificacion_ItemSumAggregateOutputType = {
+    rbd: number | null
+    montoNotificado: number | null
+    montoCalculado: number | null
+    diferenciaMonto: number | null
+  }
+
+  export type Multas_Notificacion_ItemMinAggregateOutputType = {
+    id: string | null
+    notificacionId: string | null
+    folio: string | null
+    rbd: number | null
+    establecimiento: string | null
+    sucursal: string | null
+    fechaSupervision: Date | null
+    aspecto: string | null
+    infraccionDetalle: string | null
+    montoNotificado: number | null
+    montoCalculado: number | null
+    diferenciaMonto: number | null
+    estadoConciliacion: string | null
+    clasificacionError: string | null
+    motivoClasificacion: string | null
+    resolucionAnterior: string | null
+    clasificadoPor: string | null
+    clasificadoEn: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Notificacion_ItemMaxAggregateOutputType = {
+    id: string | null
+    notificacionId: string | null
+    folio: string | null
+    rbd: number | null
+    establecimiento: string | null
+    sucursal: string | null
+    fechaSupervision: Date | null
+    aspecto: string | null
+    infraccionDetalle: string | null
+    montoNotificado: number | null
+    montoCalculado: number | null
+    diferenciaMonto: number | null
+    estadoConciliacion: string | null
+    clasificacionError: string | null
+    motivoClasificacion: string | null
+    resolucionAnterior: string | null
+    clasificadoPor: string | null
+    clasificadoEn: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Notificacion_ItemCountAggregateOutputType = {
+    id: number
+    notificacionId: number
+    folio: number
+    rbd: number
+    establecimiento: number
+    sucursal: number
+    fechaSupervision: number
+    aspecto: number
+    infraccionDetalle: number
+    montoNotificado: number
+    montoCalculado: number
+    diferenciaMonto: number
+    estadoConciliacion: number
+    clasificacionError: number
+    motivoClasificacion: number
+    resolucionAnterior: number
+    clasificadoPor: number
+    clasificadoEn: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Notificacion_ItemAvgAggregateInputType = {
+    rbd?: true
+    montoNotificado?: true
+    montoCalculado?: true
+    diferenciaMonto?: true
+  }
+
+  export type Multas_Notificacion_ItemSumAggregateInputType = {
+    rbd?: true
+    montoNotificado?: true
+    montoCalculado?: true
+    diferenciaMonto?: true
+  }
+
+  export type Multas_Notificacion_ItemMinAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    folio?: true
+    rbd?: true
+    establecimiento?: true
+    sucursal?: true
+    fechaSupervision?: true
+    aspecto?: true
+    infraccionDetalle?: true
+    montoNotificado?: true
+    montoCalculado?: true
+    diferenciaMonto?: true
+    estadoConciliacion?: true
+    clasificacionError?: true
+    motivoClasificacion?: true
+    resolucionAnterior?: true
+    clasificadoPor?: true
+    clasificadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Notificacion_ItemMaxAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    folio?: true
+    rbd?: true
+    establecimiento?: true
+    sucursal?: true
+    fechaSupervision?: true
+    aspecto?: true
+    infraccionDetalle?: true
+    montoNotificado?: true
+    montoCalculado?: true
+    diferenciaMonto?: true
+    estadoConciliacion?: true
+    clasificacionError?: true
+    motivoClasificacion?: true
+    resolucionAnterior?: true
+    clasificadoPor?: true
+    clasificadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Notificacion_ItemCountAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    folio?: true
+    rbd?: true
+    establecimiento?: true
+    sucursal?: true
+    fechaSupervision?: true
+    aspecto?: true
+    infraccionDetalle?: true
+    montoNotificado?: true
+    montoCalculado?: true
+    diferenciaMonto?: true
+    estadoConciliacion?: true
+    clasificacionError?: true
+    motivoClasificacion?: true
+    resolucionAnterior?: true
+    clasificadoPor?: true
+    clasificadoEn?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Notificacion_ItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Notificacion_Item to aggregate.
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_Items to fetch.
+     */
+    orderBy?: Multas_Notificacion_ItemOrderByWithRelationInput | Multas_Notificacion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Notificacion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Notificacion_Items
+    **/
+    _count?: true | Multas_Notificacion_ItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Notificacion_ItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Notificacion_ItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Notificacion_ItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Notificacion_ItemMaxAggregateInputType
+  }
+
+  export type GetMultas_Notificacion_ItemAggregateType<T extends Multas_Notificacion_ItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Notificacion_Item]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Notificacion_Item[P]>
+      : GetScalarType<T[P], AggregateMultas_Notificacion_Item[P]>
+  }
+
+
+
+
+  export type Multas_Notificacion_ItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Notificacion_ItemWhereInput
+    orderBy?: Multas_Notificacion_ItemOrderByWithAggregationInput | Multas_Notificacion_ItemOrderByWithAggregationInput[]
+    by: Multas_Notificacion_ItemScalarFieldEnum[] | Multas_Notificacion_ItemScalarFieldEnum
+    having?: Multas_Notificacion_ItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Notificacion_ItemCountAggregateInputType | true
+    _avg?: Multas_Notificacion_ItemAvgAggregateInputType
+    _sum?: Multas_Notificacion_ItemSumAggregateInputType
+    _min?: Multas_Notificacion_ItemMinAggregateInputType
+    _max?: Multas_Notificacion_ItemMaxAggregateInputType
+  }
+
+  export type Multas_Notificacion_ItemGroupByOutputType = {
+    id: string
+    notificacionId: string
+    folio: string
+    rbd: number | null
+    establecimiento: string | null
+    sucursal: string | null
+    fechaSupervision: Date | null
+    aspecto: string
+    infraccionDetalle: string | null
+    montoNotificado: number
+    montoCalculado: number
+    diferenciaMonto: number
+    estadoConciliacion: string
+    clasificacionError: string | null
+    motivoClasificacion: string | null
+    resolucionAnterior: string | null
+    clasificadoPor: string | null
+    clasificadoEn: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Notificacion_ItemCountAggregateOutputType | null
+    _avg: Multas_Notificacion_ItemAvgAggregateOutputType | null
+    _sum: Multas_Notificacion_ItemSumAggregateOutputType | null
+    _min: Multas_Notificacion_ItemMinAggregateOutputType | null
+    _max: Multas_Notificacion_ItemMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Notificacion_ItemGroupByPayload<T extends Multas_Notificacion_ItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Notificacion_ItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Notificacion_ItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Notificacion_ItemGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Notificacion_ItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Notificacion_ItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notificacionId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    sucursal?: boolean
+    fechaSupervision?: boolean
+    aspecto?: boolean
+    infraccionDetalle?: boolean
+    montoNotificado?: boolean
+    montoCalculado?: boolean
+    diferenciaMonto?: boolean
+    estadoConciliacion?: boolean
+    clasificacionError?: boolean
+    motivoClasificacion?: boolean
+    resolucionAnterior?: boolean
+    clasificadoPor?: boolean
+    clasificadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Notificacion_Item"]>
+
+  export type Multas_Notificacion_ItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notificacionId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    sucursal?: boolean
+    fechaSupervision?: boolean
+    aspecto?: boolean
+    infraccionDetalle?: boolean
+    montoNotificado?: boolean
+    montoCalculado?: boolean
+    diferenciaMonto?: boolean
+    estadoConciliacion?: boolean
+    clasificacionError?: boolean
+    motivoClasificacion?: boolean
+    resolucionAnterior?: boolean
+    clasificadoPor?: boolean
+    clasificadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Notificacion_Item"]>
+
+  export type Multas_Notificacion_ItemSelectScalar = {
+    id?: boolean
+    notificacionId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    sucursal?: boolean
+    fechaSupervision?: boolean
+    aspecto?: boolean
+    infraccionDetalle?: boolean
+    montoNotificado?: boolean
+    montoCalculado?: boolean
+    diferenciaMonto?: boolean
+    estadoConciliacion?: boolean
+    clasificacionError?: boolean
+    motivoClasificacion?: boolean
+    resolucionAnterior?: boolean
+    clasificadoPor?: boolean
+    clasificadoEn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Notificacion_ItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }
+  export type Multas_Notificacion_ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Notificacion_ItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Notificacion_Item"
+    objects: {
+      notificacion: Prisma.$Multas_Notificacion_REXPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      notificacionId: string
+      folio: string
+      rbd: number | null
+      establecimiento: string | null
+      sucursal: string | null
+      fechaSupervision: Date | null
+      aspecto: string
+      infraccionDetalle: string | null
+      montoNotificado: number
+      montoCalculado: number
+      diferenciaMonto: number
+      estadoConciliacion: string
+      clasificacionError: string | null
+      motivoClasificacion: string | null
+      resolucionAnterior: string | null
+      clasificadoPor: string | null
+      clasificadoEn: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Notificacion_Item"]>
+    composites: {}
+  }
+
+  type Multas_Notificacion_ItemGetPayload<S extends boolean | null | undefined | Multas_Notificacion_ItemDefaultArgs> = $Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload, S>
+
+  type Multas_Notificacion_ItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Notificacion_ItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Notificacion_ItemCountAggregateInputType | true
+    }
+
+  export interface Multas_Notificacion_ItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Notificacion_Item'], meta: { name: 'Multas_Notificacion_Item' } }
+    /**
+     * Find zero or one Multas_Notificacion_Item that matches the filter.
+     * @param {Multas_Notificacion_ItemFindUniqueArgs} args - Arguments to find a Multas_Notificacion_Item
+     * @example
+     * // Get one Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Notificacion_ItemFindUniqueArgs>(args: SelectSubset<T, Multas_Notificacion_ItemFindUniqueArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Notificacion_Item that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Notificacion_ItemFindUniqueOrThrowArgs} args - Arguments to find a Multas_Notificacion_Item
+     * @example
+     * // Get one Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Notificacion_ItemFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Notificacion_ItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Notificacion_Item that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemFindFirstArgs} args - Arguments to find a Multas_Notificacion_Item
+     * @example
+     * // Get one Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Notificacion_ItemFindFirstArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemFindFirstArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Notificacion_Item that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemFindFirstOrThrowArgs} args - Arguments to find a Multas_Notificacion_Item
+     * @example
+     * // Get one Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Notificacion_ItemFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Notificacion_Items that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Notificacion_Items
+     * const multas_Notificacion_Items = await prisma.multas_Notificacion_Item.findMany()
+     * 
+     * // Get first 10 Multas_Notificacion_Items
+     * const multas_Notificacion_Items = await prisma.multas_Notificacion_Item.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Notificacion_ItemWithIdOnly = await prisma.multas_Notificacion_Item.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Notificacion_ItemFindManyArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Notificacion_Item.
+     * @param {Multas_Notificacion_ItemCreateArgs} args - Arguments to create a Multas_Notificacion_Item.
+     * @example
+     * // Create one Multas_Notificacion_Item
+     * const Multas_Notificacion_Item = await prisma.multas_Notificacion_Item.create({
+     *   data: {
+     *     // ... data to create a Multas_Notificacion_Item
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Notificacion_ItemCreateArgs>(args: SelectSubset<T, Multas_Notificacion_ItemCreateArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Notificacion_Items.
+     * @param {Multas_Notificacion_ItemCreateManyArgs} args - Arguments to create many Multas_Notificacion_Items.
+     * @example
+     * // Create many Multas_Notificacion_Items
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Notificacion_ItemCreateManyArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Notificacion_Items and returns the data saved in the database.
+     * @param {Multas_Notificacion_ItemCreateManyAndReturnArgs} args - Arguments to create many Multas_Notificacion_Items.
+     * @example
+     * // Create many Multas_Notificacion_Items
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Notificacion_Items and only return the `id`
+     * const multas_Notificacion_ItemWithIdOnly = await prisma.multas_Notificacion_Item.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Notificacion_ItemCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Notificacion_Item.
+     * @param {Multas_Notificacion_ItemDeleteArgs} args - Arguments to delete one Multas_Notificacion_Item.
+     * @example
+     * // Delete one Multas_Notificacion_Item
+     * const Multas_Notificacion_Item = await prisma.multas_Notificacion_Item.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Notificacion_Item
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Notificacion_ItemDeleteArgs>(args: SelectSubset<T, Multas_Notificacion_ItemDeleteArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Notificacion_Item.
+     * @param {Multas_Notificacion_ItemUpdateArgs} args - Arguments to update one Multas_Notificacion_Item.
+     * @example
+     * // Update one Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Notificacion_ItemUpdateArgs>(args: SelectSubset<T, Multas_Notificacion_ItemUpdateArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Notificacion_Items.
+     * @param {Multas_Notificacion_ItemDeleteManyArgs} args - Arguments to filter Multas_Notificacion_Items to delete.
+     * @example
+     * // Delete a few Multas_Notificacion_Items
+     * const { count } = await prisma.multas_Notificacion_Item.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Notificacion_ItemDeleteManyArgs>(args?: SelectSubset<T, Multas_Notificacion_ItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Notificacion_Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Notificacion_Items
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Notificacion_ItemUpdateManyArgs>(args: SelectSubset<T, Multas_Notificacion_ItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Notificacion_Item.
+     * @param {Multas_Notificacion_ItemUpsertArgs} args - Arguments to update or create a Multas_Notificacion_Item.
+     * @example
+     * // Update or create a Multas_Notificacion_Item
+     * const multas_Notificacion_Item = await prisma.multas_Notificacion_Item.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Notificacion_Item
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Notificacion_Item we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Notificacion_ItemUpsertArgs>(args: SelectSubset<T, Multas_Notificacion_ItemUpsertArgs<ExtArgs>>): Prisma__Multas_Notificacion_ItemClient<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Notificacion_Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemCountArgs} args - Arguments to filter Multas_Notificacion_Items to count.
+     * @example
+     * // Count the number of Multas_Notificacion_Items
+     * const count = await prisma.multas_Notificacion_Item.count({
+     *   where: {
+     *     // ... the filter for the Multas_Notificacion_Items we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Notificacion_ItemCountArgs>(
+      args?: Subset<T, Multas_Notificacion_ItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Notificacion_ItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Notificacion_Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Notificacion_ItemAggregateArgs>(args: Subset<T, Multas_Notificacion_ItemAggregateArgs>): Prisma.PrismaPromise<GetMultas_Notificacion_ItemAggregateType<T>>
+
+    /**
+     * Group by Multas_Notificacion_Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Notificacion_ItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Notificacion_ItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Notificacion_ItemGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Notificacion_ItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Notificacion_ItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Notificacion_ItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Notificacion_Item model
+   */
+  readonly fields: Multas_Notificacion_ItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Notificacion_Item.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Notificacion_ItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    notificacion<T extends Multas_Notificacion_REXDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Notificacion_REXDefaultArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Notificacion_Item model
+   */ 
+  interface Multas_Notificacion_ItemFieldRefs {
+    readonly id: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly notificacionId: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly folio: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly rbd: FieldRef<"Multas_Notificacion_Item", 'Int'>
+    readonly establecimiento: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly sucursal: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly fechaSupervision: FieldRef<"Multas_Notificacion_Item", 'DateTime'>
+    readonly aspecto: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly infraccionDetalle: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly montoNotificado: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly montoCalculado: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly diferenciaMonto: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly estadoConciliacion: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly clasificacionError: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly motivoClasificacion: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly resolucionAnterior: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly clasificadoPor: FieldRef<"Multas_Notificacion_Item", 'String'>
+    readonly clasificadoEn: FieldRef<"Multas_Notificacion_Item", 'DateTime'>
+    readonly createdAt: FieldRef<"Multas_Notificacion_Item", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Notificacion_Item", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Notificacion_Item findUnique
+   */
+  export type Multas_Notificacion_ItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_Item to fetch.
+     */
+    where: Multas_Notificacion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_Item findUniqueOrThrow
+   */
+  export type Multas_Notificacion_ItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_Item to fetch.
+     */
+    where: Multas_Notificacion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_Item findFirst
+   */
+  export type Multas_Notificacion_ItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_Item to fetch.
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_Items to fetch.
+     */
+    orderBy?: Multas_Notificacion_ItemOrderByWithRelationInput | Multas_Notificacion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Notificacion_Items.
+     */
+    cursor?: Multas_Notificacion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Notificacion_Items.
+     */
+    distinct?: Multas_Notificacion_ItemScalarFieldEnum | Multas_Notificacion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_Item findFirstOrThrow
+   */
+  export type Multas_Notificacion_ItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_Item to fetch.
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_Items to fetch.
+     */
+    orderBy?: Multas_Notificacion_ItemOrderByWithRelationInput | Multas_Notificacion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Notificacion_Items.
+     */
+    cursor?: Multas_Notificacion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Notificacion_Items.
+     */
+    distinct?: Multas_Notificacion_ItemScalarFieldEnum | Multas_Notificacion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_Item findMany
+   */
+  export type Multas_Notificacion_ItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Notificacion_Items to fetch.
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Notificacion_Items to fetch.
+     */
+    orderBy?: Multas_Notificacion_ItemOrderByWithRelationInput | Multas_Notificacion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Notificacion_Items.
+     */
+    cursor?: Multas_Notificacion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Notificacion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Notificacion_Items.
+     */
+    skip?: number
+    distinct?: Multas_Notificacion_ItemScalarFieldEnum | Multas_Notificacion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_Item create
+   */
+  export type Multas_Notificacion_ItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Notificacion_Item.
+     */
+    data: XOR<Multas_Notificacion_ItemCreateInput, Multas_Notificacion_ItemUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Notificacion_Item createMany
+   */
+  export type Multas_Notificacion_ItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Notificacion_Items.
+     */
+    data: Multas_Notificacion_ItemCreateManyInput | Multas_Notificacion_ItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Notificacion_Item createManyAndReturn
+   */
+  export type Multas_Notificacion_ItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Notificacion_Items.
+     */
+    data: Multas_Notificacion_ItemCreateManyInput | Multas_Notificacion_ItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Notificacion_Item update
+   */
+  export type Multas_Notificacion_ItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Notificacion_Item.
+     */
+    data: XOR<Multas_Notificacion_ItemUpdateInput, Multas_Notificacion_ItemUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Notificacion_Item to update.
+     */
+    where: Multas_Notificacion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_Item updateMany
+   */
+  export type Multas_Notificacion_ItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Notificacion_Items.
+     */
+    data: XOR<Multas_Notificacion_ItemUpdateManyMutationInput, Multas_Notificacion_ItemUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Notificacion_Items to update
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+  }
+
+  /**
+   * Multas_Notificacion_Item upsert
+   */
+  export type Multas_Notificacion_ItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Notificacion_Item to update in case it exists.
+     */
+    where: Multas_Notificacion_ItemWhereUniqueInput
+    /**
+     * In case the Multas_Notificacion_Item found by the `where` argument doesn't exist, create a new Multas_Notificacion_Item with this data.
+     */
+    create: XOR<Multas_Notificacion_ItemCreateInput, Multas_Notificacion_ItemUncheckedCreateInput>
+    /**
+     * In case the Multas_Notificacion_Item was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Notificacion_ItemUpdateInput, Multas_Notificacion_ItemUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Notificacion_Item delete
+   */
+  export type Multas_Notificacion_ItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Notificacion_Item to delete.
+     */
+    where: Multas_Notificacion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Notificacion_Item deleteMany
+   */
+  export type Multas_Notificacion_ItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Notificacion_Items to delete
+     */
+    where?: Multas_Notificacion_ItemWhereInput
+  }
+
+  /**
+   * Multas_Notificacion_Item without action
+   */
+  export type Multas_Notificacion_ItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Notificacion_Item
+     */
+    select?: Multas_Notificacion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
   }
 
 
@@ -167626,6 +170154,56 @@ export namespace Prisma {
   export type Multas_Hallazgo_NCScalarFieldEnum = (typeof Multas_Hallazgo_NCScalarFieldEnum)[keyof typeof Multas_Hallazgo_NCScalarFieldEnum]
 
 
+  export const Multas_Notificacion_REXScalarFieldEnum: {
+    id: 'id',
+    numeroResolucion: 'numeroResolucion',
+    fechaResolucion: 'fechaResolucion',
+    periodoMes: 'periodoMes',
+    periodoAnio: 'periodoAnio',
+    licitacionId: 'licitacionId',
+    licitacionNombre: 'licitacionNombre',
+    nombreArchivo: 'nombreArchivo',
+    totalFilasNotif: 'totalFilasNotif',
+    totalFoliosNotif: 'totalFoliosNotif',
+    montoTotalNotificado: 'montoTotalNotificado',
+    montoTotalCalculado: 'montoTotalCalculado',
+    montoTotalDiferencia: 'montoTotalDiferencia',
+    estado: 'estado',
+    cargadoPor: 'cargadoPor',
+    observaciones: 'observaciones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Notificacion_REXScalarFieldEnum = (typeof Multas_Notificacion_REXScalarFieldEnum)[keyof typeof Multas_Notificacion_REXScalarFieldEnum]
+
+
+  export const Multas_Notificacion_ItemScalarFieldEnum: {
+    id: 'id',
+    notificacionId: 'notificacionId',
+    folio: 'folio',
+    rbd: 'rbd',
+    establecimiento: 'establecimiento',
+    sucursal: 'sucursal',
+    fechaSupervision: 'fechaSupervision',
+    aspecto: 'aspecto',
+    infraccionDetalle: 'infraccionDetalle',
+    montoNotificado: 'montoNotificado',
+    montoCalculado: 'montoCalculado',
+    diferenciaMonto: 'diferenciaMonto',
+    estadoConciliacion: 'estadoConciliacion',
+    clasificacionError: 'clasificacionError',
+    motivoClasificacion: 'motivoClasificacion',
+    resolucionAnterior: 'resolucionAnterior',
+    clasificadoPor: 'clasificadoPor',
+    clasificadoEn: 'clasificadoEn',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Notificacion_ItemScalarFieldEnum = (typeof Multas_Notificacion_ItemScalarFieldEnum)[keyof typeof Multas_Notificacion_ItemScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -174546,6 +177124,261 @@ export namespace Prisma {
     aceptadoEn?: DateTimeNullableWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Hallazgo_NC"> | Date | string
+  }
+
+  export type Multas_Notificacion_REXWhereInput = {
+    AND?: Multas_Notificacion_REXWhereInput | Multas_Notificacion_REXWhereInput[]
+    OR?: Multas_Notificacion_REXWhereInput[]
+    NOT?: Multas_Notificacion_REXWhereInput | Multas_Notificacion_REXWhereInput[]
+    id?: StringFilter<"Multas_Notificacion_REX"> | string
+    numeroResolucion?: StringFilter<"Multas_Notificacion_REX"> | string
+    fechaResolucion?: DateTimeNullableFilter<"Multas_Notificacion_REX"> | Date | string | null
+    periodoMes?: IntFilter<"Multas_Notificacion_REX"> | number
+    periodoAnio?: IntFilter<"Multas_Notificacion_REX"> | number
+    licitacionId?: IntNullableFilter<"Multas_Notificacion_REX"> | number | null
+    licitacionNombre?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
+    nombreArchivo?: StringFilter<"Multas_Notificacion_REX"> | string
+    totalFilasNotif?: IntFilter<"Multas_Notificacion_REX"> | number
+    totalFoliosNotif?: IntFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferencia?: FloatFilter<"Multas_Notificacion_REX"> | number
+    estado?: StringFilter<"Multas_Notificacion_REX"> | string
+    cargadoPor?: StringFilter<"Multas_Notificacion_REX"> | string
+    observaciones?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
+    items?: Multas_Notificacion_ItemListRelationFilter
+  }
+
+  export type Multas_Notificacion_REXOrderByWithRelationInput = {
+    id?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrderInput | SortOrder
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    licitacionNombre?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+    estado?: SortOrder
+    cargadoPor?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    items?: Multas_Notificacion_ItemOrderByRelationAggregateInput
+  }
+
+  export type Multas_Notificacion_REXWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    numeroResolucion_licitacionId?: Multas_Notificacion_REXNumeroResolucionLicitacionIdCompoundUniqueInput
+    AND?: Multas_Notificacion_REXWhereInput | Multas_Notificacion_REXWhereInput[]
+    OR?: Multas_Notificacion_REXWhereInput[]
+    NOT?: Multas_Notificacion_REXWhereInput | Multas_Notificacion_REXWhereInput[]
+    numeroResolucion?: StringFilter<"Multas_Notificacion_REX"> | string
+    fechaResolucion?: DateTimeNullableFilter<"Multas_Notificacion_REX"> | Date | string | null
+    periodoMes?: IntFilter<"Multas_Notificacion_REX"> | number
+    periodoAnio?: IntFilter<"Multas_Notificacion_REX"> | number
+    licitacionId?: IntNullableFilter<"Multas_Notificacion_REX"> | number | null
+    licitacionNombre?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
+    nombreArchivo?: StringFilter<"Multas_Notificacion_REX"> | string
+    totalFilasNotif?: IntFilter<"Multas_Notificacion_REX"> | number
+    totalFoliosNotif?: IntFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferencia?: FloatFilter<"Multas_Notificacion_REX"> | number
+    estado?: StringFilter<"Multas_Notificacion_REX"> | string
+    cargadoPor?: StringFilter<"Multas_Notificacion_REX"> | string
+    observaciones?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
+    items?: Multas_Notificacion_ItemListRelationFilter
+  }, "id" | "numeroResolucion_licitacionId">
+
+  export type Multas_Notificacion_REXOrderByWithAggregationInput = {
+    id?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrderInput | SortOrder
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    licitacionNombre?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+    estado?: SortOrder
+    cargadoPor?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Notificacion_REXCountOrderByAggregateInput
+    _avg?: Multas_Notificacion_REXAvgOrderByAggregateInput
+    _max?: Multas_Notificacion_REXMaxOrderByAggregateInput
+    _min?: Multas_Notificacion_REXMinOrderByAggregateInput
+    _sum?: Multas_Notificacion_REXSumOrderByAggregateInput
+  }
+
+  export type Multas_Notificacion_REXScalarWhereWithAggregatesInput = {
+    AND?: Multas_Notificacion_REXScalarWhereWithAggregatesInput | Multas_Notificacion_REXScalarWhereWithAggregatesInput[]
+    OR?: Multas_Notificacion_REXScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Notificacion_REXScalarWhereWithAggregatesInput | Multas_Notificacion_REXScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
+    numeroResolucion?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
+    fechaResolucion?: DateTimeNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | Date | string | null
+    periodoMes?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    periodoAnio?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    licitacionId?: IntNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | number | null
+    licitacionNombre?: StringNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | string | null
+    nombreArchivo?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
+    totalFilasNotif?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    totalFoliosNotif?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificado?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculado?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferencia?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    estado?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
+    cargadoPor?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
+    observaciones?: StringNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_REX"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_REX"> | Date | string
+  }
+
+  export type Multas_Notificacion_ItemWhereInput = {
+    AND?: Multas_Notificacion_ItemWhereInput | Multas_Notificacion_ItemWhereInput[]
+    OR?: Multas_Notificacion_ItemWhereInput[]
+    NOT?: Multas_Notificacion_ItemWhereInput | Multas_Notificacion_ItemWhereInput[]
+    id?: StringFilter<"Multas_Notificacion_Item"> | string
+    notificacionId?: StringFilter<"Multas_Notificacion_Item"> | string
+    folio?: StringFilter<"Multas_Notificacion_Item"> | string
+    rbd?: IntNullableFilter<"Multas_Notificacion_Item"> | number | null
+    establecimiento?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    sucursal?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    fechaSupervision?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
+    infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
+    clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    resolucionAnterior?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoPor?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoEn?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    createdAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+    notificacion?: XOR<Multas_Notificacion_REXRelationFilter, Multas_Notificacion_REXWhereInput>
+  }
+
+  export type Multas_Notificacion_ItemOrderByWithRelationInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    infraccionDetalle?: SortOrderInput | SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+    estadoConciliacion?: SortOrder
+    clasificacionError?: SortOrderInput | SortOrder
+    motivoClasificacion?: SortOrderInput | SortOrder
+    resolucionAnterior?: SortOrderInput | SortOrder
+    clasificadoPor?: SortOrderInput | SortOrder
+    clasificadoEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notificacion?: Multas_Notificacion_REXOrderByWithRelationInput
+  }
+
+  export type Multas_Notificacion_ItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Notificacion_ItemWhereInput | Multas_Notificacion_ItemWhereInput[]
+    OR?: Multas_Notificacion_ItemWhereInput[]
+    NOT?: Multas_Notificacion_ItemWhereInput | Multas_Notificacion_ItemWhereInput[]
+    notificacionId?: StringFilter<"Multas_Notificacion_Item"> | string
+    folio?: StringFilter<"Multas_Notificacion_Item"> | string
+    rbd?: IntNullableFilter<"Multas_Notificacion_Item"> | number | null
+    establecimiento?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    sucursal?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    fechaSupervision?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
+    infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
+    clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    resolucionAnterior?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoPor?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoEn?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    createdAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+    notificacion?: XOR<Multas_Notificacion_REXRelationFilter, Multas_Notificacion_REXWhereInput>
+  }, "id">
+
+  export type Multas_Notificacion_ItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    infraccionDetalle?: SortOrderInput | SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+    estadoConciliacion?: SortOrder
+    clasificacionError?: SortOrderInput | SortOrder
+    motivoClasificacion?: SortOrderInput | SortOrder
+    resolucionAnterior?: SortOrderInput | SortOrder
+    clasificadoPor?: SortOrderInput | SortOrder
+    clasificadoEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Notificacion_ItemCountOrderByAggregateInput
+    _avg?: Multas_Notificacion_ItemAvgOrderByAggregateInput
+    _max?: Multas_Notificacion_ItemMaxOrderByAggregateInput
+    _min?: Multas_Notificacion_ItemMinOrderByAggregateInput
+    _sum?: Multas_Notificacion_ItemSumOrderByAggregateInput
+  }
+
+  export type Multas_Notificacion_ItemScalarWhereWithAggregatesInput = {
+    AND?: Multas_Notificacion_ItemScalarWhereWithAggregatesInput | Multas_Notificacion_ItemScalarWhereWithAggregatesInput[]
+    OR?: Multas_Notificacion_ItemScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Notificacion_ItemScalarWhereWithAggregatesInput | Multas_Notificacion_ItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
+    notificacionId?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
+    folio?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
+    rbd?: IntNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | number | null
+    establecimiento?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    sucursal?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    fechaSupervision?: DateTimeNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string | null
+    aspecto?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
+    infraccionDetalle?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    montoNotificado?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    montoCalculado?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    diferenciaMonto?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    estadoConciliacion?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
+    clasificacionError?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    motivoClasificacion?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    resolucionAnterior?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoPor?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoEn?: DateTimeNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -188088,6 +190921,317 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Notificacion_REXCreateInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Notificacion_ItemCreateNestedManyWithoutNotificacionInput
+  }
+
+  export type Multas_Notificacion_REXUncheckedCreateInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Notificacion_ItemUncheckedCreateNestedManyWithoutNotificacionInput
+  }
+
+  export type Multas_Notificacion_REXUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Notificacion_ItemUpdateManyWithoutNotificacionNestedInput
+  }
+
+  export type Multas_Notificacion_REXUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionNestedInput
+  }
+
+  export type Multas_Notificacion_REXCreateManyInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_REXUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_REXUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemCreateInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutItemsInput
+  }
+
+  export type Multas_Notificacion_ItemUncheckedCreateInput = {
+    id?: string
+    notificacionId: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_ItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type Multas_Notificacion_ItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemCreateManyInput = {
+    id?: string
+    notificacionId: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_ItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -200173,6 +203317,194 @@ export namespace Prisma {
     licitacionId?: SortOrder
   }
 
+  export type Multas_Notificacion_ItemListRelationFilter = {
+    every?: Multas_Notificacion_ItemWhereInput
+    some?: Multas_Notificacion_ItemWhereInput
+    none?: Multas_Notificacion_ItemWhereInput
+  }
+
+  export type Multas_Notificacion_ItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXNumeroResolucionLicitacionIdCompoundUniqueInput = {
+    numeroResolucion: string
+    licitacionId: number
+  }
+
+  export type Multas_Notificacion_REXCountOrderByAggregateInput = {
+    id?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    nombreArchivo?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+    estado?: SortOrder
+    cargadoPor?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXAvgOrderByAggregateInput = {
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXMaxOrderByAggregateInput = {
+    id?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    nombreArchivo?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+    estado?: SortOrder
+    cargadoPor?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXMinOrderByAggregateInput = {
+    id?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    nombreArchivo?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+    estado?: SortOrder
+    cargadoPor?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXSumOrderByAggregateInput = {
+    periodoMes?: SortOrder
+    periodoAnio?: SortOrder
+    licitacionId?: SortOrder
+    totalFilasNotif?: SortOrder
+    totalFoliosNotif?: SortOrder
+    montoTotalNotificado?: SortOrder
+    montoTotalCalculado?: SortOrder
+    montoTotalDiferencia?: SortOrder
+  }
+
+  export type Multas_Notificacion_REXRelationFilter = {
+    is?: Multas_Notificacion_REXWhereInput
+    isNot?: Multas_Notificacion_REXWhereInput
+  }
+
+  export type Multas_Notificacion_ItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    sucursal?: SortOrder
+    fechaSupervision?: SortOrder
+    aspecto?: SortOrder
+    infraccionDetalle?: SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+    estadoConciliacion?: SortOrder
+    clasificacionError?: SortOrder
+    motivoClasificacion?: SortOrder
+    resolucionAnterior?: SortOrder
+    clasificadoPor?: SortOrder
+    clasificadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_ItemAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+  }
+
+  export type Multas_Notificacion_ItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    sucursal?: SortOrder
+    fechaSupervision?: SortOrder
+    aspecto?: SortOrder
+    infraccionDetalle?: SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+    estadoConciliacion?: SortOrder
+    clasificacionError?: SortOrder
+    motivoClasificacion?: SortOrder
+    resolucionAnterior?: SortOrder
+    clasificadoPor?: SortOrder
+    clasificadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_ItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    sucursal?: SortOrder
+    fechaSupervision?: SortOrder
+    aspecto?: SortOrder
+    infraccionDetalle?: SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+    estadoConciliacion?: SortOrder
+    clasificacionError?: SortOrder
+    motivoClasificacion?: SortOrder
+    resolucionAnterior?: SortOrder
+    clasificadoPor?: SortOrder
+    clasificadoEn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Notificacion_ItemSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoNotificado?: SortOrder
+    montoCalculado?: SortOrder
+    diferenciaMonto?: SortOrder
+  }
+
   export type Descargos_DetListRelationFilter = {
     every?: Descargos_DetWhereInput
     some?: Descargos_DetWhereInput
@@ -207055,6 +210387,62 @@ export namespace Prisma {
     upsert?: Multas_IT_Elementos_Esenciales_CabUpsertWithoutDetallesInput
     connect?: Multas_IT_Elementos_Esenciales_CabWhereUniqueInput
     update?: XOR<XOR<Multas_IT_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_IT_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_IT_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Multas_Notificacion_ItemCreateNestedManyWithoutNotificacionInput = {
+    create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
+    createMany?: Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope
+    connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+  }
+
+  export type Multas_Notificacion_ItemUncheckedCreateNestedManyWithoutNotificacionInput = {
+    create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
+    createMany?: Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope
+    connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+  }
+
+  export type Multas_Notificacion_ItemUpdateManyWithoutNotificacionNestedInput = {
+    create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
+    upsert?: Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput | Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput[]
+    createMany?: Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope
+    set?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    disconnect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    delete?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    update?: Multas_Notificacion_ItemUpdateWithWhereUniqueWithoutNotificacionInput | Multas_Notificacion_ItemUpdateWithWhereUniqueWithoutNotificacionInput[]
+    updateMany?: Multas_Notificacion_ItemUpdateManyWithWhereWithoutNotificacionInput | Multas_Notificacion_ItemUpdateManyWithWhereWithoutNotificacionInput[]
+    deleteMany?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
+  }
+
+  export type Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionNestedInput = {
+    create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
+    upsert?: Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput | Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput[]
+    createMany?: Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope
+    set?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    disconnect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    delete?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+    update?: Multas_Notificacion_ItemUpdateWithWhereUniqueWithoutNotificacionInput | Multas_Notificacion_ItemUpdateWithWhereUniqueWithoutNotificacionInput[]
+    updateMany?: Multas_Notificacion_ItemUpdateManyWithWhereWithoutNotificacionInput | Multas_Notificacion_ItemUpdateManyWithWhereWithoutNotificacionInput[]
+    deleteMany?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
+  }
+
+  export type Multas_Notificacion_REXCreateNestedOneWithoutItemsInput = {
+    create?: XOR<Multas_Notificacion_REXCreateWithoutItemsInput, Multas_Notificacion_REXUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: Multas_Notificacion_REXCreateOrConnectWithoutItemsInput
+    connect?: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  export type Multas_Notificacion_REXUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<Multas_Notificacion_REXCreateWithoutItemsInput, Multas_Notificacion_REXUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: Multas_Notificacion_REXCreateOrConnectWithoutItemsInput
+    upsert?: Multas_Notificacion_REXUpsertWithoutItemsInput
+    connect?: Multas_Notificacion_REXWhereUniqueInput
+    update?: XOR<XOR<Multas_Notificacion_REXUpdateToOneWithWhereWithoutItemsInput, Multas_Notificacion_REXUpdateWithoutItemsInput>, Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput>
   }
 
   export type Descargos_DetCreateNestedManyWithoutCabInput = {
@@ -215777,6 +219165,202 @@ export namespace Prisma {
     nombreArchivo?: NullableStringFieldUpdateOperationsInput | string | null
     archivoBase64?: NullableStringFieldUpdateOperationsInput | string | null
     cargadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemCreateWithoutNotificacionInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput = {
+    where: Multas_Notificacion_ItemWhereUniqueInput
+    create: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput>
+  }
+
+  export type Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope = {
+    data: Multas_Notificacion_ItemCreateManyNotificacionInput | Multas_Notificacion_ItemCreateManyNotificacionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput = {
+    where: Multas_Notificacion_ItemWhereUniqueInput
+    update: XOR<Multas_Notificacion_ItemUpdateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedUpdateWithoutNotificacionInput>
+    create: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput>
+  }
+
+  export type Multas_Notificacion_ItemUpdateWithWhereUniqueWithoutNotificacionInput = {
+    where: Multas_Notificacion_ItemWhereUniqueInput
+    data: XOR<Multas_Notificacion_ItemUpdateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedUpdateWithoutNotificacionInput>
+  }
+
+  export type Multas_Notificacion_ItemUpdateManyWithWhereWithoutNotificacionInput = {
+    where: Multas_Notificacion_ItemScalarWhereInput
+    data: XOR<Multas_Notificacion_ItemUpdateManyMutationInput, Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionInput>
+  }
+
+  export type Multas_Notificacion_ItemScalarWhereInput = {
+    AND?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
+    OR?: Multas_Notificacion_ItemScalarWhereInput[]
+    NOT?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
+    id?: StringFilter<"Multas_Notificacion_Item"> | string
+    notificacionId?: StringFilter<"Multas_Notificacion_Item"> | string
+    folio?: StringFilter<"Multas_Notificacion_Item"> | string
+    rbd?: IntNullableFilter<"Multas_Notificacion_Item"> | number | null
+    establecimiento?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    sucursal?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    fechaSupervision?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
+    infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
+    clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    resolucionAnterior?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoPor?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
+    clasificadoEn?: DateTimeNullableFilter<"Multas_Notificacion_Item"> | Date | string | null
+    createdAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
+  }
+
+  export type Multas_Notificacion_REXCreateWithoutItemsInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_REXUncheckedCreateWithoutItemsInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_REXCreateOrConnectWithoutItemsInput = {
+    where: Multas_Notificacion_REXWhereUniqueInput
+    create: XOR<Multas_Notificacion_REXCreateWithoutItemsInput, Multas_Notificacion_REXUncheckedCreateWithoutItemsInput>
+  }
+
+  export type Multas_Notificacion_REXUpsertWithoutItemsInput = {
+    update: XOR<Multas_Notificacion_REXUpdateWithoutItemsInput, Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput>
+    create: XOR<Multas_Notificacion_REXCreateWithoutItemsInput, Multas_Notificacion_REXUncheckedCreateWithoutItemsInput>
+    where?: Multas_Notificacion_REXWhereInput
+  }
+
+  export type Multas_Notificacion_REXUpdateToOneWithWhereWithoutItemsInput = {
+    where?: Multas_Notificacion_REXWhereInput
+    data: XOR<Multas_Notificacion_REXUpdateWithoutItemsInput, Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type Multas_Notificacion_REXUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -227693,6 +231277,94 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Notificacion_ItemCreateManyNotificacionInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    establecimiento?: string | null
+    sucursal?: string | null
+    fechaSupervision?: Date | string | null
+    aspecto: string
+    infraccionDetalle?: string | null
+    montoNotificado?: number
+    montoCalculado?: number
+    diferenciaMonto?: number
+    estadoConciliacion?: string
+    clasificacionError?: string | null
+    motivoClasificacion?: string | null
+    resolucionAnterior?: string | null
+    clasificadoPor?: string | null
+    clasificadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Notificacion_ItemUpdateWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemUncheckedUpdateWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoCalculado?: FloatFieldUpdateOperationsInput | number
+    diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    estadoConciliacion?: StringFieldUpdateOperationsInput | string
+    clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_DetCreateManyCabInput = {
     id?: string
     letraAspecto: string
@@ -231098,6 +234770,10 @@ export namespace Prisma {
      */
     export type Multas_IT_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_IT_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Multas_Notificacion_REXCountOutputTypeDefaultArgs instead
+     */
+    export type Multas_Notificacion_REXCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use Descargos_CabCountOutputTypeDefaultArgs instead
      */
     export type Descargos_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
@@ -231481,6 +235157,14 @@ export namespace Prisma {
      * @deprecated Use Multas_Hallazgo_NCDefaultArgs instead
      */
     export type Multas_Hallazgo_NCArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Hallazgo_NCDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Notificacion_REXDefaultArgs instead
+     */
+    export type Multas_Notificacion_REXArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Notificacion_REXDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Notificacion_ItemDefaultArgs instead
+     */
+    export type Multas_Notificacion_ItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Notificacion_ItemDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

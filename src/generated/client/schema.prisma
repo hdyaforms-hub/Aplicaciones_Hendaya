@@ -995,6 +995,69 @@ model Multas_Hallazgo_NC {
   @@index([aspecto, estado])
 }
 
+model Multas_Notificacion_REX {
+  id                   String                     @id @default(uuid())
+  numeroResolucion     String                     @db.VarChar(100) // ej: "REX N° 1524/2025"
+  fechaResolucion      DateTime?
+  periodoMes           Int // Mes evaluado (1..12)
+  periodoAnio          Int // Año evaluado (ej: 2025)
+  licitacionId         Int?
+  licitacionNombre     String?                    @db.VarChar(150)
+  nombreArchivo        String                     @db.VarChar(255)
+  totalFilasNotif      Int                        @default(0)
+  totalFoliosNotif     Int                        @default(0)
+  montoTotalNotificado Float                      @default(0.0) // UTM total según JUNAEB
+  montoTotalCalculado  Float                      @default(0.0) // UTM total según Hendaya
+  montoTotalDiferencia Float                      @default(0.0)
+  estado               String                     @default("BORRADOR") @db.VarChar(30) // 'BORRADOR', 'CONCILIADO', 'EN_DESCARGO', 'CERRADO'
+  cargadoPor           String                     @db.VarChar(100)
+  observaciones        String?                    @db.Text
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+  items                Multas_Notificacion_Item[]
+
+  @@unique([numeroResolucion, licitacionId], map: "multas_notif_rex_numero_lic_unique")
+  @@index([periodoAnio, periodoMes])
+  @@index([licitacionId])
+  @@index([estado])
+  @@map("Multas_Notificacion_REX")
+}
+
+model Multas_Notificacion_Item {
+  id                 String    @id @default(uuid())
+  notificacionId     String
+  folio              String    @db.VarChar(50)
+  rbd                Int?
+  establecimiento    String?   @db.VarChar(200)
+  sucursal           String?   @db.VarChar(100)
+  fechaSupervision   DateTime?
+  aspecto            String    @db.VarChar(10) // 'A'..'M', 'GENERAL'
+  infraccionDetalle  String?   @db.Text
+  montoNotificado    Float     @default(0.0) // UTM notificado por JUNAEB
+  montoCalculado     Float     @default(0.0) // UTM según motor Hendaya
+  diferenciaMonto    Float     @default(0.0) // notificado - calculado
+  estadoConciliacion String    @default("PENDIENTE") @db.VarChar(30)
+  // 'COINCIDE' | 'DIFERENCIA_MONTO' | 'SOLO_JUNAEB' | 'NO_INCLUIDO' | 'FOLIO_REPETIDO'
+
+  clasificacionError String? @db.VarChar(30)
+  // 'ERROR_JUNAEB' | 'ERROR_INTERNO' | 'EN_REVISION' | 'ACEPTADO'
+
+  motivoClasificacion String?   @db.Text
+  resolucionAnterior  String?   @db.VarChar(100) // REX previa si es repetido
+  clasificadoPor      String?   @db.VarChar(100)
+  clasificadoEn       DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  notificacion Multas_Notificacion_REX @relation(fields: [notificacionId], references: [id], onDelete: Cascade)
+
+  @@index([notificacionId, estadoConciliacion])
+  @@index([folio])
+  @@index([rbd])
+  @@index([aspecto])
+  @@map("Multas_Notificacion_Item")
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique
