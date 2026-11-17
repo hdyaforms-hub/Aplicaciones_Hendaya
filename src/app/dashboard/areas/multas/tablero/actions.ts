@@ -275,25 +275,59 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
             }
         }
 
-        // 5. Conciliación REX (C6) y Notificación oficial JUNAEB
-        const [notifItems, rexList] = await Promise.all([
-            prisma.multas_Notificacion_Item.findMany().catch(() => []),
-            prisma.multas_Notificacion_REX.findMany({
-                select: { montoTotalNotificado: true, montoTotalNotificadoPesos: true }
-            }).catch(() => [])
-        ])
+        // 5. Conciliación REX (C6) y Notificación oficial JUNAEB con filtros del tablero
+        const notifItems = await prisma.multas_Notificacion_Item.findMany({
+            include: {
+                notificacion: {
+                    select: {
+                        periodoAnio: true,
+                        periodoMes: true,
+                        licitacionNombre: true
+                    }
+                }
+            }
+        }).catch(() => [])
 
-        const totalItemsRex = notifItems.length
-        const coincideRex = notifItems.filter(i => i.estadoConciliacion === 'COINCIDE').length
-        const diferenciasRex = notifItems.filter(i => i.estadoConciliacion === 'DIFERENCIA_MONTO').length
-        const soloJunaebRex = notifItems.filter(i => i.estadoConciliacion === 'SOLO_JUNAEB').length
-        const montoTotalNotificadoRexUtm = rexList.reduce((acc, curr) => acc + (curr.montoTotalNotificado || 0), 0)
+        // Filtrar ítems de REX según filtros del tablero (Año, Licitación, Sucursal por RBD y RBDs autorizados)
+        const notifItemsFiltrados = notifItems.filter(item => {
+            if (allowedRbds !== null && item.rbd && !allowedRbds.includes(item.rbd)) {
+                return false
+            }
+            if (filtros?.anio && item.notificacion?.periodoAnio) {
+                if (item.notificacion.periodoAnio !== Number(filtros.anio)) return false
+            }
+            if (filtros?.licitacion && filtros.licitacion !== 'TODAS') {
+                if (item.notificacion?.licitacionNombre && item.notificacion.licitacionNombre !== filtros.licitacion) {
+                    return false
+                }
+            }
 
-        // Agrupar montos notificados oficialmente en REX por sucursal
+            // Mapear sucursal mediante RBD de la tabla Colegios (rbdSucursalMap)
+            const suc = (item.rbd ? rbdSucursalMap.get(item.rbd) : null) || item.sucursal || 'Central / Matriz'
+            if (filtros?.sucursal && filtros.sucursal !== 'TODAS') {
+                if (suc !== filtros.sucursal) return false
+            }
+            return true
+        })
+
+        const totalItemsRex = notifItemsFiltrados.length
+        const coincideRex = notifItemsFiltrados.filter(i => i.estadoConciliacion === 'COINCIDE').length
+        const diferenciasRex = notifItemsFiltrados.filter(i => i.estadoConciliacion === 'DIFERENCIA_MONTO').length
+        const soloJunaebRex = notifItemsFiltrados.filter(i => i.estadoConciliacion === 'SOLO_JUNAEB').length
+        const montoTotalNotificadoRexUtm = notifItemsFiltrados.reduce((acc, curr) => acc + (curr.montoNotificado || 0), 0)
+
+        // Agrupar montos notificados oficialmente en REX por la sucursal canónica (Colegio.sucursal)
         const sucursalesRexNotifMap: Record<string, number> = {}
-        for (const item of notifItems) {
-            const suc = item.sucursal || 'Central / Matriz'
+        for (const item of notifItemsFiltrados) {
+            const suc = (item.rbd ? rbdSucursalMap.get(item.rbd) : null) || item.sucursal || 'Central / Matriz'
             sucursalesRexNotifMap[suc] = (sucursalesRexNotifMap[suc] || 0) + (item.montoNotificado || 0)
+        }
+
+        // Unir con sucursales que tengan montos notificados
+        for (const suc of Object.keys(sucursalesRexNotifMap)) {
+            if (!sucursalesMap[suc]) {
+                sucursalesMap[suc] = { total: 0, cerrados: 0 }
+            }
         }
 
         const avancePorSucursal = Object.entries(sucursalesMap).map(([sucursal, data]) => {
