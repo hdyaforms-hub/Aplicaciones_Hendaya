@@ -1007,8 +1007,11 @@ model Multas_Notificacion_REX {
   totalFilasNotif      Int                      @default(0)
   totalFoliosNotif     Int                      @default(0)
   montoTotalNotificado Float                    @default(0.0) // UTM total según JUNAEB
+  montoTotalNotificadoPesos Float?               @default(0.0) // CLP total notificado por JUNAEB
   montoTotalCalculado  Float                    @default(0.0) // UTM total según Hendaya
+  montoTotalCalculadoPesos  Float?               @default(0.0) // CLP total según Hendaya
   montoTotalDiferencia Float                    @default(0.0)
+  montoTotalDiferenciaPesos Float?               @default(0.0)
   estado               String                   @default("BORRADOR") @db.VarChar(30) // 'BORRADOR', 'CONCILIADO', 'EN_DESCARGO', 'CERRADO'
   cargadoPor           String                   @db.VarChar(100)
   observaciones        String?                  @db.Text
@@ -1035,8 +1038,11 @@ model Multas_Notificacion_Item {
   aspecto              String                  @db.VarChar(10) // 'A'..'M', 'GENERAL'
   infraccionDetalle    String?                 @db.Text
   montoNotificado      Float                   @default(0.0) // UTM notificado por JUNAEB
+  montoNotificadoPesos Float?                  @default(0.0) // CLP notificado por JUNAEB
   montoCalculado       Float                   @default(0.0) // UTM según motor Hendaya
-  diferenciaMonto      Float                   @default(0.0) // notificado - calculado
+  montoCalculadoPesos  Float?                  @default(0.0) // CLP según motor Hendaya
+  diferenciaMonto      Float                   @default(0.0) // notificado - calculado (UTM)
+  diferenciaPesos      Float?                  @default(0.0) // notificado - calculado (CLP)
   estadoConciliacion   String                  @default("PENDIENTE") @db.VarChar(30) 
   // 'COINCIDE' | 'DIFERENCIA_MONTO' | 'SOLO_JUNAEB' | 'NO_INCLUIDO' | 'FOLIO_REPETIDO'
   

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
+import { checkMultasPermission } from '@/lib/multas/permisos'
 import { getReporteMaestroExcelDataAction } from '../actions'
 import * as XLSX from 'xlsx'
 
@@ -10,12 +11,17 @@ export async function GET() {
             return new NextResponse('No autorizado', { status: 401 })
         }
 
+        const { authorized } = await checkMultasPermission('export_multas_consolidado', session)
+        if (!authorized) {
+            return new NextResponse('No tienes permisos para exportar el consolidado de multas', { status: 403 })
+        }
+
         const res = await getReporteMaestroExcelDataAction()
         if (!res.success || !res.data) {
             return new NextResponse('Error compilando datos del reporte', { status: 500 })
         }
 
-        // Mapear encabezados amigables para el usuario en Excel
+        // Mapear encabezados amigables para el usuario en Excel distinguiendo CLP y UTM
         const excelRows = res.data.map(r => ({
             'Folio Acta': r.folio,
             'Fecha Supervisión': r.fechaSupervision,
@@ -24,7 +30,8 @@ export async function GET() {
             'Licitación / Contrato': r.licitacion,
             'Aspecto': r.aspecto,
             'Descripción No Conformidad': r.descripcionAspecto,
-            'Monto Notificado (UTM)': r.montoNotificadoUtm,
+            'Monto Calculado (CLP)': r.montoCalculadoPesos,
+            'Monto Calculado Est. (UTM)': r.montoNotificadoUtm,
             'Monto Impugnado (UTM)': r.montoImpugnadoUtm,
             'Monto Rebajado (UTM)': r.montoRebajadoUtm,
             'Estado Legal Descargo': r.estadoDescargo,
@@ -47,9 +54,10 @@ export async function GET() {
             { wch: 25 }, // Licitacion
             { wch: 12 }, // Aspecto
             { wch: 35 }, // Descripcion
-            { wch: 18 }, // Monto Notificado
-            { wch: 18 }, // Monto Impugnado
-            { wch: 18 }, // Monto Rebajado
+            { wch: 22 }, // Monto Calculado (CLP)
+            { wch: 24 }, // Monto Calculado Est. (UTM)
+            { wch: 20 }, // Monto Impugnado (UTM)
+            { wch: 20 }, // Monto Rebajado (UTM)
             { wch: 20 }, // Estado Descargo
             { wch: 18 }, // Resolucion
             { wch: 18 }, // Dictamen

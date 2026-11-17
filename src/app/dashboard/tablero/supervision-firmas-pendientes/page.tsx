@@ -18,7 +18,7 @@ export default async function SupervisionFirmasPendientesPage() {
 
     const roleName = session.user.role?.name?.toLowerCase().trim() || ''
     const permissions = session.user.role?.permissions || []
-    const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin' || roleName.includes('gerencia')
+    const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin'
 
     const hasAccess = isAdmin ||
         permissions.includes('view_tablero_supervision_firmas') ||

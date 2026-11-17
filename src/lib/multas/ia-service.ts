@@ -2,7 +2,17 @@ import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { ensureIaConfigTables } from './ia-config-db-init'
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_SECRET_KEY || 'hendaya-ia-secret-key-32-chars!' // 32 chars
+function getEncryptionKey(): string {
+    const key = process.env.ENCRYPTION_SECRET_KEY
+    if (!key) {
+        if (process.env.NODE_ENV === 'production') {
+            throw new Error('ENCRYPTION_SECRET_KEY no está configurada en las variables de entorno de producción.')
+        }
+        return 'hendaya-ia-secret-key-32-chars!'
+    }
+    return key
+}
+
 const IV_LENGTH = 16
 
 /**
@@ -10,7 +20,7 @@ const IV_LENGTH = 16
  */
 export function encryptApiKey(text: string): string {
     if (!text) return ''
-    const key = crypto.createHash('sha256').update(ENCRYPTION_KEY).digest()
+    const key = crypto.createHash('sha256').update(getEncryptionKey()).digest()
     const iv = crypto.randomBytes(IV_LENGTH)
     const cipher = crypto.createCipheriv('aes-256-cbc', key, iv)
     let encrypted = cipher.update(text, 'utf8', 'hex')
@@ -25,7 +35,7 @@ export function decryptApiKey(encryptedText: string): string {
     try {
         if (!encryptedText || !encryptedText.includes(':')) return ''
         const [ivHex, encrypted] = encryptedText.split(':')
-        const key = crypto.createHash('sha256').update(ENCRYPTION_KEY).digest()
+        const key = crypto.createHash('sha256').update(getEncryptionKey()).digest()
         const iv = Buffer.from(ivHex, 'hex')
         const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv)
         let decrypted = decipher.update(encrypted, 'hex', 'utf8')
@@ -47,17 +57,20 @@ export interface AnalisisIaResultado {
     costoUsd: number
     tiempoMs: number
     usandoFallbackLocal: boolean
+    error?: string
 }
 
 export interface ExtraccionPesajeResultado {
-    nivelSugerido: 'T' | 'B' | 'M'
-    nivelConfianza: number
-    bandejasEvaluadas: number
-    bandejasRechazadas: number
-    observacionesDetectadas: string
+    nivelSugerido: 'T' | 'B' | 'M' | null
+    nivelConfianza: number | null
+    bandejasEvaluadas: number | null
+    bandejasRechazadas: number | null
+    observacionesDetectadas: string | null
     tokensConsumidos: number
     costoUsd: number
+    tiempoMs?: number
     usandoFallbackLocal: boolean
+    error?: string
 }
 
 /**
@@ -84,6 +97,7 @@ export async function analizarFolioConIa(params: {
 
     const config = await getIaConfigActiva()
     const apiKey = config?.apiKeyEnc ? decryptApiKey(config.apiKeyEnc) : ''
+    const modeloActivo = config?.modelo || 'gemini-2.0-flash'
 
     // 1. Obtener datos del acta y sus aspectos calculados
     const acta = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
@@ -118,7 +132,7 @@ Analiza el siguiente caso de fiscalización:
 - Establecimiento / RBD: ${acta?.rbd || 'No especificado'}
 - Licitación / Contrato: ${acta?.licitacion || 'Estándar Hendaya'}
 - Aspectos Sancionados con Multa:
-${aspectosSancionados.map(d => `  * Aspecto ${d.letraAspecto}: ${d.descripcion || 'Sin descripción'} (Monto multa: ${d.montoMulta.toFixed(2)} UTM)`).join('\n')}
+${aspectosSancionados.map(d => `  * Aspecto ${d.letraAspecto}: ${d.descripcion || 'Sin descripción'} (Monto multa: $${Math.round(d.montoMulta).toLocaleString('es-CL')} CLP)`).join('\n')}
 
 Precedentes Jurídicos y Plantillas Institucionales Oficiales Hendaya disponibles:
 ${plantillas.map(p => `  * [Aspecto ${p.aspecto}] ${p.titulo}: "${p.argumentoTexto.slice(0, 150)}..." (Base: ${p.fundamentoLegal || 'IT JUNAEB'})`).join('\n')}
@@ -137,11 +151,15 @@ Genera una respuesta en formato JSON con la siguiente estructura:
   "probabilidadExito": "ALTA" | "MEDIA" | "BAJA"
 }`
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${config.modelo || 'gemini-1.5-flash'}:generateContent?key=${apiKey}`
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modeloActivo}:generateContent`
 
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-goog-api-key': apiKey
+                },
+                signal: AbortSignal.timeout(15000),
                 body: JSON.stringify({
                     contents: [{ parts: [{ text: prompt }] }],
                     generationConfig: {
@@ -151,14 +169,15 @@ Genera una respuesta en formato JSON con la siguiente estructura:
                 })
             })
 
+            const duration = Date.now() - startTime
+
             if (response.ok) {
                 const resJson = await response.json()
                 const candidateText = resJson?.candidates?.[0]?.content?.parts?.[0]?.text || ''
                 const usage = resJson?.usageMetadata || {}
                 const tokensPrompt = usage.promptTokenCount || 400
                 const tokensRespuesta = usage.candidatesTokenCount || 600
-                const costoEstimado = (tokensPrompt * 0.000000075) + (tokensRespuesta * 0.0000003) // Tarifas flash
-                const duration = Date.now() - startTime
+                const costoEstimado = (tokensPrompt * 0.000000075) + (tokensRespuesta * 0.0000003)
 
                 let parsed: any = {}
                 try {
@@ -173,13 +192,12 @@ Genera una respuesta en formato JSON con la siguiente estructura:
                     }
                 }
 
-                // Registrar log de consumo y actualizar gasto acumulado
                 await prisma.multas_Log_Consumo_IA.create({
                     data: {
                         folio: params.folio,
                         usuario: params.userName,
                         tipoOperacion: 'ANALISIS_DESCARGO',
-                        modeloUsado: config.modelo,
+                        modeloUsado: modeloActivo,
                         tokensPrompt,
                         tokensRespuesta,
                         costoEstimadoUsd: costoEstimado,
@@ -195,21 +213,53 @@ Genera una respuesta en formato JSON con la siguiente estructura:
                     }
                 })
 
+                const prob = ['ALTA', 'MEDIA', 'BAJA'].includes(parsed.probabilidadExito)
+                    ? parsed.probabilidadExito
+                    : (letrasAspectos.includes('G') && letrasAspectos.includes('J') ? 'ALTA' : 'MEDIA')
+
                 return {
-                    resumenEjecutivo: parsed.resumenEjecutivo || 'Análisis completado satisfactoriamente por IA.',
+                    resumenEjecutivo: parsed.resumenEjecutivo || 'Análisis completado por IA.',
                     viciosProcedimiento: Array.isArray(parsed.viciosProcedimiento) ? parsed.viciosProcedimiento : ['Insuficiencia probatoria en acta'],
                     descargoPropuesto: parsed.descargoPropuesto || candidateText,
                     fundamentoNormativo: parsed.fundamentoNormativo || 'Instrucción de Trabajo de Elementos Esenciales y Ley N° 19.880',
-                    probabilidadExito: (['ALTA', 'MEDIA', 'BAJA'].includes(parsed.probabilidadExito) ? parsed.probabilidadExito : 'ALTA') as any,
+                    probabilidadExito: prob,
                     aspectosAnalizados: letrasAspectos,
                     tokensConsumidos: tokensPrompt + tokensRespuesta,
                     costoUsd: costoEstimado,
                     tiempoMs: duration,
                     usandoFallbackLocal: false
                 }
+            } else {
+                console.error(`Error en respuesta Gemini API (${response.status})`)
+                await prisma.multas_Log_Consumo_IA.create({
+                    data: {
+                        folio: params.folio,
+                        usuario: params.userName,
+                        tipoOperacion: 'ANALISIS_DESCARGO',
+                        modeloUsado: modeloActivo,
+                        tokensPrompt: 0,
+                        tokensRespuesta: 0,
+                        costoEstimadoUsd: 0,
+                        tiempoRespuestaMs: duration,
+                        exitoso: false
+                    }
+                })
             }
         } catch (error) {
             console.error('Error al consultar Gemini API, activando fallback local:', error)
+            await prisma.multas_Log_Consumo_IA.create({
+                data: {
+                    folio: params.folio,
+                    usuario: params.userName,
+                    tipoOperacion: 'ANALISIS_DESCARGO',
+                    modeloUsado: modeloActivo,
+                    tokensPrompt: 0,
+                    tokensRespuesta: 0,
+                    costoEstimadoUsd: 0,
+                    tiempoRespuestaMs: Date.now() - startTime,
+                    exitoso: false
+                }
+            }).catch(() => {})
         }
     }
 
@@ -237,6 +287,8 @@ Genera una respuesta en formato JSON con la siguiente estructura:
         vicios.push('Falta de motivación suficiente y proporcionalidad en la cuantificación de la sanción administrativa impuesta.')
     }
 
+    const totalMontoClp = aspectosSancionados.reduce((acc, d) => acc + (d.montoMulta || 0), 0)
+
     const textoDescargo = `SEÑORA DIRECTORA REGIONAL DE JUNAEB
 PRESENTE
 
@@ -245,7 +297,7 @@ De nuestra consideración:
 Por medio de la presente, y encontrándonos dentro del plazo reglamentario contemplado en las Bases de Licitación, venimos en formular formal DESCARGO respecto de las imputaciones contenidas en el Acta de Supervisión Folio N° ${params.folio}, correspondiente al establecimiento educacional RBD ${acta?.rbd || 'respectivo'}.
 
 I. ANTECEDENTES Y ASPECTOS SANCIONADOS:
-En el acta de fiscalización referida, el funcionario supervisor consignó supuestos incumplimientos en los Aspectos ${letrasAspectos.join(', ')}, determinando multas estimadas por un total de ${actasMontoTotal(aspectosSancionados)} UTM.
+En el acta de fiscalización referida, el funcionario supervisor consignó supuestos incumplimientos en los Aspectos ${letrasAspectos.join(', ')}, determinando multas estimadas por un total de $${Math.round(totalMontoClp).toLocaleString('es-CL')} CLP.
 
 II. FUNDAMENTOS DE HECHO Y DE DERECHO:
 1. Conforme a las instrucciones técnicas oficiales de JUNAEB y las normas chilenas de muestreo estadístico, las observaciones consignadas adolecen de vicios de verificación en terreno que impiden dotarlas de certeza jurídica.
@@ -259,11 +311,11 @@ Atentamente,
 ÁREA DE GESTIÓN Y LITIGIOS PAE · HENDAYA`
 
     return {
-        resumenEjecutivo: `Acta Folio #${params.folio} analizada. Se detectaron ${vicios.length} vicios impugnables respecto de los aspectos sancionados (${letrasAspectos.join(', ')}).`,
+        resumenEjecutivo: `Acta Folio #${params.folio} analizada mediante motor jurídico local. Se detectaron ${vicios.length} vicios impugnables respecto de los aspectos sancionados (${letrasAspectos.join(', ')}).`,
         viciosProcedimiento: vicios,
         descargoPropuesto: textoDescargo,
         fundamentoNormativo: fundamentacion,
-        probabilidadExito: letrasAspectos.includes('G') && letrasAspectos.includes('J') ? 'ALTA' : 'MEDIA',
+        probabilidadExito: letrasAspectos.includes('G') && letrasAspectos.includes('J') ? 'ALTA' : (letrasAspectos.length > 0 ? 'MEDIA' : 'BAJA'),
         aspectosAnalizados: letrasAspectos,
         tokensConsumidos: 0,
         costoUsd: 0,
@@ -272,22 +324,20 @@ Atentamente,
     }
 }
 
-function actasMontoTotal(detalles: any[]): string {
-    const total = detalles.reduce((acc, d) => acc + (d.montoMulta || 0), 0)
-    return total.toFixed(2)
-}
-
 /**
  * Extraer datos de la planilla de pesaje mediante Visión Computacional
+ * No inventa datos fijos; devuelve error o null si la extracción no fue posible.
  */
 export async function extraerPesajeConVision(params: {
     imageBase64: string
     mimeType: string
     userName: string
 }): Promise<ExtraccionPesajeResultado> {
+    const startTime = Date.now()
     await ensureIaConfigTables()
     const config = await getIaConfigActiva()
     const apiKey = config?.apiKeyEnc ? decryptApiKey(config.apiKeyEnc) : ''
+    const modeloActivo = config?.modelo || 'gemini-2.0-flash'
 
     const dentroDeLimite = config
         ? (config.gastoAcumuladoMesUsd < config.limiteGastoMensualUsd)
@@ -296,20 +346,24 @@ export async function extraerPesajeConVision(params: {
     if (apiKey && dentroDeLimite && config?.proveedor === 'GOOGLE_GEMINI') {
         try {
             const prompt = `Analiza la imagen de la planilla o formulario de pesaje de control de gramaje de JUNAEB (Aspecto G).
-Extrae los siguientes datos con máxima precisión y responde estrictamente en JSON:
+Extrae los siguientes datos con máxima precisión y responde estrictamente en JSON (usa null en los campos que no se puedan leer con certeza):
 {
-  "nivelSugerido": "T" (Transición/Parvularia) | "B" (Básica) | "M" (Media),
-  "nivelConfianza": 0 a 100,
-  "bandejasEvaluadas": número entero de bandejas o platos pesados por el supervisor,
-  "bandejasRechazadas": número entero de bandejas que no cumplieron el peso mínimo Re,
-  "observacionesDetectadas": "resumen de lo escrito a mano por el supervisor respecto al gramaje"
+  "nivelSugerido": "T" (Transición) | "B" (Básica) | "M" (Media) | null,
+  "nivelConfianza": número entero de 0 a 100 o null,
+  "bandejasEvaluadas": número entero de bandejas pesadas o null,
+  "bandejasRechazadas": número entero de bandejas que no cumplieron el peso mínimo o null,
+  "observacionesDetectadas": "resumen textual de las observaciones escritas por el supervisor" | null
 }`
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${config.modelo || 'gemini-1.5-flash'}:generateContent?key=${apiKey}`
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modeloActivo}:generateContent`
 
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-goog-api-key': apiKey
+                },
+                signal: AbortSignal.timeout(15000),
                 body: JSON.stringify({
                     contents: [{
                         parts: [
@@ -329,6 +383,8 @@ Extrae los siguientes datos con máxima precisión y responde estrictamente en J
                 })
             })
 
+            const duration = Date.now() - startTime
+
             if (response.ok) {
                 const resJson = await response.json()
                 const candidateText = resJson?.candidates?.[0]?.content?.parts?.[0]?.text || ''
@@ -337,17 +393,22 @@ Extrae los siguientes datos con máxima precisión y responde estrictamente en J
                 const tokensRespuesta = usage.candidatesTokenCount || 100
                 const costoEstimado = (tokensPrompt * 0.000000075) + (tokensRespuesta * 0.0000003)
 
-                const parsed = JSON.parse(candidateText)
+                let parsed: any = {}
+                try {
+                    parsed = JSON.parse(candidateText)
+                } catch {
+                    parsed = {}
+                }
 
                 await prisma.multas_Log_Consumo_IA.create({
                     data: {
                         usuario: params.userName,
                         tipoOperacion: 'EXTRACCION_PESAJE_VISION',
-                        modeloUsado: config.modelo,
+                        modeloUsado: modeloActivo,
                         tokensPrompt,
                         tokensRespuesta,
                         costoEstimadoUsd: costoEstimado,
-                        tiempoRespuestaMs: 1200,
+                        tiempoRespuestaMs: duration,
                         exitoso: true
                     }
                 })
@@ -358,30 +419,58 @@ Extrae los siguientes datos con máxima precisión y responde estrictamente en J
                 })
 
                 return {
-                    nivelSugerido: (['T', 'B', 'M'].includes(parsed.nivelSugerido) ? parsed.nivelSugerido : 'B') as any,
-                    nivelConfianza: Number(parsed.nivelConfianza) || 85,
-                    bandejasEvaluadas: Number(parsed.bandejasEvaluadas) || 5,
-                    bandejasRechazadas: Number(parsed.bandejasRechazadas) || 0,
-                    observacionesDetectadas: String(parsed.observacionesDetectadas || 'Pesaje detectado en imagen.'),
+                    nivelSugerido: ['T', 'B', 'M'].includes(parsed.nivelSugerido) ? parsed.nivelSugerido : null,
+                    nivelConfianza: typeof parsed.nivelConfianza === 'number' ? parsed.nivelConfianza : null,
+                    bandejasEvaluadas: typeof parsed.bandejasEvaluadas === 'number' ? parsed.bandejasEvaluadas : null,
+                    bandejasRechazadas: typeof parsed.bandejasRechazadas === 'number' ? parsed.bandejasRechazadas : null,
+                    observacionesDetectadas: parsed.observacionesDetectadas ? String(parsed.observacionesDetectadas).trim() : null,
                     tokensConsumidos: tokensPrompt + tokensRespuesta,
                     costoUsd: costoEstimado,
+                    tiempoMs: duration,
                     usandoFallbackLocal: false
                 }
+            } else {
+                await prisma.multas_Log_Consumo_IA.create({
+                    data: {
+                        usuario: params.userName,
+                        tipoOperacion: 'EXTRACCION_PESAJE_VISION',
+                        modeloUsado: modeloActivo,
+                        tokensPrompt: 0,
+                        tokensRespuesta: 0,
+                        costoEstimadoUsd: 0,
+                        tiempoRespuestaMs: duration,
+                        exitoso: false
+                    }
+                })
             }
         } catch (error) {
-            console.error('Error al extraer pesaje con visión IA, activando fallback:', error)
+            console.error('Error al extraer pesaje con visión IA:', error)
+            await prisma.multas_Log_Consumo_IA.create({
+                data: {
+                    usuario: params.userName,
+                    tipoOperacion: 'EXTRACCION_PESAJE_VISION',
+                    modeloUsado: modeloActivo,
+                    tokensPrompt: 0,
+                    tokensRespuesta: 0,
+                    costoEstimadoUsd: 0,
+                    tiempoRespuestaMs: Date.now() - startTime,
+                    exitoso: false
+                }
+            }).catch(() => {})
         }
     }
 
-    // Fallback: valores sugeridos predeterminados
+    // Si la llamada falla o no hay API Key configurada, devolver nulls y error explícito (sin inventar datos)
     return {
-        nivelSugerido: 'B',
-        nivelConfianza: 75,
-        bandejasEvaluadas: 5,
-        bandejasRechazadas: 1,
-        observacionesDetectadas: 'Extracción por OCR asistido: nivel Básica sugerido con 5 bandejas controladas.',
+        nivelSugerido: null,
+        nivelConfianza: null,
+        bandejasEvaluadas: null,
+        bandejasRechazadas: null,
+        observacionesDetectadas: null,
         tokensConsumidos: 0,
         costoUsd: 0,
-        usandoFallbackLocal: true
+        tiempoMs: Date.now() - startTime,
+        usandoFallbackLocal: false,
+        error: 'No se pudo extraer información del pesaje: servicio de IA no disponible o sin credenciales válidas.'
     }
 }

@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
+import { checkMultasPermission } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { getMetricasTableroConsolidadoAction } from './actions'
 import { prisma } from '@/lib/prisma'
@@ -16,18 +17,18 @@ export default async function TableroConsolidadoPage() {
         redirect('/login')
     }
 
-    const roleName = session.user.role?.name?.toLowerCase().trim() || ''
-    const permissions = session.user.role?.permissions || []
-    const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin'
+    const { authorized } = await checkMultasPermission([
+        'view_tablero_multas_consolidado',
+        'view_tablero_multas_ee',
+        'view_multas_areas'
+    ], session)
 
-    const hasAccess = isAdmin ||
-        permissions.includes('view_tablero_multas_consolidado') ||
-        permissions.includes('view_tablero_multas_ee') ||
-        permissions.includes('view_multas_areas')
-
-    if (!hasAccess) {
+    if (!authorized) {
         redirect('/dashboard')
     }
+
+    const canExportRes = await checkMultasPermission('export_multas_consolidado', session)
+    const canExport = canExportRes.authorized
 
     // Registrar en auditoría
     await logAuditAction({
@@ -76,6 +77,7 @@ export default async function TableroConsolidadoPage() {
                 initialMetricas={metricasRes.data}
                 licitacionesDisponibles={licitaciones}
                 userName={session.user.name || session.user.username || 'Usuario'}
+                canExport={canExport}
             />
         </div>
     )

@@ -1,8 +1,9 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { ensureIaConfigTables } from '@/lib/multas/ia-config-db-init'
+import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import {
     encryptApiKey,
     decryptApiKey,
@@ -24,7 +25,7 @@ export interface ConfigIaDTO {
     activo: boolean
     hasApiKey: boolean
     apiKeyMasked: string
-    actualizadoPor: string
+    actualizadoPor: string | null
     updatedAt: string
 }
 
@@ -51,12 +52,11 @@ export async function getConfigIaAction(): Promise<{
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
         await ensureIaConfigTables()
+        const { authorized, user } = await checkMultasPermission('view_ia_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para consultar la configuración de IA' }
+        }
 
         const config = await prisma.multas_Config_IA.findFirst({
             where: { activo: true },
@@ -67,11 +67,17 @@ export async function getConfigIaAction(): Promise<{
             return { success: false, error: 'Configuración no encontrada' }
         }
 
+        // Solo usuarios con manage_config_ia_multas pueden ver los últimos 4 dígitos
+        const managePerm = await checkMultasPermission('manage_config_ia_multas')
         const rawKey = config.apiKeyEnc ? decryptApiKey(config.apiKeyEnc) : ''
         const hasKey = rawKey.length > 0
-        const masked = hasKey
-            ? `••••••••••••${rawKey.slice(-4)}`
-            : 'No configurada (Modo Local Activo)'
+
+        let masked = 'No configurada (Modo Local Activo)'
+        if (hasKey) {
+            masked = managePerm.authorized
+                ? `••••••••••••${rawKey.slice(-4)}`
+                : '••••••••••••••••'
+        }
 
         return {
             success: true,
@@ -106,59 +112,53 @@ export async function guardarConfigIaAction(data: {
     temperatura: number
 }): Promise<{ success: boolean; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_config_ia_multas')
-        if (!canManage) {
-            return { success: false, error: 'No tienes permisos para modificar la configuración de IA' }
-        }
-
         await ensureIaConfigTables()
+        const { authorized, user } = await checkMultasPermission('manage_config_ia_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para configurar parámetros o credenciales de IA' }
+        }
 
-        const config = await prisma.multas_Config_IA.findFirst({
+        const actual = await prisma.multas_Config_IA.findFirst({
             where: { activo: true },
             orderBy: { updatedAt: 'desc' }
         })
 
-        const updateData: any = {
-            proveedor: data.proveedor,
-            modelo: data.modelo,
-            limiteGastoMensualUsd: Number(data.limiteGastoMensualUsd || 50),
-            temperatura: Number(data.temperatura || 0.2),
-            actualizadoPor: session.user.name || session.user.username || 'Admin'
-        }
+        const userName = user.name || user.username || user.email || 'Administrador'
+        let apiKeyEnc = actual?.apiKeyEnc
 
         if (data.apiKeyNueva && data.apiKeyNueva.trim() !== '') {
-            updateData.apiKeyEnc = encryptApiKey(data.apiKeyNueva.trim())
+            apiKeyEnc = encryptApiKey(data.apiKeyNueva.trim())
         }
 
-        if (config) {
+        if (actual) {
             await prisma.multas_Config_IA.update({
-                where: { id: config.id },
-                data: updateData
+                where: { id: actual.id },
+                data: {
+                    proveedor: data.proveedor,
+                    modelo: data.modelo,
+                    limiteGastoMensualUsd: Number(data.limiteGastoMensualUsd) || 20.0,
+                    temperatura: Number(data.temperatura) || 0.2,
+                    apiKeyEnc,
+                    actualizadoPor: userName
+                }
             })
         } else {
             await prisma.multas_Config_IA.create({
-                data: updateData
+                data: {
+                    proveedor: data.proveedor,
+                    modelo: data.modelo,
+                    limiteGastoMensualUsd: Number(data.limiteGastoMensualUsd) || 20.0,
+                    temperatura: Number(data.temperatura) || 0.2,
+                    apiKeyEnc: apiKeyEnc || null,
+                    actualizadoPor: userName,
+                    activo: true
+                }
             })
         }
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'CONFIGURAR_IA_MULTAS',
             modulo: 'Multas · Inteligencia Artificial',
             detalle: `Se actualizó la configuración de IA. Proveedor: ${data.proveedor}, Modelo: ${data.modelo}, Límite: $${data.limiteGastoMensualUsd} USD`
@@ -174,7 +174,7 @@ export async function guardarConfigIaAction(data: {
 }
 
 /**
- * Obtener historial de consumos de IA
+ * Obtener historial de consumos de IA (Requiere manage_config_ia_multas)
  */
 export async function getLogsConsumoIaAction(): Promise<{
     success: boolean
@@ -184,6 +184,10 @@ export async function getLogsConsumoIaAction(): Promise<{
 }> {
     try {
         await ensureIaConfigTables()
+        const { authorized } = await checkMultasPermission('manage_config_ia_multas')
+        if (!authorized) {
+            return { success: false, data: [], totalGastoMesUsd: 0, error: 'No tienes permisos para ver los logs de consumo de IA' }
+        }
 
         const logs = await prisma.multas_Log_Consumo_IA.findMany({
             orderBy: { createdAt: 'desc' },
@@ -221,17 +225,30 @@ export async function analizarFolioIaAction(folio: string): Promise<{
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
+        await ensureIaConfigTables()
+        const { authorized, user } = await checkMultasPermission('view_ia_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para ejecutar el análisis de multas con IA' }
         }
 
-        const userName = session.user.name || session.user.username || 'Usuario'
+        // Validar alcance de RBD
+        const allowedRbds = await getUserEffectiveRbds()
+        if (allowedRbds !== null) {
+            const acta = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+                where: { folioOriginal: folio },
+                select: { rbd: true }
+            })
+            if (acta && !allowedRbds.includes(acta.rbd)) {
+                return { success: false, error: 'No tienes autorización para consultar el acta de este establecimiento' }
+            }
+        }
+
+        const userName = user.name || user.username || 'Usuario'
         const res = await analizarFolioConIa({ folio, userName })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'ANALISIS_IA_FOLIO',
             modulo: 'Multas · Inteligencia Artificial',
             detalle: `Se generó análisis de defensa asistido por IA para el folio #${folio}. Éxito: ${res.probabilidadExito}`
@@ -253,9 +270,10 @@ export async function extraerPesajeIaAction(formData: FormData): Promise<{
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
+        await ensureIaConfigTables()
+        const { authorized, user } = await checkMultasPermission('view_ia_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para ejecutar extracción de pesaje con IA' }
         }
 
         const file = formData.get('file') as File | null
@@ -263,10 +281,21 @@ export async function extraerPesajeIaAction(formData: FormData): Promise<{
             return { success: false, error: 'No se subió ningún archivo' }
         }
 
+        // Validación de tamaño máximo (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            return { success: false, error: 'El archivo excede el tamaño máximo permitido de 5 MB' }
+        }
+
+        // Validación de tipo de archivo permitido
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg']
+        const mimeType = file.type || 'image/jpeg'
+        if (!allowedTypes.includes(mimeType)) {
+            return { success: false, error: 'Formato de imagen no soportado. Se admiten archivos JPG, PNG y WebP' }
+        }
+
         const buffer = await file.arrayBuffer()
         const base64 = Buffer.from(buffer).toString('base64')
-        const mimeType = file.type || 'image/jpeg'
-        const userName = session.user.name || session.user.username || 'Usuario'
+        const userName = user.name || user.username || 'Usuario'
 
         const res = await extraerPesajeConVision({
             imageBase64: base64,
@@ -275,11 +304,11 @@ export async function extraerPesajeIaAction(formData: FormData): Promise<{
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'EXTRACCION_PESAJE_VISION_IA',
             modulo: 'Multas · Inteligencia Artificial',
-            detalle: `Extracción de planilla de pesaje con IA: Nivel ${res.nivelSugerido}, ${res.bandejasEvaluadas} bandejas evaluadas.`
+            detalle: `Extracción de planilla de pesaje con IA: Nivel ${res.nivelSugerido || 'No detectado'}, ${res.bandejasEvaluadas || 0} bandejas evaluadas.`
         })
 
         return { success: true, data: res }

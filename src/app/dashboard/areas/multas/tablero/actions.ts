@@ -2,12 +2,14 @@
 
 import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
+import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import * as XLSX from 'xlsx'
 
 export interface MetricasConsolidadasDTO {
     // 1. Resumen Financiero y de Litigios
     montoTotalNotificadoUtm: number
+    montoTotalCalculadoPesos: number
     montoTotalImpugnadoUtm: number
     montoTotalRebajadoUtm: number
     montoTotalRatificadoUtm: number
@@ -24,6 +26,7 @@ export interface MetricasConsolidadasDTO {
     distribucionAspectos: {
         aspecto: string
         totalUtm: number
+        totalPesos: number
         cantidadFolios: number
     }[]
 
@@ -34,6 +37,7 @@ export interface MetricasConsolidadasDTO {
         planesCerrados: number
         porcentajeCumplimiento: number
         montoNotificadoUtm: number
+        montoCalculadoPesos: number
     }[]
 
     // 5. Conciliación con JUNAEB (REX)
@@ -60,6 +64,7 @@ export interface FilaReporteMaestroDTO {
     licitacion: string
     aspecto: string
     descripcionAspecto: string
+    montoCalculadoPesos: number
     montoNotificadoUtm: number
     montoImpugnadoUtm: number
     montoRebajadoUtm: number
@@ -83,43 +88,71 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
+        const { authorized, user } = await checkMultasPermission('view_tablero_multas_consolidado')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para visualizar el tablero consolidado de multas' }
         }
 
-        // 1. Actas y cálculos de multas
+        // Obtener asignación de RBDs si está restringido
+        const allowedRbds = await getUserEffectiveRbds()
+
+        // 1. Obtener colegios para mapear RBD -> Sucursal
+        const colegios = await prisma.colegios.findMany({
+            select: { colRBD: true, sucursal: true }
+        }).catch(() => [])
+
+        const rbdSucursalMap = new Map<number, string>()
+        for (const col of colegios) {
+            if (col.sucursal) {
+                rbdSucursalMap.set(col.colRBD, col.sucursal)
+            }
+        }
+
+        // 2. Actas y cálculos de multas
         const cabs = await prisma.multas_Elementos_Esenciales_Cab.findMany({
             include: {
                 detalles: true
             }
         })
 
-        // Filtro en memoria por año si se especifica
+        // Filtro integral por año, licitación, sucursal y RBD permitido
         const cabsFiltradas = cabs.filter(c => {
+            if (allowedRbds !== null && !allowedRbds.includes(c.rbd)) {
+                return false
+            }
             if (filtros?.anio && c.fechaSupervision) {
                 if (new Date(c.fechaSupervision).getFullYear() !== Number(filtros.anio)) return false
             }
             if (filtros?.licitacion && filtros.licitacion !== 'TODAS') {
                 if (c.licitacion !== filtros.licitacion) return false
             }
+            if (filtros?.sucursal && filtros.sucursal !== 'TODAS') {
+                const suc = rbdSucursalMap.get(c.rbd) || 'Central / Matriz'
+                if (suc !== filtros.sucursal) return false
+            }
             return true
         })
 
-        let montoTotalNotificado = 0
+        let montoTotalCalculadoPesos = 0
         const foliosValidos = new Set<string>()
-        const aspectoTotals: Record<string, { totalUtm: number; folios: Set<string> }> = {}
+        const foliosFiltradosList = cabsFiltradas.map(c => c.folioOriginal)
+        const aspectoTotals: Record<string, { totalPesos: number; folios: Set<string> }> = {}
+        const sucursalesMontoMap: Record<string, number> = {}
 
         for (const cab of cabsFiltradas) {
             foliosValidos.add(cab.folioOriginal)
+            const suc = rbdSucursalMap.get(cab.rbd) || 'Central / Matriz'
+
             for (const d of cab.detalles) {
                 if (d.montoMulta > 0) {
-                    montoTotalNotificado += d.montoMulta
+                    montoTotalCalculadoPesos += d.montoMulta
+                    sucursalesMontoMap[suc] = (sucursalesMontoMap[suc] || 0) + d.montoMulta
+
                     const asp = d.letraAspecto.toUpperCase()
                     if (!aspectoTotals[asp]) {
-                        aspectoTotals[asp] = { totalUtm: 0, folios: new Set() }
+                        aspectoTotals[asp] = { totalPesos: 0, folios: new Set() }
                     }
-                    aspectoTotals[asp].totalUtm += d.montoMulta
+                    aspectoTotals[asp].totalPesos += d.montoMulta
                     aspectoTotals[asp].folios.add(cab.folioOriginal)
                 }
             }
@@ -128,13 +161,23 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
         const distribucionAspectos = Object.entries(aspectoTotals)
             .map(([aspecto, val]) => ({
                 aspecto,
-                totalUtm: Number(val.totalUtm.toFixed(2)),
+                totalUtm: Number((val.totalPesos / 65000).toFixed(2)),
+                totalPesos: Math.round(val.totalPesos),
                 cantidadFolios: val.folios.size
             }))
-            .sort((a, b) => b.totalUtm - a.totalUtm)
+            .sort((a, b) => b.totalPesos - a.totalPesos)
 
-        // 2. Descargos y Resuelves (C7)
+        // 3. Descargos y Resuelves (C7)
         const descargos = await prisma.multas_Descargo_Formal.findMany({
+            where: {
+                ...(foliosFiltradosList.length > 0 ? {
+                    folios: {
+                        some: {
+                            folio: { in: foliosFiltradosList }
+                        }
+                    }
+                } : {})
+            },
             include: {
                 resuelves: true,
                 folios: true
@@ -158,8 +201,14 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
             ? Math.round((montoTotalRebajado / montoTotalImpugnado) * 100)
             : 0
 
-        // 3. Planes de Acción Operativos (C9)
-        const planes = await prisma.multas_Plan_Accion.findMany().catch(() => [])
+        // 4. Planes de Acción Operativos (C9)
+        const planes = await prisma.multas_Plan_Accion.findMany({
+            where: {
+                ...(filtros?.sucursal && filtros.sucursal !== 'TODAS' ? { sucursal: filtros.sucursal } : {}),
+                ...(allowedRbds !== null ? { rbd: { in: allowedRbds } } : {})
+            }
+        }).catch(() => [])
+
         const totalPlanes = planes.length
         const planesCerrados = planes.filter(p => p.estado === 'CERRADO' || p.estado === 'VALIDADO').length
         const planesAccionCerradosPct = totalPlanes > 0
@@ -167,11 +216,11 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
             : 0
 
         // Agrupación de planes por sucursal
-        const sucursalesMap: Record<string, { total: number; cerrados: number; monto: number }> = {}
+        const sucursalesMap: Record<string, { total: number; cerrados: number }> = {}
         for (const p of planes) {
             const suc = p.sucursal || 'Central / Matriz'
             if (!sucursalesMap[suc]) {
-                sucursalesMap[suc] = { total: 0, cerrados: 0, monto: 0 }
+                sucursalesMap[suc] = { total: 0, cerrados: 0 }
             }
             sucursalesMap[suc].total++
             if (p.estado === 'CERRADO' || p.estado === 'VALIDADO') {
@@ -179,29 +228,41 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
             }
         }
 
-        const avancePorSucursal = Object.entries(sucursalesMap).map(([sucursal, data]) => ({
-            sucursal,
-            totalPlanes: data.total,
-            planesCerrados: data.cerrados,
-            porcentajeCumplimiento: data.total > 0 ? Math.round((data.cerrados / data.total) * 100) : 0,
-            montoNotificadoUtm: 0
-        })).sort((a, b) => b.totalPlanes - a.totalPlanes)
+        // Unir con sucursales que tengan montos calculados
+        for (const suc of Object.keys(sucursalesMontoMap)) {
+            if (!sucursalesMap[suc]) {
+                sucursalesMap[suc] = { total: 0, cerrados: 0 }
+            }
+        }
 
-        // 4. Conciliación REX (C6)
+        const avancePorSucursal = Object.entries(sucursalesMap).map(([sucursal, data]) => {
+            const montoPesos = sucursalesMontoMap[sucursal] || 0
+            return {
+                sucursal,
+                totalPlanes: data.total,
+                planesCerrados: data.cerrados,
+                porcentajeCumplimiento: data.total > 0 ? Math.round((data.cerrados / data.total) * 100) : 0,
+                montoNotificadoUtm: Number((montoPesos / 65000).toFixed(2)),
+                montoCalculadoPesos: Math.round(montoPesos)
+            }
+        }).sort((a, b) => b.montoCalculadoPesos - a.montoCalculadoPesos)
+
+        // 5. Conciliación REX (C6)
         const notifItems = await prisma.multas_Notificacion_Item.findMany().catch(() => [])
         const totalItemsRex = notifItems.length
         const coincideRex = notifItems.filter(i => i.estadoConciliacion === 'COINCIDE').length
         const diferenciasRex = notifItems.filter(i => i.estadoConciliacion === 'DIFERENCIA_MONTO').length
         const soloJunaebRex = notifItems.filter(i => i.estadoConciliacion === 'SOLO_JUNAEB').length
 
-        // 5. Métricas de IA (C10)
+        // 6. Métricas de IA (C10)
         const logsIa = await prisma.multas_Log_Consumo_IA.findMany().catch(() => [])
         const costoTotalIaUsd = logsIa.reduce((acc, curr) => acc + (curr.costoEstimadoUsd || 0), 0)
 
         return {
             success: true,
             data: {
-                montoTotalNotificadoUtm: Number(montoTotalNotificado.toFixed(2)),
+                montoTotalNotificadoUtm: Number((montoTotalCalculadoPesos / 65000).toFixed(2)),
+                montoTotalCalculadoPesos: Math.round(montoTotalCalculadoPesos),
                 montoTotalImpugnadoUtm: Number(montoTotalImpugnado.toFixed(2)),
                 montoTotalRebajadoUtm: Number(montoTotalRebajado.toFixed(2)),
                 montoTotalRatificadoUtm: Number(montoTotalRatificado.toFixed(2)),
@@ -222,7 +283,7 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
                 iaMetricas: {
                     totalConsultas: logsIa.length,
                     costoTotalUsd: Number(costoTotalIaUsd.toFixed(4)),
-                    ahorroEstimadoUtm: Number((montoTotalRebajado * 0.4).toFixed(1))
+                    ahorroEstimadoUtm: Number(montoTotalRebajado.toFixed(2)) // Ahorro real de rebajas logradas
                 }
             }
         }
@@ -241,33 +302,41 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
+        const { authorized, user } = await checkMultasPermission('export_multas_consolidado')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para exportar el reporte consolidado de multas' }
         }
+
+        const allowedRbds = await getUserEffectiveRbds()
 
         // 1. Obtener todas las actas calculadas con detalles
         const actas = await prisma.multas_Elementos_Esenciales_Cab.findMany({
+            where: {
+                ...(allowedRbds !== null ? { rbd: { in: allowedRbds } } : {})
+            },
             include: {
                 detalles: true
             },
             orderBy: { fechaSupervision: 'desc' }
         })
 
-        // 2. Obtener mapas auxiliares de Descargos, Planes y Colegios
+        // 2. Obtener mapas auxiliares de Descargos por folio y aspecto
         const foliosDescargo = await prisma.multas_Descargo_Folio.findMany({
             include: {
                 descargo: {
                     include: {
-                        resuelves: true
+                        resuelves: true,
+                        notificacion: true
                     }
                 }
             }
         }).catch(() => [])
 
-        const descargoPorFolio = new Map<string, any>()
+        // Mapear por clave única: `${folio}_${aspecto}` para no duplicar montos
+        const descargoPorFolioAspecto = new Map<string, any>()
         for (const fd of foliosDescargo) {
-            descargoPorFolio.set(fd.folio, fd)
+            const key = `${fd.folio}_${fd.aspecto.toUpperCase()}`
+            descargoPorFolioAspecto.set(key, fd)
         }
 
         const planes = await prisma.multas_Plan_Accion.findMany({
@@ -293,13 +362,15 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
         for (const acta of actas) {
             const colInfo = acta.rbd ? colegioMap.get(acta.rbd) : null
             const sucursalNombre = colInfo?.sucursal || 'Central'
-            const descargoFolio = descargoPorFolio.get(acta.folioOriginal)
             const planActa = planPorFolio.get(acta.folioOriginal)
 
             for (const d of acta.detalles) {
                 if (d.montoMulta <= 0) continue
 
-                const itemPlan = planActa?.items?.find((it: any) => it.aspecto === d.letraAspecto)
+                const aspClean = d.letraAspecto.toUpperCase()
+                const key = `${acta.folioOriginal}_${aspClean}`
+                const descargoFolio = descargoPorFolioAspecto.get(key)
+                const itemPlan = planActa?.items?.find((it: any) => it.aspecto.toUpperCase() === aspClean)
 
                 filas.push({
                     folio: acta.folioOriginal,
@@ -309,11 +380,12 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
                     licitacion: acta.licitacion || 'General',
                     aspecto: `Aspecto ${d.letraAspecto}`,
                     descripcionAspecto: d.descripcion || 'Incumplimiento normativo',
-                    montoNotificadoUtm: Number(d.montoMulta.toFixed(2)),
+                    montoCalculadoPesos: Math.round(d.montoMulta),
+                    montoNotificadoUtm: Number((d.montoMulta / 65000).toFixed(2)),
                     montoImpugnadoUtm: descargoFolio ? Number(descargoFolio.montoImpugnadoUtm.toFixed(2)) : 0,
                     montoRebajadoUtm: descargoFolio ? Number(descargoFolio.montoRebajadoUtm.toFixed(2)) : 0,
                     estadoDescargo: descargoFolio?.descargo?.estado || 'NO_IMPUGNADO',
-                    resolucionJunaeb: descargoFolio?.descargo?.numeroResolucion || 'Pendiente',
+                    resolucionJunaeb: descargoFolio?.descargo?.notificacion?.numeroResolucion || 'Pendiente',
                     dictamenResuelve: descargoFolio?.descargo?.resuelves?.[0]?.dictamen || 'EN_TRAMITE',
                     estadoPlanAccion: planActa?.estado || 'SIN_PLAN',
                     medidaCorrectiva: itemPlan?.accionTomada || 'Sin acción registrada'
@@ -322,8 +394,8 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
         }
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'EXPORTAR_REPORTE_MAESTRO_MULTAS',
             modulo: 'Multas · Tablero Consolidado',
             detalle: `Se generó el Reporte Maestro Consolidado de Multas (${filas.length} registros analizados).`

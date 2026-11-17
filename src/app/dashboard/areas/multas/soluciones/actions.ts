@@ -3,23 +3,9 @@
 import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { ensureSolucionesPlanTables } from '@/lib/multas/soluciones-plan-db-init'
+import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
-
-export interface PlanAccionItemDTO {
-    id: string
-    planId: string
-    aspecto: string
-    hallazgoDetectado: string
-    accionTomada: string | null
-    evidenciaUrl: string | null
-    evidenciaNombre: string | null
-    estadoItem: 'PENDIENTE' | 'CORREGIDO' | 'RECHAZADO' | 'VERIFICADO'
-    fechaEjecucion: string | null
-    ejecutadoPor: string | null
-    createdAt: string
-    updatedAt: string
-}
 
 export interface PlanAccionDTO {
     id: string
@@ -38,7 +24,22 @@ export interface PlanAccionDTO {
     totalItems: number
     itemsResueltos: number
     porcentajeAvance: number
-    items?: PlanAccionItemDTO[]
+    createdAt: string
+    updatedAt: string
+    items: PlanAccionItemDTO[]
+}
+
+export interface PlanAccionItemDTO {
+    id: string
+    planId: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada: string | null
+    evidenciaUrl: string | null
+    evidenciaNombre: string | null
+    estadoItem: 'PENDIENTE' | 'CORREGIDO' | 'RECHAZADO' | 'VERIFICADO'
+    fechaEjecucion: string | null
+    ejecutadoPor: string | null
     createdAt: string
     updatedAt: string
 }
@@ -49,7 +50,7 @@ export interface DiccionarioSolucionDTO {
     tipoNC: string
     accionCorrectivaTipo: string
     plazoDiasEstandar: number
-    evidenciaRequerida: string
+    evidenciaRequerida: string | null
     activo: boolean
 }
 
@@ -60,6 +61,12 @@ export interface ResumenPlanesDTO {
     evidenciaSubida: number
     cerrados: number
     efectividadGlobal: number
+}
+
+// Helper para formatear fechas en zona horaria local de Chile (America/Santiago)
+function formatDateChile(d: Date | null): string | null {
+    if (!d) return null
+    return d.toLocaleDateString('en-CA', { timeZone: 'America/Santiago' })
 }
 
 /**
@@ -77,19 +84,24 @@ export async function getPlanesAccionListAction(filtros?: {
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
+        await ensureSolucionesPlanTables()
+        const { authorized, user } = await checkMultasPermission('view_soluciones_multas')
+        if (!authorized) {
             return {
                 success: false,
                 data: [],
                 resumen: { totalPlanes: 0, pendientes: 0, enProceso: 0, evidenciaSubida: 0, cerrados: 0, efectividadGlobal: 0 },
-                error: 'Sesión no iniciada'
+                error: 'No tienes permisos para consultar los planes de acción'
             }
         }
 
-        await ensureSolucionesPlanTables()
-
         const where: any = {}
+
+        // Restricción por RBD del usuario (supervisores o delegados)
+        const allowedRbds = await getUserEffectiveRbds()
+        if (allowedRbds !== null) {
+            where.rbd = { in: allowedRbds }
+        }
 
         if (filtros?.estado && filtros.estado !== 'TODOS') {
             where.estado = filtros.estado
@@ -139,10 +151,10 @@ export async function getPlanesAccionListAction(filtros?: {
                 sucursal: p.sucursal,
                 estado: p.estado as any,
                 prioridad: p.prioridad as any,
-                fechaCompromiso: p.fechaCompromiso ? p.fechaCompromiso.toISOString().split('T')[0] : null,
+                fechaCompromiso: formatDateChile(p.fechaCompromiso),
                 responsableAsignado: p.responsableAsignado,
                 cerradoPor: p.cerradoPor,
-                fechaCierre: p.fechaCierre ? p.fechaCierre.toISOString().split('T')[0] : null,
+                fechaCierre: formatDateChile(p.fechaCierre),
                 observacionesCierre: p.observacionesCierre,
                 totalItems: p.items.length,
                 itemsResueltos: resueltos,
@@ -158,7 +170,7 @@ export async function getPlanesAccionListAction(filtros?: {
                     evidenciaUrl: it.evidenciaUrl,
                     evidenciaNombre: it.evidenciaNombre,
                     estadoItem: it.estadoItem as any,
-                    fechaEjecucion: it.fechaEjecucion ? it.fechaEjecucion.toISOString().split('T')[0] : null,
+                    fechaEjecucion: formatDateChile(it.fechaEjecucion),
                     ejecutadoPor: it.ejecutadoPor,
                     createdAt: it.createdAt.toISOString(),
                     updatedAt: it.updatedAt.toISOString()
@@ -205,6 +217,10 @@ export async function getPlanAccionDetalleAction(id: string): Promise<{
 }> {
     try {
         await ensureSolucionesPlanTables()
+        const { authorized } = await checkMultasPermission('view_soluciones_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para consultar el detalle del plan de acción' }
+        }
 
         const p = await prisma.multas_Plan_Accion.findUnique({
             where: { id },
@@ -231,10 +247,10 @@ export async function getPlanAccionDetalleAction(id: string): Promise<{
             sucursal: p.sucursal,
             estado: p.estado as any,
             prioridad: p.prioridad as any,
-            fechaCompromiso: p.fechaCompromiso ? p.fechaCompromiso.toISOString().split('T')[0] : null,
+            fechaCompromiso: formatDateChile(p.fechaCompromiso),
             responsableAsignado: p.responsableAsignado,
             cerradoPor: p.cerradoPor,
-            fechaCierre: p.fechaCierre ? p.fechaCierre.toISOString().split('T')[0] : null,
+            fechaCierre: formatDateChile(p.fechaCierre),
             observacionesCierre: p.observacionesCierre,
             totalItems: p.items.length,
             itemsResueltos: resueltos,
@@ -250,7 +266,7 @@ export async function getPlanAccionDetalleAction(id: string): Promise<{
                 evidenciaUrl: it.evidenciaUrl,
                 evidenciaNombre: it.evidenciaNombre,
                 estadoItem: it.estadoItem as any,
-                fechaEjecucion: it.fechaEjecucion ? it.fechaEjecucion.toISOString().split('T')[0] : null,
+                fechaEjecucion: formatDateChile(it.fechaEjecucion),
                 ejecutadoPor: it.ejecutadoPor,
                 createdAt: it.createdAt.toISOString(),
                 updatedAt: it.updatedAt.toISOString()
@@ -274,12 +290,11 @@ export async function generarPlanesAccionMasivosAction(): Promise<{
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
         await ensureSolucionesPlanTables()
+        const { authorized, user } = await checkMultasPermission('manage_soluciones_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para generar planes de acción' }
+        }
 
         // Buscar actas calculadas con aspectos sancionados (monto > 0)
         const actasConMulta = await prisma.multas_Elementos_Esenciales_Cab.findMany({
@@ -336,29 +351,33 @@ export async function generarPlanesAccionMasivosAction(): Promise<{
                 sucursal: sucursalNombre,
                 items: acta.detalles.map(d => ({
                     aspecto: d.letraAspecto,
-                    hallazgo: d.descripcion || `Multa calculada de ${d.montoMulta.toFixed(2)} UTM en Aspecto ${d.letraAspecto}`
+                    hallazgo: d.descripcion || `Multa calculada en Aspecto ${d.letraAspecto}`
                 }))
             })
         }
+
+        // Optimización: consultar todos los folios existentes en una sola consulta
+        const todosLosFolios = Array.from(foliosMap.keys())
+        const planesExistentes = await prisma.multas_Plan_Accion.findMany({
+            where: { folio: { in: todosLosFolios } },
+            select: { folio: true }
+        })
+        const foliosExistentesSet = new Set(planesExistentes.map(p => p.folio))
 
         let creados = 0
         let existentes = 0
 
         for (const [folio, data] of foliosMap.entries()) {
-            const yaExiste = await prisma.multas_Plan_Accion.findUnique({
-                where: { folio }
-            })
-
-            if (yaExiste) {
+            if (foliosExistentesSet.has(folio)) {
                 existentes++
                 continue
             }
 
-            // Fecha compromiso estándar: 5 días hábiles a partir de hoy
+            // Plazo compromiso estándar: 5 días hábiles a partir de hoy
             const compromiso = new Date()
             compromiso.setDate(compromiso.getDate() + 7)
 
-            const plan = await prisma.multas_Plan_Accion.create({
+            await prisma.multas_Plan_Accion.create({
                 data: {
                     folio,
                     rbd: data.rbd,
@@ -383,8 +402,8 @@ export async function generarPlanesAccionMasivosAction(): Promise<{
         }
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'GENERAR_PLANES_ACCION_MASIVOS',
             modulo: 'Multas · Soluciones y Planes de Acción',
             detalle: `Generación masiva de planes: ${creados} nuevos creados, ${existentes} ya existentes.`
@@ -412,21 +431,45 @@ export async function actualizarItemPlanAccionAction(
     }
 ): Promise<{ success: boolean; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
+        await ensureSolucionesPlanTables()
+        const { authorized, user } = await checkMultasPermission('manage_soluciones_multas')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para actualizar acciones correctivas' }
         }
 
-        await ensureSolucionesPlanTables()
+        // Verificar que el ítem exista y que su plan NO esté CERRADO o VALIDADO
+        const itemExistente = await prisma.multas_Plan_Accion_Item.findUnique({
+            where: { id: itemId },
+            include: { plan: true }
+        })
 
-        const ejecutor = session.user.name || session.user.username || 'Usuario Terreno'
+        if (!itemExistente) {
+            return { success: false, error: 'Ítem de plan de acción no encontrado' }
+        }
+
+        if (itemExistente.plan.estado === 'CERRADO' || itemExistente.plan.estado === 'VALIDADO') {
+            return {
+                success: false,
+                error: 'No se pueden editar ítems de un plan de acción que ya ha sido CERRADO o VALIDADO.'
+            }
+        }
+
+        // Validar que evidenciaUrl sea un enlace válido si se especifica
+        if (data.evidenciaUrl && data.evidenciaUrl.trim() !== '') {
+            const urlTrim = data.evidenciaUrl.trim()
+            if (!urlTrim.startsWith('http://') && !urlTrim.startsWith('https://') && !urlTrim.startsWith('/')) {
+                return { success: false, error: 'La URL de la evidencia debe comenzar con http:// o https://' }
+            }
+        }
+
+        const ejecutor = user.name || user.username || 'Usuario Terreno'
 
         const item = await prisma.multas_Plan_Accion_Item.update({
             where: { id: itemId },
             data: {
                 accionTomada: data.accionTomada.trim(),
-                evidenciaUrl: data.evidenciaUrl || null,
-                evidenciaNombre: data.evidenciaNombre || null,
+                evidenciaUrl: data.evidenciaUrl ? data.evidenciaUrl.trim() : null,
+                evidenciaNombre: data.evidenciaNombre ? data.evidenciaNombre.trim() : null,
                 estadoItem: data.estadoItem || 'CORREGIDO',
                 fechaEjecucion: new Date(),
                 ejecutadoPor: ejecutor
@@ -454,8 +497,8 @@ export async function actualizarItemPlanAccionAction(
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'ACTUALIZAR_ITEM_PLAN_ACCION',
             modulo: 'Multas · Soluciones y Planes de Acción',
             detalle: `Se actualizó la acción correctiva del Aspecto ${item.aspecto} en el folio ${item.plan.folio}. Estado: ${data.estadoItem || 'CORREGIDO'}`
@@ -482,29 +525,31 @@ export async function cerrarPlanAccionAction(
     }
 ): Promise<{ success: boolean; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_soluciones_multas')
-        if (!canManage) {
+        await ensureSolucionesPlanTables()
+        const { authorized, user } = await checkMultasPermission('manage_soluciones_multas')
+        if (!authorized) {
             return { success: false, error: 'No tienes permisos para cerrar o validar planes de acción' }
         }
 
-        await ensureSolucionesPlanTables()
+        const plan = await prisma.multas_Plan_Accion.findUnique({
+            where: { id: planId },
+            include: { items: true }
+        })
 
-        const cerradoPor = session.user.name || session.user.username || 'Jefatura Calidad'
+        if (!plan) {
+            return { success: false, error: 'Plan de acción no encontrado' }
+        }
+
+        // Bloquear cierre si hay ítems pendientes
+        const tienePendientes = plan.items.some(i => i.estadoItem === 'PENDIENTE')
+        if (tienePendientes) {
+            return {
+                success: false,
+                error: 'No se puede cerrar ni validar un plan de acción que aún tiene ítems pendientes de corrección.'
+            }
+        }
+
+        const cerradoPor = user.name || user.username || 'Jefatura Calidad'
 
         const updated = await prisma.multas_Plan_Accion.update({
             where: { id: planId },
@@ -517,8 +562,8 @@ export async function cerrarPlanAccionAction(
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'CERRAR_PLAN_ACCION',
             modulo: 'Multas · Soluciones y Planes de Acción',
             detalle: `Se cerró formalmente el Plan de Acción del folio ${updated.folio} en estado ${data.estado}.`
@@ -544,6 +589,10 @@ export async function getDiccionarioSolucionesAction(aspecto?: string): Promise<
 }> {
     try {
         await ensureSolucionesPlanTables()
+        const { authorized } = await checkMultasPermission('view_soluciones_multas')
+        if (!authorized) {
+            return { success: false, data: [], error: 'No tienes permisos para consultar el diccionario de soluciones' }
+        }
 
         const where: any = { activo: true }
         if (aspecto && aspecto !== 'TODOS') {

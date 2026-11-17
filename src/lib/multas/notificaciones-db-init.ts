@@ -57,6 +57,16 @@ export async function ensureNotificacionesJunaebTables(): Promise<void> {
             ON "Multas_Notificacion_REX" ("estado");
         `)
 
+        // Migraciones de columnas adicionales idempotentes
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;
+            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;
+            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalDiferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;
+            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;
+            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;
+            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "diferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;
+        `)
+
         // 2. Detalle de Items de Notificación REX
         await rawPrisma.$executeRawUnsafe(`
             CREATE TABLE IF NOT EXISTS "Multas_Notificacion_Item" (

@@ -1,4 +1,5 @@
 import { rawPrisma } from '@/lib/prisma'
+import { ensureNotificacionesJunaebTables } from './notificaciones-db-init'
 
 let isInitialized = false
 
@@ -16,6 +17,8 @@ export async function ensureCicloLegalTables(): Promise<void> {
     if (isInitialized) return
 
     try {
+        // Asegurar que las tablas padre de Notificaciones REX existan previamente
+        await ensureNotificacionesJunaebTables()
         // 1. Descargos Formales
         await rawPrisma.$executeRawUnsafe(`
             CREATE TABLE IF NOT EXISTS "Multas_Descargo_Formal" (

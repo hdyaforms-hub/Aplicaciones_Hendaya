@@ -31,12 +31,14 @@ interface Props {
     initialMetricas?: MetricasConsolidadasDTO
     licitacionesDisponibles: string[]
     userName: string
+    canExport?: boolean
 }
 
 export default function TableroConsolidadoClient({
     initialMetricas,
     licitacionesDisponibles,
-    userName
+    userName,
+    canExport = false
 }: Props) {
     const [metricas, setMetricas] = useState<MetricasConsolidadasDTO | undefined>(initialMetricas)
     const [isPending, startTransition] = useTransition()
@@ -122,17 +124,19 @@ export default function TableroConsolidadoClient({
                 </div>
 
                 {/* Botón de Exportación Maestra Excel */}
-                <div className="flex items-center gap-2">
-                    <a
-                        href="/dashboard/areas/multas/tablero/exportar"
-                        target="_blank"
-                        className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-sm transition cursor-pointer"
-                        title="Descargar planilla Excel consolidada completa por folio y aspecto"
-                    >
-                        <FileSpreadsheet className="w-4 h-4" />
-                        <span>Exportar Reporte Maestro (.xlsx)</span>
-                    </a>
-                </div>
+                {canExport && (
+                    <div className="flex items-center gap-2">
+                        <a
+                            href="/dashboard/areas/multas/tablero/exportar"
+                            target="_blank"
+                            className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-sm transition cursor-pointer"
+                            title="Descargar planilla Excel consolidada completa por folio y aspecto"
+                        >
+                            <FileSpreadsheet className="w-4 h-4" />
+                            <span>Exportar Reporte Maestro (.xlsx)</span>
+                        </a>
+                    </div>
+                )}
             </div>
 
             {/* 5 TARJETAS DE KPIS FINANCIEROS Y DE LITIGIO (Modo Claro) */}
@@ -140,13 +144,15 @@ export default function TableroConsolidadoClient({
                 {/* 1. Notificado Total */}
                 <div className="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm flex flex-col justify-between">
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
-                        <span>Notificado JUNAEB</span>
+                        <span>Calculado Total (CLP)</span>
                         <Scale className="w-4 h-4 text-slate-500" />
                     </span>
-                    <p className="text-2xl font-black text-slate-900 mt-2">
-                        {metricas.montoTotalNotificadoUtm.toFixed(1)} <span className="text-xs font-normal">UTM</span>
+                    <p className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+                        ${Math.round(metricas.montoTotalCalculadoPesos || (metricas.montoTotalNotificadoUtm * 65000)).toLocaleString('es-CL')}
                     </p>
-                    <span className="text-[10px] text-slate-400 mt-0.5">{metricas.totalActasCalculadas} actas fiscalizadas</span>
+                    <span className="text-[10px] text-slate-400 mt-0.5">
+                        {metricas.totalActasCalculadas} actas ({metricas.montoTotalNotificadoUtm.toFixed(1)} UTM est.)
+                    </span>
                 </div>
 
                 {/* 2. Impugnado */}

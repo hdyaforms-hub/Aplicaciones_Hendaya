@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 import { ensureSolucionesPlanTables } from '@/lib/multas/soluciones-plan-db-init'
+import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
@@ -13,6 +14,11 @@ export async function GET(
         const session = await getSession()
         if (!session?.user) {
             return new NextResponse('No autorizado', { status: 401 })
+        }
+
+        const { authorized } = await checkMultasPermission('view_soluciones_multas', session)
+        if (!authorized) {
+            return new NextResponse('No tienes permisos para visualizar el PDF del plan de acción', { status: 403 })
         }
 
         await ensureSolucionesPlanTables()
@@ -29,6 +35,12 @@ export async function GET(
 
         if (!plan) {
             return new NextResponse('Plan de acción no encontrado', { status: 404 })
+        }
+
+        // Restricción por RBD del usuario
+        const allowedRbds = await getUserEffectiveRbds()
+        if (allowedRbds !== null && plan.rbd && !allowedRbds.includes(plan.rbd)) {
+            return new NextResponse('Acceso denegado: No tienes permisos sobre el RBD de este plan de acción', { status: 403 })
         }
 
         // Crear documento PDF tamaño carta
@@ -163,8 +175,11 @@ export async function GET(
         // 5. Observaciones de Validación y Cierre (si existen)
         if (plan.observacionesCierre) {
             currentY += 8
+            const textLines = doc.splitTextToSize(plan.observacionesCierre, pageWidth - 36)
+            const boxHeight = Math.max(18, textLines.length * 4 + 10)
+
             doc.setFillColor(241, 245, 249)
-            doc.roundedRect(14, currentY, pageWidth - 28, 18, 2, 2, 'F')
+            doc.roundedRect(14, currentY, pageWidth - 28, boxHeight, 2, 2, 'F')
 
             doc.setFont('helvetica', 'bold')
             doc.setFontSize(8)
@@ -174,8 +189,8 @@ export async function GET(
             doc.setFont('helvetica', 'normal')
             doc.setFontSize(7.5)
             doc.setTextColor(71, 85, 105)
-            doc.text(plan.observacionesCierre, 18, currentY + 11, { maxWidth: pageWidth - 36 })
-            currentY += 24
+            doc.text(textLines, 18, currentY + 11)
+            currentY += boxHeight + 6
         } else {
             currentY += 12
         }

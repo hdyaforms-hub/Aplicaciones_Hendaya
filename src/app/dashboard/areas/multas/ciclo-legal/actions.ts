@@ -5,6 +5,23 @@ import { getSession } from '@/lib/session'
 import { ensureCicloLegalTables } from '@/lib/multas/ciclo-legal-db-init'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
+import { checkMultasPermission } from '@/lib/multas/permisos'
+
+/**
+ * Calcula la fecha límite sumando días hábiles (excluyendo sábados y domingos)
+ */
+export function calcularFechaPlazoHabil(fechaInicio: Date, diasHabiles: number): Date {
+    const res = new Date(fechaInicio)
+    let agregados = 0
+    while (agregados < diasHabiles) {
+        res.setDate(res.getDate() + 1)
+        const dia = res.getDay()
+        if (dia !== 0 && dia !== 6) {
+            agregados++
+        }
+    }
+    return res
+}
 
 export interface DescargoFormalDTO {
     id: string
@@ -125,30 +142,10 @@ export interface HitoTimelineDTO {
     detallesBadge: string | null
 }
 
-// Utility para verificar permisos con consulta directa a BD
+// Utility para verificar permisos con consulta directa a BD usando el validador central
 async function checkCicloLegalPermission(perm: string | string[]): Promise<{ authorized: boolean; user: any }> {
-    const session = await getSession()
-    if (!session?.user?.id) return { authorized: false, user: null }
-
-    const user = await prisma.user.findUnique({
-        where: { id: session.user.id },
-        include: { role: true }
-    })
-    if (!user || !user.role) return { authorized: false, user: null }
-
-    const roleName = user.role.name?.toLowerCase().trim() || ''
-    const isAdmin = roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin'
-    if (isAdmin) return { authorized: true, user }
-
-    const permissions: string[] = Array.isArray(user.role.permissions)
-        ? (user.role.permissions as string[])
-        : typeof user.role.permissions === 'string'
-            ? (() => { try { return JSON.parse(user.role.permissions) } catch { return [] } })()
-            : []
-
-    const targets = Array.isArray(perm) ? perm : [perm]
-    const authorized = permissions.includes('*') || targets.some(p => permissions.includes(p))
-    return { authorized, user }
+    const res = await checkMultasPermission(perm)
+    return { authorized: res.authorized, user: res.user }
 }
 
 /**
@@ -455,6 +452,11 @@ export async function getNotificacionesDisponiblesAction(): Promise<{
 }> {
     try {
         await ensureCicloLegalTables()
+        const { authorized } = await checkMultasPermission(['view_ciclo_legal_multas', 'manage_ciclo_legal_multas'])
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para consultar las notificaciones REX del ciclo legal.' }
+        }
+
         const list = await prisma.multas_Notificacion_REX.findMany({
             select: {
                 id: true,
@@ -507,8 +509,8 @@ export async function crearDescargoFormalAction(formData: FormData): Promise<{ s
         if (!fechaIngresoStr) return { success: false, error: 'La fecha de ingreso es obligatoria.' }
 
         const fechaIngreso = new Date(fechaIngresoStr)
-        const fechaPlazoRespuesta = new Date(fechaIngreso)
-        fechaPlazoRespuesta.setDate(fechaPlazoRespuesta.getDate() + diasPlazoLegal)
+        // Cálculo del plazo legal en días hábiles administrativos
+        const fechaPlazoRespuesta = calcularFechaPlazoHabil(fechaIngreso, diasPlazoLegal)
 
         // Obtener items de la REX notificada para asociar sus folios
         const rexItems = await prisma.multas_Notificacion_Item.findMany({
@@ -519,10 +521,18 @@ export async function crearDescargoFormalAction(formData: FormData): Promise<{ s
             return { success: false, error: 'La resolución seleccionada no contiene items ni folios para impugnar.' }
         }
 
-        // Sumar monto impugnado en UTM
+        // Se impugnan los ítems notificados por JUNAEB (excluyendo 'NO_INCLUIDO' que no fue notificado)
+        const itemsAImpugnar = rexItems.filter(item => item.montoNotificado > 0 && item.estadoConciliacion !== 'NO_INCLUIDO')
+        const itemsFinales = itemsAImpugnar.length > 0 ? itemsAImpugnar : rexItems.filter(item => item.montoNotificado > 0)
+
+        if (itemsFinales.length === 0) {
+            return { success: false, error: 'No se encontraron ítems con monto notificado por JUNAEB para impugnar.' }
+        }
+
+        // Sumar monto impugnado en UTM basado estrictamente en lo notificado por JUNAEB
         let totalImpugnadoUtm = 0
-        const foliosToCreate = rexItems.map(item => {
-            const montoImpugnado = item.montoNotificado > 0 ? item.montoNotificado : item.montoCalculado
+        const foliosToCreate = itemsFinales.map(item => {
+            const montoImpugnado = item.montoNotificado
             totalImpugnadoUtm += montoImpugnado
             return {
                 notificacionItemId: item.id,
@@ -610,6 +620,10 @@ export async function registrarResuelveAction(params: {
             return { success: false, error: 'Número de resolución y fecha son obligatorios.' }
         }
 
+        if (montoRatificadoUtm < 0 || montoRebajadoUtm < 0) {
+            return { success: false, error: 'Los montos ratificados o rebajados no pueden ser negativos.' }
+        }
+
         const totalEvaluado = montoRatificadoUtm + montoRebajadoUtm
         const pctRebaja = totalEvaluado > 0 ? Math.round((montoRebajadoUtm / totalEvaluado) * 100) : (dictamen === 'ACOGIDO_TOTAL' ? 100 : 0)
         const userName = user.name || user.username || 'Usuario'
@@ -631,12 +645,41 @@ export async function registrarResuelveAction(params: {
             }
         })
 
-        // Actualizar estado del descargo según el dictamen
-        const nuevoEstado = dictamen === 'ACOGIDO_TOTAL' ? 'CERRADO' : 'RESPONDIDO_PARCIAL'
+        // Actualizar estado del descargo y de sus folios según el dictamen formal
+        const nuevoEstadoDescargo = dictamen === 'ACOGIDO_TOTAL' || dictamen === 'RECHAZADO'
+            ? 'CERRADO'
+            : 'RESPONDIDO_PARCIAL'
+
         await prisma.multas_Descargo_Formal.update({
             where: { id: descargoId },
-            data: { estado: nuevoEstado }
+            data: { estado: nuevoEstadoDescargo }
         })
+
+        // Actualizar estado de los folios controvertidos
+        if (dictamen === 'ACOGIDO_TOTAL') {
+            await prisma.multas_Descargo_Folio.updateMany({
+                where: { descargoId },
+                data: {
+                    estado: 'ACOGIDO_TOTAL',
+                    montoRebajadoUtm: montoRebajadoUtm // o prorrateado
+                }
+            })
+        } else if (dictamen === 'RECHAZADO') {
+            await prisma.multas_Descargo_Folio.updateMany({
+                where: { descargoId },
+                data: {
+                    estado: 'RECHAZADO',
+                    montoRebajadoUtm: 0.0
+                }
+            })
+        } else {
+            await prisma.multas_Descargo_Folio.updateMany({
+                where: { descargoId },
+                data: {
+                    estado: 'ACOGIDO_PARCIAL'
+                }
+            })
+        }
 
         await logAuditAction({
             username: userName,
@@ -801,6 +844,14 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
         }
 
         const hitos: HitoTimelineDTO[] = []
+        const seenHitoIds = new Set<string>()
+
+        const pushHito = (hito: HitoTimelineDTO) => {
+            if (!seenHitoIds.has(hito.id)) {
+                seenHitoIds.add(hito.id)
+                hitos.push(hito)
+            }
+        }
 
         if (folio) {
             // 1. Acta de Supervisión
@@ -811,7 +862,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
 
             if (cab) {
                 const totalAspectos = cab.detalles.length
-                hitos.push({
+                pushHito({
                     id: `sup_${cab.id}`,
                     fecha: cab.fechaSupervision.toISOString().split('T')[0],
                     tipo: 'SUPERVISION',
@@ -835,7 +886,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
             })
 
             for (const ni of notifItems) {
-                hitos.push({
+                pushHito({
                     id: `notif_${ni.id}`,
                     fecha: ni.notificacion.fechaResolucion ? ni.notificacion.fechaResolucion.toISOString().split('T')[0] : ni.createdAt.toISOString().split('T')[0],
                     tipo: 'NOTIFICACION_REX',
@@ -869,7 +920,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
 
             for (const df of descargoFolios) {
                 const d = df.descargo
-                hitos.push({
+                pushHito({
                     id: `desc_${d.id}`,
                     fecha: d.fechaIngreso.toISOString().split('T')[0],
                     tipo: 'DESCARGO_FORMAL',
@@ -887,7 +938,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
 
                 // Resuelves asociados
                 for (const r of d.resuelves) {
-                    hitos.push({
+                    pushHito({
                         id: `res_${r.id}`,
                         fecha: r.fechaResolucion.toISOString().split('T')[0],
                         tipo: 'RESUELVE',
@@ -906,7 +957,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
 
                 // Recursos administrativos
                 for (const rc of d.recursos) {
-                    hitos.push({
+                    pushHito({
                         id: `rec_${rc.id}`,
                         fecha: rc.fechaPresentacion.toISOString().split('T')[0],
                         tipo: 'RECURSO_ADMIN',
@@ -925,7 +976,7 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
 
                 // Procesos judiciales
                 for (const pj of d.procesosJudiciales) {
-                    hitos.push({
+                    pushHito({
                         id: `jud_${pj.id}`,
                         fecha: pj.fechaIngreso.toISOString().split('T')[0],
                         tipo: 'PROCESO_JUDICIAL',
@@ -941,6 +992,160 @@ export async function getExpedienteTimelineAction(query: { folio?: string; numer
                         detallesBadge: pj.resultadoSentencia || pj.estadoProcesal
                     })
                 }
+            }
+        } else if (numRex) {
+            // Búsqueda por número de resolución (REX o Resuelve)
+            const notificacionesRex = await prisma.multas_Notificacion_REX.findMany({
+                where: { numeroResolucion: { contains: numRex, mode: 'insensitive' } },
+                include: {
+                    descargos: {
+                        include: {
+                            folios: true,
+                            resuelves: true,
+                            recursos: true,
+                            procesosJudiciales: true
+                        }
+                    }
+                }
+            })
+
+            for (const notif of notificacionesRex) {
+                pushHito({
+                    id: `rex_${notif.id}`,
+                    fecha: notif.fechaResolucion ? notif.fechaResolucion.toISOString().split('T')[0] : notif.createdAt.toISOString().split('T')[0],
+                    tipo: 'NOTIFICACION_REX',
+                    titulo: `Notificación Oficial JUNAEB — REX ${notif.numeroResolucion}`,
+                    subtitulo: `Período ${notif.periodoMes}/${notif.periodoAnio} · ${notif.totalFoliosNotif} folios notificados`,
+                    descripcion: `Monto total notificado: ${notif.montoTotalNotificado.toFixed(2)} UTM. Estado: ${notif.estado}.`,
+                    estado: notif.estado,
+                    montoUtm: notif.montoTotalNotificado,
+                    montoPesos: null,
+                    documentoUrl: null,
+                    documentoNombre: notif.nombreArchivo,
+                    responsable: notif.cargadoPor,
+                    detallesBadge: notif.estado
+                })
+
+                for (const d of notif.descargos) {
+                    pushHito({
+                        id: `desc_${d.id}`,
+                        fecha: d.fechaIngreso.toISOString().split('T')[0],
+                        tipo: 'DESCARGO_FORMAL',
+                        titulo: `Descargo Formal Ingresado — ${d.codigoIngreso}`,
+                        subtitulo: `REX ${notif.numeroResolucion} · Abogado: ${d.abogadoResponsable || 'No asignado'}`,
+                        descripcion: d.resumenArgumentos || `Presentación formal de descargos ante oficina de partes de JUNAEB.`,
+                        estado: d.estado,
+                        montoUtm: d.montoImpugnadoUtm,
+                        montoPesos: d.montoImpugnadoPesos,
+                        documentoUrl: d.documentoUrl,
+                        documentoNombre: d.documentoNombre,
+                        responsable: d.creadoPor,
+                        detallesBadge: `Plazo: ${d.diasPlazoLegal} días`
+                    })
+
+                    for (const r of d.resuelves) {
+                        pushHito({
+                            id: `res_${r.id}`,
+                            fecha: r.fechaResolucion.toISOString().split('T')[0],
+                            tipo: 'RESUELVE',
+                            titulo: `Dictamen de Término — ${r.numeroResolucion}`,
+                            subtitulo: `Resultado JUNAEB: ${r.dictamen}`,
+                            descripcion: r.fundamentoResuelve || `Resolución que resuelve los descargos presentados. Rebaja: ${r.montoRebajadoUtm.toFixed(2)} UTM.`,
+                            estado: r.dictamen,
+                            montoUtm: r.montoRatificadoUtm,
+                            montoPesos: null,
+                            documentoUrl: r.documentoUrl,
+                            documentoNombre: r.documentoNombre,
+                            responsable: r.registradoPor,
+                            detallesBadge: `Rebaja: ${r.montoRebajadoUtm.toFixed(2)} UTM`
+                        })
+                    }
+
+                    for (const rc of d.recursos) {
+                        pushHito({
+                            id: `rec_${rc.id}`,
+                            fecha: rc.fechaPresentacion.toISOString().split('T')[0],
+                            tipo: 'RECURSO_ADMIN',
+                            titulo: `Recurso Administrativo (${rc.tipoRecurso}) — ${rc.codigoPresentacion}`,
+                            subtitulo: `Presentado ante: ${rc.autoridadDestino || 'JUNAEB'}`,
+                            descripcion: rc.fundamentosRecurso || `Impugnación administrativa en segunda instancia contra el dictamen emitido.`,
+                            estado: rc.estado,
+                            montoUtm: rc.montoRebajaExtraUtm > 0 ? rc.montoRebajaExtraUtm : null,
+                            montoPesos: null,
+                            documentoUrl: rc.documentoUrl,
+                            documentoNombre: rc.documentoNombre,
+                            responsable: rc.registradoPor,
+                            detallesBadge: rc.estado
+                        })
+                    }
+
+                    for (const pj of d.procesosJudiciales) {
+                        pushHito({
+                            id: `jud_${pj.id}`,
+                            fecha: pj.fechaIngreso.toISOString().split('T')[0],
+                            tipo: 'PROCESO_JUDICIAL',
+                            titulo: `Proceso Judicial — Rol ${pj.rolCausa}`,
+                            subtitulo: `${pj.tribunal} · ${pj.caratulado || ''}`,
+                            descripcion: pj.notas || `Litigio judicial en tribunales. Estado procesal: ${pj.estadoProcesal}.`,
+                            estado: pj.estadoProcesal,
+                            montoUtm: null,
+                            montoPesos: pj.cuantiaDemandaPesos,
+                            documentoUrl: pj.documentoUrl,
+                            documentoNombre: pj.documentoNombre,
+                            responsable: pj.registradoPor,
+                            detallesBadge: pj.resultadoSentencia || pj.estadoProcesal
+                        })
+                    }
+                }
+            }
+
+            // También buscar si el número coincide directamente con algún Resuelve
+            const resuelvesDirectos = await prisma.multas_Resuelve.findMany({
+                where: { numeroResolucion: { contains: numRex, mode: 'insensitive' } },
+                include: {
+                    descargo: {
+                        include: {
+                            notificacion: true,
+                            recursos: true,
+                            procesosJudiciales: true
+                        }
+                    }
+                }
+            })
+
+            for (const r of resuelvesDirectos) {
+                const d = r.descargo
+                pushHito({
+                    id: `desc_${d.id}`,
+                    fecha: d.fechaIngreso.toISOString().split('T')[0],
+                    tipo: 'DESCARGO_FORMAL',
+                    titulo: `Descargo Formal Vinculado — ${d.codigoIngreso}`,
+                    subtitulo: `REX ${d.notificacion.numeroResolucion}`,
+                    descripcion: d.resumenArgumentos || `Presentación formal de descargos.`,
+                    estado: d.estado,
+                    montoUtm: d.montoImpugnadoUtm,
+                    montoPesos: d.montoImpugnadoPesos,
+                    documentoUrl: d.documentoUrl,
+                    documentoNombre: d.documentoNombre,
+                    responsable: d.creadoPor,
+                    detallesBadge: `Plazo: ${d.diasPlazoLegal} días`
+                })
+
+                pushHito({
+                    id: `res_${r.id}`,
+                    fecha: r.fechaResolucion.toISOString().split('T')[0],
+                    tipo: 'RESUELVE',
+                    titulo: `Dictamen de Término — ${r.numeroResolucion}`,
+                    subtitulo: `Resultado JUNAEB: ${r.dictamen}`,
+                    descripcion: r.fundamentoResuelve || `Resolución que resuelve los descargos presentados. Rebaja: ${r.montoRebajadoUtm.toFixed(2)} UTM.`,
+                    estado: r.dictamen,
+                    montoUtm: r.montoRatificadoUtm,
+                    montoPesos: null,
+                    documentoUrl: r.documentoUrl,
+                    documentoNombre: r.documentoNombre,
+                    responsable: r.registradoPor,
+                    detallesBadge: `Rebaja: ${r.montoRebajadoUtm.toFixed(2)} UTM`
+                })
             }
         }
 

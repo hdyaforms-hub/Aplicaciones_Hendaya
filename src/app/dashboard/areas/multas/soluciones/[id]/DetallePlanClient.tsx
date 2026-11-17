@@ -80,7 +80,7 @@ export default function DetallePlanClient({
         if (encontrada) {
             setFormAccionTomada(encontrada.accionCorrectivaTipo)
             if (!formEvidenciaNombre) {
-                setFormEvidenciaNombre(encontrada.evidenciaRequerida)
+                setFormEvidenciaNombre(encontrada.evidenciaRequerida || '')
             }
         }
     }

@@ -78628,8 +78628,11 @@ export namespace Prisma {
     totalFilasNotif: number | null
     totalFoliosNotif: number | null
     montoTotalNotificado: number | null
+    montoTotalNotificadoPesos: number | null
     montoTotalCalculado: number | null
+    montoTotalCalculadoPesos: number | null
     montoTotalDiferencia: number | null
+    montoTotalDiferenciaPesos: number | null
   }
 
   export type Multas_Notificacion_REXSumAggregateOutputType = {
@@ -78639,8 +78642,11 @@ export namespace Prisma {
     totalFilasNotif: number | null
     totalFoliosNotif: number | null
     montoTotalNotificado: number | null
+    montoTotalNotificadoPesos: number | null
     montoTotalCalculado: number | null
+    montoTotalCalculadoPesos: number | null
     montoTotalDiferencia: number | null
+    montoTotalDiferenciaPesos: number | null
   }
 
   export type Multas_Notificacion_REXMinAggregateOutputType = {
@@ -78655,8 +78661,11 @@ export namespace Prisma {
     totalFilasNotif: number | null
     totalFoliosNotif: number | null
     montoTotalNotificado: number | null
+    montoTotalNotificadoPesos: number | null
     montoTotalCalculado: number | null
+    montoTotalCalculadoPesos: number | null
     montoTotalDiferencia: number | null
+    montoTotalDiferenciaPesos: number | null
     estado: string | null
     cargadoPor: string | null
     observaciones: string | null
@@ -78676,8 +78685,11 @@ export namespace Prisma {
     totalFilasNotif: number | null
     totalFoliosNotif: number | null
     montoTotalNotificado: number | null
+    montoTotalNotificadoPesos: number | null
     montoTotalCalculado: number | null
+    montoTotalCalculadoPesos: number | null
     montoTotalDiferencia: number | null
+    montoTotalDiferenciaPesos: number | null
     estado: string | null
     cargadoPor: string | null
     observaciones: string | null
@@ -78697,8 +78709,11 @@ export namespace Prisma {
     totalFilasNotif: number
     totalFoliosNotif: number
     montoTotalNotificado: number
+    montoTotalNotificadoPesos: number
     montoTotalCalculado: number
+    montoTotalCalculadoPesos: number
     montoTotalDiferencia: number
+    montoTotalDiferenciaPesos: number
     estado: number
     cargadoPor: number
     observaciones: number
@@ -78715,8 +78730,11 @@ export namespace Prisma {
     totalFilasNotif?: true
     totalFoliosNotif?: true
     montoTotalNotificado?: true
+    montoTotalNotificadoPesos?: true
     montoTotalCalculado?: true
+    montoTotalCalculadoPesos?: true
     montoTotalDiferencia?: true
+    montoTotalDiferenciaPesos?: true
   }
 
   export type Multas_Notificacion_REXSumAggregateInputType = {
@@ -78726,8 +78744,11 @@ export namespace Prisma {
     totalFilasNotif?: true
     totalFoliosNotif?: true
     montoTotalNotificado?: true
+    montoTotalNotificadoPesos?: true
     montoTotalCalculado?: true
+    montoTotalCalculadoPesos?: true
     montoTotalDiferencia?: true
+    montoTotalDiferenciaPesos?: true
   }
 
   export type Multas_Notificacion_REXMinAggregateInputType = {
@@ -78742,8 +78763,11 @@ export namespace Prisma {
     totalFilasNotif?: true
     totalFoliosNotif?: true
     montoTotalNotificado?: true
+    montoTotalNotificadoPesos?: true
     montoTotalCalculado?: true
+    montoTotalCalculadoPesos?: true
     montoTotalDiferencia?: true
+    montoTotalDiferenciaPesos?: true
     estado?: true
     cargadoPor?: true
     observaciones?: true
@@ -78763,8 +78787,11 @@ export namespace Prisma {
     totalFilasNotif?: true
     totalFoliosNotif?: true
     montoTotalNotificado?: true
+    montoTotalNotificadoPesos?: true
     montoTotalCalculado?: true
+    montoTotalCalculadoPesos?: true
     montoTotalDiferencia?: true
+    montoTotalDiferenciaPesos?: true
     estado?: true
     cargadoPor?: true
     observaciones?: true
@@ -78784,8 +78811,11 @@ export namespace Prisma {
     totalFilasNotif?: true
     totalFoliosNotif?: true
     montoTotalNotificado?: true
+    montoTotalNotificadoPesos?: true
     montoTotalCalculado?: true
+    montoTotalCalculadoPesos?: true
     montoTotalDiferencia?: true
+    montoTotalDiferenciaPesos?: true
     estado?: true
     cargadoPor?: true
     observaciones?: true
@@ -78892,8 +78922,11 @@ export namespace Prisma {
     totalFilasNotif: number
     totalFoliosNotif: number
     montoTotalNotificado: number
+    montoTotalNotificadoPesos: number | null
     montoTotalCalculado: number
+    montoTotalCalculadoPesos: number | null
     montoTotalDiferencia: number
+    montoTotalDiferenciaPesos: number | null
     estado: string
     cargadoPor: string
     observaciones: string | null
@@ -78932,8 +78965,11 @@ export namespace Prisma {
     totalFilasNotif?: boolean
     totalFoliosNotif?: boolean
     montoTotalNotificado?: boolean
+    montoTotalNotificadoPesos?: boolean
     montoTotalCalculado?: boolean
+    montoTotalCalculadoPesos?: boolean
     montoTotalDiferencia?: boolean
+    montoTotalDiferenciaPesos?: boolean
     estado?: boolean
     cargadoPor?: boolean
     observaciones?: boolean
@@ -78956,8 +78992,11 @@ export namespace Prisma {
     totalFilasNotif?: boolean
     totalFoliosNotif?: boolean
     montoTotalNotificado?: boolean
+    montoTotalNotificadoPesos?: boolean
     montoTotalCalculado?: boolean
+    montoTotalCalculadoPesos?: boolean
     montoTotalDiferencia?: boolean
+    montoTotalDiferenciaPesos?: boolean
     estado?: boolean
     cargadoPor?: boolean
     observaciones?: boolean
@@ -78977,8 +79016,11 @@ export namespace Prisma {
     totalFilasNotif?: boolean
     totalFoliosNotif?: boolean
     montoTotalNotificado?: boolean
+    montoTotalNotificadoPesos?: boolean
     montoTotalCalculado?: boolean
+    montoTotalCalculadoPesos?: boolean
     montoTotalDiferencia?: boolean
+    montoTotalDiferenciaPesos?: boolean
     estado?: boolean
     cargadoPor?: boolean
     observaciones?: boolean
@@ -79011,8 +79053,11 @@ export namespace Prisma {
       totalFilasNotif: number
       totalFoliosNotif: number
       montoTotalNotificado: number
+      montoTotalNotificadoPesos: number | null
       montoTotalCalculado: number
+      montoTotalCalculadoPesos: number | null
       montoTotalDiferencia: number
+      montoTotalDiferenciaPesos: number | null
       estado: string
       cargadoPor: string
       observaciones: string | null
@@ -79424,8 +79469,11 @@ export namespace Prisma {
     readonly totalFilasNotif: FieldRef<"Multas_Notificacion_REX", 'Int'>
     readonly totalFoliosNotif: FieldRef<"Multas_Notificacion_REX", 'Int'>
     readonly montoTotalNotificado: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly montoTotalNotificadoPesos: FieldRef<"Multas_Notificacion_REX", 'Float'>
     readonly montoTotalCalculado: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly montoTotalCalculadoPesos: FieldRef<"Multas_Notificacion_REX", 'Float'>
     readonly montoTotalDiferencia: FieldRef<"Multas_Notificacion_REX", 'Float'>
+    readonly montoTotalDiferenciaPesos: FieldRef<"Multas_Notificacion_REX", 'Float'>
     readonly estado: FieldRef<"Multas_Notificacion_REX", 'String'>
     readonly cargadoPor: FieldRef<"Multas_Notificacion_REX", 'String'>
     readonly observaciones: FieldRef<"Multas_Notificacion_REX", 'String'>
@@ -79814,15 +79862,21 @@ export namespace Prisma {
   export type Multas_Notificacion_ItemAvgAggregateOutputType = {
     rbd: number | null
     montoNotificado: number | null
+    montoNotificadoPesos: number | null
     montoCalculado: number | null
+    montoCalculadoPesos: number | null
     diferenciaMonto: number | null
+    diferenciaPesos: number | null
   }
 
   export type Multas_Notificacion_ItemSumAggregateOutputType = {
     rbd: number | null
     montoNotificado: number | null
+    montoNotificadoPesos: number | null
     montoCalculado: number | null
+    montoCalculadoPesos: number | null
     diferenciaMonto: number | null
+    diferenciaPesos: number | null
   }
 
   export type Multas_Notificacion_ItemMinAggregateOutputType = {
@@ -79836,8 +79890,11 @@ export namespace Prisma {
     aspecto: string | null
     infraccionDetalle: string | null
     montoNotificado: number | null
+    montoNotificadoPesos: number | null
     montoCalculado: number | null
+    montoCalculadoPesos: number | null
     diferenciaMonto: number | null
+    diferenciaPesos: number | null
     estadoConciliacion: string | null
     clasificacionError: string | null
     motivoClasificacion: string | null
@@ -79859,8 +79916,11 @@ export namespace Prisma {
     aspecto: string | null
     infraccionDetalle: string | null
     montoNotificado: number | null
+    montoNotificadoPesos: number | null
     montoCalculado: number | null
+    montoCalculadoPesos: number | null
     diferenciaMonto: number | null
+    diferenciaPesos: number | null
     estadoConciliacion: string | null
     clasificacionError: string | null
     motivoClasificacion: string | null
@@ -79882,8 +79942,11 @@ export namespace Prisma {
     aspecto: number
     infraccionDetalle: number
     montoNotificado: number
+    montoNotificadoPesos: number
     montoCalculado: number
+    montoCalculadoPesos: number
     diferenciaMonto: number
+    diferenciaPesos: number
     estadoConciliacion: number
     clasificacionError: number
     motivoClasificacion: number
@@ -79899,15 +79962,21 @@ export namespace Prisma {
   export type Multas_Notificacion_ItemAvgAggregateInputType = {
     rbd?: true
     montoNotificado?: true
+    montoNotificadoPesos?: true
     montoCalculado?: true
+    montoCalculadoPesos?: true
     diferenciaMonto?: true
+    diferenciaPesos?: true
   }
 
   export type Multas_Notificacion_ItemSumAggregateInputType = {
     rbd?: true
     montoNotificado?: true
+    montoNotificadoPesos?: true
     montoCalculado?: true
+    montoCalculadoPesos?: true
     diferenciaMonto?: true
+    diferenciaPesos?: true
   }
 
   export type Multas_Notificacion_ItemMinAggregateInputType = {
@@ -79921,8 +79990,11 @@ export namespace Prisma {
     aspecto?: true
     infraccionDetalle?: true
     montoNotificado?: true
+    montoNotificadoPesos?: true
     montoCalculado?: true
+    montoCalculadoPesos?: true
     diferenciaMonto?: true
+    diferenciaPesos?: true
     estadoConciliacion?: true
     clasificacionError?: true
     motivoClasificacion?: true
@@ -79944,8 +80016,11 @@ export namespace Prisma {
     aspecto?: true
     infraccionDetalle?: true
     montoNotificado?: true
+    montoNotificadoPesos?: true
     montoCalculado?: true
+    montoCalculadoPesos?: true
     diferenciaMonto?: true
+    diferenciaPesos?: true
     estadoConciliacion?: true
     clasificacionError?: true
     motivoClasificacion?: true
@@ -79967,8 +80042,11 @@ export namespace Prisma {
     aspecto?: true
     infraccionDetalle?: true
     montoNotificado?: true
+    montoNotificadoPesos?: true
     montoCalculado?: true
+    montoCalculadoPesos?: true
     diferenciaMonto?: true
+    diferenciaPesos?: true
     estadoConciliacion?: true
     clasificacionError?: true
     motivoClasificacion?: true
@@ -80077,8 +80155,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle: string | null
     montoNotificado: number
+    montoNotificadoPesos: number | null
     montoCalculado: number
+    montoCalculadoPesos: number | null
     diferenciaMonto: number
+    diferenciaPesos: number | null
     estadoConciliacion: string
     clasificacionError: string | null
     motivoClasificacion: string | null
@@ -80119,8 +80200,11 @@ export namespace Prisma {
     aspecto?: boolean
     infraccionDetalle?: boolean
     montoNotificado?: boolean
+    montoNotificadoPesos?: boolean
     montoCalculado?: boolean
+    montoCalculadoPesos?: boolean
     diferenciaMonto?: boolean
+    diferenciaPesos?: boolean
     estadoConciliacion?: boolean
     clasificacionError?: boolean
     motivoClasificacion?: boolean
@@ -80143,8 +80227,11 @@ export namespace Prisma {
     aspecto?: boolean
     infraccionDetalle?: boolean
     montoNotificado?: boolean
+    montoNotificadoPesos?: boolean
     montoCalculado?: boolean
+    montoCalculadoPesos?: boolean
     diferenciaMonto?: boolean
+    diferenciaPesos?: boolean
     estadoConciliacion?: boolean
     clasificacionError?: boolean
     motivoClasificacion?: boolean
@@ -80167,8 +80254,11 @@ export namespace Prisma {
     aspecto?: boolean
     infraccionDetalle?: boolean
     montoNotificado?: boolean
+    montoNotificadoPesos?: boolean
     montoCalculado?: boolean
+    montoCalculadoPesos?: boolean
     diferenciaMonto?: boolean
+    diferenciaPesos?: boolean
     estadoConciliacion?: boolean
     clasificacionError?: boolean
     motivoClasificacion?: boolean
@@ -80202,8 +80292,11 @@ export namespace Prisma {
       aspecto: string
       infraccionDetalle: string | null
       montoNotificado: number
+      montoNotificadoPesos: number | null
       montoCalculado: number
+      montoCalculadoPesos: number | null
       diferenciaMonto: number
+      diferenciaPesos: number | null
       estadoConciliacion: string
       clasificacionError: string | null
       motivoClasificacion: string | null
@@ -80616,8 +80709,11 @@ export namespace Prisma {
     readonly aspecto: FieldRef<"Multas_Notificacion_Item", 'String'>
     readonly infraccionDetalle: FieldRef<"Multas_Notificacion_Item", 'String'>
     readonly montoNotificado: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly montoNotificadoPesos: FieldRef<"Multas_Notificacion_Item", 'Float'>
     readonly montoCalculado: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly montoCalculadoPesos: FieldRef<"Multas_Notificacion_Item", 'Float'>
     readonly diferenciaMonto: FieldRef<"Multas_Notificacion_Item", 'Float'>
+    readonly diferenciaPesos: FieldRef<"Multas_Notificacion_Item", 'Float'>
     readonly estadoConciliacion: FieldRef<"Multas_Notificacion_Item", 'String'>
     readonly clasificacionError: FieldRef<"Multas_Notificacion_Item", 'String'>
     readonly motivoClasificacion: FieldRef<"Multas_Notificacion_Item", 'String'>
@@ -182982,8 +183078,11 @@ export namespace Prisma {
     totalFilasNotif: 'totalFilasNotif',
     totalFoliosNotif: 'totalFoliosNotif',
     montoTotalNotificado: 'montoTotalNotificado',
+    montoTotalNotificadoPesos: 'montoTotalNotificadoPesos',
     montoTotalCalculado: 'montoTotalCalculado',
+    montoTotalCalculadoPesos: 'montoTotalCalculadoPesos',
     montoTotalDiferencia: 'montoTotalDiferencia',
+    montoTotalDiferenciaPesos: 'montoTotalDiferenciaPesos',
     estado: 'estado',
     cargadoPor: 'cargadoPor',
     observaciones: 'observaciones',
@@ -183005,8 +183104,11 @@ export namespace Prisma {
     aspecto: 'aspecto',
     infraccionDetalle: 'infraccionDetalle',
     montoNotificado: 'montoNotificado',
+    montoNotificadoPesos: 'montoNotificadoPesos',
     montoCalculado: 'montoCalculado',
+    montoCalculadoPesos: 'montoCalculadoPesos',
     diferenciaMonto: 'diferenciaMonto',
+    diferenciaPesos: 'diferenciaPesos',
     estadoConciliacion: 'estadoConciliacion',
     clasificacionError: 'clasificacionError',
     motivoClasificacion: 'motivoClasificacion',
@@ -190177,8 +190279,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFilter<"Multas_Notificacion_REX"> | number
     totalFoliosNotif?: IntFilter<"Multas_Notificacion_REX"> | number
     montoTotalNotificado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificadoPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalCalculado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculadoPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalDiferencia?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferenciaPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     estado?: StringFilter<"Multas_Notificacion_REX"> | string
     cargadoPor?: StringFilter<"Multas_Notificacion_REX"> | string
     observaciones?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
@@ -190200,8 +190305,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrderInput | SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrderInput | SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrderInput | SortOrder
     estado?: SortOrder
     cargadoPor?: SortOrder
     observaciones?: SortOrderInput | SortOrder
@@ -190227,8 +190335,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFilter<"Multas_Notificacion_REX"> | number
     totalFoliosNotif?: IntFilter<"Multas_Notificacion_REX"> | number
     montoTotalNotificado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificadoPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalCalculado?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculadoPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalDiferencia?: FloatFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferenciaPesos?: FloatNullableFilter<"Multas_Notificacion_REX"> | number | null
     estado?: StringFilter<"Multas_Notificacion_REX"> | string
     cargadoPor?: StringFilter<"Multas_Notificacion_REX"> | string
     observaciones?: StringNullableFilter<"Multas_Notificacion_REX"> | string | null
@@ -190250,8 +190361,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrderInput | SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrderInput | SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrderInput | SortOrder
     estado?: SortOrder
     cargadoPor?: SortOrder
     observaciones?: SortOrderInput | SortOrder
@@ -190279,8 +190393,11 @@ export namespace Prisma {
     totalFilasNotif?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
     totalFoliosNotif?: IntWithAggregatesFilter<"Multas_Notificacion_REX"> | number
     montoTotalNotificado?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalNotificadoPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalCalculado?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalCalculadoPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | number | null
     montoTotalDiferencia?: FloatWithAggregatesFilter<"Multas_Notificacion_REX"> | number
+    montoTotalDiferenciaPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | number | null
     estado?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
     cargadoPor?: StringWithAggregatesFilter<"Multas_Notificacion_REX"> | string
     observaciones?: StringNullableWithAggregatesFilter<"Multas_Notificacion_REX"> | string | null
@@ -190302,8 +190419,11 @@ export namespace Prisma {
     aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
     infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoNotificadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
     clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
@@ -190326,8 +190446,11 @@ export namespace Prisma {
     aspecto?: SortOrder
     infraccionDetalle?: SortOrderInput | SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrderInput | SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrderInput | SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrderInput | SortOrder
     estadoConciliacion?: SortOrder
     clasificacionError?: SortOrderInput | SortOrder
     motivoClasificacion?: SortOrderInput | SortOrder
@@ -190353,8 +190476,11 @@ export namespace Prisma {
     aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
     infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoNotificadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
     clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
@@ -190377,8 +190503,11 @@ export namespace Prisma {
     aspecto?: SortOrder
     infraccionDetalle?: SortOrderInput | SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrderInput | SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrderInput | SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrderInput | SortOrder
     estadoConciliacion?: SortOrder
     clasificacionError?: SortOrderInput | SortOrder
     motivoClasificacion?: SortOrderInput | SortOrder
@@ -190408,8 +190537,11 @@ export namespace Prisma {
     aspecto?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
     infraccionDetalle?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
     montoNotificado?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    montoNotificadoPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | number | null
     montoCalculado?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    montoCalculadoPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | number | null
     diferenciaMonto?: FloatWithAggregatesFilter<"Multas_Notificacion_Item"> | number
+    diferenciaPesos?: FloatNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | number | null
     estadoConciliacion?: StringWithAggregatesFilter<"Multas_Notificacion_Item"> | string
     clasificacionError?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
     motivoClasificacion?: StringNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | string | null
@@ -205093,8 +205225,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -205116,8 +205251,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -205139,8 +205277,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205162,8 +205303,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205185,8 +205329,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -205206,8 +205353,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205227,8 +205377,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205246,8 +205399,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -205270,8 +205426,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -205292,8 +205451,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205316,8 +205478,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205339,8 +205504,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -205361,8 +205529,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -205384,8 +205555,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -218841,8 +219015,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrder
     estado?: SortOrder
     cargadoPor?: SortOrder
     observaciones?: SortOrder
@@ -218857,8 +219034,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrder
   }
 
   export type Multas_Notificacion_REXMaxOrderByAggregateInput = {
@@ -218873,8 +219053,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrder
     estado?: SortOrder
     cargadoPor?: SortOrder
     observaciones?: SortOrder
@@ -218894,8 +219077,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrder
     estado?: SortOrder
     cargadoPor?: SortOrder
     observaciones?: SortOrder
@@ -218910,8 +219096,11 @@ export namespace Prisma {
     totalFilasNotif?: SortOrder
     totalFoliosNotif?: SortOrder
     montoTotalNotificado?: SortOrder
+    montoTotalNotificadoPesos?: SortOrder
     montoTotalCalculado?: SortOrder
+    montoTotalCalculadoPesos?: SortOrder
     montoTotalDiferencia?: SortOrder
+    montoTotalDiferenciaPesos?: SortOrder
   }
 
   export type Multas_Notificacion_REXRelationFilter = {
@@ -218930,8 +219119,11 @@ export namespace Prisma {
     aspecto?: SortOrder
     infraccionDetalle?: SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrder
     estadoConciliacion?: SortOrder
     clasificacionError?: SortOrder
     motivoClasificacion?: SortOrder
@@ -218945,8 +219137,11 @@ export namespace Prisma {
   export type Multas_Notificacion_ItemAvgOrderByAggregateInput = {
     rbd?: SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrder
   }
 
   export type Multas_Notificacion_ItemMaxOrderByAggregateInput = {
@@ -218960,8 +219155,11 @@ export namespace Prisma {
     aspecto?: SortOrder
     infraccionDetalle?: SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrder
     estadoConciliacion?: SortOrder
     clasificacionError?: SortOrder
     motivoClasificacion?: SortOrder
@@ -218983,8 +219181,11 @@ export namespace Prisma {
     aspecto?: SortOrder
     infraccionDetalle?: SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrder
     estadoConciliacion?: SortOrder
     clasificacionError?: SortOrder
     motivoClasificacion?: SortOrder
@@ -218998,8 +219199,11 @@ export namespace Prisma {
   export type Multas_Notificacion_ItemSumOrderByAggregateInput = {
     rbd?: SortOrder
     montoNotificado?: SortOrder
+    montoNotificadoPesos?: SortOrder
     montoCalculado?: SortOrder
+    montoCalculadoPesos?: SortOrder
     diferenciaMonto?: SortOrder
+    diferenciaPesos?: SortOrder
   }
 
   export type Multas_Descargo_FolioListRelationFilter = {
@@ -235750,8 +235954,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -235772,8 +235979,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -235878,8 +236088,11 @@ export namespace Prisma {
     aspecto?: StringFilter<"Multas_Notificacion_Item"> | string
     infraccionDetalle?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     montoNotificado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoNotificadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     montoCalculado?: FloatFilter<"Multas_Notificacion_Item"> | number
+    montoCalculadoPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     diferenciaMonto?: FloatFilter<"Multas_Notificacion_Item"> | number
+    diferenciaPesos?: FloatNullableFilter<"Multas_Notificacion_Item"> | number | null
     estadoConciliacion?: StringFilter<"Multas_Notificacion_Item"> | string
     clasificacionError?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
     motivoClasificacion?: StringNullableFilter<"Multas_Notificacion_Item"> | string | null
@@ -235940,8 +236153,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -235962,8 +236178,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -236000,8 +236219,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -236022,8 +236244,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -236044,8 +236269,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -236066,8 +236294,11 @@ export namespace Prisma {
     totalFilasNotif?: number
     totalFoliosNotif?: number
     montoTotalNotificado?: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado?: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia?: number
+    montoTotalDiferenciaPesos?: number | null
     estado?: string
     cargadoPor: string
     observaciones?: string | null
@@ -236280,8 +236511,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -236302,8 +236536,11 @@ export namespace Prisma {
     totalFilasNotif?: IntFieldUpdateOperationsInput | number
     totalFoliosNotif?: IntFieldUpdateOperationsInput | number
     montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     cargadoPor?: StringFieldUpdateOperationsInput | string
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
@@ -248966,8 +249203,11 @@ export namespace Prisma {
     aspecto: string
     infraccionDetalle?: string | null
     montoNotificado?: number
+    montoNotificadoPesos?: number | null
     montoCalculado?: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto?: number
+    diferenciaPesos?: number | null
     estadoConciliacion?: string
     clasificacionError?: string | null
     motivoClasificacion?: string | null
@@ -249006,8 +249246,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -249028,8 +249271,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null
@@ -249050,8 +249296,11 @@ export namespace Prisma {
     aspecto?: StringFieldUpdateOperationsInput | string
     infraccionDetalle?: NullableStringFieldUpdateOperationsInput | string | null
     montoNotificado?: FloatFieldUpdateOperationsInput | number
+    montoNotificadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     montoCalculado?: FloatFieldUpdateOperationsInput | number
+    montoCalculadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     diferenciaMonto?: FloatFieldUpdateOperationsInput | number
+    diferenciaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
     estadoConciliacion?: StringFieldUpdateOperationsInput | string
     clasificacionError?: NullableStringFieldUpdateOperationsInput | string | null
     motivoClasificacion?: NullableStringFieldUpdateOperationsInput | string | null

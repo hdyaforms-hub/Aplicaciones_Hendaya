@@ -3,6 +3,7 @@
 import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { ensureBibliotecaArgumentosTables } from '@/lib/multas/biblioteca-argumentos-db-init'
+import { checkMultasPermission } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
 import * as XLSX from 'xlsx'
@@ -44,12 +45,11 @@ export async function getArgumentosBibliotecaAction(filtros?: FiltrosArgumentosD
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, data: [], error: 'Sesión no iniciada' }
-        }
-
         await ensureBibliotecaArgumentosTables()
+        const { authorized } = await checkMultasPermission('view_biblioteca_argumentos')
+        if (!authorized) {
+            return { success: false, data: [], error: 'No tienes permisos para consultar la biblioteca de argumentos' }
+        }
 
         const where: any = { activo: true }
 
@@ -130,6 +130,10 @@ export async function getArgumentosSugeridosAction(params: {
 }> {
     try {
         await ensureBibliotecaArgumentosTables()
+        const { authorized } = await checkMultasPermission('view_biblioteca_argumentos')
+        if (!authorized) {
+            return { success: false, data: [], error: 'No tienes permisos para consultar sugerencias de argumentos' }
+        }
 
         const where: any = {
             activo: true,
@@ -187,6 +191,11 @@ export async function getArgumentosSugeridosAction(params: {
 export async function incrementarUsoArgumentoAction(id: string): Promise<{ success: boolean; nuevoTotal?: number }> {
     try {
         await ensureBibliotecaArgumentosTables()
+        const { authorized } = await checkMultasPermission('view_biblioteca_argumentos')
+        if (!authorized) {
+            return { success: false }
+        }
+
         const updated = await prisma.multas_Argumento_Biblioteca.update({
             where: { id },
             data: {
@@ -217,59 +226,38 @@ export async function crearArgumentoAction(data: {
     esPlantillaOficial?: boolean
 }): Promise<{ success: boolean; data?: ArgumentoBibliotecaDTO; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        // Permiso
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_biblioteca_argumentos')
-        if (!canManage) {
+        await ensureBibliotecaArgumentosTables()
+        const { authorized, user } = await checkMultasPermission('manage_biblioteca_argumentos')
+        if (!authorized) {
             return { success: false, error: 'No tienes permisos para crear o modificar argumentos de biblioteca' }
         }
 
-        if (!data.aspecto || !data.titulo?.trim() || !data.argumentoTexto?.trim()) {
-            return { success: false, error: 'Aspecto, título y texto del argumento son obligatorios' }
-        }
-
-        await ensureBibliotecaArgumentosTables()
-
-        const autor = session.user.name || session.user.email || 'Usuario'
+        const autor = user.name || user.username || user.email || 'Área Legal Hendaya'
 
         const created = await prisma.multas_Argumento_Biblioteca.create({
             data: {
                 aspecto: data.aspecto.toUpperCase(),
-                reglaId: data.reglaId?.trim() || null,
+                reglaId: data.reglaId || null,
                 titulo: data.titulo.trim(),
                 argumentoTexto: data.argumentoTexto.trim(),
                 fundamentoLegal: data.fundamentoLegal?.trim() || null,
                 folioEjemplo: data.folioEjemplo?.trim() || null,
                 numeroRexPrecedente: data.numeroRexPrecedente?.trim() || null,
                 resultadoHistorico: data.resultadoHistorico || 'ACEPTADO',
-                montoRebajadoUtm: Number(data.montoRebajadoUtm || 0),
+                montoRebajadoUtm: Number(data.montoRebajadoUtm) || 0,
                 etiquetas: data.etiquetas?.trim() || null,
-                esPlantillaOficial: Boolean(data.esPlantillaOficial),
+                esPlantillaOficial: data.esPlantillaOficial || false,
                 autor,
                 activo: true
             }
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'CREAR_ARGUMENTO_BIBLIOTECA',
             modulo: 'Multas · Biblioteca de Argumentos',
-            detalle: `Se creó el argumento "${created.titulo}" para el Aspecto ${created.aspecto}. Oficial: ${created.esPlantillaOficial}`
+            detalle: `Se creó el argumento "${created.titulo}" para Aspecto ${created.aspecto}`
         })
 
         revalidatePath('/dashboard/areas/multas/biblioteca')
@@ -277,27 +265,14 @@ export async function crearArgumentoAction(data: {
         return {
             success: true,
             data: {
-                id: created.id,
-                aspecto: created.aspecto,
-                reglaId: created.reglaId,
-                titulo: created.titulo,
-                argumentoTexto: created.argumentoTexto,
-                fundamentoLegal: created.fundamentoLegal,
-                folioEjemplo: created.folioEjemplo,
-                numeroRexPrecedente: created.numeroRexPrecedente,
+                ...created,
                 resultadoHistorico: created.resultadoHistorico as any,
-                montoRebajadoUtm: created.montoRebajadoUtm,
-                vecesUtilizado: created.vecesUtilizado,
-                etiquetas: created.etiquetas,
-                esPlantillaOficial: created.esPlantillaOficial,
-                autor: created.autor,
-                activo: created.activo,
                 createdAt: created.createdAt.toISOString(),
                 updatedAt: created.updatedAt.toISOString()
             }
         }
     } catch (error: any) {
-        console.error('Error al crear argumento:', error)
+        console.error('Error al crear argumento en biblioteca:', error)
         return { success: false, error: error.message || 'Error al guardar argumento' }
     }
 }
@@ -308,10 +283,10 @@ export async function crearArgumentoAction(data: {
 export async function editarArgumentoAction(
     id: string,
     data: {
-        aspecto?: string
+        aspecto: string
         reglaId?: string | null
-        titulo?: string
-        argumentoTexto?: string
+        titulo: string
+        argumentoTexto: string
         fundamentoLegal?: string | null
         folioEjemplo?: string | null
         numeroRexPrecedente?: string | null
@@ -320,117 +295,91 @@ export async function editarArgumentoAction(
         etiquetas?: string | null
         esPlantillaOficial?: boolean
     }
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; data?: ArgumentoBibliotecaDTO; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_biblioteca_argumentos')
-        if (!canManage) {
-            return { success: false, error: 'No tienes permisos para modificar argumentos de biblioteca' }
-        }
-
         await ensureBibliotecaArgumentosTables()
+        const { authorized, user } = await checkMultasPermission('manage_biblioteca_argumentos')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para crear o modificar argumentos de biblioteca' }
+        }
 
-        const updateData: any = {}
-        if (data.aspecto !== undefined) updateData.aspecto = data.aspecto.toUpperCase()
-        if (data.reglaId !== undefined) updateData.reglaId = data.reglaId?.trim() || null
-        if (data.titulo !== undefined) updateData.titulo = data.titulo.trim()
-        if (data.argumentoTexto !== undefined) updateData.argumentoTexto = data.argumentoTexto.trim()
-        if (data.fundamentoLegal !== undefined) updateData.fundamentoLegal = data.fundamentoLegal?.trim() || null
-        if (data.folioEjemplo !== undefined) updateData.folioEjemplo = data.folioEjemplo?.trim() || null
-        if (data.numeroRexPrecedente !== undefined) updateData.numeroRexPrecedente = data.numeroRexPrecedente?.trim() || null
-        if (data.resultadoHistorico !== undefined) updateData.resultadoHistorico = data.resultadoHistorico
-        if (data.montoRebajadoUtm !== undefined) updateData.montoRebajadoUtm = Number(data.montoRebajadoUtm || 0)
-        if (data.etiquetas !== undefined) updateData.etiquetas = data.etiquetas?.trim() || null
-        if (data.esPlantillaOficial !== undefined) updateData.esPlantillaOficial = Boolean(data.esPlantillaOficial)
-
-        await prisma.multas_Argumento_Biblioteca.update({
+        const updated = await prisma.multas_Argumento_Biblioteca.update({
             where: { id },
-            data: updateData
+            data: {
+                aspecto: data.aspecto.toUpperCase(),
+                reglaId: data.reglaId ?? undefined,
+                titulo: data.titulo.trim(),
+                argumentoTexto: data.argumentoTexto.trim(),
+                fundamentoLegal: data.fundamentoLegal?.trim() ?? undefined,
+                folioEjemplo: data.folioEjemplo?.trim() ?? undefined,
+                numeroRexPrecedente: data.numeroRexPrecedente?.trim() ?? undefined,
+                resultadoHistorico: data.resultadoHistorico || 'ACEPTADO',
+                montoRebajadoUtm: Number(data.montoRebajadoUtm) || 0,
+                etiquetas: data.etiquetas?.trim() ?? undefined,
+                esPlantillaOficial: data.esPlantillaOficial || false
+            }
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'EDITAR_ARGUMENTO_BIBLIOTECA',
             modulo: 'Multas · Biblioteca de Argumentos',
-            detalle: `Se actualizó el argumento ID ${id}`
+            detalle: `Se editó el argumento "${updated.titulo}" (ID: ${id})`
         })
 
         revalidatePath('/dashboard/areas/multas/biblioteca')
 
-        return { success: true }
+        return {
+            success: true,
+            data: {
+                ...updated,
+                resultadoHistorico: updated.resultadoHistorico as any,
+                createdAt: updated.createdAt.toISOString(),
+                updatedAt: updated.updatedAt.toISOString()
+            }
+        }
     } catch (error: any) {
-        console.error('Error al editar argumento:', error)
-        return { success: false, error: error.message || 'Error al editar argumento' }
+        console.error('Error al editar argumento en biblioteca:', error)
+        return { success: false, error: error.message || 'Error al actualizar argumento' }
     }
 }
 
 /**
- * Eliminar (borrado lógico o físico) un argumento
+ * Eliminar (lógico) un argumento de la biblioteca
  */
 export async function eliminarArgumentoAction(id: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_biblioteca_argumentos')
-        if (!canManage) {
+        await ensureBibliotecaArgumentosTables()
+        const { authorized, user } = await checkMultasPermission('manage_biblioteca_argumentos')
+        if (!authorized) {
             return { success: false, error: 'No tienes permisos para eliminar argumentos de biblioteca' }
         }
 
-        await ensureBibliotecaArgumentosTables()
-
-        // Desactivación lógica para preservar trazabilidad
-        await prisma.multas_Argumento_Biblioteca.update({
+        const arg = await prisma.multas_Argumento_Biblioteca.update({
             where: { id },
             data: { activo: false }
         })
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'ELIMINAR_ARGUMENTO_BIBLIOTECA',
             modulo: 'Multas · Biblioteca de Argumentos',
-            detalle: `Se desactivó el argumento ID ${id}`
+            detalle: `Se desactivó el argumento "${arg.titulo}" (ID: ${id})`
         })
 
         revalidatePath('/dashboard/areas/multas/biblioteca')
 
         return { success: true }
     } catch (error: any) {
-        console.error('Error al eliminar argumento:', error)
+        console.error('Error al eliminar argumento de biblioteca:', error)
         return { success: false, error: error.message || 'Error al eliminar argumento' }
     }
 }
 
 /**
- * Importar lote de argumentos desde archivo Excel
+ * Importar masivamente argumentos y descargos desde Excel real de JUNAEB (Hoja "Descargos")
  */
 export async function importarArgumentosExcelAction(formData: FormData): Promise<{
     success: boolean
@@ -438,24 +387,10 @@ export async function importarArgumentosExcelAction(formData: FormData): Promise
     error?: string
 }> {
     try {
-        const session = await getSession()
-        if (!session?.user) {
-            return { success: false, error: 'Sesión no iniciada' }
-        }
-
-        const currentUser = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            include: { role: true }
-        })
-        const perms: string[] = currentUser?.role?.permissions
-            ? (typeof currentUser.role.permissions === 'string'
-                ? JSON.parse(currentUser.role.permissions)
-                : currentUser.role.permissions)
-            : []
-
-        const canManage = perms.includes('*') || perms.includes('manage_biblioteca_argumentos')
-        if (!canManage) {
-            return { success: false, error: 'No tienes permisos para importar argumentos' }
+        await ensureBibliotecaArgumentosTables()
+        const { authorized, user } = await checkMultasPermission('manage_biblioteca_argumentos')
+        if (!authorized) {
+            return { success: false, error: 'No tienes permisos para importar argumentos de biblioteca' }
         }
 
         const file = formData.get('file') as File | null
@@ -467,76 +402,123 @@ export async function importarArgumentosExcelAction(formData: FormData): Promise
         const buffer = Buffer.from(arrayBuffer)
         const workbook = XLSX.read(buffer, { type: 'buffer' })
 
-        // Buscar hoja "Descargos" o la primera hoja
-        let sheetName = workbook.SheetNames.find(s =>
-            s.toLowerCase().includes('descargo') || s.toLowerCase().includes('argumento')
-        ) || workbook.SheetNames[0]
+        // Buscar estrictamente la hoja "Descargos"
+        const sheetName = workbook.SheetNames.find(s => {
+            const clean = s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            return clean.includes('descargo')
+        })
+
+        if (!sheetName) {
+            return { success: false, error: 'El archivo Excel no contiene la hoja obligatoria "Descargos".' }
+        }
 
         const sheet = workbook.Sheets[sheetName]
         if (!sheet) {
             return { success: false, error: 'El archivo Excel no contiene hojas válidas' }
         }
 
-        const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' })
-        if (!rows || rows.length === 0) {
+        const rawRows: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' })
+        if (!rawRows || rawRows.length === 0) {
             return { success: false, error: 'La hoja de Excel está vacía' }
         }
 
-        await ensureBibliotecaArgumentosTables()
+        // Detectar fila de cabecera
+        let headerRowIdx = 0
+        for (let r = 0; r < Math.min(5, rawRows.length); r++) {
+            const rowStr = rawRows[r].map(c => String(c).toLowerCase()).join(' ')
+            if (rowStr.includes('acta') || rowStr.includes('folio') || rowStr.includes('aspecto') || rowStr.includes('descargo')) {
+                headerRowIdx = r
+                break
+            }
+        }
 
-        const autor = session.user.name || session.user.email || 'Importación Excel'
+        const headerRow = rawRows[headerRowIdx] || []
+        // Posiciones estándar sigs: col 2 (ID_ACTA/folio), col 9/10 (ASPECTO), col 11 (OBS), col 19 (PESOS), col 20 (DESCARGO)
+        let colFolio = 2
+        let colAspecto = 9
+        let colObs = 11
+        let colPesos = 19
+        let colDescargo = 20
+
+        // Si los encabezados existen, mapear dinámicamente
+        headerRow.forEach((cellVal, idx) => {
+            const c = String(cellVal).toLowerCase().trim()
+            if (c === 'id_acta' || c === 'folio' || c === 'n° acta' || c === 'acta' || c.includes('id_acta')) colFolio = idx
+            else if (c === 'aspecto' || c === 'letra' || c.includes('aspecto')) colAspecto = idx
+            else if (c.includes('observacion') || c.includes('hecho') || c.includes('obs')) colObs = idx
+            else if (c.includes('pesos') || c.includes('monto')) colPesos = idx
+            else if (c.includes('descargo') || c.includes('argumento') || c.includes('texto')) colDescargo = idx
+        })
+
+        const autor = user.name || user.username || user.email || 'Importación Anexo 1 Descargos'
         let insertados = 0
 
-        for (const r of rows) {
-            // Mapeo flexible de columnas
-            const aspecto = String(r['Aspecto'] || r['ASPECTO'] || r['aspecto'] || '').trim().toUpperCase()
-            const titulo = String(r['Titulo'] || r['Título'] || r['TITULO'] || r['Nombre'] || '').trim()
-            const argumentoTexto = String(r['Argumento'] || r['ARGUMENTO'] || r['Descargo'] || r['Texto'] || '').trim()
+        for (let r = headerRowIdx + 1; r < rawRows.length; r++) {
+            const row = rawRows[r]
+            if (!row || row.length === 0) continue
 
-            if (!aspecto || !titulo || !argumentoTexto) {
-                continue
-            }
+            const folioRaw = row[colFolio]
+            const folio = folioRaw ? String(folioRaw).trim().replace(/^['"\s]+|['"\s]+$/g, '') : null
 
-            const reglaId = String(r['Regla'] || r['ReglaId'] || r['Criterio'] || '').trim() || null
-            const fundamentoLegal = String(r['Fundamento'] || r['Fundamento Legal'] || r['Base Legal'] || '').trim() || null
-            const folioEjemplo = String(r['Folio'] || r['Folio Ejemplo'] || '').trim() || null
-            const numeroRexPrecedente = String(r['REX'] || r['Numero REX'] || r['Resolucion'] || '').trim() || null
-            const resultadoRaw = String(r['Resultado'] || r['Estado'] || 'ACEPTADO').trim().toUpperCase()
-            const resultadoHistorico = ['ACEPTADO', 'PARCIAL', 'RECHAZADO', 'PLANTILLA_OFICIAL'].includes(resultadoRaw)
-                ? resultadoRaw
-                : 'ACEPTADO'
-            const montoRebajadoUtm = Number(r['Monto Rebajado UTM'] || r['Rebaja UTM'] || r['UTM'] || 0) || 0
-            const etiquetas = String(r['Etiquetas'] || r['Tags'] || '').trim() || null
-            const esPlantillaOficial = String(r['Es Plantilla'] || r['Plantilla'] || '').toLowerCase().includes('si') ||
-                String(r['Es Plantilla'] || '').toLowerCase().includes('true') ||
-                resultadoHistorico === 'PLANTILLA_OFICIAL'
+            const aspectoRaw = row[colAspecto]
+            const aspecto = aspectoRaw ? String(aspectoRaw).trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5) : 'GENERAL'
 
-            await prisma.multas_Argumento_Biblioteca.create({
-                data: {
-                    aspecto,
-                    reglaId,
-                    titulo,
-                    argumentoTexto,
-                    fundamentoLegal,
-                    folioEjemplo,
-                    numeroRexPrecedente,
-                    resultadoHistorico,
-                    montoRebajadoUtm,
-                    etiquetas,
-                    esPlantillaOficial,
-                    autor,
+            const descargoTexto = String(row[colDescargo] || '').trim()
+            if (!descargoTexto) continue
+
+            const observacion = String(row[colObs] || '').trim()
+            const titulo = observacion
+                ? (observacion.length > 70 ? observacion.slice(0, 67) + '...' : observacion)
+                : (folio ? `Descargo Acta #${folio} · Aspecto ${aspecto}` : `Descargo Oficial Aspecto ${aspecto}`)
+
+            const fundamentoLegal = observacion || 'Bases de Licitación PAE e Instrucción de Trabajo de Elementos Esenciales JUNAEB'
+
+            // Deduplicación por (folioEjemplo, aspecto)
+            const existing = await prisma.multas_Argumento_Biblioteca.findFirst({
+                where: {
+                    folioEjemplo: folio || undefined,
+                    aspecto: aspecto,
                     activo: true
                 }
             })
+
+            if (existing) {
+                await prisma.multas_Argumento_Biblioteca.update({
+                    where: { id: existing.id },
+                    data: {
+                        titulo,
+                        argumentoTexto: descargoTexto,
+                        fundamentoLegal,
+                        autor,
+                        updatedAt: new Date()
+                    }
+                })
+            } else {
+                await prisma.multas_Argumento_Biblioteca.create({
+                    data: {
+                        aspecto,
+                        titulo,
+                        argumentoTexto: descargoTexto,
+                        fundamentoLegal,
+                        folioEjemplo: folio || null,
+                        resultadoHistorico: 'ACEPTADO',
+                        montoRebajadoUtm: 0,
+                        esPlantillaOficial: false,
+                        autor,
+                        activo: true
+                    }
+                })
+            }
+
             insertados++
         }
 
         await logAuditAction({
-            username: (session.user.username || session.user.email) as string,
-            userId: session.user.id || null,
+            username: (user.username || user.email) as string,
+            userId: user.id || null,
             action: 'IMPORTAR_ARGUMENTOS_EXCEL',
             modulo: 'Multas · Biblioteca de Argumentos',
-            detalle: `Se importaron ${insertados} argumentos desde el archivo "${file.name}" (total filas: ${rows.length})`
+            detalle: `Se procesaron y deduplicaron ${insertados} argumentos desde el archivo "${file.name}" (hoja "${sheetName}")`
         })
 
         revalidatePath('/dashboard/areas/multas/biblioteca')

@@ -3,6 +3,7 @@
 import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { ensureNotificacionesJunaebTables } from '@/lib/multas/notificaciones-db-init'
+import { checkMultasPermission } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
 import * as xlsx from 'xlsx'
@@ -18,8 +19,11 @@ export interface NotificacionRexItemDTO {
     aspecto: string
     infraccionDetalle: string | null
     montoNotificado: number
+    montoNotificadoPesos?: number | null
     montoCalculado: number
+    montoCalculadoPesos?: number | null
     diferenciaMonto: number
+    diferenciaPesos?: number | null
     estadoConciliacion: 'COINCIDE' | 'DIFERENCIA_MONTO' | 'SOLO_JUNAEB' | 'NO_INCLUIDO' | 'FOLIO_REPETIDO' | 'PENDIENTE'
     clasificacionError: 'ERROR_JUNAEB' | 'ERROR_INTERNO' | 'EN_REVISION' | 'ACEPTADO' | null
     motivoClasificacion: string | null
@@ -40,8 +44,11 @@ export interface NotificacionRexCabDTO {
     totalFilasNotif: number
     totalFoliosNotif: number
     montoTotalNotificado: number
+    montoTotalNotificadoPesos?: number | null
     montoTotalCalculado: number
+    montoTotalCalculadoPesos?: number | null
     montoTotalDiferencia: number
+    montoTotalDiferenciaPesos?: number | null
     estado: 'BORRADOR' | 'CONCILIADO' | 'EN_DESCARGO' | 'CERRADO'
     cargadoPor: string
     observaciones: string | null
@@ -63,30 +70,10 @@ export interface ResumenEstadisticoConciliacion {
     montoTotalDiferencia: number
 }
 
-// Utility para verificar permisos con lectura fresca de base de datos
+// Utility para verificar permisos con lectura fresca de base de datos usando el validador central
 async function checkNotificacionesPermission(perm: string | string[]): Promise<{ authorized: boolean; user: any }> {
-    const session = await getSession()
-    if (!session?.user?.id) return { authorized: false, user: null }
-
-    const user = await prisma.user.findUnique({
-        where: { id: session.user.id },
-        include: { role: true }
-    })
-    if (!user || !user.role) return { authorized: false, user: null }
-
-    const roleName = user.role.name?.toLowerCase().trim() || ''
-    const isAdmin = roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin'
-    if (isAdmin) return { authorized: true, user }
-
-    const permissions: string[] = Array.isArray(user.role.permissions)
-        ? (user.role.permissions as string[])
-        : typeof user.role.permissions === 'string'
-            ? (() => { try { return JSON.parse(user.role.permissions) } catch { return [] } })()
-            : []
-
-    const targets = Array.isArray(perm) ? perm : [perm]
-    const authorized = permissions.includes('*') || targets.some(p => permissions.includes(p))
-    return { authorized, user }
+    const res = await checkMultasPermission(perm)
+    return { authorized: res.authorized, user: res.user }
 }
 
 /**
@@ -290,18 +277,68 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
         // Leer archivo Excel
         const arrayBuffer = await file.arrayBuffer()
         const workbook = xlsx.read(Buffer.from(arrayBuffer), { type: 'buffer' })
-        const sheetName = workbook.SheetNames[0]
-        if (!sheetName) {
-            return { success: false, error: 'El archivo Excel no contiene ninguna hoja.' }
+        
+        // Buscar la hoja "Cálculo de multa" o similar (como en sigs)
+        const targetSheetName = workbook.SheetNames.find(n => {
+            const clean = n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            return clean.includes("calculo de multa") || clean.includes("calculo") || clean.includes("anexo 1")
+        }) || workbook.SheetNames[0]
+
+        if (!targetSheetName) {
+            return { success: false, error: 'El archivo Excel no contiene ninguna hoja válida.' }
         }
 
-        const sheet = workbook.Sheets[sheetName]
-        const rows: any[] = xlsx.utils.sheet_to_json(sheet, { defval: '' })
-        if (rows.length === 0) {
+        const sheet = workbook.Sheets[targetSheetName]
+        const rawRows: any[][] = xlsx.utils.sheet_to_json(sheet, { header: 1, defval: '' })
+        if (rawRows.length === 0) {
             return { success: false, error: 'La hoja seleccionada está vacía.' }
         }
 
-        // Mapeo flexible de columnas
+        // En el Anexo 1 real, la fila 0 contiene metadatos del período y la fila 1 contiene los encabezados.
+        let headerRowIdx = 0
+        for (let r = 0; r < Math.min(5, rawRows.length); r++) {
+            const rowStr = rawRows[r].map(c => String(c).toLowerCase()).join(' ')
+            if (rowStr.includes('acta') || rowStr.includes('folio') || rowStr.includes('aspecto') || rowStr.includes('id_acta')) {
+                headerRowIdx = r
+                break
+            }
+        }
+
+        const headerRow = rawRows[headerRowIdx] || []
+        // Posiciones estándar sigs: col 2 (ID_ACTA/folio), col 10 (ASPECTO), col 19 (MULTA_UTM), col 20 (MONTO_PESOS)
+        let colFolio = 2
+        let colAspecto = 10
+        let colUtm = 19
+        let colClp = 20
+        let colRbd = 0
+        let colEstablecimiento = 1
+        let colSucursal = 3
+        let colFecha = 5
+
+        // Si los encabezados existen por nombre, detectarlos dinámicamente
+        headerRow.forEach((cellVal, idx) => {
+            const c = String(cellVal).toLowerCase().trim()
+            if (c === 'id_acta' || c === 'folio' || c === 'n° acta' || c === 'acta' || c.includes('id_acta')) colFolio = idx
+            else if (c === 'aspecto' || c === 'letra' || c.includes('aspecto')) colAspecto = idx
+            else if (c.includes('multa_utm') || c.includes('multa utm') || c === 'utm') colUtm = idx
+            else if (c.includes('monto_pesos') || c.includes('monto pesos') || c.includes('pesos') || (c.includes('monto') && !c.includes('utm'))) colClp = idx
+            else if (c === 'rbd' || c.includes('rbd')) colRbd = idx
+            else if (c.includes('establecimiento') || c.includes('colegio')) colEstablecimiento = idx
+            else if (c.includes('sucursal') || c.includes('zona') || c.includes('sede')) colSucursal = idx
+            else if (c.includes('fecha')) colFecha = idx
+        })
+
+        // Validar unicidad previa considerando licitacionId nulo
+        const existingRex = await prisma.multas_Notificacion_REX.findFirst({
+            where: {
+                numeroResolucion,
+                licitacionId: licitacionId ?? null
+            }
+        })
+        if (existingRex) {
+            return { success: false, error: 'Ya existe una resolución registrada con ese mismo número y licitación.' }
+        }
+
         const itemsToInsert: Array<{
             folio: string
             rbd: number | null
@@ -310,49 +347,38 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
             fechaSupervision: Date | null
             aspecto: string
             infraccionDetalle: string | null
-            montoNotificado: number
+            montoNotificadoUtm: number
+            montoNotificadoPesos: number
         }> = []
 
         const foliosSet = new Set<string>()
-        let totalMontoNotificado = 0
+        let totalMontoNotificadoUtm = 0
+        let totalMontoNotificadoPesos = 0
 
-        for (const row of rows) {
-            // Buscar columna de folio
-            const folioVal = findRowValue(row, ['folio', 'n° acta', 'acta', 'nro acta', 'nro_acta', 'folio_acta', 'folio acta', 'n° de acta'])
-            if (!folioVal) continue
+        for (let r = headerRowIdx + 1; r < rawRows.length; r++) {
+            const row = rawRows[r]
+            if (!row || row.length === 0) continue
 
-            const folio = String(folioVal).trim().replace(/^['"\s]+|['"\s]+$/g, '')
+            const folioRaw = row[colFolio]
+            if (!folioRaw) continue
+            const folio = String(folioRaw).trim().replace(/^['"\s]+|['"\s]+$/g, '')
             if (!folio) continue
 
-            // Aspecto / Letra
-            const aspectoVal = findRowValue(row, ['aspecto', 'letra', 'item', 'código aspecto', 'codigo_aspecto', 'letra aspecto', 'aspecto ee', 'aspecto_ee']) || 'GENERAL'
-            const aspecto = String(aspectoVal).trim().toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5) || 'A'
+            const aspecto = parseAspecto(row[colAspecto])
+            const montoUtm = parseNumeroChileno(row[colUtm])
+            const montoPesos = parseNumeroChileno(row[colClp])
 
-            // Monto Notificado (UTM)
-            const montoVal = findRowValue(row, ['monto', 'utm', 'monto utm', 'monto_utm', 'multa utm', 'total utm', 'monto notificado', 'monto sancion', 'sancion utm'])
-            let montoNotificado = 0
-            if (montoVal !== undefined && montoVal !== null && montoVal !== '') {
-                const parsedMonto = typeof montoVal === 'number' ? montoVal : parseFloat(String(montoVal).replace(/\./g, '').replace(',', '.'))
-                if (!isNaN(parsedMonto)) {
-                    montoNotificado = Math.round(parsedMonto * 1000) / 1000
-                }
-            }
-
-            // RBD
-            const rbdVal = findRowValue(row, ['rbd', 'cod rbd', 'colegio rbd', 'rbd colegio', 'codigo rbd'])
-            const rbdNum = rbdVal ? parseInt(String(rbdVal).replace(/\D/g, ''), 10) : null
+            const rbdRaw = row[colRbd]
+            const rbdNum = rbdRaw ? parseInt(String(rbdRaw).replace(/\D/g, ''), 10) : null
             const rbd = rbdNum && !isNaN(rbdNum) ? rbdNum : null
 
-            // Establecimiento
-            const estabVal = findRowValue(row, ['establecimiento', 'nombre establecimiento', 'colegio', 'escuela', 'nombre colegio'])
+            const estabVal = row[colEstablecimiento]
             const establecimiento = estabVal ? String(estabVal).trim() : null
 
-            // Sucursal
-            const sucursalVal = findRowValue(row, ['sucursal', 'sede', 'cd', 'zona'])
-            const sucursal = sucursalVal ? String(sucursalVal).trim() : null
+            const sucVal = row[colSucursal]
+            const sucursal = sucVal ? String(sucVal).trim() : null
 
-            // Fecha Supervisión
-            const fechaVal = findRowValue(row, ['fecha', 'fecha supervisión', 'fecha_supervision', 'fecha visita', 'fecha acta'])
+            const fechaVal = row[colFecha]
             let fechaSupervision: Date | null = null
             if (fechaVal) {
                 const parsedDate = parseExcelDate(fechaVal)
@@ -361,10 +387,6 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 }
             }
 
-            // Infracción / Detalle
-            const infraccionVal = findRowValue(row, ['infraccion', 'descripcion', 'detalle', 'observacion', 'motivo', 'hecho imputado'])
-            const infraccionDetalle = infraccionVal ? String(infraccionVal).trim() : null
-
             itemsToInsert.push({
                 folio,
                 rbd,
@@ -372,12 +394,14 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 sucursal,
                 fechaSupervision,
                 aspecto,
-                infraccionDetalle,
-                montoNotificado
+                infraccionDetalle: null,
+                montoNotificadoUtm: montoUtm,
+                montoNotificadoPesos: montoPesos
             })
 
             foliosSet.add(folio)
-            totalMontoNotificado += montoNotificado
+            totalMontoNotificadoUtm += montoUtm
+            totalMontoNotificadoPesos += montoPesos
         }
 
         if (itemsToInsert.length === 0) {
@@ -399,7 +423,8 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 nombreArchivo: file.name,
                 totalFilasNotif: itemsToInsert.length,
                 totalFoliosNotif: foliosSet.size,
-                montoTotalNotificado: Math.round(totalMontoNotificado * 1000) / 1000,
+                montoTotalNotificado: Math.round(totalMontoNotificadoUtm * 1000) / 1000,
+                montoTotalNotificadoPesos: Math.round(totalMontoNotificadoPesos),
                 estado: 'BORRADOR',
                 cargadoPor: userName,
                 observaciones,
@@ -412,9 +437,12 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                         fechaSupervision: i.fechaSupervision,
                         aspecto: i.aspecto,
                         infraccionDetalle: i.infraccionDetalle,
-                        montoNotificado: i.montoNotificado,
+                        montoNotificado: i.montoNotificadoUtm,
+                        montoNotificadoPesos: i.montoNotificadoPesos,
                         montoCalculado: 0.0,
-                        diferenciaMonto: i.montoNotificado,
+                        montoCalculadoPesos: 0.0,
+                        diferenciaMonto: i.montoNotificadoUtm,
+                        diferenciaPesos: i.montoNotificadoPesos,
                         estadoConciliacion: 'PENDIENTE'
                     }))
                 }
@@ -427,7 +455,7 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
             userId: user.id,
             action: 'CARGA_NOTIFICACION_REX',
             modulo: 'Multas · Notificaciones JUNAEB',
-            detalle: `Carga de REX N° ${numeroResolucion}: ${itemsToInsert.length} filas, ${foliosSet.size} folios, total ${totalMontoNotificado.toFixed(2)} UTM.`
+            detalle: `Carga de REX N° ${numeroResolucion}: ${itemsToInsert.length} filas, ${foliosSet.size} folios, total ${totalMontoNotificadoUtm.toFixed(2)} UTM.`
         })
 
         revalidatePath('/dashboard/areas/multas/notificaciones')
@@ -460,7 +488,8 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
             return { success: false, error: 'Resolución no encontrada.' }
         }
 
-        const items = rex.items
+        // Excluir registros previos NO_INCLUIDO antes del loop para no inflar cálculos ni perder filas
+        const items = rex.items.filter(i => i.estadoConciliacion !== 'NO_INCLUIDO')
         const foliosNotif = Array.from(new Set(items.map(i => i.folio)))
 
         // 1. Consultar cálculos internos en Multas_Elementos_Esenciales
@@ -469,22 +498,39 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
             include: { detalles: true }
         })
 
-        // Mapa de cálculo interno: folio -> aspecto -> montoMulta
-        const calcMap = new Map<string, Map<string, number>>()
+        // Mapa de cálculo interno: folio -> aspecto -> montoMulta (en CLP)
+        const calcMapClp = new Map<string, Map<string, number>>()
         for (const cab of cabs) {
             const aspMap = new Map<string, number>()
             for (const det of cab.detalles) {
-                const letra = (det.letraAspecto || '').toUpperCase().trim()
-                aspMap.set(letra, det.montoMulta || 0)
+                const letra = parseAspecto(det.letraAspecto)
+                aspMap.set(letra, (aspMap.get(letra) || 0) + (det.montoMulta || 0))
             }
-            calcMap.set(cab.folioOriginal, aspMap)
+            calcMapClp.set(cab.folioOriginal, aspMap)
         }
 
-        // 2. Buscar si los folios/aspectos ya fueron imputados en resoluciones anteriores
+        // 2. Buscar si los folios/aspectos ya fueron imputados en resoluciones ANTERIORES
+        // Scoped strictly to prior REX (prior year/month/created) with montoNotificado > 0
         const prevItems = await prisma.multas_Notificacion_Item.findMany({
             where: {
                 folio: { in: foliosNotif },
-                notificacionId: { not: notificacionId }
+                notificacionId: { not: notificacionId },
+                montoNotificado: { gt: 0 },
+                estadoConciliacion: { notIn: ['NO_INCLUIDO', 'SOLO_JUNAEB'] },
+                notificacion: {
+                    OR: [
+                        { periodoAnio: { lt: rex.periodoAnio } },
+                        {
+                            periodoAnio: rex.periodoAnio,
+                            periodoMes: { lt: rex.periodoMes }
+                        },
+                        {
+                            periodoAnio: rex.periodoAnio,
+                            periodoMes: rex.periodoMes,
+                            createdAt: { lt: rex.createdAt }
+                        }
+                    ]
+                }
             },
             include: {
                 notificacion: {
@@ -495,24 +541,37 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
 
         const prevMap = new Map<string, string>() // key: `${folio}_${aspecto}` -> numeroResolucion
         for (const pi of prevItems) {
-            const key = `${pi.folio}_${pi.aspecto.toUpperCase()}`
+            const key = `${pi.folio}_${parseAspecto(pi.aspecto)}`
             if (!prevMap.has(key)) {
                 prevMap.set(key, pi.notificacion.numeroResolucion)
             }
         }
 
+        // Eliminar antiguos 'NO_INCLUIDO' de esta conciliación previa si existían antes de procesar
+        await prisma.multas_Notificacion_Item.deleteMany({
+            where: {
+                notificacionId,
+                estadoConciliacion: 'NO_INCLUIDO'
+            }
+        })
+
         // 3. Procesar y actualizar cada item de la notificación
-        let montoTotalCalculado = 0
+        let montoTotalCalculadoPesos = 0
+        let montoTotalCalculadoUtm = 0
         const notifiedKeys = new Set<string>()
+        const updateOperations: any[] = []
 
         for (const item of items) {
-            const aspUpper = item.aspecto.toUpperCase()
-            const key = `${item.folio}_${aspUpper}`
+            const aspClean = parseAspecto(item.aspecto)
+            const key = `${item.folio}_${aspClean}`
             notifiedKeys.add(key)
 
-            const aspMap = calcMap.get(item.folio)
-            const montoCalculado = aspMap && aspMap.has(aspUpper) ? aspMap.get(aspUpper)! : 0
-            const diff = Math.round((item.montoNotificado - montoCalculado) * 1000) / 1000
+            const aspMap = calcMapClp.get(item.folio)
+            const montoCalculadoPesos = aspMap && aspMap.has(aspClean) ? aspMap.get(aspClean)! : 0
+            const notificadoPesos = item.montoNotificadoPesos || 0
+
+            const diffPesos = Math.round(notificadoPesos - montoCalculadoPesos)
+            const diffUtm = Math.round((item.montoNotificado - (montoCalculadoPesos > 0 ? item.montoNotificado : 0)) * 1000) / 1000
 
             let estadoConciliacion: 'COINCIDE' | 'DIFERENCIA_MONTO' | 'SOLO_JUNAEB' | 'FOLIO_REPETIDO' = 'COINCIDE'
             let resolucionAnterior: string | null = null
@@ -520,29 +579,40 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
             if (prevMap.has(key)) {
                 estadoConciliacion = 'FOLIO_REPETIDO'
                 resolucionAnterior = prevMap.get(key)!
-            } else if (!aspMap || !aspMap.has(aspUpper) || (montoCalculado === 0 && item.montoNotificado > 0)) {
+            } else if (!aspMap || !aspMap.has(aspClean) || (montoCalculadoPesos === 0 && (item.montoNotificado > 0 || notificadoPesos > 0))) {
                 estadoConciliacion = 'SOLO_JUNAEB'
-            } else if (Math.abs(diff) < 0.005) {
+            } else if (Math.abs(diffPesos) < 100) {
                 estadoConciliacion = 'COINCIDE'
             } else {
                 estadoConciliacion = 'DIFERENCIA_MONTO'
             }
 
-            montoTotalCalculado += montoCalculado
+            montoTotalCalculadoPesos += montoCalculadoPesos
+            if (montoCalculadoPesos > 0) {
+                montoTotalCalculadoUtm += item.montoNotificado
+            }
 
-            await prisma.multas_Notificacion_Item.update({
-                where: { id: item.id },
-                data: {
-                    montoCalculado,
-                    diferenciaMonto: diff,
-                    estadoConciliacion,
-                    resolucionAnterior
-                }
-            })
+            updateOperations.push(
+                prisma.multas_Notificacion_Item.update({
+                    where: { id: item.id },
+                    data: {
+                        montoCalculado: montoCalculadoPesos > 0 ? item.montoNotificado : 0.0,
+                        montoCalculadoPesos,
+                        diferenciaMonto: diffUtm,
+                        diferenciaPesos: diffPesos,
+                        estadoConciliacion,
+                        resolucionAnterior
+                    }
+                })
+            )
+        }
+
+        // Ejecutar actualizaciones en lotes usando transacciones
+        for (let i = 0; i < updateOperations.length; i += 50) {
+            await prisma.$transaction(updateOperations.slice(i, i + 50))
         }
 
         // 4. Identificar actas del mismo período calculadas en Hendaya pero OMITIDAS por JUNAEB ('NO_INCLUIDO')
-        // Buscar actas del mes/año especificado
         const startOfMonth = new Date(rex.periodoAnio, rex.periodoMes - 1, 1)
         const endOfMonth = new Date(rex.periodoAnio, rex.periodoMes, 0, 23, 59, 59)
 
@@ -557,18 +627,10 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
             include: { detalles: true }
         })
 
-        // Eliminar antiguos 'NO_INCLUIDO' de esta conciliación previa si existían
-        await prisma.multas_Notificacion_Item.deleteMany({
-            where: {
-                notificacionId,
-                estadoConciliacion: 'NO_INCLUIDO'
-            }
-        })
-
         const omittedItemsToCreate = []
         for (const oc of omittedCabs) {
             for (const od of oc.detalles) {
-                const letra = (od.letraAspecto || '').toUpperCase().trim()
+                const letra = parseAspecto(od.letraAspecto)
                 const key = `${oc.folioOriginal}_${letra}`
                 if (od.montoMulta > 0 && !notifiedKeys.has(key)) {
                     omittedItemsToCreate.push({
@@ -579,13 +641,16 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
                         aspecto: letra,
                         infraccionDetalle: od.descripcion || `Infracción aspecto ${letra} calculada internamente no notificada por JUNAEB`,
                         montoNotificado: 0.0,
-                        montoCalculado: od.montoMulta,
-                        diferenciaMonto: -od.montoMulta,
+                        montoNotificadoPesos: 0.0,
+                        montoCalculado: 0.0,
+                        montoCalculadoPesos: od.montoMulta,
+                        diferenciaMonto: 0.0,
+                        diferenciaPesos: -od.montoMulta,
                         estadoConciliacion: 'NO_INCLUIDO',
                         clasificacionError: 'ERROR_JUNAEB',
                         motivoClasificacion: 'Infracción no consignada en Anexo 1 por JUNAEB'
                     })
-                    montoTotalCalculado += od.montoMulta
+                    montoTotalCalculadoPesos += od.montoMulta
                 }
             }
         }
@@ -598,13 +663,17 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
 
         // 5. Actualizar totales y estado de la resolución
         const totalItemsCount = items.length + omittedItemsToCreate.length
-        const totalDiff = Math.round((rex.montoTotalNotificado - montoTotalCalculado) * 1000) / 1000
+        const totalDiffUtm = Math.round((rex.montoTotalNotificado - montoTotalCalculadoUtm) * 1000) / 1000
+        const notificadoPesosTotal = rex.montoTotalNotificadoPesos || 0
+        const totalDiffPesos = Math.round(notificadoPesosTotal - montoTotalCalculadoPesos)
 
         await prisma.multas_Notificacion_REX.update({
             where: { id: notificacionId },
             data: {
-                montoTotalCalculado: Math.round(montoTotalCalculado * 1000) / 1000,
-                montoTotalDiferencia: totalDiff,
+                montoTotalCalculado: Math.round(montoTotalCalculadoUtm * 1000) / 1000,
+                montoTotalCalculadoPesos,
+                montoTotalDiferencia: totalDiffUtm,
+                montoTotalDiferenciaPesos: totalDiffPesos,
                 totalFilasNotif: totalItemsCount,
                 estado: 'CONCILIADO'
             }
@@ -616,7 +685,7 @@ export async function conciliarNotificacionRexAction(notificacionId: string): Pr
             userId: user.id,
             action: 'CONCILIACION_NOTIFICACION_REX',
             modulo: 'Multas · Notificaciones JUNAEB',
-            detalle: `Conciliación ejecutada para REX N° ${rex.numeroResolucion}: ${totalItemsCount} items evaluados. Total Notificado: ${rex.montoTotalNotificado} UTM vs Calculado: ${montoTotalCalculado.toFixed(2)} UTM.`
+            detalle: `Conciliación ejecutada para REX N° ${rex.numeroResolucion}: ${totalItemsCount} items evaluados. Total Notificado: ${rex.montoTotalNotificado} UTM vs Calculado: ${montoTotalCalculadoUtm.toFixed(2)} UTM.`
         })
 
         revalidatePath(`/dashboard/areas/multas/notificaciones/${notificacionId}`)
@@ -682,7 +751,7 @@ export async function updateClasificacionItemAction(params: {
 }
 
 /**
- * Elimina una resolución REX y todos sus items asociados
+ * Elimina una resolución REX y todos sus items asociados si no tiene descargos
  */
 export async function eliminarNotificacionRexAction(notificacionId: string): Promise<{ success: boolean; error?: string }> {
     try {
@@ -697,6 +766,17 @@ export async function eliminarNotificacionRexAction(notificacionId: string): Pro
         })
         if (!rex) {
             return { success: false, error: 'Resolución no encontrada.' }
+        }
+
+        // Bloquear eliminación si tiene descargos formales asociados
+        const descargosAsociados = await prisma.multas_Descargo_Formal.count({
+            where: { notificacionId }
+        })
+        if (descargosAsociados > 0) {
+            return {
+                success: false,
+                error: `No se puede eliminar la REX porque tiene ${descargosAsociados} descargo(s) formal(es) asociado(s). Elimina o desvincula los descargos primero.`
+            }
         }
 
         await prisma.multas_Notificacion_REX.delete({
@@ -718,6 +798,40 @@ export async function eliminarNotificacionRexAction(notificacionId: string): Pro
         console.error('Error al eliminar REX:', e)
         return { success: false, error: e.message || 'Error al eliminar la resolución.' }
     }
+}
+
+// Helper: análisis y saneamiento de aspectos PAE
+function parseAspecto(val: any): string {
+    if (!val) return 'GENERAL'
+    const s = String(val).trim().toUpperCase()
+    if (s.startsWith('ASPECTO')) {
+        const after = s.replace('ASPECTO', '').trim()
+        if (after) return after
+    }
+    if (s === 'GENERAL' || s === 'GEN') return 'GENERAL'
+    const match = s.match(/^[A-Z](?:\.[0-9]+)?/)
+    if (match) return match[0]
+    return s.slice(0, 10)
+}
+
+// Helper: parseo numérico con soporte para estándar chileno (CLP y UTM)
+function parseNumeroChileno(val: any): number {
+    if (typeof val === 'number') return isNaN(val) ? 0 : val
+    if (!val) return 0
+    let s = String(val).trim().replace(/[\$\s]/g, '')
+    if (!s) return 0
+    if (s.includes('.') && s.includes(',')) {
+        s = s.replace(/\./g, '').replace(',', '.')
+    } else if (s.includes(',')) {
+        s = s.replace(',', '.')
+    } else if (s.includes('.')) {
+        const parts = s.split('.')
+        if (parts.length > 2 || (parts.length === 2 && parts[1].length === 3 && parseInt(parts[0], 10) > 0)) {
+            s = s.replace(/\./g, '')
+        }
+    }
+    const num = parseFloat(s)
+    return isNaN(num) ? 0 : num
 }
 
 // Helper: búsqueda case-insensitive y flexible en filas de Excel
