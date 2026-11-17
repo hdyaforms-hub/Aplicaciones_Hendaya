@@ -102,12 +102,14 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [descarteModal, setDescarteModal] = useState<{ isOpen: boolean; hallazgoId: number | null; nota: string } | null>(null)
     const [filtroEstadoHallazgos, setFiltroEstadoHallazgos] = useState<string>('ALL')
 
-    const loadHallazgos = async (f: string, licId?: number) => {
+    const loadHallazgos = async (f: string, licId?: number, forzarRecalculo = false) => {
         setLoadingHallazgos(true)
         try {
-            const hRes = await getHallazgosFolioAction(f, licId)
+            const hRes = await getHallazgosFolioAction(f, licId, forzarRecalculo)
             if (hRes.data) {
                 setHallazgosList(hRes.data)
+            } else if (hRes.error && forzarRecalculo) {
+                alert(hRes.error)
             }
         } catch (e) {
             console.error('Error al cargar hallazgos C5:', e)
@@ -1632,7 +1634,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
 
                             <button
                                 type="button"
-                                onClick={() => loadHallazgos(folio, data?.licitacionId)}
+                                onClick={() => loadHallazgos(folio, data?.licitacionId, true)}
                                 disabled={loadingHallazgos}
                                 className="text-xs text-cyan-700 hover:text-cyan-900 font-bold flex items-center gap-1 cursor-pointer disabled:opacity-50"
                             >

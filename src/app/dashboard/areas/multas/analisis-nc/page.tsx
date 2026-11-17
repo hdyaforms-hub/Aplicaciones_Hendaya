@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { logAuditAction } from '@/lib/audit'
+import { prisma } from '@/lib/prisma'
 import AnalisisNCClient from './AnalisisNCClient'
 
 export const metadata: Metadata = {
@@ -12,18 +13,28 @@ export const metadata: Metadata = {
 export default async function AnalisisNCPage() {
     const session = await getSession()
 
-    if (!session?.user) {
+    if (!session?.user?.id) {
         redirect('/login')
     }
 
-    const roleName = session.user.role?.name?.toLowerCase().trim() || ''
-    const permissions: string[] = Array.isArray(session.user.role?.permissions)
-        ? (session.user.role.permissions as string[])
-        : typeof session.user.role?.permissions === 'string'
-            ? JSON.parse(session.user.role.permissions)
+    // Consulta fresca a la base de datos para revocación inmediata de permisos
+    const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        include: { role: true }
+    })
+
+    if (!user?.role) {
+        redirect('/dashboard')
+    }
+
+    const roleName = user.role.name?.toLowerCase().trim() || ''
+    const permissions: string[] = Array.isArray(user.role.permissions)
+        ? (user.role.permissions as string[])
+        : typeof user.role.permissions === 'string'
+            ? (() => { try { return JSON.parse(user.role.permissions) } catch { return [] } })()
             : []
 
-    const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin' || roleName.includes('gerencia')
+    const isAdmin = roleName === 'administrador' || roleName === 'admin' || roleName === 'super admin'
 
     const hasAccess = isAdmin ||
         permissions.includes('*') ||

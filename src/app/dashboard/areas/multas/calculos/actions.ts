@@ -30,19 +30,28 @@ const dbMinutas = () => prisma.multas_Minuta_Mes
 const dbFolioDato = () => prisma.multas_Folio_Dato
 const dbCantidadOverride = () => prisma.multas_Cantidad_Override
 
-// Utility to check permissions
+// Utility to check permissions (lectura directa desde BD para revocación inmediata)
 async function checkPermission(permission: string | string[]) {
     const session = await getSession()
-    if (!session?.user) return false
-    const roleName = session.user.role?.name?.toLowerCase().trim() || ''
-    if (roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin' || roleName.includes('gerencia')) {
+    if (!session?.user?.id) return false
+
+    const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        include: { role: true }
+    })
+    if (!user?.role) return false
+
+    const roleName = user.role.name?.toLowerCase().trim() || ''
+    if (roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin') {
         return true
     }
-    const permissions: string[] = Array.isArray(session.user.role?.permissions)
-        ? (session.user.role.permissions as string[])
-        : typeof session.user.role?.permissions === 'string'
-            ? (() => { try { return JSON.parse(session.user.role.permissions) } catch { return [] } })()
+
+    const permissions: string[] = Array.isArray(user.role.permissions)
+        ? (user.role.permissions as string[])
+        : typeof user.role.permissions === 'string'
+            ? (() => { try { return JSON.parse(user.role.permissions) } catch { return [] } })()
             : []
+
     if (permissions.includes('*')) return true
     const targets = Array.isArray(permission) ? permission : [permission]
     return targets.some(p => permissions.includes(p))
@@ -2065,17 +2074,27 @@ export async function getComparacionExtraccionLicitacion(params: {
 // ----------------------------------------------------------------------
 
 /**
- * Obtiene o evalúa los hallazgos NC para un folio específico, preservando descartes previos.
+ * Obtiene los hallazgos NC para un folio específico desde la base de datos (lectura pura).
+ * Si se solicita forzar recálculo (`forzarRecalculo = true`), se exige permiso de gestión y se evalúa y persiste.
  */
-export async function getHallazgosFolioAction(folio: string, licId?: number) {
+export async function getHallazgosFolioAction(folio: string, licId?: number, forzarRecalculo = false) {
     try {
         const session = await getSession()
-        if (!session?.user) return { error: 'No autorizado' }
+        if (!session?.user?.id) return { error: 'No autorizado' }
         if (!await checkPermission(['view_analisis_nc', 'manage_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas'])) {
             return { error: 'No tienes permisos para consultar hallazgos NC.' }
         }
-        const usuario = session.user.name || session.user.username || 'Usuario'
-        const hallazgos = await evaluarYGuardarHallazgosFolio(folio, licId, usuario)
+
+        if (forzarRecalculo) {
+            if (!await checkPermission('manage_analisis_nc')) {
+                return { error: 'No tienes permisos para reevaluar y guardar hallazgos NC.' }
+            }
+            const usuario = session.user.name || session.user.username || 'Usuario'
+            const hallazgos = await evaluarYGuardarHallazgosFolio(folio, licId, usuario)
+            return { data: hallazgos }
+        }
+
+        const hallazgos = await obtenerHallazgosFolio(folio)
         return { data: hallazgos }
     } catch (e: any) {
         console.error('Error en getHallazgosFolioAction:', e)
