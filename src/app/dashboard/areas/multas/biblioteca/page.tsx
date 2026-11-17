@@ -43,14 +43,22 @@ export default async function BibliotecaArgumentosPage() {
     return (
         <div className="w-full py-4 sm:py-6 px-2 sm:px-6 space-y-6">
             {/* Header del Módulo */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
                 <div>
-                    <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2.5">
-                        <span className="w-2.5 h-6 bg-cyan-500 rounded-full inline-block"></span>
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="font-mono text-cyan-700 font-extrabold tracking-widest text-[11px] uppercase px-2.5 py-0.5 rounded-full bg-cyan-50 border border-cyan-200">
+                            HENDAYA · LITIGIOS Y DEFENSAS JUNAEB
+                        </span>
+                        <span className="text-slate-400 text-xs font-semibold">
+                            Módulo C8: Biblioteca de Precedentes
+                        </span>
+                    </div>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2.5">
+                        <span className="w-2.5 h-6 bg-cyan-600 rounded-full inline-block"></span>
                         Biblioteca de Argumentos y Precedentes
                     </h1>
-                    <p className="text-xs text-slate-400 mt-1">
-                        Repositorio de plantillas jurídicas oficiales, criterios jurisprudenciales y descargos con alto historial de rebaja ante JUNAEB.
+                    <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-3xl leading-relaxed">
+                        Repositorio institucional de plantillas jurídicas oficiales, criterios jurisprudenciales estandarizados y descargos exitosos con alto historial de rebaja ante JUNAEB.
                     </p>
                 </div>
             </div>
