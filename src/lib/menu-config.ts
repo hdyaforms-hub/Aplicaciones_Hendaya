@@ -334,6 +334,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Asistente y Análisis IA',
                         href: '/dashboard/areas/multas/analisis-ia',
                         requiredPermission: ['view_ia_multas', 'manage_config_ia_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Tablero Consolidado y Reportes',
+                        href: '/dashboard/areas/multas/tablero',
+                        requiredPermission: ['view_tablero_multas_consolidado', 'view_tablero_multas_ee', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

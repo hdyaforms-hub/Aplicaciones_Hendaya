@@ -92,6 +92,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/biblioteca')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Biblioteca de Argumentos' }
         if (path.includes('/soluciones')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Planes de Acción (Soluciones)' }
         if (path.includes('/analisis-ia')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Asistente y Análisis con IA' }
+        if (path.includes('/tablero')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Tablero Consolidado de Multas' }
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }
     }

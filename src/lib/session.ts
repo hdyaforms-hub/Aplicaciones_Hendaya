@@ -210,7 +210,9 @@ export async function getSession() {
                 'view_soluciones_multas',
                 'manage_soluciones_multas',
                 'view_ia_multas',
-                'manage_config_ia_multas'
+                'manage_config_ia_multas',
+                'view_tablero_multas_consolidado',
+                'export_multas_consolidado'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

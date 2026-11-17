@@ -125,6 +125,8 @@ export default async function RolesPage() {
         { id: 'manage_soluciones_multas', name: 'Planes de Acción y Soluciones (Gestionar)', description: 'Permite generar planes de acción masivos, certificar evidencias y cerrar formalmente los planes.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_ia_multas', name: 'Asistente y Análisis con IA (Ver)', description: 'Permite solicitar análisis de defensas jurídicas y extracción visual de planillas de pesaje por IA.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_config_ia_multas', name: 'Configuración de IA (Gestionar)', description: 'Permite configurar credenciales de API cifradas, modelos y topes de gasto mensual de IA.', category: 'ÁREAS -> MULTAS' },
+        { id: 'view_tablero_multas_consolidado', name: 'Tablero Consolidado de Multas (Ver)', description: 'Permite consultar el tablero ejecutivo consolidado con métricas financieras y operativas de multas.', category: 'ÁREAS -> MULTAS' },
+        { id: 'export_multas_consolidado', name: 'Exportar Reporte Maestro (Excel)', description: 'Permite descargar la planilla Excel consolidada de todas las actas, montos y resoluciones.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
