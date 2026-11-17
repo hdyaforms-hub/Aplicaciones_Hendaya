@@ -1152,6 +1152,53 @@ exports.Prisma.Multas_Argumento_BibliotecaScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Diccionario_SolucionScalarFieldEnum = {
+  id: 'id',
+  aspecto: 'aspecto',
+  tipoNC: 'tipoNC',
+  accionCorrectivaTipo: 'accionCorrectivaTipo',
+  plazoDiasEstandar: 'plazoDiasEstandar',
+  evidenciaRequerida: 'evidenciaRequerida',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Plan_AccionScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  rbd: 'rbd',
+  licitacionId: 'licitacionId',
+  licitacionNombre: 'licitacionNombre',
+  sucursal: 'sucursal',
+  estado: 'estado',
+  prioridad: 'prioridad',
+  fechaCompromiso: 'fechaCompromiso',
+  responsableAsignado: 'responsableAsignado',
+  cerradoPor: 'cerradoPor',
+  fechaCierre: 'fechaCierre',
+  observacionesCierre: 'observacionesCierre',
+  totalItems: 'totalItems',
+  itemsResueltos: 'itemsResueltos',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Plan_Accion_ItemScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  aspecto: 'aspecto',
+  hallazgoDetectado: 'hallazgoDetectado',
+  accionTomada: 'accionTomada',
+  evidenciaUrl: 'evidenciaUrl',
+  evidenciaNombre: 'evidenciaNombre',
+  estadoItem: 'estadoItem',
+  fechaEjecucion: 'fechaEjecucion',
+  ejecutadoPor: 'ejecutadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2380,6 +2427,9 @@ exports.Prisma.ModelName = {
   Multas_Recurso_Admin: 'Multas_Recurso_Admin',
   Multas_Proceso_Judicial: 'Multas_Proceso_Judicial',
   Multas_Argumento_Biblioteca: 'Multas_Argumento_Biblioteca',
+  Multas_Diccionario_Solucion: 'Multas_Diccionario_Solucion',
+  Multas_Plan_Accion: 'Multas_Plan_Accion',
+  Multas_Plan_Accion_Item: 'Multas_Plan_Accion_Item',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

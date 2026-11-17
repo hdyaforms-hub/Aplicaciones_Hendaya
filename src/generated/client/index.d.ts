@@ -354,6 +354,21 @@ export type Multas_Proceso_Judicial = $Result.DefaultSelection<Prisma.$Multas_Pr
  */
 export type Multas_Argumento_Biblioteca = $Result.DefaultSelection<Prisma.$Multas_Argumento_BibliotecaPayload>
 /**
+ * Model Multas_Diccionario_Solucion
+ * 
+ */
+export type Multas_Diccionario_Solucion = $Result.DefaultSelection<Prisma.$Multas_Diccionario_SolucionPayload>
+/**
+ * Model Multas_Plan_Accion
+ * 
+ */
+export type Multas_Plan_Accion = $Result.DefaultSelection<Prisma.$Multas_Plan_AccionPayload>
+/**
+ * Model Multas_Plan_Accion_Item
+ * 
+ */
+export type Multas_Plan_Accion_Item = $Result.DefaultSelection<Prisma.$Multas_Plan_Accion_ItemPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1591,6 +1606,36 @@ export class PrismaClient<
     * ```
     */
   get multas_Argumento_Biblioteca(): Prisma.Multas_Argumento_BibliotecaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Diccionario_Solucion`: Exposes CRUD operations for the **Multas_Diccionario_Solucion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Diccionario_Solucions
+    * const multas_Diccionario_Solucions = await prisma.multas_Diccionario_Solucion.findMany()
+    * ```
+    */
+  get multas_Diccionario_Solucion(): Prisma.Multas_Diccionario_SolucionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Plan_Accion`: Exposes CRUD operations for the **Multas_Plan_Accion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Plan_Accions
+    * const multas_Plan_Accions = await prisma.multas_Plan_Accion.findMany()
+    * ```
+    */
+  get multas_Plan_Accion(): Prisma.Multas_Plan_AccionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Plan_Accion_Item`: Exposes CRUD operations for the **Multas_Plan_Accion_Item** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Plan_Accion_Items
+    * const multas_Plan_Accion_Items = await prisma.multas_Plan_Accion_Item.findMany()
+    * ```
+    */
+  get multas_Plan_Accion_Item(): Prisma.Multas_Plan_Accion_ItemDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2970,6 +3015,9 @@ export namespace Prisma {
     Multas_Recurso_Admin: 'Multas_Recurso_Admin',
     Multas_Proceso_Judicial: 'Multas_Proceso_Judicial',
     Multas_Argumento_Biblioteca: 'Multas_Argumento_Biblioteca',
+    Multas_Diccionario_Solucion: 'Multas_Diccionario_Solucion',
+    Multas_Plan_Accion: 'Multas_Plan_Accion',
+    Multas_Plan_Accion_Item: 'Multas_Plan_Accion_Item',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -3072,7 +3120,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "multas_Descargo_Formal" | "multas_Descargo_Folio" | "multas_Resuelve" | "multas_Recurso_Admin" | "multas_Proceso_Judicial" | "multas_Argumento_Biblioteca" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "multas_Descargo_Formal" | "multas_Descargo_Folio" | "multas_Resuelve" | "multas_Recurso_Admin" | "multas_Proceso_Judicial" | "multas_Argumento_Biblioteca" | "multas_Diccionario_Solucion" | "multas_Plan_Accion" | "multas_Plan_Accion_Item" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7833,6 +7881,216 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Argumento_BibliotecaCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Argumento_BibliotecaCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Diccionario_Solucion: {
+        payload: Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>
+        fields: Prisma.Multas_Diccionario_SolucionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Diccionario_SolucionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Diccionario_SolucionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Diccionario_SolucionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Diccionario_SolucionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Diccionario_SolucionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Diccionario_SolucionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Diccionario_SolucionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Diccionario_SolucionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Diccionario_SolucionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          update: {
+            args: Prisma.Multas_Diccionario_SolucionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Diccionario_SolucionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Diccionario_SolucionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Diccionario_SolucionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Diccionario_SolucionPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Diccionario_SolucionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Diccionario_Solucion>
+          }
+          groupBy: {
+            args: Prisma.Multas_Diccionario_SolucionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Diccionario_SolucionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Diccionario_SolucionCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Diccionario_SolucionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Plan_Accion: {
+        payload: Prisma.$Multas_Plan_AccionPayload<ExtArgs>
+        fields: Prisma.Multas_Plan_AccionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Plan_AccionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Plan_AccionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Plan_AccionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Plan_AccionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Plan_AccionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Plan_AccionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Plan_AccionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Plan_AccionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Plan_AccionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          update: {
+            args: Prisma.Multas_Plan_AccionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Plan_AccionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Plan_AccionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Plan_AccionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_AccionPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Plan_AccionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Plan_Accion>
+          }
+          groupBy: {
+            args: Prisma.Multas_Plan_AccionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Plan_AccionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Plan_AccionCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Plan_AccionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Plan_Accion_Item: {
+        payload: Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>
+        fields: Prisma.Multas_Plan_Accion_ItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Plan_Accion_ItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Plan_Accion_ItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Plan_Accion_ItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Plan_Accion_ItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Plan_Accion_ItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Plan_Accion_ItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Plan_Accion_ItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Plan_Accion_ItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Plan_Accion_ItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          update: {
+            args: Prisma.Multas_Plan_Accion_ItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Plan_Accion_ItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Plan_Accion_ItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Plan_Accion_ItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Plan_Accion_ItemPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Plan_Accion_ItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Plan_Accion_Item>
+          }
+          groupBy: {
+            args: Prisma.Multas_Plan_Accion_ItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Plan_Accion_ItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Plan_Accion_ItemCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Plan_Accion_ItemCountAggregateOutputType> | number
           }
         }
       }
@@ -14854,6 +15112,37 @@ export namespace Prisma {
    */
   export type Multas_Descargo_FormalCountOutputTypeCountProcesosJudicialesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Multas_Proceso_JudicialWhereInput
+  }
+
+
+  /**
+   * Count Type Multas_Plan_AccionCountOutputType
+   */
+
+  export type Multas_Plan_AccionCountOutputType = {
+    items: number
+  }
+
+  export type Multas_Plan_AccionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | Multas_Plan_AccionCountOutputTypeCountItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Multas_Plan_AccionCountOutputType without action
+   */
+  export type Multas_Plan_AccionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_AccionCountOutputType
+     */
+    select?: Multas_Plan_AccionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Plan_AccionCountOutputType without action
+   */
+  export type Multas_Plan_AccionCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Plan_Accion_ItemWhereInput
   }
 
 
@@ -87127,6 +87416,3121 @@ export namespace Prisma {
      * Select specific fields to fetch from the Multas_Argumento_Biblioteca
      */
     select?: Multas_Argumento_BibliotecaSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Diccionario_Solucion
+   */
+
+  export type AggregateMultas_Diccionario_Solucion = {
+    _count: Multas_Diccionario_SolucionCountAggregateOutputType | null
+    _avg: Multas_Diccionario_SolucionAvgAggregateOutputType | null
+    _sum: Multas_Diccionario_SolucionSumAggregateOutputType | null
+    _min: Multas_Diccionario_SolucionMinAggregateOutputType | null
+    _max: Multas_Diccionario_SolucionMaxAggregateOutputType | null
+  }
+
+  export type Multas_Diccionario_SolucionAvgAggregateOutputType = {
+    plazoDiasEstandar: number | null
+  }
+
+  export type Multas_Diccionario_SolucionSumAggregateOutputType = {
+    plazoDiasEstandar: number | null
+  }
+
+  export type Multas_Diccionario_SolucionMinAggregateOutputType = {
+    id: string | null
+    aspecto: string | null
+    tipoNC: string | null
+    accionCorrectivaTipo: string | null
+    plazoDiasEstandar: number | null
+    evidenciaRequerida: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Diccionario_SolucionMaxAggregateOutputType = {
+    id: string | null
+    aspecto: string | null
+    tipoNC: string | null
+    accionCorrectivaTipo: string | null
+    plazoDiasEstandar: number | null
+    evidenciaRequerida: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Diccionario_SolucionCountAggregateOutputType = {
+    id: number
+    aspecto: number
+    tipoNC: number
+    accionCorrectivaTipo: number
+    plazoDiasEstandar: number
+    evidenciaRequerida: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Diccionario_SolucionAvgAggregateInputType = {
+    plazoDiasEstandar?: true
+  }
+
+  export type Multas_Diccionario_SolucionSumAggregateInputType = {
+    plazoDiasEstandar?: true
+  }
+
+  export type Multas_Diccionario_SolucionMinAggregateInputType = {
+    id?: true
+    aspecto?: true
+    tipoNC?: true
+    accionCorrectivaTipo?: true
+    plazoDiasEstandar?: true
+    evidenciaRequerida?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Diccionario_SolucionMaxAggregateInputType = {
+    id?: true
+    aspecto?: true
+    tipoNC?: true
+    accionCorrectivaTipo?: true
+    plazoDiasEstandar?: true
+    evidenciaRequerida?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Diccionario_SolucionCountAggregateInputType = {
+    id?: true
+    aspecto?: true
+    tipoNC?: true
+    accionCorrectivaTipo?: true
+    plazoDiasEstandar?: true
+    evidenciaRequerida?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Diccionario_SolucionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Diccionario_Solucion to aggregate.
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Diccionario_Solucions to fetch.
+     */
+    orderBy?: Multas_Diccionario_SolucionOrderByWithRelationInput | Multas_Diccionario_SolucionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Diccionario_SolucionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Diccionario_Solucions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Diccionario_Solucions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Diccionario_Solucions
+    **/
+    _count?: true | Multas_Diccionario_SolucionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Diccionario_SolucionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Diccionario_SolucionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Diccionario_SolucionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Diccionario_SolucionMaxAggregateInputType
+  }
+
+  export type GetMultas_Diccionario_SolucionAggregateType<T extends Multas_Diccionario_SolucionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Diccionario_Solucion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Diccionario_Solucion[P]>
+      : GetScalarType<T[P], AggregateMultas_Diccionario_Solucion[P]>
+  }
+
+
+
+
+  export type Multas_Diccionario_SolucionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Diccionario_SolucionWhereInput
+    orderBy?: Multas_Diccionario_SolucionOrderByWithAggregationInput | Multas_Diccionario_SolucionOrderByWithAggregationInput[]
+    by: Multas_Diccionario_SolucionScalarFieldEnum[] | Multas_Diccionario_SolucionScalarFieldEnum
+    having?: Multas_Diccionario_SolucionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Diccionario_SolucionCountAggregateInputType | true
+    _avg?: Multas_Diccionario_SolucionAvgAggregateInputType
+    _sum?: Multas_Diccionario_SolucionSumAggregateInputType
+    _min?: Multas_Diccionario_SolucionMinAggregateInputType
+    _max?: Multas_Diccionario_SolucionMaxAggregateInputType
+  }
+
+  export type Multas_Diccionario_SolucionGroupByOutputType = {
+    id: string
+    aspecto: string
+    tipoNC: string
+    accionCorrectivaTipo: string
+    plazoDiasEstandar: number
+    evidenciaRequerida: string
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Diccionario_SolucionCountAggregateOutputType | null
+    _avg: Multas_Diccionario_SolucionAvgAggregateOutputType | null
+    _sum: Multas_Diccionario_SolucionSumAggregateOutputType | null
+    _min: Multas_Diccionario_SolucionMinAggregateOutputType | null
+    _max: Multas_Diccionario_SolucionMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Diccionario_SolucionGroupByPayload<T extends Multas_Diccionario_SolucionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Diccionario_SolucionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Diccionario_SolucionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Diccionario_SolucionGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Diccionario_SolucionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Diccionario_SolucionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    aspecto?: boolean
+    tipoNC?: boolean
+    accionCorrectivaTipo?: boolean
+    plazoDiasEstandar?: boolean
+    evidenciaRequerida?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Diccionario_Solucion"]>
+
+  export type Multas_Diccionario_SolucionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    aspecto?: boolean
+    tipoNC?: boolean
+    accionCorrectivaTipo?: boolean
+    plazoDiasEstandar?: boolean
+    evidenciaRequerida?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Diccionario_Solucion"]>
+
+  export type Multas_Diccionario_SolucionSelectScalar = {
+    id?: boolean
+    aspecto?: boolean
+    tipoNC?: boolean
+    accionCorrectivaTipo?: boolean
+    plazoDiasEstandar?: boolean
+    evidenciaRequerida?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Diccionario_SolucionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Diccionario_Solucion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      aspecto: string
+      tipoNC: string
+      accionCorrectivaTipo: string
+      plazoDiasEstandar: number
+      evidenciaRequerida: string
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Diccionario_Solucion"]>
+    composites: {}
+  }
+
+  type Multas_Diccionario_SolucionGetPayload<S extends boolean | null | undefined | Multas_Diccionario_SolucionDefaultArgs> = $Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload, S>
+
+  type Multas_Diccionario_SolucionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Diccionario_SolucionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Diccionario_SolucionCountAggregateInputType | true
+    }
+
+  export interface Multas_Diccionario_SolucionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Diccionario_Solucion'], meta: { name: 'Multas_Diccionario_Solucion' } }
+    /**
+     * Find zero or one Multas_Diccionario_Solucion that matches the filter.
+     * @param {Multas_Diccionario_SolucionFindUniqueArgs} args - Arguments to find a Multas_Diccionario_Solucion
+     * @example
+     * // Get one Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Diccionario_SolucionFindUniqueArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionFindUniqueArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Diccionario_Solucion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Diccionario_SolucionFindUniqueOrThrowArgs} args - Arguments to find a Multas_Diccionario_Solucion
+     * @example
+     * // Get one Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Diccionario_SolucionFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Diccionario_Solucion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionFindFirstArgs} args - Arguments to find a Multas_Diccionario_Solucion
+     * @example
+     * // Get one Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Diccionario_SolucionFindFirstArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionFindFirstArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Diccionario_Solucion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionFindFirstOrThrowArgs} args - Arguments to find a Multas_Diccionario_Solucion
+     * @example
+     * // Get one Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Diccionario_SolucionFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Diccionario_Solucions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Diccionario_Solucions
+     * const multas_Diccionario_Solucions = await prisma.multas_Diccionario_Solucion.findMany()
+     * 
+     * // Get first 10 Multas_Diccionario_Solucions
+     * const multas_Diccionario_Solucions = await prisma.multas_Diccionario_Solucion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Diccionario_SolucionWithIdOnly = await prisma.multas_Diccionario_Solucion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Diccionario_SolucionFindManyArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Diccionario_Solucion.
+     * @param {Multas_Diccionario_SolucionCreateArgs} args - Arguments to create a Multas_Diccionario_Solucion.
+     * @example
+     * // Create one Multas_Diccionario_Solucion
+     * const Multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.create({
+     *   data: {
+     *     // ... data to create a Multas_Diccionario_Solucion
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Diccionario_SolucionCreateArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionCreateArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Diccionario_Solucions.
+     * @param {Multas_Diccionario_SolucionCreateManyArgs} args - Arguments to create many Multas_Diccionario_Solucions.
+     * @example
+     * // Create many Multas_Diccionario_Solucions
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Diccionario_SolucionCreateManyArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Diccionario_Solucions and returns the data saved in the database.
+     * @param {Multas_Diccionario_SolucionCreateManyAndReturnArgs} args - Arguments to create many Multas_Diccionario_Solucions.
+     * @example
+     * // Create many Multas_Diccionario_Solucions
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Diccionario_Solucions and only return the `id`
+     * const multas_Diccionario_SolucionWithIdOnly = await prisma.multas_Diccionario_Solucion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Diccionario_SolucionCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Diccionario_Solucion.
+     * @param {Multas_Diccionario_SolucionDeleteArgs} args - Arguments to delete one Multas_Diccionario_Solucion.
+     * @example
+     * // Delete one Multas_Diccionario_Solucion
+     * const Multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Diccionario_Solucion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Diccionario_SolucionDeleteArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionDeleteArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Diccionario_Solucion.
+     * @param {Multas_Diccionario_SolucionUpdateArgs} args - Arguments to update one Multas_Diccionario_Solucion.
+     * @example
+     * // Update one Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Diccionario_SolucionUpdateArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionUpdateArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Diccionario_Solucions.
+     * @param {Multas_Diccionario_SolucionDeleteManyArgs} args - Arguments to filter Multas_Diccionario_Solucions to delete.
+     * @example
+     * // Delete a few Multas_Diccionario_Solucions
+     * const { count } = await prisma.multas_Diccionario_Solucion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Diccionario_SolucionDeleteManyArgs>(args?: SelectSubset<T, Multas_Diccionario_SolucionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Diccionario_Solucions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Diccionario_Solucions
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Diccionario_SolucionUpdateManyArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Diccionario_Solucion.
+     * @param {Multas_Diccionario_SolucionUpsertArgs} args - Arguments to update or create a Multas_Diccionario_Solucion.
+     * @example
+     * // Update or create a Multas_Diccionario_Solucion
+     * const multas_Diccionario_Solucion = await prisma.multas_Diccionario_Solucion.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Diccionario_Solucion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Diccionario_Solucion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Diccionario_SolucionUpsertArgs>(args: SelectSubset<T, Multas_Diccionario_SolucionUpsertArgs<ExtArgs>>): Prisma__Multas_Diccionario_SolucionClient<$Result.GetResult<Prisma.$Multas_Diccionario_SolucionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Diccionario_Solucions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionCountArgs} args - Arguments to filter Multas_Diccionario_Solucions to count.
+     * @example
+     * // Count the number of Multas_Diccionario_Solucions
+     * const count = await prisma.multas_Diccionario_Solucion.count({
+     *   where: {
+     *     // ... the filter for the Multas_Diccionario_Solucions we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Diccionario_SolucionCountArgs>(
+      args?: Subset<T, Multas_Diccionario_SolucionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Diccionario_SolucionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Diccionario_Solucion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Diccionario_SolucionAggregateArgs>(args: Subset<T, Multas_Diccionario_SolucionAggregateArgs>): Prisma.PrismaPromise<GetMultas_Diccionario_SolucionAggregateType<T>>
+
+    /**
+     * Group by Multas_Diccionario_Solucion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Diccionario_SolucionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Diccionario_SolucionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Diccionario_SolucionGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Diccionario_SolucionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Diccionario_SolucionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Diccionario_SolucionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Diccionario_Solucion model
+   */
+  readonly fields: Multas_Diccionario_SolucionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Diccionario_Solucion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Diccionario_SolucionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Diccionario_Solucion model
+   */ 
+  interface Multas_Diccionario_SolucionFieldRefs {
+    readonly id: FieldRef<"Multas_Diccionario_Solucion", 'String'>
+    readonly aspecto: FieldRef<"Multas_Diccionario_Solucion", 'String'>
+    readonly tipoNC: FieldRef<"Multas_Diccionario_Solucion", 'String'>
+    readonly accionCorrectivaTipo: FieldRef<"Multas_Diccionario_Solucion", 'String'>
+    readonly plazoDiasEstandar: FieldRef<"Multas_Diccionario_Solucion", 'Int'>
+    readonly evidenciaRequerida: FieldRef<"Multas_Diccionario_Solucion", 'String'>
+    readonly activo: FieldRef<"Multas_Diccionario_Solucion", 'Boolean'>
+    readonly createdAt: FieldRef<"Multas_Diccionario_Solucion", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Diccionario_Solucion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Diccionario_Solucion findUnique
+   */
+  export type Multas_Diccionario_SolucionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Diccionario_Solucion to fetch.
+     */
+    where: Multas_Diccionario_SolucionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion findUniqueOrThrow
+   */
+  export type Multas_Diccionario_SolucionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Diccionario_Solucion to fetch.
+     */
+    where: Multas_Diccionario_SolucionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion findFirst
+   */
+  export type Multas_Diccionario_SolucionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Diccionario_Solucion to fetch.
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Diccionario_Solucions to fetch.
+     */
+    orderBy?: Multas_Diccionario_SolucionOrderByWithRelationInput | Multas_Diccionario_SolucionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Diccionario_Solucions.
+     */
+    cursor?: Multas_Diccionario_SolucionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Diccionario_Solucions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Diccionario_Solucions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Diccionario_Solucions.
+     */
+    distinct?: Multas_Diccionario_SolucionScalarFieldEnum | Multas_Diccionario_SolucionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Diccionario_Solucion findFirstOrThrow
+   */
+  export type Multas_Diccionario_SolucionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Diccionario_Solucion to fetch.
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Diccionario_Solucions to fetch.
+     */
+    orderBy?: Multas_Diccionario_SolucionOrderByWithRelationInput | Multas_Diccionario_SolucionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Diccionario_Solucions.
+     */
+    cursor?: Multas_Diccionario_SolucionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Diccionario_Solucions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Diccionario_Solucions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Diccionario_Solucions.
+     */
+    distinct?: Multas_Diccionario_SolucionScalarFieldEnum | Multas_Diccionario_SolucionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Diccionario_Solucion findMany
+   */
+  export type Multas_Diccionario_SolucionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Diccionario_Solucions to fetch.
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Diccionario_Solucions to fetch.
+     */
+    orderBy?: Multas_Diccionario_SolucionOrderByWithRelationInput | Multas_Diccionario_SolucionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Diccionario_Solucions.
+     */
+    cursor?: Multas_Diccionario_SolucionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Diccionario_Solucions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Diccionario_Solucions.
+     */
+    skip?: number
+    distinct?: Multas_Diccionario_SolucionScalarFieldEnum | Multas_Diccionario_SolucionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Diccionario_Solucion create
+   */
+  export type Multas_Diccionario_SolucionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Diccionario_Solucion.
+     */
+    data: XOR<Multas_Diccionario_SolucionCreateInput, Multas_Diccionario_SolucionUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Diccionario_Solucion createMany
+   */
+  export type Multas_Diccionario_SolucionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Diccionario_Solucions.
+     */
+    data: Multas_Diccionario_SolucionCreateManyInput | Multas_Diccionario_SolucionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Diccionario_Solucion createManyAndReturn
+   */
+  export type Multas_Diccionario_SolucionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Diccionario_Solucions.
+     */
+    data: Multas_Diccionario_SolucionCreateManyInput | Multas_Diccionario_SolucionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Diccionario_Solucion update
+   */
+  export type Multas_Diccionario_SolucionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Diccionario_Solucion.
+     */
+    data: XOR<Multas_Diccionario_SolucionUpdateInput, Multas_Diccionario_SolucionUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Diccionario_Solucion to update.
+     */
+    where: Multas_Diccionario_SolucionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion updateMany
+   */
+  export type Multas_Diccionario_SolucionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Diccionario_Solucions.
+     */
+    data: XOR<Multas_Diccionario_SolucionUpdateManyMutationInput, Multas_Diccionario_SolucionUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Diccionario_Solucions to update
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion upsert
+   */
+  export type Multas_Diccionario_SolucionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Diccionario_Solucion to update in case it exists.
+     */
+    where: Multas_Diccionario_SolucionWhereUniqueInput
+    /**
+     * In case the Multas_Diccionario_Solucion found by the `where` argument doesn't exist, create a new Multas_Diccionario_Solucion with this data.
+     */
+    create: XOR<Multas_Diccionario_SolucionCreateInput, Multas_Diccionario_SolucionUncheckedCreateInput>
+    /**
+     * In case the Multas_Diccionario_Solucion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Diccionario_SolucionUpdateInput, Multas_Diccionario_SolucionUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Diccionario_Solucion delete
+   */
+  export type Multas_Diccionario_SolucionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Diccionario_Solucion to delete.
+     */
+    where: Multas_Diccionario_SolucionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion deleteMany
+   */
+  export type Multas_Diccionario_SolucionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Diccionario_Solucions to delete
+     */
+    where?: Multas_Diccionario_SolucionWhereInput
+  }
+
+  /**
+   * Multas_Diccionario_Solucion without action
+   */
+  export type Multas_Diccionario_SolucionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Diccionario_Solucion
+     */
+    select?: Multas_Diccionario_SolucionSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Plan_Accion
+   */
+
+  export type AggregateMultas_Plan_Accion = {
+    _count: Multas_Plan_AccionCountAggregateOutputType | null
+    _avg: Multas_Plan_AccionAvgAggregateOutputType | null
+    _sum: Multas_Plan_AccionSumAggregateOutputType | null
+    _min: Multas_Plan_AccionMinAggregateOutputType | null
+    _max: Multas_Plan_AccionMaxAggregateOutputType | null
+  }
+
+  export type Multas_Plan_AccionAvgAggregateOutputType = {
+    rbd: number | null
+    licitacionId: number | null
+    totalItems: number | null
+    itemsResueltos: number | null
+  }
+
+  export type Multas_Plan_AccionSumAggregateOutputType = {
+    rbd: number | null
+    licitacionId: number | null
+    totalItems: number | null
+    itemsResueltos: number | null
+  }
+
+  export type Multas_Plan_AccionMinAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    rbd: number | null
+    licitacionId: number | null
+    licitacionNombre: string | null
+    sucursal: string | null
+    estado: string | null
+    prioridad: string | null
+    fechaCompromiso: Date | null
+    responsableAsignado: string | null
+    cerradoPor: string | null
+    fechaCierre: Date | null
+    observacionesCierre: string | null
+    totalItems: number | null
+    itemsResueltos: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Plan_AccionMaxAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    rbd: number | null
+    licitacionId: number | null
+    licitacionNombre: string | null
+    sucursal: string | null
+    estado: string | null
+    prioridad: string | null
+    fechaCompromiso: Date | null
+    responsableAsignado: string | null
+    cerradoPor: string | null
+    fechaCierre: Date | null
+    observacionesCierre: string | null
+    totalItems: number | null
+    itemsResueltos: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Plan_AccionCountAggregateOutputType = {
+    id: number
+    folio: number
+    rbd: number
+    licitacionId: number
+    licitacionNombre: number
+    sucursal: number
+    estado: number
+    prioridad: number
+    fechaCompromiso: number
+    responsableAsignado: number
+    cerradoPor: number
+    fechaCierre: number
+    observacionesCierre: number
+    totalItems: number
+    itemsResueltos: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Plan_AccionAvgAggregateInputType = {
+    rbd?: true
+    licitacionId?: true
+    totalItems?: true
+    itemsResueltos?: true
+  }
+
+  export type Multas_Plan_AccionSumAggregateInputType = {
+    rbd?: true
+    licitacionId?: true
+    totalItems?: true
+    itemsResueltos?: true
+  }
+
+  export type Multas_Plan_AccionMinAggregateInputType = {
+    id?: true
+    folio?: true
+    rbd?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    sucursal?: true
+    estado?: true
+    prioridad?: true
+    fechaCompromiso?: true
+    responsableAsignado?: true
+    cerradoPor?: true
+    fechaCierre?: true
+    observacionesCierre?: true
+    totalItems?: true
+    itemsResueltos?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Plan_AccionMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    rbd?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    sucursal?: true
+    estado?: true
+    prioridad?: true
+    fechaCompromiso?: true
+    responsableAsignado?: true
+    cerradoPor?: true
+    fechaCierre?: true
+    observacionesCierre?: true
+    totalItems?: true
+    itemsResueltos?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Plan_AccionCountAggregateInputType = {
+    id?: true
+    folio?: true
+    rbd?: true
+    licitacionId?: true
+    licitacionNombre?: true
+    sucursal?: true
+    estado?: true
+    prioridad?: true
+    fechaCompromiso?: true
+    responsableAsignado?: true
+    cerradoPor?: true
+    fechaCierre?: true
+    observacionesCierre?: true
+    totalItems?: true
+    itemsResueltos?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Plan_AccionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Plan_Accion to aggregate.
+     */
+    where?: Multas_Plan_AccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accions to fetch.
+     */
+    orderBy?: Multas_Plan_AccionOrderByWithRelationInput | Multas_Plan_AccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Plan_AccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Plan_Accions
+    **/
+    _count?: true | Multas_Plan_AccionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Plan_AccionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Plan_AccionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Plan_AccionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Plan_AccionMaxAggregateInputType
+  }
+
+  export type GetMultas_Plan_AccionAggregateType<T extends Multas_Plan_AccionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Plan_Accion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Plan_Accion[P]>
+      : GetScalarType<T[P], AggregateMultas_Plan_Accion[P]>
+  }
+
+
+
+
+  export type Multas_Plan_AccionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Plan_AccionWhereInput
+    orderBy?: Multas_Plan_AccionOrderByWithAggregationInput | Multas_Plan_AccionOrderByWithAggregationInput[]
+    by: Multas_Plan_AccionScalarFieldEnum[] | Multas_Plan_AccionScalarFieldEnum
+    having?: Multas_Plan_AccionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Plan_AccionCountAggregateInputType | true
+    _avg?: Multas_Plan_AccionAvgAggregateInputType
+    _sum?: Multas_Plan_AccionSumAggregateInputType
+    _min?: Multas_Plan_AccionMinAggregateInputType
+    _max?: Multas_Plan_AccionMaxAggregateInputType
+  }
+
+  export type Multas_Plan_AccionGroupByOutputType = {
+    id: string
+    folio: string
+    rbd: number | null
+    licitacionId: number | null
+    licitacionNombre: string | null
+    sucursal: string | null
+    estado: string
+    prioridad: string
+    fechaCompromiso: Date | null
+    responsableAsignado: string | null
+    cerradoPor: string | null
+    fechaCierre: Date | null
+    observacionesCierre: string | null
+    totalItems: number
+    itemsResueltos: number
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Plan_AccionCountAggregateOutputType | null
+    _avg: Multas_Plan_AccionAvgAggregateOutputType | null
+    _sum: Multas_Plan_AccionSumAggregateOutputType | null
+    _min: Multas_Plan_AccionMinAggregateOutputType | null
+    _max: Multas_Plan_AccionMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Plan_AccionGroupByPayload<T extends Multas_Plan_AccionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Plan_AccionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Plan_AccionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Plan_AccionGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Plan_AccionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Plan_AccionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    rbd?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    sucursal?: boolean
+    estado?: boolean
+    prioridad?: boolean
+    fechaCompromiso?: boolean
+    responsableAsignado?: boolean
+    cerradoPor?: boolean
+    fechaCierre?: boolean
+    observacionesCierre?: boolean
+    totalItems?: boolean
+    itemsResueltos?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    items?: boolean | Multas_Plan_Accion$itemsArgs<ExtArgs>
+    _count?: boolean | Multas_Plan_AccionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Plan_Accion"]>
+
+  export type Multas_Plan_AccionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    rbd?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    sucursal?: boolean
+    estado?: boolean
+    prioridad?: boolean
+    fechaCompromiso?: boolean
+    responsableAsignado?: boolean
+    cerradoPor?: boolean
+    fechaCierre?: boolean
+    observacionesCierre?: boolean
+    totalItems?: boolean
+    itemsResueltos?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Plan_Accion"]>
+
+  export type Multas_Plan_AccionSelectScalar = {
+    id?: boolean
+    folio?: boolean
+    rbd?: boolean
+    licitacionId?: boolean
+    licitacionNombre?: boolean
+    sucursal?: boolean
+    estado?: boolean
+    prioridad?: boolean
+    fechaCompromiso?: boolean
+    responsableAsignado?: boolean
+    cerradoPor?: boolean
+    fechaCierre?: boolean
+    observacionesCierre?: boolean
+    totalItems?: boolean
+    itemsResueltos?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Plan_AccionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | Multas_Plan_Accion$itemsArgs<ExtArgs>
+    _count?: boolean | Multas_Plan_AccionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Multas_Plan_AccionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Multas_Plan_AccionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Plan_Accion"
+    objects: {
+      items: Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folio: string
+      rbd: number | null
+      licitacionId: number | null
+      licitacionNombre: string | null
+      sucursal: string | null
+      estado: string
+      prioridad: string
+      fechaCompromiso: Date | null
+      responsableAsignado: string | null
+      cerradoPor: string | null
+      fechaCierre: Date | null
+      observacionesCierre: string | null
+      totalItems: number
+      itemsResueltos: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Plan_Accion"]>
+    composites: {}
+  }
+
+  type Multas_Plan_AccionGetPayload<S extends boolean | null | undefined | Multas_Plan_AccionDefaultArgs> = $Result.GetResult<Prisma.$Multas_Plan_AccionPayload, S>
+
+  type Multas_Plan_AccionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Plan_AccionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Plan_AccionCountAggregateInputType | true
+    }
+
+  export interface Multas_Plan_AccionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Plan_Accion'], meta: { name: 'Multas_Plan_Accion' } }
+    /**
+     * Find zero or one Multas_Plan_Accion that matches the filter.
+     * @param {Multas_Plan_AccionFindUniqueArgs} args - Arguments to find a Multas_Plan_Accion
+     * @example
+     * // Get one Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Plan_AccionFindUniqueArgs>(args: SelectSubset<T, Multas_Plan_AccionFindUniqueArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Plan_Accion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Plan_AccionFindUniqueOrThrowArgs} args - Arguments to find a Multas_Plan_Accion
+     * @example
+     * // Get one Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Plan_AccionFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Plan_AccionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Plan_Accion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionFindFirstArgs} args - Arguments to find a Multas_Plan_Accion
+     * @example
+     * // Get one Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Plan_AccionFindFirstArgs>(args?: SelectSubset<T, Multas_Plan_AccionFindFirstArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Plan_Accion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionFindFirstOrThrowArgs} args - Arguments to find a Multas_Plan_Accion
+     * @example
+     * // Get one Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Plan_AccionFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Plan_AccionFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Plan_Accions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Plan_Accions
+     * const multas_Plan_Accions = await prisma.multas_Plan_Accion.findMany()
+     * 
+     * // Get first 10 Multas_Plan_Accions
+     * const multas_Plan_Accions = await prisma.multas_Plan_Accion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Plan_AccionWithIdOnly = await prisma.multas_Plan_Accion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Plan_AccionFindManyArgs>(args?: SelectSubset<T, Multas_Plan_AccionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Plan_Accion.
+     * @param {Multas_Plan_AccionCreateArgs} args - Arguments to create a Multas_Plan_Accion.
+     * @example
+     * // Create one Multas_Plan_Accion
+     * const Multas_Plan_Accion = await prisma.multas_Plan_Accion.create({
+     *   data: {
+     *     // ... data to create a Multas_Plan_Accion
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Plan_AccionCreateArgs>(args: SelectSubset<T, Multas_Plan_AccionCreateArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Plan_Accions.
+     * @param {Multas_Plan_AccionCreateManyArgs} args - Arguments to create many Multas_Plan_Accions.
+     * @example
+     * // Create many Multas_Plan_Accions
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Plan_AccionCreateManyArgs>(args?: SelectSubset<T, Multas_Plan_AccionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Plan_Accions and returns the data saved in the database.
+     * @param {Multas_Plan_AccionCreateManyAndReturnArgs} args - Arguments to create many Multas_Plan_Accions.
+     * @example
+     * // Create many Multas_Plan_Accions
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Plan_Accions and only return the `id`
+     * const multas_Plan_AccionWithIdOnly = await prisma.multas_Plan_Accion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Plan_AccionCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Plan_AccionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Plan_Accion.
+     * @param {Multas_Plan_AccionDeleteArgs} args - Arguments to delete one Multas_Plan_Accion.
+     * @example
+     * // Delete one Multas_Plan_Accion
+     * const Multas_Plan_Accion = await prisma.multas_Plan_Accion.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Plan_Accion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Plan_AccionDeleteArgs>(args: SelectSubset<T, Multas_Plan_AccionDeleteArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Plan_Accion.
+     * @param {Multas_Plan_AccionUpdateArgs} args - Arguments to update one Multas_Plan_Accion.
+     * @example
+     * // Update one Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Plan_AccionUpdateArgs>(args: SelectSubset<T, Multas_Plan_AccionUpdateArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Plan_Accions.
+     * @param {Multas_Plan_AccionDeleteManyArgs} args - Arguments to filter Multas_Plan_Accions to delete.
+     * @example
+     * // Delete a few Multas_Plan_Accions
+     * const { count } = await prisma.multas_Plan_Accion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Plan_AccionDeleteManyArgs>(args?: SelectSubset<T, Multas_Plan_AccionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Plan_Accions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Plan_Accions
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Plan_AccionUpdateManyArgs>(args: SelectSubset<T, Multas_Plan_AccionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Plan_Accion.
+     * @param {Multas_Plan_AccionUpsertArgs} args - Arguments to update or create a Multas_Plan_Accion.
+     * @example
+     * // Update or create a Multas_Plan_Accion
+     * const multas_Plan_Accion = await prisma.multas_Plan_Accion.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Plan_Accion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Plan_Accion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Plan_AccionUpsertArgs>(args: SelectSubset<T, Multas_Plan_AccionUpsertArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Plan_Accions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionCountArgs} args - Arguments to filter Multas_Plan_Accions to count.
+     * @example
+     * // Count the number of Multas_Plan_Accions
+     * const count = await prisma.multas_Plan_Accion.count({
+     *   where: {
+     *     // ... the filter for the Multas_Plan_Accions we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Plan_AccionCountArgs>(
+      args?: Subset<T, Multas_Plan_AccionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Plan_AccionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Plan_Accion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Plan_AccionAggregateArgs>(args: Subset<T, Multas_Plan_AccionAggregateArgs>): Prisma.PrismaPromise<GetMultas_Plan_AccionAggregateType<T>>
+
+    /**
+     * Group by Multas_Plan_Accion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_AccionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Plan_AccionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Plan_AccionGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Plan_AccionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Plan_AccionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Plan_AccionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Plan_Accion model
+   */
+  readonly fields: Multas_Plan_AccionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Plan_Accion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Plan_AccionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends Multas_Plan_Accion$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Plan_Accion$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Plan_Accion model
+   */ 
+  interface Multas_Plan_AccionFieldRefs {
+    readonly id: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly folio: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly rbd: FieldRef<"Multas_Plan_Accion", 'Int'>
+    readonly licitacionId: FieldRef<"Multas_Plan_Accion", 'Int'>
+    readonly licitacionNombre: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly sucursal: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly estado: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly prioridad: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly fechaCompromiso: FieldRef<"Multas_Plan_Accion", 'DateTime'>
+    readonly responsableAsignado: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly cerradoPor: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly fechaCierre: FieldRef<"Multas_Plan_Accion", 'DateTime'>
+    readonly observacionesCierre: FieldRef<"Multas_Plan_Accion", 'String'>
+    readonly totalItems: FieldRef<"Multas_Plan_Accion", 'Int'>
+    readonly itemsResueltos: FieldRef<"Multas_Plan_Accion", 'Int'>
+    readonly createdAt: FieldRef<"Multas_Plan_Accion", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Plan_Accion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Plan_Accion findUnique
+   */
+  export type Multas_Plan_AccionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion to fetch.
+     */
+    where: Multas_Plan_AccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion findUniqueOrThrow
+   */
+  export type Multas_Plan_AccionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion to fetch.
+     */
+    where: Multas_Plan_AccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion findFirst
+   */
+  export type Multas_Plan_AccionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion to fetch.
+     */
+    where?: Multas_Plan_AccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accions to fetch.
+     */
+    orderBy?: Multas_Plan_AccionOrderByWithRelationInput | Multas_Plan_AccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Plan_Accions.
+     */
+    cursor?: Multas_Plan_AccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Plan_Accions.
+     */
+    distinct?: Multas_Plan_AccionScalarFieldEnum | Multas_Plan_AccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion findFirstOrThrow
+   */
+  export type Multas_Plan_AccionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion to fetch.
+     */
+    where?: Multas_Plan_AccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accions to fetch.
+     */
+    orderBy?: Multas_Plan_AccionOrderByWithRelationInput | Multas_Plan_AccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Plan_Accions.
+     */
+    cursor?: Multas_Plan_AccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Plan_Accions.
+     */
+    distinct?: Multas_Plan_AccionScalarFieldEnum | Multas_Plan_AccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion findMany
+   */
+  export type Multas_Plan_AccionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accions to fetch.
+     */
+    where?: Multas_Plan_AccionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accions to fetch.
+     */
+    orderBy?: Multas_Plan_AccionOrderByWithRelationInput | Multas_Plan_AccionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Plan_Accions.
+     */
+    cursor?: Multas_Plan_AccionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accions.
+     */
+    skip?: number
+    distinct?: Multas_Plan_AccionScalarFieldEnum | Multas_Plan_AccionScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion create
+   */
+  export type Multas_Plan_AccionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Plan_Accion.
+     */
+    data: XOR<Multas_Plan_AccionCreateInput, Multas_Plan_AccionUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Plan_Accion createMany
+   */
+  export type Multas_Plan_AccionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Plan_Accions.
+     */
+    data: Multas_Plan_AccionCreateManyInput | Multas_Plan_AccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Plan_Accion createManyAndReturn
+   */
+  export type Multas_Plan_AccionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Plan_Accions.
+     */
+    data: Multas_Plan_AccionCreateManyInput | Multas_Plan_AccionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Plan_Accion update
+   */
+  export type Multas_Plan_AccionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Plan_Accion.
+     */
+    data: XOR<Multas_Plan_AccionUpdateInput, Multas_Plan_AccionUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Plan_Accion to update.
+     */
+    where: Multas_Plan_AccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion updateMany
+   */
+  export type Multas_Plan_AccionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Plan_Accions.
+     */
+    data: XOR<Multas_Plan_AccionUpdateManyMutationInput, Multas_Plan_AccionUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Plan_Accions to update
+     */
+    where?: Multas_Plan_AccionWhereInput
+  }
+
+  /**
+   * Multas_Plan_Accion upsert
+   */
+  export type Multas_Plan_AccionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Plan_Accion to update in case it exists.
+     */
+    where: Multas_Plan_AccionWhereUniqueInput
+    /**
+     * In case the Multas_Plan_Accion found by the `where` argument doesn't exist, create a new Multas_Plan_Accion with this data.
+     */
+    create: XOR<Multas_Plan_AccionCreateInput, Multas_Plan_AccionUncheckedCreateInput>
+    /**
+     * In case the Multas_Plan_Accion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Plan_AccionUpdateInput, Multas_Plan_AccionUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Plan_Accion delete
+   */
+  export type Multas_Plan_AccionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Plan_Accion to delete.
+     */
+    where: Multas_Plan_AccionWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion deleteMany
+   */
+  export type Multas_Plan_AccionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Plan_Accions to delete
+     */
+    where?: Multas_Plan_AccionWhereInput
+  }
+
+  /**
+   * Multas_Plan_Accion.items
+   */
+  export type Multas_Plan_Accion$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    where?: Multas_Plan_Accion_ItemWhereInput
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithRelationInput | Multas_Plan_Accion_ItemOrderByWithRelationInput[]
+    cursor?: Multas_Plan_Accion_ItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Plan_Accion_ItemScalarFieldEnum | Multas_Plan_Accion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion without action
+   */
+  export type Multas_Plan_AccionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion
+     */
+    select?: Multas_Plan_AccionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_AccionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Plan_Accion_Item
+   */
+
+  export type AggregateMultas_Plan_Accion_Item = {
+    _count: Multas_Plan_Accion_ItemCountAggregateOutputType | null
+    _min: Multas_Plan_Accion_ItemMinAggregateOutputType | null
+    _max: Multas_Plan_Accion_ItemMaxAggregateOutputType | null
+  }
+
+  export type Multas_Plan_Accion_ItemMinAggregateOutputType = {
+    id: string | null
+    planId: string | null
+    aspecto: string | null
+    hallazgoDetectado: string | null
+    accionTomada: string | null
+    evidenciaUrl: string | null
+    evidenciaNombre: string | null
+    estadoItem: string | null
+    fechaEjecucion: Date | null
+    ejecutadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Plan_Accion_ItemMaxAggregateOutputType = {
+    id: string | null
+    planId: string | null
+    aspecto: string | null
+    hallazgoDetectado: string | null
+    accionTomada: string | null
+    evidenciaUrl: string | null
+    evidenciaNombre: string | null
+    estadoItem: string | null
+    fechaEjecucion: Date | null
+    ejecutadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Plan_Accion_ItemCountAggregateOutputType = {
+    id: number
+    planId: number
+    aspecto: number
+    hallazgoDetectado: number
+    accionTomada: number
+    evidenciaUrl: number
+    evidenciaNombre: number
+    estadoItem: number
+    fechaEjecucion: number
+    ejecutadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Plan_Accion_ItemMinAggregateInputType = {
+    id?: true
+    planId?: true
+    aspecto?: true
+    hallazgoDetectado?: true
+    accionTomada?: true
+    evidenciaUrl?: true
+    evidenciaNombre?: true
+    estadoItem?: true
+    fechaEjecucion?: true
+    ejecutadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Plan_Accion_ItemMaxAggregateInputType = {
+    id?: true
+    planId?: true
+    aspecto?: true
+    hallazgoDetectado?: true
+    accionTomada?: true
+    evidenciaUrl?: true
+    evidenciaNombre?: true
+    estadoItem?: true
+    fechaEjecucion?: true
+    ejecutadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Plan_Accion_ItemCountAggregateInputType = {
+    id?: true
+    planId?: true
+    aspecto?: true
+    hallazgoDetectado?: true
+    accionTomada?: true
+    evidenciaUrl?: true
+    evidenciaNombre?: true
+    estadoItem?: true
+    fechaEjecucion?: true
+    ejecutadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Plan_Accion_ItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Plan_Accion_Item to aggregate.
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accion_Items to fetch.
+     */
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithRelationInput | Multas_Plan_Accion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Plan_Accion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Plan_Accion_Items
+    **/
+    _count?: true | Multas_Plan_Accion_ItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Plan_Accion_ItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Plan_Accion_ItemMaxAggregateInputType
+  }
+
+  export type GetMultas_Plan_Accion_ItemAggregateType<T extends Multas_Plan_Accion_ItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Plan_Accion_Item]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Plan_Accion_Item[P]>
+      : GetScalarType<T[P], AggregateMultas_Plan_Accion_Item[P]>
+  }
+
+
+
+
+  export type Multas_Plan_Accion_ItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Plan_Accion_ItemWhereInput
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithAggregationInput | Multas_Plan_Accion_ItemOrderByWithAggregationInput[]
+    by: Multas_Plan_Accion_ItemScalarFieldEnum[] | Multas_Plan_Accion_ItemScalarFieldEnum
+    having?: Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Plan_Accion_ItemCountAggregateInputType | true
+    _min?: Multas_Plan_Accion_ItemMinAggregateInputType
+    _max?: Multas_Plan_Accion_ItemMaxAggregateInputType
+  }
+
+  export type Multas_Plan_Accion_ItemGroupByOutputType = {
+    id: string
+    planId: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada: string | null
+    evidenciaUrl: string | null
+    evidenciaNombre: string | null
+    estadoItem: string
+    fechaEjecucion: Date | null
+    ejecutadoPor: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Plan_Accion_ItemCountAggregateOutputType | null
+    _min: Multas_Plan_Accion_ItemMinAggregateOutputType | null
+    _max: Multas_Plan_Accion_ItemMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Plan_Accion_ItemGroupByPayload<T extends Multas_Plan_Accion_ItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Plan_Accion_ItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Plan_Accion_ItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Plan_Accion_ItemGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Plan_Accion_ItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Plan_Accion_ItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planId?: boolean
+    aspecto?: boolean
+    hallazgoDetectado?: boolean
+    accionTomada?: boolean
+    evidenciaUrl?: boolean
+    evidenciaNombre?: boolean
+    estadoItem?: boolean
+    fechaEjecucion?: boolean
+    ejecutadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    plan?: boolean | Multas_Plan_AccionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Plan_Accion_Item"]>
+
+  export type Multas_Plan_Accion_ItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planId?: boolean
+    aspecto?: boolean
+    hallazgoDetectado?: boolean
+    accionTomada?: boolean
+    evidenciaUrl?: boolean
+    evidenciaNombre?: boolean
+    estadoItem?: boolean
+    fechaEjecucion?: boolean
+    ejecutadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    plan?: boolean | Multas_Plan_AccionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Plan_Accion_Item"]>
+
+  export type Multas_Plan_Accion_ItemSelectScalar = {
+    id?: boolean
+    planId?: boolean
+    aspecto?: boolean
+    hallazgoDetectado?: boolean
+    accionTomada?: boolean
+    evidenciaUrl?: boolean
+    evidenciaNombre?: boolean
+    estadoItem?: boolean
+    fechaEjecucion?: boolean
+    ejecutadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Plan_Accion_ItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    plan?: boolean | Multas_Plan_AccionDefaultArgs<ExtArgs>
+  }
+  export type Multas_Plan_Accion_ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    plan?: boolean | Multas_Plan_AccionDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Plan_Accion_ItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Plan_Accion_Item"
+    objects: {
+      plan: Prisma.$Multas_Plan_AccionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      planId: string
+      aspecto: string
+      hallazgoDetectado: string
+      accionTomada: string | null
+      evidenciaUrl: string | null
+      evidenciaNombre: string | null
+      estadoItem: string
+      fechaEjecucion: Date | null
+      ejecutadoPor: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Plan_Accion_Item"]>
+    composites: {}
+  }
+
+  type Multas_Plan_Accion_ItemGetPayload<S extends boolean | null | undefined | Multas_Plan_Accion_ItemDefaultArgs> = $Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload, S>
+
+  type Multas_Plan_Accion_ItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Plan_Accion_ItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Plan_Accion_ItemCountAggregateInputType | true
+    }
+
+  export interface Multas_Plan_Accion_ItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Plan_Accion_Item'], meta: { name: 'Multas_Plan_Accion_Item' } }
+    /**
+     * Find zero or one Multas_Plan_Accion_Item that matches the filter.
+     * @param {Multas_Plan_Accion_ItemFindUniqueArgs} args - Arguments to find a Multas_Plan_Accion_Item
+     * @example
+     * // Get one Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Plan_Accion_ItemFindUniqueArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemFindUniqueArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Plan_Accion_Item that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Plan_Accion_ItemFindUniqueOrThrowArgs} args - Arguments to find a Multas_Plan_Accion_Item
+     * @example
+     * // Get one Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Plan_Accion_ItemFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Plan_Accion_Item that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemFindFirstArgs} args - Arguments to find a Multas_Plan_Accion_Item
+     * @example
+     * // Get one Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Plan_Accion_ItemFindFirstArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemFindFirstArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Plan_Accion_Item that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemFindFirstOrThrowArgs} args - Arguments to find a Multas_Plan_Accion_Item
+     * @example
+     * // Get one Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Plan_Accion_ItemFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Plan_Accion_Items that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Plan_Accion_Items
+     * const multas_Plan_Accion_Items = await prisma.multas_Plan_Accion_Item.findMany()
+     * 
+     * // Get first 10 Multas_Plan_Accion_Items
+     * const multas_Plan_Accion_Items = await prisma.multas_Plan_Accion_Item.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Plan_Accion_ItemWithIdOnly = await prisma.multas_Plan_Accion_Item.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Plan_Accion_ItemFindManyArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Plan_Accion_Item.
+     * @param {Multas_Plan_Accion_ItemCreateArgs} args - Arguments to create a Multas_Plan_Accion_Item.
+     * @example
+     * // Create one Multas_Plan_Accion_Item
+     * const Multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.create({
+     *   data: {
+     *     // ... data to create a Multas_Plan_Accion_Item
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Plan_Accion_ItemCreateArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemCreateArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Plan_Accion_Items.
+     * @param {Multas_Plan_Accion_ItemCreateManyArgs} args - Arguments to create many Multas_Plan_Accion_Items.
+     * @example
+     * // Create many Multas_Plan_Accion_Items
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Plan_Accion_ItemCreateManyArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Plan_Accion_Items and returns the data saved in the database.
+     * @param {Multas_Plan_Accion_ItemCreateManyAndReturnArgs} args - Arguments to create many Multas_Plan_Accion_Items.
+     * @example
+     * // Create many Multas_Plan_Accion_Items
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Plan_Accion_Items and only return the `id`
+     * const multas_Plan_Accion_ItemWithIdOnly = await prisma.multas_Plan_Accion_Item.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Plan_Accion_ItemCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Plan_Accion_Item.
+     * @param {Multas_Plan_Accion_ItemDeleteArgs} args - Arguments to delete one Multas_Plan_Accion_Item.
+     * @example
+     * // Delete one Multas_Plan_Accion_Item
+     * const Multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Plan_Accion_Item
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Plan_Accion_ItemDeleteArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemDeleteArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Plan_Accion_Item.
+     * @param {Multas_Plan_Accion_ItemUpdateArgs} args - Arguments to update one Multas_Plan_Accion_Item.
+     * @example
+     * // Update one Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Plan_Accion_ItemUpdateArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemUpdateArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Plan_Accion_Items.
+     * @param {Multas_Plan_Accion_ItemDeleteManyArgs} args - Arguments to filter Multas_Plan_Accion_Items to delete.
+     * @example
+     * // Delete a few Multas_Plan_Accion_Items
+     * const { count } = await prisma.multas_Plan_Accion_Item.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Plan_Accion_ItemDeleteManyArgs>(args?: SelectSubset<T, Multas_Plan_Accion_ItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Plan_Accion_Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Plan_Accion_Items
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Plan_Accion_ItemUpdateManyArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Plan_Accion_Item.
+     * @param {Multas_Plan_Accion_ItemUpsertArgs} args - Arguments to update or create a Multas_Plan_Accion_Item.
+     * @example
+     * // Update or create a Multas_Plan_Accion_Item
+     * const multas_Plan_Accion_Item = await prisma.multas_Plan_Accion_Item.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Plan_Accion_Item
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Plan_Accion_Item we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Plan_Accion_ItemUpsertArgs>(args: SelectSubset<T, Multas_Plan_Accion_ItemUpsertArgs<ExtArgs>>): Prisma__Multas_Plan_Accion_ItemClient<$Result.GetResult<Prisma.$Multas_Plan_Accion_ItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Plan_Accion_Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemCountArgs} args - Arguments to filter Multas_Plan_Accion_Items to count.
+     * @example
+     * // Count the number of Multas_Plan_Accion_Items
+     * const count = await prisma.multas_Plan_Accion_Item.count({
+     *   where: {
+     *     // ... the filter for the Multas_Plan_Accion_Items we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Plan_Accion_ItemCountArgs>(
+      args?: Subset<T, Multas_Plan_Accion_ItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Plan_Accion_ItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Plan_Accion_Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Plan_Accion_ItemAggregateArgs>(args: Subset<T, Multas_Plan_Accion_ItemAggregateArgs>): Prisma.PrismaPromise<GetMultas_Plan_Accion_ItemAggregateType<T>>
+
+    /**
+     * Group by Multas_Plan_Accion_Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Plan_Accion_ItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Plan_Accion_ItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Plan_Accion_ItemGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Plan_Accion_ItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Plan_Accion_ItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Plan_Accion_ItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Plan_Accion_Item model
+   */
+  readonly fields: Multas_Plan_Accion_ItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Plan_Accion_Item.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Plan_Accion_ItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    plan<T extends Multas_Plan_AccionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Plan_AccionDefaultArgs<ExtArgs>>): Prisma__Multas_Plan_AccionClient<$Result.GetResult<Prisma.$Multas_Plan_AccionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Plan_Accion_Item model
+   */ 
+  interface Multas_Plan_Accion_ItemFieldRefs {
+    readonly id: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly planId: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly aspecto: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly hallazgoDetectado: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly accionTomada: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly evidenciaUrl: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly evidenciaNombre: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly estadoItem: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly fechaEjecucion: FieldRef<"Multas_Plan_Accion_Item", 'DateTime'>
+    readonly ejecutadoPor: FieldRef<"Multas_Plan_Accion_Item", 'String'>
+    readonly createdAt: FieldRef<"Multas_Plan_Accion_Item", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Plan_Accion_Item", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Plan_Accion_Item findUnique
+   */
+  export type Multas_Plan_Accion_ItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion_Item to fetch.
+     */
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item findUniqueOrThrow
+   */
+  export type Multas_Plan_Accion_ItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion_Item to fetch.
+     */
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item findFirst
+   */
+  export type Multas_Plan_Accion_ItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion_Item to fetch.
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accion_Items to fetch.
+     */
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithRelationInput | Multas_Plan_Accion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Plan_Accion_Items.
+     */
+    cursor?: Multas_Plan_Accion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Plan_Accion_Items.
+     */
+    distinct?: Multas_Plan_Accion_ItemScalarFieldEnum | Multas_Plan_Accion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion_Item findFirstOrThrow
+   */
+  export type Multas_Plan_Accion_ItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion_Item to fetch.
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accion_Items to fetch.
+     */
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithRelationInput | Multas_Plan_Accion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Plan_Accion_Items.
+     */
+    cursor?: Multas_Plan_Accion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accion_Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Plan_Accion_Items.
+     */
+    distinct?: Multas_Plan_Accion_ItemScalarFieldEnum | Multas_Plan_Accion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion_Item findMany
+   */
+  export type Multas_Plan_Accion_ItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Plan_Accion_Items to fetch.
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Plan_Accion_Items to fetch.
+     */
+    orderBy?: Multas_Plan_Accion_ItemOrderByWithRelationInput | Multas_Plan_Accion_ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Plan_Accion_Items.
+     */
+    cursor?: Multas_Plan_Accion_ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Plan_Accion_Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Plan_Accion_Items.
+     */
+    skip?: number
+    distinct?: Multas_Plan_Accion_ItemScalarFieldEnum | Multas_Plan_Accion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Plan_Accion_Item create
+   */
+  export type Multas_Plan_Accion_ItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Plan_Accion_Item.
+     */
+    data: XOR<Multas_Plan_Accion_ItemCreateInput, Multas_Plan_Accion_ItemUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Plan_Accion_Item createMany
+   */
+  export type Multas_Plan_Accion_ItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Plan_Accion_Items.
+     */
+    data: Multas_Plan_Accion_ItemCreateManyInput | Multas_Plan_Accion_ItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Plan_Accion_Item createManyAndReturn
+   */
+  export type Multas_Plan_Accion_ItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Plan_Accion_Items.
+     */
+    data: Multas_Plan_Accion_ItemCreateManyInput | Multas_Plan_Accion_ItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Plan_Accion_Item update
+   */
+  export type Multas_Plan_Accion_ItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Plan_Accion_Item.
+     */
+    data: XOR<Multas_Plan_Accion_ItemUpdateInput, Multas_Plan_Accion_ItemUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Plan_Accion_Item to update.
+     */
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item updateMany
+   */
+  export type Multas_Plan_Accion_ItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Plan_Accion_Items.
+     */
+    data: XOR<Multas_Plan_Accion_ItemUpdateManyMutationInput, Multas_Plan_Accion_ItemUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Plan_Accion_Items to update
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item upsert
+   */
+  export type Multas_Plan_Accion_ItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Plan_Accion_Item to update in case it exists.
+     */
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+    /**
+     * In case the Multas_Plan_Accion_Item found by the `where` argument doesn't exist, create a new Multas_Plan_Accion_Item with this data.
+     */
+    create: XOR<Multas_Plan_Accion_ItemCreateInput, Multas_Plan_Accion_ItemUncheckedCreateInput>
+    /**
+     * In case the Multas_Plan_Accion_Item was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Plan_Accion_ItemUpdateInput, Multas_Plan_Accion_ItemUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Plan_Accion_Item delete
+   */
+  export type Multas_Plan_Accion_ItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Plan_Accion_Item to delete.
+     */
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item deleteMany
+   */
+  export type Multas_Plan_Accion_ItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Plan_Accion_Items to delete
+     */
+    where?: Multas_Plan_Accion_ItemWhereInput
+  }
+
+  /**
+   * Multas_Plan_Accion_Item without action
+   */
+  export type Multas_Plan_Accion_ItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Plan_Accion_Item
+     */
+    select?: Multas_Plan_Accion_ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
   }
 
 
@@ -177573,6 +180977,62 @@ export namespace Prisma {
   export type Multas_Argumento_BibliotecaScalarFieldEnum = (typeof Multas_Argumento_BibliotecaScalarFieldEnum)[keyof typeof Multas_Argumento_BibliotecaScalarFieldEnum]
 
 
+  export const Multas_Diccionario_SolucionScalarFieldEnum: {
+    id: 'id',
+    aspecto: 'aspecto',
+    tipoNC: 'tipoNC',
+    accionCorrectivaTipo: 'accionCorrectivaTipo',
+    plazoDiasEstandar: 'plazoDiasEstandar',
+    evidenciaRequerida: 'evidenciaRequerida',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Diccionario_SolucionScalarFieldEnum = (typeof Multas_Diccionario_SolucionScalarFieldEnum)[keyof typeof Multas_Diccionario_SolucionScalarFieldEnum]
+
+
+  export const Multas_Plan_AccionScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    rbd: 'rbd',
+    licitacionId: 'licitacionId',
+    licitacionNombre: 'licitacionNombre',
+    sucursal: 'sucursal',
+    estado: 'estado',
+    prioridad: 'prioridad',
+    fechaCompromiso: 'fechaCompromiso',
+    responsableAsignado: 'responsableAsignado',
+    cerradoPor: 'cerradoPor',
+    fechaCierre: 'fechaCierre',
+    observacionesCierre: 'observacionesCierre',
+    totalItems: 'totalItems',
+    itemsResueltos: 'itemsResueltos',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Plan_AccionScalarFieldEnum = (typeof Multas_Plan_AccionScalarFieldEnum)[keyof typeof Multas_Plan_AccionScalarFieldEnum]
+
+
+  export const Multas_Plan_Accion_ItemScalarFieldEnum: {
+    id: 'id',
+    planId: 'planId',
+    aspecto: 'aspecto',
+    hallazgoDetectado: 'hallazgoDetectado',
+    accionTomada: 'accionTomada',
+    evidenciaUrl: 'evidenciaUrl',
+    evidenciaNombre: 'evidenciaNombre',
+    estadoItem: 'estadoItem',
+    fechaEjecucion: 'fechaEjecucion',
+    ejecutadoPor: 'ejecutadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Plan_Accion_ItemScalarFieldEnum = (typeof Multas_Plan_Accion_ItemScalarFieldEnum)[keyof typeof Multas_Plan_Accion_ItemScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -185418,6 +188878,287 @@ export namespace Prisma {
     activo?: BoolWithAggregatesFilter<"Multas_Argumento_Biblioteca"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Argumento_Biblioteca"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Argumento_Biblioteca"> | Date | string
+  }
+
+  export type Multas_Diccionario_SolucionWhereInput = {
+    AND?: Multas_Diccionario_SolucionWhereInput | Multas_Diccionario_SolucionWhereInput[]
+    OR?: Multas_Diccionario_SolucionWhereInput[]
+    NOT?: Multas_Diccionario_SolucionWhereInput | Multas_Diccionario_SolucionWhereInput[]
+    id?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    aspecto?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    tipoNC?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    accionCorrectivaTipo?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    plazoDiasEstandar?: IntFilter<"Multas_Diccionario_Solucion"> | number
+    evidenciaRequerida?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    activo?: BoolFilter<"Multas_Diccionario_Solucion"> | boolean
+    createdAt?: DateTimeFilter<"Multas_Diccionario_Solucion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Diccionario_Solucion"> | Date | string
+  }
+
+  export type Multas_Diccionario_SolucionOrderByWithRelationInput = {
+    id?: SortOrder
+    aspecto?: SortOrder
+    tipoNC?: SortOrder
+    accionCorrectivaTipo?: SortOrder
+    plazoDiasEstandar?: SortOrder
+    evidenciaRequerida?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Diccionario_SolucionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Diccionario_SolucionWhereInput | Multas_Diccionario_SolucionWhereInput[]
+    OR?: Multas_Diccionario_SolucionWhereInput[]
+    NOT?: Multas_Diccionario_SolucionWhereInput | Multas_Diccionario_SolucionWhereInput[]
+    aspecto?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    tipoNC?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    accionCorrectivaTipo?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    plazoDiasEstandar?: IntFilter<"Multas_Diccionario_Solucion"> | number
+    evidenciaRequerida?: StringFilter<"Multas_Diccionario_Solucion"> | string
+    activo?: BoolFilter<"Multas_Diccionario_Solucion"> | boolean
+    createdAt?: DateTimeFilter<"Multas_Diccionario_Solucion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Diccionario_Solucion"> | Date | string
+  }, "id">
+
+  export type Multas_Diccionario_SolucionOrderByWithAggregationInput = {
+    id?: SortOrder
+    aspecto?: SortOrder
+    tipoNC?: SortOrder
+    accionCorrectivaTipo?: SortOrder
+    plazoDiasEstandar?: SortOrder
+    evidenciaRequerida?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Diccionario_SolucionCountOrderByAggregateInput
+    _avg?: Multas_Diccionario_SolucionAvgOrderByAggregateInput
+    _max?: Multas_Diccionario_SolucionMaxOrderByAggregateInput
+    _min?: Multas_Diccionario_SolucionMinOrderByAggregateInput
+    _sum?: Multas_Diccionario_SolucionSumOrderByAggregateInput
+  }
+
+  export type Multas_Diccionario_SolucionScalarWhereWithAggregatesInput = {
+    AND?: Multas_Diccionario_SolucionScalarWhereWithAggregatesInput | Multas_Diccionario_SolucionScalarWhereWithAggregatesInput[]
+    OR?: Multas_Diccionario_SolucionScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Diccionario_SolucionScalarWhereWithAggregatesInput | Multas_Diccionario_SolucionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Diccionario_Solucion"> | string
+    aspecto?: StringWithAggregatesFilter<"Multas_Diccionario_Solucion"> | string
+    tipoNC?: StringWithAggregatesFilter<"Multas_Diccionario_Solucion"> | string
+    accionCorrectivaTipo?: StringWithAggregatesFilter<"Multas_Diccionario_Solucion"> | string
+    plazoDiasEstandar?: IntWithAggregatesFilter<"Multas_Diccionario_Solucion"> | number
+    evidenciaRequerida?: StringWithAggregatesFilter<"Multas_Diccionario_Solucion"> | string
+    activo?: BoolWithAggregatesFilter<"Multas_Diccionario_Solucion"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Diccionario_Solucion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Diccionario_Solucion"> | Date | string
+  }
+
+  export type Multas_Plan_AccionWhereInput = {
+    AND?: Multas_Plan_AccionWhereInput | Multas_Plan_AccionWhereInput[]
+    OR?: Multas_Plan_AccionWhereInput[]
+    NOT?: Multas_Plan_AccionWhereInput | Multas_Plan_AccionWhereInput[]
+    id?: StringFilter<"Multas_Plan_Accion"> | string
+    folio?: StringFilter<"Multas_Plan_Accion"> | string
+    rbd?: IntNullableFilter<"Multas_Plan_Accion"> | number | null
+    licitacionId?: IntNullableFilter<"Multas_Plan_Accion"> | number | null
+    licitacionNombre?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    sucursal?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    estado?: StringFilter<"Multas_Plan_Accion"> | string
+    prioridad?: StringFilter<"Multas_Plan_Accion"> | string
+    fechaCompromiso?: DateTimeNullableFilter<"Multas_Plan_Accion"> | Date | string | null
+    responsableAsignado?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    cerradoPor?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    fechaCierre?: DateTimeNullableFilter<"Multas_Plan_Accion"> | Date | string | null
+    observacionesCierre?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    totalItems?: IntFilter<"Multas_Plan_Accion"> | number
+    itemsResueltos?: IntFilter<"Multas_Plan_Accion"> | number
+    createdAt?: DateTimeFilter<"Multas_Plan_Accion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Plan_Accion"> | Date | string
+    items?: Multas_Plan_Accion_ItemListRelationFilter
+  }
+
+  export type Multas_Plan_AccionOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    licitacionNombre?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCompromiso?: SortOrderInput | SortOrder
+    responsableAsignado?: SortOrderInput | SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    fechaCierre?: SortOrderInput | SortOrder
+    observacionesCierre?: SortOrderInput | SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    items?: Multas_Plan_Accion_ItemOrderByRelationAggregateInput
+  }
+
+  export type Multas_Plan_AccionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folio?: string
+    AND?: Multas_Plan_AccionWhereInput | Multas_Plan_AccionWhereInput[]
+    OR?: Multas_Plan_AccionWhereInput[]
+    NOT?: Multas_Plan_AccionWhereInput | Multas_Plan_AccionWhereInput[]
+    rbd?: IntNullableFilter<"Multas_Plan_Accion"> | number | null
+    licitacionId?: IntNullableFilter<"Multas_Plan_Accion"> | number | null
+    licitacionNombre?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    sucursal?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    estado?: StringFilter<"Multas_Plan_Accion"> | string
+    prioridad?: StringFilter<"Multas_Plan_Accion"> | string
+    fechaCompromiso?: DateTimeNullableFilter<"Multas_Plan_Accion"> | Date | string | null
+    responsableAsignado?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    cerradoPor?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    fechaCierre?: DateTimeNullableFilter<"Multas_Plan_Accion"> | Date | string | null
+    observacionesCierre?: StringNullableFilter<"Multas_Plan_Accion"> | string | null
+    totalItems?: IntFilter<"Multas_Plan_Accion"> | number
+    itemsResueltos?: IntFilter<"Multas_Plan_Accion"> | number
+    createdAt?: DateTimeFilter<"Multas_Plan_Accion"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Plan_Accion"> | Date | string
+    items?: Multas_Plan_Accion_ItemListRelationFilter
+  }, "id" | "folio">
+
+  export type Multas_Plan_AccionOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    licitacionNombre?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCompromiso?: SortOrderInput | SortOrder
+    responsableAsignado?: SortOrderInput | SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    fechaCierre?: SortOrderInput | SortOrder
+    observacionesCierre?: SortOrderInput | SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Plan_AccionCountOrderByAggregateInput
+    _avg?: Multas_Plan_AccionAvgOrderByAggregateInput
+    _max?: Multas_Plan_AccionMaxOrderByAggregateInput
+    _min?: Multas_Plan_AccionMinOrderByAggregateInput
+    _sum?: Multas_Plan_AccionSumOrderByAggregateInput
+  }
+
+  export type Multas_Plan_AccionScalarWhereWithAggregatesInput = {
+    AND?: Multas_Plan_AccionScalarWhereWithAggregatesInput | Multas_Plan_AccionScalarWhereWithAggregatesInput[]
+    OR?: Multas_Plan_AccionScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Plan_AccionScalarWhereWithAggregatesInput | Multas_Plan_AccionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Plan_Accion"> | string
+    folio?: StringWithAggregatesFilter<"Multas_Plan_Accion"> | string
+    rbd?: IntNullableWithAggregatesFilter<"Multas_Plan_Accion"> | number | null
+    licitacionId?: IntNullableWithAggregatesFilter<"Multas_Plan_Accion"> | number | null
+    licitacionNombre?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion"> | string | null
+    sucursal?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion"> | string | null
+    estado?: StringWithAggregatesFilter<"Multas_Plan_Accion"> | string
+    prioridad?: StringWithAggregatesFilter<"Multas_Plan_Accion"> | string
+    fechaCompromiso?: DateTimeNullableWithAggregatesFilter<"Multas_Plan_Accion"> | Date | string | null
+    responsableAsignado?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion"> | string | null
+    cerradoPor?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion"> | string | null
+    fechaCierre?: DateTimeNullableWithAggregatesFilter<"Multas_Plan_Accion"> | Date | string | null
+    observacionesCierre?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion"> | string | null
+    totalItems?: IntWithAggregatesFilter<"Multas_Plan_Accion"> | number
+    itemsResueltos?: IntWithAggregatesFilter<"Multas_Plan_Accion"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion"> | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemWhereInput = {
+    AND?: Multas_Plan_Accion_ItemWhereInput | Multas_Plan_Accion_ItemWhereInput[]
+    OR?: Multas_Plan_Accion_ItemWhereInput[]
+    NOT?: Multas_Plan_Accion_ItemWhereInput | Multas_Plan_Accion_ItemWhereInput[]
+    id?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    planId?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    aspecto?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    hallazgoDetectado?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    accionTomada?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaUrl?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaNombre?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    estadoItem?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    fechaEjecucion?: DateTimeNullableFilter<"Multas_Plan_Accion_Item"> | Date | string | null
+    ejecutadoPor?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+    plan?: XOR<Multas_Plan_AccionRelationFilter, Multas_Plan_AccionWhereInput>
+  }
+
+  export type Multas_Plan_Accion_ItemOrderByWithRelationInput = {
+    id?: SortOrder
+    planId?: SortOrder
+    aspecto?: SortOrder
+    hallazgoDetectado?: SortOrder
+    accionTomada?: SortOrderInput | SortOrder
+    evidenciaUrl?: SortOrderInput | SortOrder
+    evidenciaNombre?: SortOrderInput | SortOrder
+    estadoItem?: SortOrder
+    fechaEjecucion?: SortOrderInput | SortOrder
+    ejecutadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    plan?: Multas_Plan_AccionOrderByWithRelationInput
+  }
+
+  export type Multas_Plan_Accion_ItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Plan_Accion_ItemWhereInput | Multas_Plan_Accion_ItemWhereInput[]
+    OR?: Multas_Plan_Accion_ItemWhereInput[]
+    NOT?: Multas_Plan_Accion_ItemWhereInput | Multas_Plan_Accion_ItemWhereInput[]
+    planId?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    aspecto?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    hallazgoDetectado?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    accionTomada?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaUrl?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaNombre?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    estadoItem?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    fechaEjecucion?: DateTimeNullableFilter<"Multas_Plan_Accion_Item"> | Date | string | null
+    ejecutadoPor?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+    plan?: XOR<Multas_Plan_AccionRelationFilter, Multas_Plan_AccionWhereInput>
+  }, "id">
+
+  export type Multas_Plan_Accion_ItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    planId?: SortOrder
+    aspecto?: SortOrder
+    hallazgoDetectado?: SortOrder
+    accionTomada?: SortOrderInput | SortOrder
+    evidenciaUrl?: SortOrderInput | SortOrder
+    evidenciaNombre?: SortOrderInput | SortOrder
+    estadoItem?: SortOrder
+    fechaEjecucion?: SortOrderInput | SortOrder
+    ejecutadoPor?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Plan_Accion_ItemCountOrderByAggregateInput
+    _max?: Multas_Plan_Accion_ItemMaxOrderByAggregateInput
+    _min?: Multas_Plan_Accion_ItemMinOrderByAggregateInput
+  }
+
+  export type Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput = {
+    AND?: Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput | Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput[]
+    OR?: Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput | Multas_Plan_Accion_ItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string
+    planId?: StringWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string
+    aspecto?: StringWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string
+    hallazgoDetectado?: StringWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string
+    accionTomada?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaUrl?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaNombre?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string | null
+    estadoItem?: StringWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string
+    fechaEjecucion?: DateTimeNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | Date | string | null
+    ejecutadoPor?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion_Item"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion_Item"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -200063,6 +203804,338 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Diccionario_SolucionCreateInput = {
+    id?: string
+    aspecto: string
+    tipoNC: string
+    accionCorrectivaTipo: string
+    plazoDiasEstandar?: number
+    evidenciaRequerida: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Diccionario_SolucionUncheckedCreateInput = {
+    id?: string
+    aspecto: string
+    tipoNC: string
+    accionCorrectivaTipo: string
+    plazoDiasEstandar?: number
+    evidenciaRequerida: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Diccionario_SolucionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    tipoNC?: StringFieldUpdateOperationsInput | string
+    accionCorrectivaTipo?: StringFieldUpdateOperationsInput | string
+    plazoDiasEstandar?: IntFieldUpdateOperationsInput | number
+    evidenciaRequerida?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Diccionario_SolucionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    tipoNC?: StringFieldUpdateOperationsInput | string
+    accionCorrectivaTipo?: StringFieldUpdateOperationsInput | string
+    plazoDiasEstandar?: IntFieldUpdateOperationsInput | number
+    evidenciaRequerida?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Diccionario_SolucionCreateManyInput = {
+    id?: string
+    aspecto: string
+    tipoNC: string
+    accionCorrectivaTipo: string
+    plazoDiasEstandar?: number
+    evidenciaRequerida: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Diccionario_SolucionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    tipoNC?: StringFieldUpdateOperationsInput | string
+    accionCorrectivaTipo?: StringFieldUpdateOperationsInput | string
+    plazoDiasEstandar?: IntFieldUpdateOperationsInput | number
+    evidenciaRequerida?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Diccionario_SolucionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    tipoNC?: StringFieldUpdateOperationsInput | string
+    accionCorrectivaTipo?: StringFieldUpdateOperationsInput | string
+    plazoDiasEstandar?: IntFieldUpdateOperationsInput | number
+    evidenciaRequerida?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_AccionCreateInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    sucursal?: string | null
+    estado?: string
+    prioridad?: string
+    fechaCompromiso?: Date | string | null
+    responsableAsignado?: string | null
+    cerradoPor?: string | null
+    fechaCierre?: Date | string | null
+    observacionesCierre?: string | null
+    totalItems?: number
+    itemsResueltos?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Plan_Accion_ItemCreateNestedManyWithoutPlanInput
+  }
+
+  export type Multas_Plan_AccionUncheckedCreateInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    sucursal?: string | null
+    estado?: string
+    prioridad?: string
+    fechaCompromiso?: Date | string | null
+    responsableAsignado?: string | null
+    cerradoPor?: string | null
+    fechaCierre?: Date | string | null
+    observacionesCierre?: string | null
+    totalItems?: number
+    itemsResueltos?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Plan_Accion_ItemUncheckedCreateNestedManyWithoutPlanInput
+  }
+
+  export type Multas_Plan_AccionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Plan_Accion_ItemUpdateManyWithoutPlanNestedInput
+  }
+
+  export type Multas_Plan_AccionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Plan_Accion_ItemUncheckedUpdateManyWithoutPlanNestedInput
+  }
+
+  export type Multas_Plan_AccionCreateManyInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    sucursal?: string | null
+    estado?: string
+    prioridad?: string
+    fechaCompromiso?: Date | string | null
+    responsableAsignado?: string | null
+    cerradoPor?: string | null
+    fechaCierre?: Date | string | null
+    observacionesCierre?: string | null
+    totalItems?: number
+    itemsResueltos?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_AccionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_AccionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemCreateInput = {
+    id?: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    plan: Multas_Plan_AccionCreateNestedOneWithoutItemsInput
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedCreateInput = {
+    id?: string
+    planId: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    plan?: Multas_Plan_AccionUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planId?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemCreateManyInput = {
+    id?: string
+    planId: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planId?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -212793,6 +216866,184 @@ export namespace Prisma {
     vecesUtilizado?: SortOrder
   }
 
+  export type Multas_Diccionario_SolucionCountOrderByAggregateInput = {
+    id?: SortOrder
+    aspecto?: SortOrder
+    tipoNC?: SortOrder
+    accionCorrectivaTipo?: SortOrder
+    plazoDiasEstandar?: SortOrder
+    evidenciaRequerida?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Diccionario_SolucionAvgOrderByAggregateInput = {
+    plazoDiasEstandar?: SortOrder
+  }
+
+  export type Multas_Diccionario_SolucionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    aspecto?: SortOrder
+    tipoNC?: SortOrder
+    accionCorrectivaTipo?: SortOrder
+    plazoDiasEstandar?: SortOrder
+    evidenciaRequerida?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Diccionario_SolucionMinOrderByAggregateInput = {
+    id?: SortOrder
+    aspecto?: SortOrder
+    tipoNC?: SortOrder
+    accionCorrectivaTipo?: SortOrder
+    plazoDiasEstandar?: SortOrder
+    evidenciaRequerida?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Diccionario_SolucionSumOrderByAggregateInput = {
+    plazoDiasEstandar?: SortOrder
+  }
+
+  export type Multas_Plan_Accion_ItemListRelationFilter = {
+    every?: Multas_Plan_Accion_ItemWhereInput
+    some?: Multas_Plan_Accion_ItemWhereInput
+    none?: Multas_Plan_Accion_ItemWhereInput
+  }
+
+  export type Multas_Plan_Accion_ItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Plan_AccionCountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    sucursal?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCompromiso?: SortOrder
+    responsableAsignado?: SortOrder
+    cerradoPor?: SortOrder
+    fechaCierre?: SortOrder
+    observacionesCierre?: SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Plan_AccionAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    licitacionId?: SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+  }
+
+  export type Multas_Plan_AccionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    sucursal?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCompromiso?: SortOrder
+    responsableAsignado?: SortOrder
+    cerradoPor?: SortOrder
+    fechaCierre?: SortOrder
+    observacionesCierre?: SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Plan_AccionMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    licitacionId?: SortOrder
+    licitacionNombre?: SortOrder
+    sucursal?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCompromiso?: SortOrder
+    responsableAsignado?: SortOrder
+    cerradoPor?: SortOrder
+    fechaCierre?: SortOrder
+    observacionesCierre?: SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Plan_AccionSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    licitacionId?: SortOrder
+    totalItems?: SortOrder
+    itemsResueltos?: SortOrder
+  }
+
+  export type Multas_Plan_AccionRelationFilter = {
+    is?: Multas_Plan_AccionWhereInput
+    isNot?: Multas_Plan_AccionWhereInput
+  }
+
+  export type Multas_Plan_Accion_ItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    planId?: SortOrder
+    aspecto?: SortOrder
+    hallazgoDetectado?: SortOrder
+    accionTomada?: SortOrder
+    evidenciaUrl?: SortOrder
+    evidenciaNombre?: SortOrder
+    estadoItem?: SortOrder
+    fechaEjecucion?: SortOrder
+    ejecutadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Plan_Accion_ItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    planId?: SortOrder
+    aspecto?: SortOrder
+    hallazgoDetectado?: SortOrder
+    accionTomada?: SortOrder
+    evidenciaUrl?: SortOrder
+    evidenciaNombre?: SortOrder
+    estadoItem?: SortOrder
+    fechaEjecucion?: SortOrder
+    ejecutadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Plan_Accion_ItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    planId?: SortOrder
+    aspecto?: SortOrder
+    hallazgoDetectado?: SortOrder
+    accionTomada?: SortOrder
+    evidenciaUrl?: SortOrder
+    evidenciaNombre?: SortOrder
+    estadoItem?: SortOrder
+    fechaEjecucion?: SortOrder
+    ejecutadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type Descargos_DetListRelationFilter = {
     every?: Descargos_DetWhereInput
     some?: Descargos_DetWhereInput
@@ -220011,6 +224262,62 @@ export namespace Prisma {
     upsert?: Multas_Descargo_FormalUpsertWithoutProcesosJudicialesInput
     connect?: Multas_Descargo_FormalWhereUniqueInput
     update?: XOR<XOR<Multas_Descargo_FormalUpdateToOneWithWhereWithoutProcesosJudicialesInput, Multas_Descargo_FormalUpdateWithoutProcesosJudicialesInput>, Multas_Descargo_FormalUncheckedUpdateWithoutProcesosJudicialesInput>
+  }
+
+  export type Multas_Plan_Accion_ItemCreateNestedManyWithoutPlanInput = {
+    create?: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput> | Multas_Plan_Accion_ItemCreateWithoutPlanInput[] | Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput[]
+    connectOrCreate?: Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput | Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput[]
+    createMany?: Multas_Plan_Accion_ItemCreateManyPlanInputEnvelope
+    connect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedCreateNestedManyWithoutPlanInput = {
+    create?: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput> | Multas_Plan_Accion_ItemCreateWithoutPlanInput[] | Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput[]
+    connectOrCreate?: Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput | Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput[]
+    createMany?: Multas_Plan_Accion_ItemCreateManyPlanInputEnvelope
+    connect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateManyWithoutPlanNestedInput = {
+    create?: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput> | Multas_Plan_Accion_ItemCreateWithoutPlanInput[] | Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput[]
+    connectOrCreate?: Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput | Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput[]
+    upsert?: Multas_Plan_Accion_ItemUpsertWithWhereUniqueWithoutPlanInput | Multas_Plan_Accion_ItemUpsertWithWhereUniqueWithoutPlanInput[]
+    createMany?: Multas_Plan_Accion_ItemCreateManyPlanInputEnvelope
+    set?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    disconnect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    delete?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    connect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    update?: Multas_Plan_Accion_ItemUpdateWithWhereUniqueWithoutPlanInput | Multas_Plan_Accion_ItemUpdateWithWhereUniqueWithoutPlanInput[]
+    updateMany?: Multas_Plan_Accion_ItemUpdateManyWithWhereWithoutPlanInput | Multas_Plan_Accion_ItemUpdateManyWithWhereWithoutPlanInput[]
+    deleteMany?: Multas_Plan_Accion_ItemScalarWhereInput | Multas_Plan_Accion_ItemScalarWhereInput[]
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedUpdateManyWithoutPlanNestedInput = {
+    create?: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput> | Multas_Plan_Accion_ItemCreateWithoutPlanInput[] | Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput[]
+    connectOrCreate?: Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput | Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput[]
+    upsert?: Multas_Plan_Accion_ItemUpsertWithWhereUniqueWithoutPlanInput | Multas_Plan_Accion_ItemUpsertWithWhereUniqueWithoutPlanInput[]
+    createMany?: Multas_Plan_Accion_ItemCreateManyPlanInputEnvelope
+    set?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    disconnect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    delete?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    connect?: Multas_Plan_Accion_ItemWhereUniqueInput | Multas_Plan_Accion_ItemWhereUniqueInput[]
+    update?: Multas_Plan_Accion_ItemUpdateWithWhereUniqueWithoutPlanInput | Multas_Plan_Accion_ItemUpdateWithWhereUniqueWithoutPlanInput[]
+    updateMany?: Multas_Plan_Accion_ItemUpdateManyWithWhereWithoutPlanInput | Multas_Plan_Accion_ItemUpdateManyWithWhereWithoutPlanInput[]
+    deleteMany?: Multas_Plan_Accion_ItemScalarWhereInput | Multas_Plan_Accion_ItemScalarWhereInput[]
+  }
+
+  export type Multas_Plan_AccionCreateNestedOneWithoutItemsInput = {
+    create?: XOR<Multas_Plan_AccionCreateWithoutItemsInput, Multas_Plan_AccionUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: Multas_Plan_AccionCreateOrConnectWithoutItemsInput
+    connect?: Multas_Plan_AccionWhereUniqueInput
+  }
+
+  export type Multas_Plan_AccionUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<Multas_Plan_AccionCreateWithoutItemsInput, Multas_Plan_AccionUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: Multas_Plan_AccionCreateOrConnectWithoutItemsInput
+    upsert?: Multas_Plan_AccionUpsertWithoutItemsInput
+    connect?: Multas_Plan_AccionWhereUniqueInput
+    update?: XOR<XOR<Multas_Plan_AccionUpdateToOneWithWhereWithoutItemsInput, Multas_Plan_AccionUpdateWithoutItemsInput>, Multas_Plan_AccionUncheckedUpdateWithoutItemsInput>
   }
 
   export type Descargos_DetCreateNestedManyWithoutCabInput = {
@@ -229871,6 +234178,174 @@ export namespace Prisma {
     folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
     resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
     recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Plan_Accion_ItemCreateWithoutPlanInput = {
+    id?: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput = {
+    id?: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemCreateOrConnectWithoutPlanInput = {
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+    create: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput>
+  }
+
+  export type Multas_Plan_Accion_ItemCreateManyPlanInputEnvelope = {
+    data: Multas_Plan_Accion_ItemCreateManyPlanInput | Multas_Plan_Accion_ItemCreateManyPlanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Plan_Accion_ItemUpsertWithWhereUniqueWithoutPlanInput = {
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+    update: XOR<Multas_Plan_Accion_ItemUpdateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedUpdateWithoutPlanInput>
+    create: XOR<Multas_Plan_Accion_ItemCreateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedCreateWithoutPlanInput>
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateWithWhereUniqueWithoutPlanInput = {
+    where: Multas_Plan_Accion_ItemWhereUniqueInput
+    data: XOR<Multas_Plan_Accion_ItemUpdateWithoutPlanInput, Multas_Plan_Accion_ItemUncheckedUpdateWithoutPlanInput>
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateManyWithWhereWithoutPlanInput = {
+    where: Multas_Plan_Accion_ItemScalarWhereInput
+    data: XOR<Multas_Plan_Accion_ItemUpdateManyMutationInput, Multas_Plan_Accion_ItemUncheckedUpdateManyWithoutPlanInput>
+  }
+
+  export type Multas_Plan_Accion_ItemScalarWhereInput = {
+    AND?: Multas_Plan_Accion_ItemScalarWhereInput | Multas_Plan_Accion_ItemScalarWhereInput[]
+    OR?: Multas_Plan_Accion_ItemScalarWhereInput[]
+    NOT?: Multas_Plan_Accion_ItemScalarWhereInput | Multas_Plan_Accion_ItemScalarWhereInput[]
+    id?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    planId?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    aspecto?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    hallazgoDetectado?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    accionTomada?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaUrl?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    evidenciaNombre?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    estadoItem?: StringFilter<"Multas_Plan_Accion_Item"> | string
+    fechaEjecucion?: DateTimeNullableFilter<"Multas_Plan_Accion_Item"> | Date | string | null
+    ejecutadoPor?: StringNullableFilter<"Multas_Plan_Accion_Item"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Plan_Accion_Item"> | Date | string
+  }
+
+  export type Multas_Plan_AccionCreateWithoutItemsInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    sucursal?: string | null
+    estado?: string
+    prioridad?: string
+    fechaCompromiso?: Date | string | null
+    responsableAsignado?: string | null
+    cerradoPor?: string | null
+    fechaCierre?: Date | string | null
+    observacionesCierre?: string | null
+    totalItems?: number
+    itemsResueltos?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_AccionUncheckedCreateWithoutItemsInput = {
+    id?: string
+    folio: string
+    rbd?: number | null
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    sucursal?: string | null
+    estado?: string
+    prioridad?: string
+    fechaCompromiso?: Date | string | null
+    responsableAsignado?: string | null
+    cerradoPor?: string | null
+    fechaCierre?: Date | string | null
+    observacionesCierre?: string | null
+    totalItems?: number
+    itemsResueltos?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_AccionCreateOrConnectWithoutItemsInput = {
+    where: Multas_Plan_AccionWhereUniqueInput
+    create: XOR<Multas_Plan_AccionCreateWithoutItemsInput, Multas_Plan_AccionUncheckedCreateWithoutItemsInput>
+  }
+
+  export type Multas_Plan_AccionUpsertWithoutItemsInput = {
+    update: XOR<Multas_Plan_AccionUpdateWithoutItemsInput, Multas_Plan_AccionUncheckedUpdateWithoutItemsInput>
+    create: XOR<Multas_Plan_AccionCreateWithoutItemsInput, Multas_Plan_AccionUncheckedCreateWithoutItemsInput>
+    where?: Multas_Plan_AccionWhereInput
+  }
+
+  export type Multas_Plan_AccionUpdateToOneWithWhereWithoutItemsInput = {
+    where?: Multas_Plan_AccionWhereInput
+    data: XOR<Multas_Plan_AccionUpdateWithoutItemsInput, Multas_Plan_AccionUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type Multas_Plan_AccionUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_AccionUncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    prioridad?: StringFieldUpdateOperationsInput | string
+    fechaCompromiso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    responsableAsignado?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionesCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    totalItems?: IntFieldUpdateOperationsInput | number
+    itemsResueltos?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Descargos_DetCreateWithoutCabInput = {
@@ -242225,6 +246700,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Plan_Accion_ItemCreateManyPlanInput = {
+    id?: string
+    aspecto: string
+    hallazgoDetectado: string
+    accionTomada?: string | null
+    evidenciaUrl?: string | null
+    evidenciaNombre?: string | null
+    estadoItem?: string
+    fechaEjecucion?: Date | string | null
+    ejecutadoPor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUpdateWithoutPlanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedUpdateWithoutPlanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Plan_Accion_ItemUncheckedUpdateManyWithoutPlanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: StringFieldUpdateOperationsInput | string
+    hallazgoDetectado?: StringFieldUpdateOperationsInput | string
+    accionTomada?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoItem?: StringFieldUpdateOperationsInput | string
+    fechaEjecucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ejecutadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_DetCreateManyCabInput = {
     id?: string
     letraAspecto: string
@@ -245638,6 +250169,10 @@ export namespace Prisma {
      */
     export type Multas_Descargo_FormalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Descargo_FormalCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Multas_Plan_AccionCountOutputTypeDefaultArgs instead
+     */
+    export type Multas_Plan_AccionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Plan_AccionCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use Descargos_CabCountOutputTypeDefaultArgs instead
      */
     export type Descargos_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
@@ -246053,6 +250588,18 @@ export namespace Prisma {
      * @deprecated Use Multas_Argumento_BibliotecaDefaultArgs instead
      */
     export type Multas_Argumento_BibliotecaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Argumento_BibliotecaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Diccionario_SolucionDefaultArgs instead
+     */
+    export type Multas_Diccionario_SolucionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Diccionario_SolucionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Plan_AccionDefaultArgs instead
+     */
+    export type Multas_Plan_AccionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Plan_AccionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Plan_Accion_ItemDefaultArgs instead
+     */
+    export type Multas_Plan_Accion_ItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Plan_Accion_ItemDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */

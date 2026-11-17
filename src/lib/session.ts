@@ -206,7 +206,9 @@ export async function getSession() {
                 'view_ciclo_legal_multas',
                 'manage_ciclo_legal_multas',
                 'view_biblioteca_argumentos',
-                'manage_biblioteca_argumentos'
+                'manage_biblioteca_argumentos',
+                'view_soluciones_multas',
+                'manage_soluciones_multas'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

@@ -1225,6 +1225,76 @@ model Multas_Argumento_Biblioteca {
   @@map("Multas_Argumento_Biblioteca")
 }
 
+// ==========================================
+// C9: SOLUCIONES Y PLANES DE ACCIÓN OPERATIVOS
+// ==========================================
+
+model Multas_Diccionario_Solucion {
+  id                   String   @id @default(uuid())
+  aspecto              String   @db.VarChar(10) // 'A'..'M', etc.
+  tipoNC               String   @db.VarChar(120) // ej: 'Pesaje insuficiente', 'Falta balanza', 'Temperatura de cocción baja'
+  accionCorrectivaTipo String   @db.Text // Procedimiento estándar para corregir
+  plazoDiasEstandar    Int      @default(3) // Días hábiles recomendados para subsanar
+  evidenciaRequerida   String   @db.Text // Ej: "Foto calibración", "Guía de entrega insumos"
+  activo               Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([aspecto])
+  @@index([activo])
+  @@map("Multas_Diccionario_Solucion")
+}
+
+model Multas_Plan_Accion {
+  id                  String                    @id @default(uuid())
+  folio               String                    @db.VarChar(50)
+  rbd                 Int?
+  licitacionId        Int?
+  licitacionNombre    String?                   @db.VarChar(150)
+  sucursal            String?                   @db.VarChar(100)
+  estado              String                    @default("PENDIENTE") @db.VarChar(30) // PENDIENTE, EN_PROCESO, EVIDENCIA_SUBIDA, VALIDADO, CERRADO
+  prioridad           String                    @default("MEDIA") @db.VarChar(20) // ALTA, MEDIA, BAJA
+  fechaCompromiso     DateTime?
+  responsableAsignado String?                   @db.VarChar(120) // Zonal / Supervisor
+  cerradoPor          String?                   @db.VarChar(100)
+  fechaCierre         DateTime?
+  observacionesCierre String?                   @db.Text
+  totalItems          Int                       @default(0)
+  itemsResueltos      Int                       @default(0)
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+
+  items               Multas_Plan_Accion_Item[]
+
+  @@unique([folio])
+  @@index([rbd])
+  @@index([sucursal])
+  @@index([estado])
+  @@map("Multas_Plan_Accion")
+}
+
+model Multas_Plan_Accion_Item {
+  id                String             @id @default(uuid())
+  planId            String
+  aspecto           String             @db.VarChar(10)
+  hallazgoDetectado String             @db.Text
+  accionTomada      String?            @db.Text
+  evidenciaUrl      String?            @db.Text
+  evidenciaNombre   String?            @db.VarChar(255)
+  estadoItem        String             @default("PENDIENTE") @db.VarChar(30) // PENDIENTE, CORREGIDO, RECHAZADO, VERIFICADO
+  fechaEjecucion    DateTime?
+  ejecutadoPor      String?            @db.VarChar(100)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  plan              Multas_Plan_Accion @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@index([aspecto])
+  @@index([estadoItem])
+  @@map("Multas_Plan_Accion_Item")
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

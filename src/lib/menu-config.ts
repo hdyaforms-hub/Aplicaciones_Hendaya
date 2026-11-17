@@ -324,6 +324,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Biblioteca de Argumentos',
                         href: '/dashboard/areas/multas/biblioteca',
                         requiredPermission: ['view_biblioteca_argumentos', 'manage_biblioteca_argumentos', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Planes de Acción (Soluciones)',
+                        href: '/dashboard/areas/multas/soluciones',
+                        requiredPermission: ['view_soluciones_multas', 'manage_soluciones_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },
