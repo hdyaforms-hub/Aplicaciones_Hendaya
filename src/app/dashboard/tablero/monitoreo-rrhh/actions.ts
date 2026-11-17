@@ -708,11 +708,18 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
         }
 
-        // REGLA ALTERNATIVA 1: Normalización automática de Atrasos y Adelantos por Establecimiento y Sucursal
+        // REGLA ALTERNATIVA 1: Normalización automática de Horas Extras, Atrasos y Adelantos por Establecimiento y Sucursal
         for (const m of metricsByRbd.values()) {
+            const ausCompletado = m.ausentismo.total > 0 && m.ausentismo.pendientes === 0
+            const hheeResuelto = m.horasExtras.total > 0 && (m.horasExtras.gestionados > 0 || ausCompletado)
+            if (hheeResuelto) {
+                m.horasExtras.gestionados = m.horasExtras.total
+                m.horasExtras.pendientes = 0
+            }
+
             const otrosTot = m.ausentismo.total + m.horasExtras.total
             const otrosPend = m.ausentismo.pendientes + m.horasExtras.pendientes
-            const otrosCompletados = otrosTot > 0 && otrosPend === 0
+            const otrosCompletados = (otrosTot > 0 && otrosPend === 0) || hheeResuelto
 
             if (m.atrasos.total > 0 && (m.atrasos.gestionados > 0 || otrosCompletados)) {
                 m.atrasos.gestionados = m.atrasos.total
@@ -725,15 +732,24 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         }
 
         for (const agg of sucursalAggMap.values()) {
+            let recomputedHheeGest = 0
+            let recomputedHheePend = 0
             let recomputedAtrGest = 0
             let recomputedAtrPend = 0
             let recomputedAdeGest = 0
             let recomputedAdePend = 0
 
             for (const estItem of agg.establecimientosMap.values()) {
+                const estAusCompletado = estItem.ausentismo.total > 0 && estItem.ausentismo.pendientes === 0
+                const estHheeResuelto = estItem.horasExtras.total > 0 && (estItem.horasExtras.gestionados > 0 || estAusCompletado)
+                if (estHheeResuelto) {
+                    estItem.horasExtras.gestionados = estItem.horasExtras.total
+                    estItem.horasExtras.pendientes = 0
+                }
+
                 const estOtrosTot = estItem.ausentismo.total + estItem.horasExtras.total
                 const estOtrosPend = estItem.ausentismo.pendientes + estItem.horasExtras.pendientes
-                const estOtrosCompletados = estOtrosTot > 0 && estOtrosPend === 0
+                const estOtrosCompletados = (estOtrosTot > 0 && estOtrosPend === 0) || estHheeResuelto
 
                 if (estItem.atrasos.total > 0 && (estItem.atrasos.gestionados > 0 || estOtrosCompletados)) {
                     estItem.atrasos.gestionados = estItem.atrasos.total
@@ -744,6 +760,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                     estItem.adelantos.pendientes = 0
                 }
 
+                recomputedHheeGest += estItem.horasExtras.gestionados
+                recomputedHheePend += estItem.horasExtras.pendientes
                 recomputedAtrGest += estItem.atrasos.gestionados
                 recomputedAtrPend += estItem.atrasos.pendientes
                 recomputedAdeGest += estItem.adelantos.gestionados
@@ -751,6 +769,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
 
             if (agg.establecimientosMap.size > 0) {
+                agg.horasExtras.gestionados = recomputedHheeGest
+                agg.horasExtras.pendientes = recomputedHheePend
                 agg.atrasos.gestionados = recomputedAtrGest
                 agg.atrasos.pendientes = recomputedAtrPend
                 agg.adelantos.gestionados = recomputedAdeGest
@@ -802,8 +822,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 const ausPend = ausTotal - ausGest
 
                 const hheeTotal = userHhee.length
-                const hheeGest = userHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
-                const hheePend = hheeTotal - hheeGest
+                const hheeManualGest = userHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
                 const hheeAplica = userHhee.filter(r => r.aplica === true).length
                 const hheeNoAplica = hheeTotal - hheeAplica
 
@@ -820,9 +839,16 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 const adelantoNoAplica = adelantoTotal - adelantoAplica
 
                 // REGLA ALTERNATIVA 1: Deducción automática por gestión integral de nómina
+                const ausCompletado = ausTotal > 0 && ausPend === 0
+                // Horas Extras: En nómina, 'No Aplica' es el estado por defecto. Si el colaborador gestionó/autorizó horas extras
+                // o completó Ausentismo, los registros no modificados se confirman como 'No Aplica' legítimamente -> 100%
+                const hheeResuelto = hheeManualGest > 0 || (hheeTotal > 0 && ausCompletado)
+                const hheeGest = hheeResuelto ? hheeTotal : hheeManualGest
+                const hheePend = hheeTotal - hheeGest
+
                 const userOtrosTotal = ausTotal + hheeTotal
                 const userOtrosPend = ausPend + hheePend
-                const userOtrosCompletados = userOtrosTotal > 0 && userOtrosPend === 0
+                const userOtrosCompletados = (userOtrosTotal > 0 && userOtrosPend === 0) || hheeResuelto
 
                 // Atrasos: Si justificó excepciones o completó Ausentismo/Horas Extras -> 100%
                 const atrResuelto = atrasoManualGest > 0 || (atrasoTotal > 0 && userOtrosCompletados)
@@ -878,13 +904,17 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                     const eAusGest = estAus.filter(r => r.criterioId !== null && r.criterioId !== undefined).length
 
                     const eHheeTot = estHhee.length
-                    const eHheeGest = estHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eHheeManualGest = estHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
                     const eHheeAplica = estHhee.filter(r => r.aplica === true).length
                     const eHheeNoAplica = eHheeTot - eHheeAplica
 
+                    const eAusCompletado = eAusTot > 0 && (eAusTot - eAusGest === 0)
+                    const eHheeResuelto = eHheeManualGest > 0 || (eHheeTot > 0 && (hheeResuelto || eAusCompletado || userOtrosCompletados))
+                    const eHheeGest = eHheeResuelto ? eHheeTot : eHheeManualGest
+
                     const estOtrosTot = eAusTot + eHheeTot
                     const estOtrosPend = (eAusTot - eAusGest) + (eHheeTot - eHheeGest)
-                    const estOtrosCompletados = estOtrosTot > 0 && estOtrosPend === 0
+                    const estOtrosCompletados = (estOtrosTot > 0 && estOtrosPend === 0) || eHheeResuelto
 
                     const estAtr = estAtrAde.filter(r => r.tipo === 'ATRASO')
                     const eAtrTot = estAtr.length
@@ -1048,9 +1078,56 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 // Calcular métricas acumuladas por módulo para este usuario
                 let ausTotal = 0, ausGest = 0, ausPend = 0
-                let hheeTotal = 0, hheeGest = 0, hheePend = 0, hheeAplica = 0, hheeNoAplica = 0
-                let atrasoTotal = 0, atrasoGest = 0, atrasoPend = 0, atrasoAplica = 0, atrasoNoAplica = 0
-                let adelantoTotal = 0, adelantoGest = 0, adelantoPend = 0, adelantoAplica = 0, adelantoNoAplica = 0
+                let hheeTotal = 0, hheeManualGest = 0, hheeAplica = 0, hheeNoAplica = 0
+                let atrasoTotal = 0, atrasoManualGest = 0, atrasoAplica = 0, atrasoNoAplica = 0
+                let adelantoTotal = 0, adelantoManualGest = 0, adelantoAplica = 0, adelantoNoAplica = 0
+
+                for (const rbd of finalRbds) {
+                    const rbdMetrics = metricsByRbd.get(rbd)
+                    const aus = rbdMetrics?.ausentismo || { total: 0, gestionados: 0, pendientes: 0 }
+                    const hhee = rbdMetrics?.horasExtras || { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 }
+                    const atr = rbdMetrics?.atrasos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+                    const ade = rbdMetrics?.adelantos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+
+                    ausTotal += aus.total
+                    ausGest += aus.gestionados
+
+                    hheeTotal += hhee.total
+                    hheeManualGest += hhee.gestionados
+                    hheeAplica += hhee.aplica
+                    hheeNoAplica += hhee.noAplica
+
+                    atrasoTotal += atr.total
+                    atrasoManualGest += atr.gestionados
+                    atrasoAplica += atr.aplicaDescuento
+                    atrasoNoAplica += atr.noAplica
+
+                    adelantoTotal += ade.total
+                    adelantoManualGest += ade.gestionados
+                    adelantoAplica += ade.aplicaDescuento
+                    adelantoNoAplica += ade.noAplica
+                }
+                ausPend = ausTotal - ausGest
+
+                // REGLA ALTERNATIVA 1: Consolidación y deducción automática por gestión integral de nómina
+                const ausCompletado = ausTotal > 0 && ausPend === 0
+                // Horas Extras: En nómina, 'No Aplica' es el estado por defecto. Si el colaborador gestionó/autorizó horas extras
+                // o completó Ausentismo, los registros no modificados se confirman como 'No Aplica' legítimamente -> 100%
+                const userHheeResuelto = hheeManualGest > 0 || (hheeTotal > 0 && ausCompletado)
+                const hheeGest = userHheeResuelto ? hheeTotal : hheeManualGest
+                const hheePend = hheeTotal - hheeGest
+
+                const userOtrosTotal = ausTotal + hheeTotal
+                const userOtrosPend = ausPend + hheePend
+                const userOtrosCompletados = (userOtrosTotal > 0 && userOtrosPend === 0) || userHheeResuelto
+
+                const atrResuelto = atrasoManualGest > 0 || (atrasoTotal > 0 && userOtrosCompletados)
+                const atrasoGest = atrResuelto ? atrasoTotal : atrasoManualGest
+                const atrasoPend = atrasoTotal - atrasoGest
+
+                const adeResuelto = adelantoManualGest > 0 || (adelantoTotal > 0 && userOtrosCompletados)
+                const adelantoGest = adeResuelto ? adelantoTotal : adelantoManualGest
+                const adelantoPend = adelantoTotal - adelantoGest
 
                 const colegiosDetalle: DetalleColegioRRHH[] = []
 
@@ -1065,32 +1142,43 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                         userSucursalesSet.add(sucursal)
                     }
 
-                    const aus = rbdMetrics?.ausentismo || { total: 0, gestionados: 0, pendientes: 0 }
-                    const hhee = rbdMetrics?.horasExtras || { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 }
-                    const atr = rbdMetrics?.atrasos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
-                    const ade = rbdMetrics?.adelantos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+                    const aus = rbdMetrics ? { ...rbdMetrics.ausentismo } : { total: 0, gestionados: 0, pendientes: 0 }
+                    const hheeRaw = rbdMetrics?.horasExtras || { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 }
+                    const atrRaw = rbdMetrics?.atrasos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+                    const adeRaw = rbdMetrics?.adelantos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
 
-                    ausTotal += aus.total
-                    ausGest += aus.gestionados
-                    ausPend += aus.pendientes
+                    const colHheeResuelto = (userHheeResuelto || hheeRaw.gestionados > 0) && hheeRaw.total > 0
+                    const colHheeGest = colHheeResuelto ? hheeRaw.total : hheeRaw.gestionados
+                    const colHheePend = hheeRaw.total - colHheeGest
+                    const hhee = {
+                        total: hheeRaw.total,
+                        gestionados: colHheeGest,
+                        pendientes: colHheePend,
+                        aplica: hheeRaw.aplica,
+                        noAplica: hheeRaw.noAplica
+                    }
 
-                    hheeTotal += hhee.total
-                    hheeGest += hhee.gestionados
-                    hheePend += hhee.pendientes
-                    hheeAplica += hhee.aplica
-                    hheeNoAplica += hhee.noAplica
+                    const colAtrResuelto = (atrRaw.gestionados > 0 || userOtrosCompletados) && atrRaw.total > 0
+                    const colAtrGest = colAtrResuelto ? atrRaw.total : atrRaw.gestionados
+                    const colAtrPend = atrRaw.total - colAtrGest
+                    const atr = {
+                        total: atrRaw.total,
+                        gestionados: colAtrGest,
+                        pendientes: colAtrPend,
+                        aplicaDescuento: atrRaw.aplicaDescuento,
+                        noAplica: atrRaw.noAplica
+                    }
 
-                    atrasoTotal += atr.total
-                    atrasoGest += atr.gestionados
-                    atrasoPend += atr.pendientes
-                    atrasoAplica += atr.aplicaDescuento
-                    atrasoNoAplica += atr.noAplica
-
-                    adelantoTotal += ade.total
-                    adelantoGest += ade.gestionados
-                    adelantoPend += ade.pendientes
-                    adelantoAplica += ade.aplicaDescuento
-                    adelantoNoAplica += ade.noAplica
+                    const colAdeResuelto = (adeRaw.gestionados > 0 || userOtrosCompletados) && adeRaw.total > 0
+                    const colAdeGest = colAdeResuelto ? adeRaw.total : adeRaw.gestionados
+                    const colAdePend = adeRaw.total - colAdeGest
+                    const ade = {
+                        total: adeRaw.total,
+                        gestionados: colAdeGest,
+                        pendientes: colAdePend,
+                        aplicaDescuento: adeRaw.aplicaDescuento,
+                        noAplica: adeRaw.noAplica
+                    }
 
                     const colTotal = aus.total + hhee.total + atr.total + ade.total
                     const colGest = aus.gestionados + hhee.gestionados + atr.gestionados + ade.gestionados
@@ -1115,20 +1203,6 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 // Ordenar colegios por RBD
                 colegiosDetalle.sort((a, b) => a.rbd - b.rbd)
-
-                // REGLA ALTERNATIVA 1: Consolidación y deducción automática por gestión integral de nómina
-                const userOtrosTotal = ausTotal + hheeTotal
-                const userOtrosPend = ausPend + hheePend
-                const userOtrosCompletados = userOtrosTotal > 0 && userOtrosPend === 0
-
-                if (atrasoTotal > 0 && (atrasoGest > 0 || userOtrosCompletados)) {
-                    atrasoGest = atrasoTotal
-                    atrasoPend = 0
-                }
-                if (adelantoTotal > 0 && (adelantoGest > 0 || userOtrosCompletados)) {
-                    adelantoGest = adelantoTotal
-                    adelantoPend = 0
-                }
 
                 // Consolidar módulos del colaborador
                 const pctAus = calcularPorcentajeAvance(ausGest, ausTotal, ausPend)
