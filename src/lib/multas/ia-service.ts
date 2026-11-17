@@ -51,7 +51,7 @@ export interface AnalisisIaResultado {
     viciosProcedimiento: string[]
     descargoPropuesto: string
     fundamentoNormativo: string
-    probabilidadExito: 'ALTA' | 'MEDIA' | 'BAJA'
+    probabilidadExito: 'ALTA' | 'MEDIA' | 'BAJA' | 'NO_EVALUADA'
     aspectosAnalizados: string[]
     tokensConsumidos: number
     costoUsd: number
@@ -333,7 +333,7 @@ Atentamente,
         viciosProcedimiento: vicios,
         descargoPropuesto: textoDescargo,
         fundamentoNormativo: fundamentacion,
-        probabilidadExito: 'MEDIA',
+        probabilidadExito: 'NO_EVALUADA',
         aspectosAnalizados: letrasAspectos,
         tokensConsumidos: 0,
         costoUsd: 0,

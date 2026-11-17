@@ -331,8 +331,8 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 colFolio = idx
             }
 
-            // Aspecto: Debe ser código/letra, NUNCA descripción ni glosa
-            const isAspectoDesc = clean.includes('desc') || clean.includes('glosa') || clean.includes('nombre') || clean.includes('det') || clean.includes('infraccion')
+            // Aspecto: Debe ser código/letra, NUNCA descripción, glosa ni observación
+            const isAspectoDesc = clean.includes('desc') || clean.includes('glosa') || clean.includes('nombre') || clean.includes('det') || clean.includes('infraccion') || clean.includes('observ')
             if (!isAspectoDesc) {
                 if (clean === 'aspecto' || clean === 'codaspecto' || clean === 'codigoaspecto' || clean === 'letra' || clean === 'letraaspecto' || clean === 'idaspecto') {
                     colAspecto = idx
@@ -341,15 +341,15 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 }
             }
 
-            // Multa UTM
-            if (clean === 'multautm' || clean === 'montoutm' || clean === 'totalutm' || clean === 'utm' || clean === 'valorutm') {
+            // Multa UTM (Debe ser el monto de la multa, no el valor UTM de referencia ni del mes)
+            if (clean === 'multautm' || clean === 'multaenutm' || clean === 'montoutm' || clean === 'totalutm' || clean === 'utm' || clean === 'multatotalutm') {
                 colUtm = idx
-            } else if (colUtm === -1 && clean.includes('utm')) {
+            } else if (colUtm === -1 && clean.includes('utm') && !clean.includes('mes') && !clean.includes('valor')) {
                 colUtm = idx
             }
 
-            // Monto Pesos (CLP): descartar monto base, monto gravedad, etc.
-            if (clean === 'montopesos' || clean === 'multapesos' || clean === 'totalpesos' || clean === 'pesos' || clean === 'valorpesos' || clean === 'clp' || clean === 'montoclp') {
+            // Monto Pesos (CLP): descartar monto base, gravedad, etc.
+            if (clean === 'montopesos' || clean === 'multapesos' || clean === 'multaenpesos' || clean === 'totalpesos' || clean === 'pesos' || clean === 'valorpesos' || clean === 'clp' || clean === 'montoclp') {
                 colClp = idx
             } else if (colClp === -1 && (clean.includes('pesos') || clean.includes('clp') || (clean.includes('monto') && !clean.includes('utm') && !clean.includes('base') && !clean.includes('gravedad')))) {
                 colClp = idx
@@ -369,17 +369,17 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 colEstablecimiento = idx
             }
 
-            // Sucursal / Sede
+            // Sucursal / Comuna
             if (clean === 'sucursal' || clean === 'sede' || clean === 'zona' || clean === 'comuna') {
                 colSucursal = idx
-            } else if (colSucursal === -1 && (clean.includes('sucursal') || clean.includes('zona'))) {
+            } else if (colSucursal === -1 && (clean.includes('sucursal') || clean.includes('zona') || clean.includes('comuna'))) {
                 colSucursal = idx
             }
 
-            // Fecha
+            // Fecha (Supervisión / Visita, no fecha de conversión)
             if (clean === 'fecha' || clean === 'fechasupervision' || clean === 'fechavisita' || clean === 'fechafiscalizacion') {
                 colFecha = idx
-            } else if (colFecha === -1 && clean.includes('fecha')) {
+            } else if (colFecha === -1 && clean.includes('fecha') && !clean.includes('conversion')) {
                 colFecha = idx
             }
         })

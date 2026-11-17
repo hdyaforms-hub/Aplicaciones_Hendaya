@@ -343,9 +343,11 @@ export default function AnalisisIaClient({
                                                 ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                                                 : resultadoAnalisis.probabilidadExito === 'MEDIA'
                                                 ? 'bg-amber-50 text-amber-800 border-amber-200'
-                                                : 'bg-rose-50 text-rose-800 border-rose-200'
+                                                : resultadoAnalisis.probabilidadExito === 'BAJA'
+                                                ? 'bg-rose-50 text-rose-800 border-rose-200'
+                                                : 'bg-slate-100 text-slate-700 border-slate-300'
                                         }`}>
-                                            Probabilidad de Rebaja: {resultadoAnalisis.probabilidadExito}
+                                            Probabilidad de Rebaja: {resultadoAnalisis.probabilidadExito === 'NO_EVALUADA' ? 'No evaluada' : resultadoAnalisis.probabilidadExito}
                                         </span>
                                     </div>
                                     <p className="text-xs text-slate-500 mt-1">{resultadoAnalisis.resumenEjecutivo}</p>

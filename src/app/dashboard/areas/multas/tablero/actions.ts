@@ -275,19 +275,6 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
             }
         }
 
-        const avancePorSucursal = Object.entries(sucursalesMap).map(([sucursal, data]) => {
-            const montoData = sucursalesMontoMap[sucursal] || { pesos: 0, utm: 0 }
-            return {
-                sucursal,
-                totalPlanes: data.total,
-                planesCerrados: data.cerrados,
-                porcentajeCumplimiento: data.total > 0 ? Math.round((data.cerrados / data.total) * 100) : 0,
-                montoCalculadoUtm: Number(montoData.utm.toFixed(2)),
-                montoNotificadoUtm: Number(montoData.utm.toFixed(2)),
-                montoCalculadoPesos: Math.round(montoData.pesos)
-            }
-        }).sort((a, b) => b.montoCalculadoPesos - a.montoCalculadoPesos)
-
         // 5. Conciliación REX (C6) y Notificación oficial JUNAEB
         const [notifItems, rexList] = await Promise.all([
             prisma.multas_Notificacion_Item.findMany().catch(() => []),
@@ -302,6 +289,27 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
         const soloJunaebRex = notifItems.filter(i => i.estadoConciliacion === 'SOLO_JUNAEB').length
         const montoTotalNotificadoRexUtm = rexList.reduce((acc, curr) => acc + (curr.montoTotalNotificado || 0), 0)
 
+        // Agrupar montos notificados oficialmente en REX por sucursal
+        const sucursalesRexNotifMap: Record<string, number> = {}
+        for (const item of notifItems) {
+            const suc = item.sucursal || 'Central / Matriz'
+            sucursalesRexNotifMap[suc] = (sucursalesRexNotifMap[suc] || 0) + (item.montoNotificado || 0)
+        }
+
+        const avancePorSucursal = Object.entries(sucursalesMap).map(([sucursal, data]) => {
+            const montoData = sucursalesMontoMap[sucursal] || { pesos: 0, utm: 0 }
+            const notificadoRex = sucursalesRexNotifMap[sucursal] || 0
+            return {
+                sucursal,
+                totalPlanes: data.total,
+                planesCerrados: data.cerrados,
+                porcentajeCumplimiento: data.total > 0 ? Math.round((data.cerrados / data.total) * 100) : 0,
+                montoCalculadoUtm: Number(montoData.utm.toFixed(2)),
+                montoNotificadoUtm: Number(notificadoRex.toFixed(2)),
+                montoCalculadoPesos: Math.round(montoData.pesos)
+            }
+        }).sort((a, b) => b.montoCalculadoPesos - a.montoCalculadoPesos)
+
         // 6. Métricas de IA (C10)
         const logsIa = await prisma.multas_Log_Consumo_IA.findMany().catch(() => [])
         const costoTotalIaUsd = logsIa.reduce((acc, curr) => acc + (curr.costoEstimadoUsd || 0), 0)
@@ -312,9 +320,7 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
                 montoTotalCalculadoUtm: Number(montoTotalCalculadoUtm.toFixed(2)),
                 montoTotalCalculadoPesos: Math.round(montoTotalCalculadoPesos),
                 montoTotalNotificadoRexUtm: Number(montoTotalNotificadoRexUtm.toFixed(2)),
-                montoTotalNotificadoUtm: montoTotalNotificadoRexUtm > 0
-                    ? Number(montoTotalNotificadoRexUtm.toFixed(2))
-                    : Number(montoTotalCalculadoUtm.toFixed(2)),
+                montoTotalNotificadoUtm: Number(montoTotalNotificadoRexUtm.toFixed(2)),
                 montoTotalImpugnadoUtm: Number(montoTotalImpugnado.toFixed(2)),
                 montoTotalRebajadoUtm: Number(montoTotalRebajado.toFixed(2)),
                 montoTotalRatificadoUtm: Number(montoTotalRatificado.toFixed(2)),
@@ -409,6 +415,17 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
             colegioMap.set(col.colRBD, { sucursal: col.sucursal || 'Central', nombre: col.nombreEstablecimiento })
         }
 
+        // Obtener montos notificados oficialmente en REX para cada folio y aspecto
+        const notifItems = await prisma.multas_Notificacion_Item.findMany({
+            select: { folio: true, aspecto: true, montoNotificado: true }
+        }).catch(() => [])
+
+        const notifMap = new Map<string, number>()
+        for (const ni of notifItems) {
+            const key = `${ni.folio}_${ni.aspecto.toUpperCase()}`
+            notifMap.set(key, (notifMap.get(key) || 0) + (ni.montoNotificado || 0))
+        }
+
         const getUtm = await getUtmLookup()
         const filas: FilaReporteMaestroDTO[] = []
 
@@ -426,6 +443,7 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
                 const descargoFolio = descargoPorFolioAspecto.get(key)
                 const itemPlan = planActa?.items?.find((it: any) => it.aspecto.toUpperCase() === aspClean)
                 const utmDetalle = utmVal > 0 ? Number((d.montoMulta / utmVal).toFixed(2)) : 0
+                const montoRexNotif = notifMap.get(key) || 0
 
                 filas.push({
                     folio: acta.folioOriginal,
@@ -437,7 +455,7 @@ export async function getReporteMaestroExcelDataAction(): Promise<{
                     descripcionAspecto: d.descripcion || 'Incumplimiento normativo',
                     montoCalculadoPesos: Math.round(d.montoMulta),
                     montoCalculadoUtm: utmDetalle,
-                    montoNotificadoUtm: utmDetalle,
+                    montoNotificadoUtm: Number(montoRexNotif.toFixed(2)),
                     montoImpugnadoUtm: descargoFolio ? Number(descargoFolio.montoImpugnadoUtm.toFixed(2)) : 0,
                     montoRebajadoUtm: descargoFolio ? Number(descargoFolio.montoRebajadoUtm.toFixed(2)) : 0,
                     estadoDescargo: descargoFolio?.descargo?.estado || 'NO_IMPUGNADO',
