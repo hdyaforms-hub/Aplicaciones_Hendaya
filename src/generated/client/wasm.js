@@ -1199,6 +1199,35 @@ exports.Prisma.Multas_Plan_Accion_ItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Config_IAScalarFieldEnum = {
+  id: 'id',
+  proveedor: 'proveedor',
+  apiKeyEnc: 'apiKeyEnc',
+  modelo: 'modelo',
+  limiteGastoMensualUsd: 'limiteGastoMensualUsd',
+  gastoAcumuladoMesUsd: 'gastoAcumuladoMesUsd',
+  temperatura: 'temperatura',
+  activo: 'activo',
+  actualizadoPor: 'actualizadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Log_Consumo_IAScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  usuario: 'usuario',
+  tipoOperacion: 'tipoOperacion',
+  modeloUsado: 'modeloUsado',
+  tokensPrompt: 'tokensPrompt',
+  tokensRespuesta: 'tokensRespuesta',
+  costoEstimadoUsd: 'costoEstimadoUsd',
+  tiempoRespuestaMs: 'tiempoRespuestaMs',
+  exitoso: 'exitoso',
+  errorMensaje: 'errorMensaje',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2430,6 +2459,8 @@ exports.Prisma.ModelName = {
   Multas_Diccionario_Solucion: 'Multas_Diccionario_Solucion',
   Multas_Plan_Accion: 'Multas_Plan_Accion',
   Multas_Plan_Accion_Item: 'Multas_Plan_Accion_Item',
+  Multas_Config_IA: 'Multas_Config_IA',
+  Multas_Log_Consumo_IA: 'Multas_Log_Consumo_IA',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

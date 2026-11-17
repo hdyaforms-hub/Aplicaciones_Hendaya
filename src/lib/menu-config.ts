@@ -329,6 +329,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Planes de Acción (Soluciones)',
                         href: '/dashboard/areas/multas/soluciones',
                         requiredPermission: ['view_soluciones_multas', 'manage_soluciones_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Asistente y Análisis IA',
+                        href: '/dashboard/areas/multas/analisis-ia',
+                        requiredPermission: ['view_ia_multas', 'manage_config_ia_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

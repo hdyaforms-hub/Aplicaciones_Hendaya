@@ -123,6 +123,8 @@ export default async function RolesPage() {
         { id: 'manage_biblioteca_argumentos', name: 'Biblioteca de Argumentos (Gestionar)', description: 'Permite crear, editar, eliminar e importar planillas Excel de argumentos y precedentes.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_soluciones_multas', name: 'Planes de Acción y Soluciones (Ver)', description: 'Permite consultar los planes de acción y medidas correctivas de las actas de su jurisdicción.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_soluciones_multas', name: 'Planes de Acción y Soluciones (Gestionar)', description: 'Permite generar planes de acción masivos, certificar evidencias y cerrar formalmente los planes.', category: 'ÁREAS -> MULTAS' },
+        { id: 'view_ia_multas', name: 'Asistente y Análisis con IA (Ver)', description: 'Permite solicitar análisis de defensas jurídicas y extracción visual de planillas de pesaje por IA.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_config_ia_multas', name: 'Configuración de IA (Gestionar)', description: 'Permite configurar credenciales de API cifradas, modelos y topes de gasto mensual de IA.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },

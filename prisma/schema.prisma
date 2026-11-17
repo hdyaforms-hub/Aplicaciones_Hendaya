@@ -1295,6 +1295,46 @@ model Multas_Plan_Accion_Item {
   @@map("Multas_Plan_Accion_Item")
 }
 
+// ==========================================
+// C10: ANÁLISIS Y ASISTENTE CON INTELIGENCIA ARTIFICIAL
+// ==========================================
+
+model Multas_Config_IA {
+  id                   String   @id @default(uuid())
+  proveedor            String   @default("GOOGLE_GEMINI") @db.VarChar(50) // GOOGLE_GEMINI, OPENAI, ANTHROPIC
+  apiKeyEnc            String?  @db.Text
+  modelo               String   @default("gemini-1.5-flash") @db.VarChar(100)
+  limiteGastoMensualUsd Float   @default(50.0)
+  gastoAcumuladoMesUsd  Float   @default(0.0)
+  temperatura          Float    @default(0.2)
+  activo               Boolean  @default(true)
+  actualizadoPor       String   @default("Sistema") @db.VarChar(100)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("Multas_Config_IA")
+}
+
+model Multas_Log_Consumo_IA {
+  id                 String   @id @default(uuid())
+  folio              String?  @db.VarChar(50)
+  usuario            String   @db.VarChar(100)
+  tipoOperacion      String   @db.VarChar(60) // ANALISIS_DESCARGO, EXTRACCION_PESAJE_VISION, RESUMEN_ACTA
+  modeloUsado        String   @db.VarChar(100)
+  tokensPrompt       Int      @default(0)
+  tokensRespuesta    Int      @default(0)
+  costoEstimadoUsd   Float    @default(0.0)
+  tiempoRespuestaMs  Int      @default(0)
+  exitoso            Boolean  @default(true)
+  errorMensaje       String?  @db.Text
+  createdAt          DateTime @default(now())
+
+  @@index([folio])
+  @@index([usuario])
+  @@index([createdAt])
+  @@map("Multas_Log_Consumo_IA")
+}
+
 model Descargos_Cab {
   id               String          @id @default(uuid())
   folio            String          @unique

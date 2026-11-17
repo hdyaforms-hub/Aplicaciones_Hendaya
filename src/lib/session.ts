@@ -208,7 +208,9 @@ export async function getSession() {
                 'view_biblioteca_argumentos',
                 'manage_biblioteca_argumentos',
                 'view_soluciones_multas',
-                'manage_soluciones_multas'
+                'manage_soluciones_multas',
+                'view_ia_multas',
+                'manage_config_ia_multas'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

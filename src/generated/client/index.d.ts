@@ -369,6 +369,16 @@ export type Multas_Plan_Accion = $Result.DefaultSelection<Prisma.$Multas_Plan_Ac
  */
 export type Multas_Plan_Accion_Item = $Result.DefaultSelection<Prisma.$Multas_Plan_Accion_ItemPayload>
 /**
+ * Model Multas_Config_IA
+ * 
+ */
+export type Multas_Config_IA = $Result.DefaultSelection<Prisma.$Multas_Config_IAPayload>
+/**
+ * Model Multas_Log_Consumo_IA
+ * 
+ */
+export type Multas_Log_Consumo_IA = $Result.DefaultSelection<Prisma.$Multas_Log_Consumo_IAPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1636,6 +1646,26 @@ export class PrismaClient<
     * ```
     */
   get multas_Plan_Accion_Item(): Prisma.Multas_Plan_Accion_ItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Config_IA`: Exposes CRUD operations for the **Multas_Config_IA** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Config_IAS
+    * const multas_Config_IAS = await prisma.multas_Config_IA.findMany()
+    * ```
+    */
+  get multas_Config_IA(): Prisma.Multas_Config_IADelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Log_Consumo_IA`: Exposes CRUD operations for the **Multas_Log_Consumo_IA** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Log_Consumo_IAS
+    * const multas_Log_Consumo_IAS = await prisma.multas_Log_Consumo_IA.findMany()
+    * ```
+    */
+  get multas_Log_Consumo_IA(): Prisma.Multas_Log_Consumo_IADelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -3018,6 +3048,8 @@ export namespace Prisma {
     Multas_Diccionario_Solucion: 'Multas_Diccionario_Solucion',
     Multas_Plan_Accion: 'Multas_Plan_Accion',
     Multas_Plan_Accion_Item: 'Multas_Plan_Accion_Item',
+    Multas_Config_IA: 'Multas_Config_IA',
+    Multas_Log_Consumo_IA: 'Multas_Log_Consumo_IA',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -3120,7 +3152,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "multas_Descargo_Formal" | "multas_Descargo_Folio" | "multas_Resuelve" | "multas_Recurso_Admin" | "multas_Proceso_Judicial" | "multas_Argumento_Biblioteca" | "multas_Diccionario_Solucion" | "multas_Plan_Accion" | "multas_Plan_Accion_Item" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "multas_Descargo_Formal" | "multas_Descargo_Folio" | "multas_Resuelve" | "multas_Recurso_Admin" | "multas_Proceso_Judicial" | "multas_Argumento_Biblioteca" | "multas_Diccionario_Solucion" | "multas_Plan_Accion" | "multas_Plan_Accion_Item" | "multas_Config_IA" | "multas_Log_Consumo_IA" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -8091,6 +8123,146 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Plan_Accion_ItemCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Plan_Accion_ItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Config_IA: {
+        payload: Prisma.$Multas_Config_IAPayload<ExtArgs>
+        fields: Prisma.Multas_Config_IAFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Config_IAFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Config_IAFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Config_IAFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Config_IAFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Config_IAFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Config_IACreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Config_IACreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Config_IACreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Config_IADeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          update: {
+            args: Prisma.Multas_Config_IAUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Config_IADeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Config_IAUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Config_IAUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Config_IAPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Config_IAAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Config_IA>
+          }
+          groupBy: {
+            args: Prisma.Multas_Config_IAGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Config_IAGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Config_IACountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Config_IACountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Log_Consumo_IA: {
+        payload: Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>
+        fields: Prisma.Multas_Log_Consumo_IAFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Log_Consumo_IAFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Log_Consumo_IAFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Log_Consumo_IAFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Log_Consumo_IAFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Log_Consumo_IAFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Log_Consumo_IACreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Log_Consumo_IACreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Log_Consumo_IACreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Log_Consumo_IADeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          update: {
+            args: Prisma.Multas_Log_Consumo_IAUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Log_Consumo_IADeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Log_Consumo_IAUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Log_Consumo_IAUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Log_Consumo_IAPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Log_Consumo_IAAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Log_Consumo_IA>
+          }
+          groupBy: {
+            args: Prisma.Multas_Log_Consumo_IAGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Log_Consumo_IAGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Log_Consumo_IACountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Log_Consumo_IACountAggregateOutputType> | number
           }
         }
       }
@@ -90531,6 +90703,2006 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: Multas_Plan_Accion_ItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Config_IA
+   */
+
+  export type AggregateMultas_Config_IA = {
+    _count: Multas_Config_IACountAggregateOutputType | null
+    _avg: Multas_Config_IAAvgAggregateOutputType | null
+    _sum: Multas_Config_IASumAggregateOutputType | null
+    _min: Multas_Config_IAMinAggregateOutputType | null
+    _max: Multas_Config_IAMaxAggregateOutputType | null
+  }
+
+  export type Multas_Config_IAAvgAggregateOutputType = {
+    limiteGastoMensualUsd: number | null
+    gastoAcumuladoMesUsd: number | null
+    temperatura: number | null
+  }
+
+  export type Multas_Config_IASumAggregateOutputType = {
+    limiteGastoMensualUsd: number | null
+    gastoAcumuladoMesUsd: number | null
+    temperatura: number | null
+  }
+
+  export type Multas_Config_IAMinAggregateOutputType = {
+    id: string | null
+    proveedor: string | null
+    apiKeyEnc: string | null
+    modelo: string | null
+    limiteGastoMensualUsd: number | null
+    gastoAcumuladoMesUsd: number | null
+    temperatura: number | null
+    activo: boolean | null
+    actualizadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Config_IAMaxAggregateOutputType = {
+    id: string | null
+    proveedor: string | null
+    apiKeyEnc: string | null
+    modelo: string | null
+    limiteGastoMensualUsd: number | null
+    gastoAcumuladoMesUsd: number | null
+    temperatura: number | null
+    activo: boolean | null
+    actualizadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Config_IACountAggregateOutputType = {
+    id: number
+    proveedor: number
+    apiKeyEnc: number
+    modelo: number
+    limiteGastoMensualUsd: number
+    gastoAcumuladoMesUsd: number
+    temperatura: number
+    activo: number
+    actualizadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Config_IAAvgAggregateInputType = {
+    limiteGastoMensualUsd?: true
+    gastoAcumuladoMesUsd?: true
+    temperatura?: true
+  }
+
+  export type Multas_Config_IASumAggregateInputType = {
+    limiteGastoMensualUsd?: true
+    gastoAcumuladoMesUsd?: true
+    temperatura?: true
+  }
+
+  export type Multas_Config_IAMinAggregateInputType = {
+    id?: true
+    proveedor?: true
+    apiKeyEnc?: true
+    modelo?: true
+    limiteGastoMensualUsd?: true
+    gastoAcumuladoMesUsd?: true
+    temperatura?: true
+    activo?: true
+    actualizadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Config_IAMaxAggregateInputType = {
+    id?: true
+    proveedor?: true
+    apiKeyEnc?: true
+    modelo?: true
+    limiteGastoMensualUsd?: true
+    gastoAcumuladoMesUsd?: true
+    temperatura?: true
+    activo?: true
+    actualizadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Config_IACountAggregateInputType = {
+    id?: true
+    proveedor?: true
+    apiKeyEnc?: true
+    modelo?: true
+    limiteGastoMensualUsd?: true
+    gastoAcumuladoMesUsd?: true
+    temperatura?: true
+    activo?: true
+    actualizadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Config_IAAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Config_IA to aggregate.
+     */
+    where?: Multas_Config_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Config_IAS to fetch.
+     */
+    orderBy?: Multas_Config_IAOrderByWithRelationInput | Multas_Config_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Config_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Config_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Config_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Config_IAS
+    **/
+    _count?: true | Multas_Config_IACountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Config_IAAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Config_IASumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Config_IAMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Config_IAMaxAggregateInputType
+  }
+
+  export type GetMultas_Config_IAAggregateType<T extends Multas_Config_IAAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Config_IA]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Config_IA[P]>
+      : GetScalarType<T[P], AggregateMultas_Config_IA[P]>
+  }
+
+
+
+
+  export type Multas_Config_IAGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Config_IAWhereInput
+    orderBy?: Multas_Config_IAOrderByWithAggregationInput | Multas_Config_IAOrderByWithAggregationInput[]
+    by: Multas_Config_IAScalarFieldEnum[] | Multas_Config_IAScalarFieldEnum
+    having?: Multas_Config_IAScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Config_IACountAggregateInputType | true
+    _avg?: Multas_Config_IAAvgAggregateInputType
+    _sum?: Multas_Config_IASumAggregateInputType
+    _min?: Multas_Config_IAMinAggregateInputType
+    _max?: Multas_Config_IAMaxAggregateInputType
+  }
+
+  export type Multas_Config_IAGroupByOutputType = {
+    id: string
+    proveedor: string
+    apiKeyEnc: string | null
+    modelo: string
+    limiteGastoMensualUsd: number
+    gastoAcumuladoMesUsd: number
+    temperatura: number
+    activo: boolean
+    actualizadoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Config_IACountAggregateOutputType | null
+    _avg: Multas_Config_IAAvgAggregateOutputType | null
+    _sum: Multas_Config_IASumAggregateOutputType | null
+    _min: Multas_Config_IAMinAggregateOutputType | null
+    _max: Multas_Config_IAMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Config_IAGroupByPayload<T extends Multas_Config_IAGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Config_IAGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Config_IAGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Config_IAGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Config_IAGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Config_IASelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    proveedor?: boolean
+    apiKeyEnc?: boolean
+    modelo?: boolean
+    limiteGastoMensualUsd?: boolean
+    gastoAcumuladoMesUsd?: boolean
+    temperatura?: boolean
+    activo?: boolean
+    actualizadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Config_IA"]>
+
+  export type Multas_Config_IASelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    proveedor?: boolean
+    apiKeyEnc?: boolean
+    modelo?: boolean
+    limiteGastoMensualUsd?: boolean
+    gastoAcumuladoMesUsd?: boolean
+    temperatura?: boolean
+    activo?: boolean
+    actualizadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["multas_Config_IA"]>
+
+  export type Multas_Config_IASelectScalar = {
+    id?: boolean
+    proveedor?: boolean
+    apiKeyEnc?: boolean
+    modelo?: boolean
+    limiteGastoMensualUsd?: boolean
+    gastoAcumuladoMesUsd?: boolean
+    temperatura?: boolean
+    activo?: boolean
+    actualizadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Multas_Config_IAPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Config_IA"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      proveedor: string
+      apiKeyEnc: string | null
+      modelo: string
+      limiteGastoMensualUsd: number
+      gastoAcumuladoMesUsd: number
+      temperatura: number
+      activo: boolean
+      actualizadoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Config_IA"]>
+    composites: {}
+  }
+
+  type Multas_Config_IAGetPayload<S extends boolean | null | undefined | Multas_Config_IADefaultArgs> = $Result.GetResult<Prisma.$Multas_Config_IAPayload, S>
+
+  type Multas_Config_IACountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Config_IAFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Config_IACountAggregateInputType | true
+    }
+
+  export interface Multas_Config_IADelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Config_IA'], meta: { name: 'Multas_Config_IA' } }
+    /**
+     * Find zero or one Multas_Config_IA that matches the filter.
+     * @param {Multas_Config_IAFindUniqueArgs} args - Arguments to find a Multas_Config_IA
+     * @example
+     * // Get one Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Config_IAFindUniqueArgs>(args: SelectSubset<T, Multas_Config_IAFindUniqueArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Config_IA that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Config_IAFindUniqueOrThrowArgs} args - Arguments to find a Multas_Config_IA
+     * @example
+     * // Get one Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Config_IAFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Config_IAFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Config_IA that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAFindFirstArgs} args - Arguments to find a Multas_Config_IA
+     * @example
+     * // Get one Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Config_IAFindFirstArgs>(args?: SelectSubset<T, Multas_Config_IAFindFirstArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Config_IA that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAFindFirstOrThrowArgs} args - Arguments to find a Multas_Config_IA
+     * @example
+     * // Get one Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Config_IAFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Config_IAFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Config_IAS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Config_IAS
+     * const multas_Config_IAS = await prisma.multas_Config_IA.findMany()
+     * 
+     * // Get first 10 Multas_Config_IAS
+     * const multas_Config_IAS = await prisma.multas_Config_IA.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Config_IAWithIdOnly = await prisma.multas_Config_IA.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Config_IAFindManyArgs>(args?: SelectSubset<T, Multas_Config_IAFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Config_IA.
+     * @param {Multas_Config_IACreateArgs} args - Arguments to create a Multas_Config_IA.
+     * @example
+     * // Create one Multas_Config_IA
+     * const Multas_Config_IA = await prisma.multas_Config_IA.create({
+     *   data: {
+     *     // ... data to create a Multas_Config_IA
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Config_IACreateArgs>(args: SelectSubset<T, Multas_Config_IACreateArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Config_IAS.
+     * @param {Multas_Config_IACreateManyArgs} args - Arguments to create many Multas_Config_IAS.
+     * @example
+     * // Create many Multas_Config_IAS
+     * const multas_Config_IA = await prisma.multas_Config_IA.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Config_IACreateManyArgs>(args?: SelectSubset<T, Multas_Config_IACreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Config_IAS and returns the data saved in the database.
+     * @param {Multas_Config_IACreateManyAndReturnArgs} args - Arguments to create many Multas_Config_IAS.
+     * @example
+     * // Create many Multas_Config_IAS
+     * const multas_Config_IA = await prisma.multas_Config_IA.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Config_IAS and only return the `id`
+     * const multas_Config_IAWithIdOnly = await prisma.multas_Config_IA.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Config_IACreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Config_IACreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Config_IA.
+     * @param {Multas_Config_IADeleteArgs} args - Arguments to delete one Multas_Config_IA.
+     * @example
+     * // Delete one Multas_Config_IA
+     * const Multas_Config_IA = await prisma.multas_Config_IA.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Config_IA
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Config_IADeleteArgs>(args: SelectSubset<T, Multas_Config_IADeleteArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Config_IA.
+     * @param {Multas_Config_IAUpdateArgs} args - Arguments to update one Multas_Config_IA.
+     * @example
+     * // Update one Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Config_IAUpdateArgs>(args: SelectSubset<T, Multas_Config_IAUpdateArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Config_IAS.
+     * @param {Multas_Config_IADeleteManyArgs} args - Arguments to filter Multas_Config_IAS to delete.
+     * @example
+     * // Delete a few Multas_Config_IAS
+     * const { count } = await prisma.multas_Config_IA.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Config_IADeleteManyArgs>(args?: SelectSubset<T, Multas_Config_IADeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Config_IAS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Config_IAS
+     * const multas_Config_IA = await prisma.multas_Config_IA.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Config_IAUpdateManyArgs>(args: SelectSubset<T, Multas_Config_IAUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Config_IA.
+     * @param {Multas_Config_IAUpsertArgs} args - Arguments to update or create a Multas_Config_IA.
+     * @example
+     * // Update or create a Multas_Config_IA
+     * const multas_Config_IA = await prisma.multas_Config_IA.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Config_IA
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Config_IA we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Config_IAUpsertArgs>(args: SelectSubset<T, Multas_Config_IAUpsertArgs<ExtArgs>>): Prisma__Multas_Config_IAClient<$Result.GetResult<Prisma.$Multas_Config_IAPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Config_IAS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IACountArgs} args - Arguments to filter Multas_Config_IAS to count.
+     * @example
+     * // Count the number of Multas_Config_IAS
+     * const count = await prisma.multas_Config_IA.count({
+     *   where: {
+     *     // ... the filter for the Multas_Config_IAS we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Config_IACountArgs>(
+      args?: Subset<T, Multas_Config_IACountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Config_IACountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Config_IA.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Config_IAAggregateArgs>(args: Subset<T, Multas_Config_IAAggregateArgs>): Prisma.PrismaPromise<GetMultas_Config_IAAggregateType<T>>
+
+    /**
+     * Group by Multas_Config_IA.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Config_IAGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Config_IAGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Config_IAGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Config_IAGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Config_IAGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Config_IAGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Config_IA model
+   */
+  readonly fields: Multas_Config_IAFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Config_IA.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Config_IAClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Config_IA model
+   */ 
+  interface Multas_Config_IAFieldRefs {
+    readonly id: FieldRef<"Multas_Config_IA", 'String'>
+    readonly proveedor: FieldRef<"Multas_Config_IA", 'String'>
+    readonly apiKeyEnc: FieldRef<"Multas_Config_IA", 'String'>
+    readonly modelo: FieldRef<"Multas_Config_IA", 'String'>
+    readonly limiteGastoMensualUsd: FieldRef<"Multas_Config_IA", 'Float'>
+    readonly gastoAcumuladoMesUsd: FieldRef<"Multas_Config_IA", 'Float'>
+    readonly temperatura: FieldRef<"Multas_Config_IA", 'Float'>
+    readonly activo: FieldRef<"Multas_Config_IA", 'Boolean'>
+    readonly actualizadoPor: FieldRef<"Multas_Config_IA", 'String'>
+    readonly createdAt: FieldRef<"Multas_Config_IA", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Config_IA", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Config_IA findUnique
+   */
+  export type Multas_Config_IAFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Config_IA to fetch.
+     */
+    where: Multas_Config_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Config_IA findUniqueOrThrow
+   */
+  export type Multas_Config_IAFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Config_IA to fetch.
+     */
+    where: Multas_Config_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Config_IA findFirst
+   */
+  export type Multas_Config_IAFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Config_IA to fetch.
+     */
+    where?: Multas_Config_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Config_IAS to fetch.
+     */
+    orderBy?: Multas_Config_IAOrderByWithRelationInput | Multas_Config_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Config_IAS.
+     */
+    cursor?: Multas_Config_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Config_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Config_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Config_IAS.
+     */
+    distinct?: Multas_Config_IAScalarFieldEnum | Multas_Config_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Config_IA findFirstOrThrow
+   */
+  export type Multas_Config_IAFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Config_IA to fetch.
+     */
+    where?: Multas_Config_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Config_IAS to fetch.
+     */
+    orderBy?: Multas_Config_IAOrderByWithRelationInput | Multas_Config_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Config_IAS.
+     */
+    cursor?: Multas_Config_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Config_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Config_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Config_IAS.
+     */
+    distinct?: Multas_Config_IAScalarFieldEnum | Multas_Config_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Config_IA findMany
+   */
+  export type Multas_Config_IAFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Config_IAS to fetch.
+     */
+    where?: Multas_Config_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Config_IAS to fetch.
+     */
+    orderBy?: Multas_Config_IAOrderByWithRelationInput | Multas_Config_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Config_IAS.
+     */
+    cursor?: Multas_Config_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Config_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Config_IAS.
+     */
+    skip?: number
+    distinct?: Multas_Config_IAScalarFieldEnum | Multas_Config_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Config_IA create
+   */
+  export type Multas_Config_IACreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Config_IA.
+     */
+    data: XOR<Multas_Config_IACreateInput, Multas_Config_IAUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Config_IA createMany
+   */
+  export type Multas_Config_IACreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Config_IAS.
+     */
+    data: Multas_Config_IACreateManyInput | Multas_Config_IACreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Config_IA createManyAndReturn
+   */
+  export type Multas_Config_IACreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Config_IAS.
+     */
+    data: Multas_Config_IACreateManyInput | Multas_Config_IACreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Config_IA update
+   */
+  export type Multas_Config_IAUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Config_IA.
+     */
+    data: XOR<Multas_Config_IAUpdateInput, Multas_Config_IAUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Config_IA to update.
+     */
+    where: Multas_Config_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Config_IA updateMany
+   */
+  export type Multas_Config_IAUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Config_IAS.
+     */
+    data: XOR<Multas_Config_IAUpdateManyMutationInput, Multas_Config_IAUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Config_IAS to update
+     */
+    where?: Multas_Config_IAWhereInput
+  }
+
+  /**
+   * Multas_Config_IA upsert
+   */
+  export type Multas_Config_IAUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Config_IA to update in case it exists.
+     */
+    where: Multas_Config_IAWhereUniqueInput
+    /**
+     * In case the Multas_Config_IA found by the `where` argument doesn't exist, create a new Multas_Config_IA with this data.
+     */
+    create: XOR<Multas_Config_IACreateInput, Multas_Config_IAUncheckedCreateInput>
+    /**
+     * In case the Multas_Config_IA was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Config_IAUpdateInput, Multas_Config_IAUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Config_IA delete
+   */
+  export type Multas_Config_IADeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Config_IA to delete.
+     */
+    where: Multas_Config_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Config_IA deleteMany
+   */
+  export type Multas_Config_IADeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Config_IAS to delete
+     */
+    where?: Multas_Config_IAWhereInput
+  }
+
+  /**
+   * Multas_Config_IA without action
+   */
+  export type Multas_Config_IADefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Config_IA
+     */
+    select?: Multas_Config_IASelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Log_Consumo_IA
+   */
+
+  export type AggregateMultas_Log_Consumo_IA = {
+    _count: Multas_Log_Consumo_IACountAggregateOutputType | null
+    _avg: Multas_Log_Consumo_IAAvgAggregateOutputType | null
+    _sum: Multas_Log_Consumo_IASumAggregateOutputType | null
+    _min: Multas_Log_Consumo_IAMinAggregateOutputType | null
+    _max: Multas_Log_Consumo_IAMaxAggregateOutputType | null
+  }
+
+  export type Multas_Log_Consumo_IAAvgAggregateOutputType = {
+    tokensPrompt: number | null
+    tokensRespuesta: number | null
+    costoEstimadoUsd: number | null
+    tiempoRespuestaMs: number | null
+  }
+
+  export type Multas_Log_Consumo_IASumAggregateOutputType = {
+    tokensPrompt: number | null
+    tokensRespuesta: number | null
+    costoEstimadoUsd: number | null
+    tiempoRespuestaMs: number | null
+  }
+
+  export type Multas_Log_Consumo_IAMinAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    usuario: string | null
+    tipoOperacion: string | null
+    modeloUsado: string | null
+    tokensPrompt: number | null
+    tokensRespuesta: number | null
+    costoEstimadoUsd: number | null
+    tiempoRespuestaMs: number | null
+    exitoso: boolean | null
+    errorMensaje: string | null
+    createdAt: Date | null
+  }
+
+  export type Multas_Log_Consumo_IAMaxAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    usuario: string | null
+    tipoOperacion: string | null
+    modeloUsado: string | null
+    tokensPrompt: number | null
+    tokensRespuesta: number | null
+    costoEstimadoUsd: number | null
+    tiempoRespuestaMs: number | null
+    exitoso: boolean | null
+    errorMensaje: string | null
+    createdAt: Date | null
+  }
+
+  export type Multas_Log_Consumo_IACountAggregateOutputType = {
+    id: number
+    folio: number
+    usuario: number
+    tipoOperacion: number
+    modeloUsado: number
+    tokensPrompt: number
+    tokensRespuesta: number
+    costoEstimadoUsd: number
+    tiempoRespuestaMs: number
+    exitoso: number
+    errorMensaje: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type Multas_Log_Consumo_IAAvgAggregateInputType = {
+    tokensPrompt?: true
+    tokensRespuesta?: true
+    costoEstimadoUsd?: true
+    tiempoRespuestaMs?: true
+  }
+
+  export type Multas_Log_Consumo_IASumAggregateInputType = {
+    tokensPrompt?: true
+    tokensRespuesta?: true
+    costoEstimadoUsd?: true
+    tiempoRespuestaMs?: true
+  }
+
+  export type Multas_Log_Consumo_IAMinAggregateInputType = {
+    id?: true
+    folio?: true
+    usuario?: true
+    tipoOperacion?: true
+    modeloUsado?: true
+    tokensPrompt?: true
+    tokensRespuesta?: true
+    costoEstimadoUsd?: true
+    tiempoRespuestaMs?: true
+    exitoso?: true
+    errorMensaje?: true
+    createdAt?: true
+  }
+
+  export type Multas_Log_Consumo_IAMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    usuario?: true
+    tipoOperacion?: true
+    modeloUsado?: true
+    tokensPrompt?: true
+    tokensRespuesta?: true
+    costoEstimadoUsd?: true
+    tiempoRespuestaMs?: true
+    exitoso?: true
+    errorMensaje?: true
+    createdAt?: true
+  }
+
+  export type Multas_Log_Consumo_IACountAggregateInputType = {
+    id?: true
+    folio?: true
+    usuario?: true
+    tipoOperacion?: true
+    modeloUsado?: true
+    tokensPrompt?: true
+    tokensRespuesta?: true
+    costoEstimadoUsd?: true
+    tiempoRespuestaMs?: true
+    exitoso?: true
+    errorMensaje?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type Multas_Log_Consumo_IAAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Log_Consumo_IA to aggregate.
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Log_Consumo_IAS to fetch.
+     */
+    orderBy?: Multas_Log_Consumo_IAOrderByWithRelationInput | Multas_Log_Consumo_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Log_Consumo_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Log_Consumo_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Log_Consumo_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Log_Consumo_IAS
+    **/
+    _count?: true | Multas_Log_Consumo_IACountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Log_Consumo_IAAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Log_Consumo_IASumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Log_Consumo_IAMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Log_Consumo_IAMaxAggregateInputType
+  }
+
+  export type GetMultas_Log_Consumo_IAAggregateType<T extends Multas_Log_Consumo_IAAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Log_Consumo_IA]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Log_Consumo_IA[P]>
+      : GetScalarType<T[P], AggregateMultas_Log_Consumo_IA[P]>
+  }
+
+
+
+
+  export type Multas_Log_Consumo_IAGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Log_Consumo_IAWhereInput
+    orderBy?: Multas_Log_Consumo_IAOrderByWithAggregationInput | Multas_Log_Consumo_IAOrderByWithAggregationInput[]
+    by: Multas_Log_Consumo_IAScalarFieldEnum[] | Multas_Log_Consumo_IAScalarFieldEnum
+    having?: Multas_Log_Consumo_IAScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Log_Consumo_IACountAggregateInputType | true
+    _avg?: Multas_Log_Consumo_IAAvgAggregateInputType
+    _sum?: Multas_Log_Consumo_IASumAggregateInputType
+    _min?: Multas_Log_Consumo_IAMinAggregateInputType
+    _max?: Multas_Log_Consumo_IAMaxAggregateInputType
+  }
+
+  export type Multas_Log_Consumo_IAGroupByOutputType = {
+    id: string
+    folio: string | null
+    usuario: string
+    tipoOperacion: string
+    modeloUsado: string
+    tokensPrompt: number
+    tokensRespuesta: number
+    costoEstimadoUsd: number
+    tiempoRespuestaMs: number
+    exitoso: boolean
+    errorMensaje: string | null
+    createdAt: Date
+    _count: Multas_Log_Consumo_IACountAggregateOutputType | null
+    _avg: Multas_Log_Consumo_IAAvgAggregateOutputType | null
+    _sum: Multas_Log_Consumo_IASumAggregateOutputType | null
+    _min: Multas_Log_Consumo_IAMinAggregateOutputType | null
+    _max: Multas_Log_Consumo_IAMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Log_Consumo_IAGroupByPayload<T extends Multas_Log_Consumo_IAGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Log_Consumo_IAGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Log_Consumo_IAGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Log_Consumo_IAGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Log_Consumo_IAGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Log_Consumo_IASelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    usuario?: boolean
+    tipoOperacion?: boolean
+    modeloUsado?: boolean
+    tokensPrompt?: boolean
+    tokensRespuesta?: boolean
+    costoEstimadoUsd?: boolean
+    tiempoRespuestaMs?: boolean
+    exitoso?: boolean
+    errorMensaje?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["multas_Log_Consumo_IA"]>
+
+  export type Multas_Log_Consumo_IASelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    usuario?: boolean
+    tipoOperacion?: boolean
+    modeloUsado?: boolean
+    tokensPrompt?: boolean
+    tokensRespuesta?: boolean
+    costoEstimadoUsd?: boolean
+    tiempoRespuestaMs?: boolean
+    exitoso?: boolean
+    errorMensaje?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["multas_Log_Consumo_IA"]>
+
+  export type Multas_Log_Consumo_IASelectScalar = {
+    id?: boolean
+    folio?: boolean
+    usuario?: boolean
+    tipoOperacion?: boolean
+    modeloUsado?: boolean
+    tokensPrompt?: boolean
+    tokensRespuesta?: boolean
+    costoEstimadoUsd?: boolean
+    tiempoRespuestaMs?: boolean
+    exitoso?: boolean
+    errorMensaje?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $Multas_Log_Consumo_IAPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Log_Consumo_IA"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folio: string | null
+      usuario: string
+      tipoOperacion: string
+      modeloUsado: string
+      tokensPrompt: number
+      tokensRespuesta: number
+      costoEstimadoUsd: number
+      tiempoRespuestaMs: number
+      exitoso: boolean
+      errorMensaje: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["multas_Log_Consumo_IA"]>
+    composites: {}
+  }
+
+  type Multas_Log_Consumo_IAGetPayload<S extends boolean | null | undefined | Multas_Log_Consumo_IADefaultArgs> = $Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload, S>
+
+  type Multas_Log_Consumo_IACountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Log_Consumo_IAFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Log_Consumo_IACountAggregateInputType | true
+    }
+
+  export interface Multas_Log_Consumo_IADelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Log_Consumo_IA'], meta: { name: 'Multas_Log_Consumo_IA' } }
+    /**
+     * Find zero or one Multas_Log_Consumo_IA that matches the filter.
+     * @param {Multas_Log_Consumo_IAFindUniqueArgs} args - Arguments to find a Multas_Log_Consumo_IA
+     * @example
+     * // Get one Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Log_Consumo_IAFindUniqueArgs>(args: SelectSubset<T, Multas_Log_Consumo_IAFindUniqueArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Log_Consumo_IA that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Log_Consumo_IAFindUniqueOrThrowArgs} args - Arguments to find a Multas_Log_Consumo_IA
+     * @example
+     * // Get one Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Log_Consumo_IAFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Log_Consumo_IAFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Log_Consumo_IA that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAFindFirstArgs} args - Arguments to find a Multas_Log_Consumo_IA
+     * @example
+     * // Get one Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Log_Consumo_IAFindFirstArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IAFindFirstArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Log_Consumo_IA that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAFindFirstOrThrowArgs} args - Arguments to find a Multas_Log_Consumo_IA
+     * @example
+     * // Get one Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Log_Consumo_IAFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IAFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Log_Consumo_IAS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Log_Consumo_IAS
+     * const multas_Log_Consumo_IAS = await prisma.multas_Log_Consumo_IA.findMany()
+     * 
+     * // Get first 10 Multas_Log_Consumo_IAS
+     * const multas_Log_Consumo_IAS = await prisma.multas_Log_Consumo_IA.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Log_Consumo_IAWithIdOnly = await prisma.multas_Log_Consumo_IA.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Log_Consumo_IAFindManyArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IAFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Log_Consumo_IA.
+     * @param {Multas_Log_Consumo_IACreateArgs} args - Arguments to create a Multas_Log_Consumo_IA.
+     * @example
+     * // Create one Multas_Log_Consumo_IA
+     * const Multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.create({
+     *   data: {
+     *     // ... data to create a Multas_Log_Consumo_IA
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Log_Consumo_IACreateArgs>(args: SelectSubset<T, Multas_Log_Consumo_IACreateArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Log_Consumo_IAS.
+     * @param {Multas_Log_Consumo_IACreateManyArgs} args - Arguments to create many Multas_Log_Consumo_IAS.
+     * @example
+     * // Create many Multas_Log_Consumo_IAS
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Log_Consumo_IACreateManyArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IACreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Log_Consumo_IAS and returns the data saved in the database.
+     * @param {Multas_Log_Consumo_IACreateManyAndReturnArgs} args - Arguments to create many Multas_Log_Consumo_IAS.
+     * @example
+     * // Create many Multas_Log_Consumo_IAS
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Log_Consumo_IAS and only return the `id`
+     * const multas_Log_Consumo_IAWithIdOnly = await prisma.multas_Log_Consumo_IA.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Log_Consumo_IACreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IACreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Log_Consumo_IA.
+     * @param {Multas_Log_Consumo_IADeleteArgs} args - Arguments to delete one Multas_Log_Consumo_IA.
+     * @example
+     * // Delete one Multas_Log_Consumo_IA
+     * const Multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Log_Consumo_IA
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Log_Consumo_IADeleteArgs>(args: SelectSubset<T, Multas_Log_Consumo_IADeleteArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Log_Consumo_IA.
+     * @param {Multas_Log_Consumo_IAUpdateArgs} args - Arguments to update one Multas_Log_Consumo_IA.
+     * @example
+     * // Update one Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Log_Consumo_IAUpdateArgs>(args: SelectSubset<T, Multas_Log_Consumo_IAUpdateArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Log_Consumo_IAS.
+     * @param {Multas_Log_Consumo_IADeleteManyArgs} args - Arguments to filter Multas_Log_Consumo_IAS to delete.
+     * @example
+     * // Delete a few Multas_Log_Consumo_IAS
+     * const { count } = await prisma.multas_Log_Consumo_IA.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Log_Consumo_IADeleteManyArgs>(args?: SelectSubset<T, Multas_Log_Consumo_IADeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Log_Consumo_IAS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Log_Consumo_IAS
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Log_Consumo_IAUpdateManyArgs>(args: SelectSubset<T, Multas_Log_Consumo_IAUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Log_Consumo_IA.
+     * @param {Multas_Log_Consumo_IAUpsertArgs} args - Arguments to update or create a Multas_Log_Consumo_IA.
+     * @example
+     * // Update or create a Multas_Log_Consumo_IA
+     * const multas_Log_Consumo_IA = await prisma.multas_Log_Consumo_IA.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Log_Consumo_IA
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Log_Consumo_IA we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Log_Consumo_IAUpsertArgs>(args: SelectSubset<T, Multas_Log_Consumo_IAUpsertArgs<ExtArgs>>): Prisma__Multas_Log_Consumo_IAClient<$Result.GetResult<Prisma.$Multas_Log_Consumo_IAPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Log_Consumo_IAS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IACountArgs} args - Arguments to filter Multas_Log_Consumo_IAS to count.
+     * @example
+     * // Count the number of Multas_Log_Consumo_IAS
+     * const count = await prisma.multas_Log_Consumo_IA.count({
+     *   where: {
+     *     // ... the filter for the Multas_Log_Consumo_IAS we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Log_Consumo_IACountArgs>(
+      args?: Subset<T, Multas_Log_Consumo_IACountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Log_Consumo_IACountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Log_Consumo_IA.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Log_Consumo_IAAggregateArgs>(args: Subset<T, Multas_Log_Consumo_IAAggregateArgs>): Prisma.PrismaPromise<GetMultas_Log_Consumo_IAAggregateType<T>>
+
+    /**
+     * Group by Multas_Log_Consumo_IA.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Log_Consumo_IAGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Log_Consumo_IAGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Log_Consumo_IAGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Log_Consumo_IAGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Log_Consumo_IAGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Log_Consumo_IAGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Log_Consumo_IA model
+   */
+  readonly fields: Multas_Log_Consumo_IAFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Log_Consumo_IA.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Log_Consumo_IAClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Log_Consumo_IA model
+   */ 
+  interface Multas_Log_Consumo_IAFieldRefs {
+    readonly id: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly folio: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly usuario: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly tipoOperacion: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly modeloUsado: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly tokensPrompt: FieldRef<"Multas_Log_Consumo_IA", 'Int'>
+    readonly tokensRespuesta: FieldRef<"Multas_Log_Consumo_IA", 'Int'>
+    readonly costoEstimadoUsd: FieldRef<"Multas_Log_Consumo_IA", 'Float'>
+    readonly tiempoRespuestaMs: FieldRef<"Multas_Log_Consumo_IA", 'Int'>
+    readonly exitoso: FieldRef<"Multas_Log_Consumo_IA", 'Boolean'>
+    readonly errorMensaje: FieldRef<"Multas_Log_Consumo_IA", 'String'>
+    readonly createdAt: FieldRef<"Multas_Log_Consumo_IA", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Log_Consumo_IA findUnique
+   */
+  export type Multas_Log_Consumo_IAFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Log_Consumo_IA to fetch.
+     */
+    where: Multas_Log_Consumo_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA findUniqueOrThrow
+   */
+  export type Multas_Log_Consumo_IAFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Log_Consumo_IA to fetch.
+     */
+    where: Multas_Log_Consumo_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA findFirst
+   */
+  export type Multas_Log_Consumo_IAFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Log_Consumo_IA to fetch.
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Log_Consumo_IAS to fetch.
+     */
+    orderBy?: Multas_Log_Consumo_IAOrderByWithRelationInput | Multas_Log_Consumo_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Log_Consumo_IAS.
+     */
+    cursor?: Multas_Log_Consumo_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Log_Consumo_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Log_Consumo_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Log_Consumo_IAS.
+     */
+    distinct?: Multas_Log_Consumo_IAScalarFieldEnum | Multas_Log_Consumo_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Log_Consumo_IA findFirstOrThrow
+   */
+  export type Multas_Log_Consumo_IAFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Log_Consumo_IA to fetch.
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Log_Consumo_IAS to fetch.
+     */
+    orderBy?: Multas_Log_Consumo_IAOrderByWithRelationInput | Multas_Log_Consumo_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Log_Consumo_IAS.
+     */
+    cursor?: Multas_Log_Consumo_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Log_Consumo_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Log_Consumo_IAS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Log_Consumo_IAS.
+     */
+    distinct?: Multas_Log_Consumo_IAScalarFieldEnum | Multas_Log_Consumo_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Log_Consumo_IA findMany
+   */
+  export type Multas_Log_Consumo_IAFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter, which Multas_Log_Consumo_IAS to fetch.
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Log_Consumo_IAS to fetch.
+     */
+    orderBy?: Multas_Log_Consumo_IAOrderByWithRelationInput | Multas_Log_Consumo_IAOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Log_Consumo_IAS.
+     */
+    cursor?: Multas_Log_Consumo_IAWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Log_Consumo_IAS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Log_Consumo_IAS.
+     */
+    skip?: number
+    distinct?: Multas_Log_Consumo_IAScalarFieldEnum | Multas_Log_Consumo_IAScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Log_Consumo_IA create
+   */
+  export type Multas_Log_Consumo_IACreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Log_Consumo_IA.
+     */
+    data: XOR<Multas_Log_Consumo_IACreateInput, Multas_Log_Consumo_IAUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Log_Consumo_IA createMany
+   */
+  export type Multas_Log_Consumo_IACreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Log_Consumo_IAS.
+     */
+    data: Multas_Log_Consumo_IACreateManyInput | Multas_Log_Consumo_IACreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Log_Consumo_IA createManyAndReturn
+   */
+  export type Multas_Log_Consumo_IACreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Log_Consumo_IAS.
+     */
+    data: Multas_Log_Consumo_IACreateManyInput | Multas_Log_Consumo_IACreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Log_Consumo_IA update
+   */
+  export type Multas_Log_Consumo_IAUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Log_Consumo_IA.
+     */
+    data: XOR<Multas_Log_Consumo_IAUpdateInput, Multas_Log_Consumo_IAUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Log_Consumo_IA to update.
+     */
+    where: Multas_Log_Consumo_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA updateMany
+   */
+  export type Multas_Log_Consumo_IAUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Log_Consumo_IAS.
+     */
+    data: XOR<Multas_Log_Consumo_IAUpdateManyMutationInput, Multas_Log_Consumo_IAUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Log_Consumo_IAS to update
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA upsert
+   */
+  export type Multas_Log_Consumo_IAUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Log_Consumo_IA to update in case it exists.
+     */
+    where: Multas_Log_Consumo_IAWhereUniqueInput
+    /**
+     * In case the Multas_Log_Consumo_IA found by the `where` argument doesn't exist, create a new Multas_Log_Consumo_IA with this data.
+     */
+    create: XOR<Multas_Log_Consumo_IACreateInput, Multas_Log_Consumo_IAUncheckedCreateInput>
+    /**
+     * In case the Multas_Log_Consumo_IA was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Log_Consumo_IAUpdateInput, Multas_Log_Consumo_IAUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Log_Consumo_IA delete
+   */
+  export type Multas_Log_Consumo_IADeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
+    /**
+     * Filter which Multas_Log_Consumo_IA to delete.
+     */
+    where: Multas_Log_Consumo_IAWhereUniqueInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA deleteMany
+   */
+  export type Multas_Log_Consumo_IADeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Log_Consumo_IAS to delete
+     */
+    where?: Multas_Log_Consumo_IAWhereInput
+  }
+
+  /**
+   * Multas_Log_Consumo_IA without action
+   */
+  export type Multas_Log_Consumo_IADefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Log_Consumo_IA
+     */
+    select?: Multas_Log_Consumo_IASelect<ExtArgs> | null
   }
 
 
@@ -181033,6 +183205,41 @@ export namespace Prisma {
   export type Multas_Plan_Accion_ItemScalarFieldEnum = (typeof Multas_Plan_Accion_ItemScalarFieldEnum)[keyof typeof Multas_Plan_Accion_ItemScalarFieldEnum]
 
 
+  export const Multas_Config_IAScalarFieldEnum: {
+    id: 'id',
+    proveedor: 'proveedor',
+    apiKeyEnc: 'apiKeyEnc',
+    modelo: 'modelo',
+    limiteGastoMensualUsd: 'limiteGastoMensualUsd',
+    gastoAcumuladoMesUsd: 'gastoAcumuladoMesUsd',
+    temperatura: 'temperatura',
+    activo: 'activo',
+    actualizadoPor: 'actualizadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Config_IAScalarFieldEnum = (typeof Multas_Config_IAScalarFieldEnum)[keyof typeof Multas_Config_IAScalarFieldEnum]
+
+
+  export const Multas_Log_Consumo_IAScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    usuario: 'usuario',
+    tipoOperacion: 'tipoOperacion',
+    modeloUsado: 'modeloUsado',
+    tokensPrompt: 'tokensPrompt',
+    tokensRespuesta: 'tokensRespuesta',
+    costoEstimadoUsd: 'costoEstimadoUsd',
+    tiempoRespuestaMs: 'tiempoRespuestaMs',
+    exitoso: 'exitoso',
+    errorMensaje: 'errorMensaje',
+    createdAt: 'createdAt'
+  };
+
+  export type Multas_Log_Consumo_IAScalarFieldEnum = (typeof Multas_Log_Consumo_IAScalarFieldEnum)[keyof typeof Multas_Log_Consumo_IAScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -189159,6 +191366,179 @@ export namespace Prisma {
     ejecutadoPor?: StringNullableWithAggregatesFilter<"Multas_Plan_Accion_Item"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion_Item"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Plan_Accion_Item"> | Date | string
+  }
+
+  export type Multas_Config_IAWhereInput = {
+    AND?: Multas_Config_IAWhereInput | Multas_Config_IAWhereInput[]
+    OR?: Multas_Config_IAWhereInput[]
+    NOT?: Multas_Config_IAWhereInput | Multas_Config_IAWhereInput[]
+    id?: StringFilter<"Multas_Config_IA"> | string
+    proveedor?: StringFilter<"Multas_Config_IA"> | string
+    apiKeyEnc?: StringNullableFilter<"Multas_Config_IA"> | string | null
+    modelo?: StringFilter<"Multas_Config_IA"> | string
+    limiteGastoMensualUsd?: FloatFilter<"Multas_Config_IA"> | number
+    gastoAcumuladoMesUsd?: FloatFilter<"Multas_Config_IA"> | number
+    temperatura?: FloatFilter<"Multas_Config_IA"> | number
+    activo?: BoolFilter<"Multas_Config_IA"> | boolean
+    actualizadoPor?: StringFilter<"Multas_Config_IA"> | string
+    createdAt?: DateTimeFilter<"Multas_Config_IA"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Config_IA"> | Date | string
+  }
+
+  export type Multas_Config_IAOrderByWithRelationInput = {
+    id?: SortOrder
+    proveedor?: SortOrder
+    apiKeyEnc?: SortOrderInput | SortOrder
+    modelo?: SortOrder
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+    activo?: SortOrder
+    actualizadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Config_IAWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Config_IAWhereInput | Multas_Config_IAWhereInput[]
+    OR?: Multas_Config_IAWhereInput[]
+    NOT?: Multas_Config_IAWhereInput | Multas_Config_IAWhereInput[]
+    proveedor?: StringFilter<"Multas_Config_IA"> | string
+    apiKeyEnc?: StringNullableFilter<"Multas_Config_IA"> | string | null
+    modelo?: StringFilter<"Multas_Config_IA"> | string
+    limiteGastoMensualUsd?: FloatFilter<"Multas_Config_IA"> | number
+    gastoAcumuladoMesUsd?: FloatFilter<"Multas_Config_IA"> | number
+    temperatura?: FloatFilter<"Multas_Config_IA"> | number
+    activo?: BoolFilter<"Multas_Config_IA"> | boolean
+    actualizadoPor?: StringFilter<"Multas_Config_IA"> | string
+    createdAt?: DateTimeFilter<"Multas_Config_IA"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Config_IA"> | Date | string
+  }, "id">
+
+  export type Multas_Config_IAOrderByWithAggregationInput = {
+    id?: SortOrder
+    proveedor?: SortOrder
+    apiKeyEnc?: SortOrderInput | SortOrder
+    modelo?: SortOrder
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+    activo?: SortOrder
+    actualizadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Config_IACountOrderByAggregateInput
+    _avg?: Multas_Config_IAAvgOrderByAggregateInput
+    _max?: Multas_Config_IAMaxOrderByAggregateInput
+    _min?: Multas_Config_IAMinOrderByAggregateInput
+    _sum?: Multas_Config_IASumOrderByAggregateInput
+  }
+
+  export type Multas_Config_IAScalarWhereWithAggregatesInput = {
+    AND?: Multas_Config_IAScalarWhereWithAggregatesInput | Multas_Config_IAScalarWhereWithAggregatesInput[]
+    OR?: Multas_Config_IAScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Config_IAScalarWhereWithAggregatesInput | Multas_Config_IAScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Config_IA"> | string
+    proveedor?: StringWithAggregatesFilter<"Multas_Config_IA"> | string
+    apiKeyEnc?: StringNullableWithAggregatesFilter<"Multas_Config_IA"> | string | null
+    modelo?: StringWithAggregatesFilter<"Multas_Config_IA"> | string
+    limiteGastoMensualUsd?: FloatWithAggregatesFilter<"Multas_Config_IA"> | number
+    gastoAcumuladoMesUsd?: FloatWithAggregatesFilter<"Multas_Config_IA"> | number
+    temperatura?: FloatWithAggregatesFilter<"Multas_Config_IA"> | number
+    activo?: BoolWithAggregatesFilter<"Multas_Config_IA"> | boolean
+    actualizadoPor?: StringWithAggregatesFilter<"Multas_Config_IA"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Config_IA"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Config_IA"> | Date | string
+  }
+
+  export type Multas_Log_Consumo_IAWhereInput = {
+    AND?: Multas_Log_Consumo_IAWhereInput | Multas_Log_Consumo_IAWhereInput[]
+    OR?: Multas_Log_Consumo_IAWhereInput[]
+    NOT?: Multas_Log_Consumo_IAWhereInput | Multas_Log_Consumo_IAWhereInput[]
+    id?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    folio?: StringNullableFilter<"Multas_Log_Consumo_IA"> | string | null
+    usuario?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    tipoOperacion?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    modeloUsado?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    tokensPrompt?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    tokensRespuesta?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    costoEstimadoUsd?: FloatFilter<"Multas_Log_Consumo_IA"> | number
+    tiempoRespuestaMs?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    exitoso?: BoolFilter<"Multas_Log_Consumo_IA"> | boolean
+    errorMensaje?: StringNullableFilter<"Multas_Log_Consumo_IA"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Log_Consumo_IA"> | Date | string
+  }
+
+  export type Multas_Log_Consumo_IAOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrderInput | SortOrder
+    usuario?: SortOrder
+    tipoOperacion?: SortOrder
+    modeloUsado?: SortOrder
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+    exitoso?: SortOrder
+    errorMensaje?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IAWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Log_Consumo_IAWhereInput | Multas_Log_Consumo_IAWhereInput[]
+    OR?: Multas_Log_Consumo_IAWhereInput[]
+    NOT?: Multas_Log_Consumo_IAWhereInput | Multas_Log_Consumo_IAWhereInput[]
+    folio?: StringNullableFilter<"Multas_Log_Consumo_IA"> | string | null
+    usuario?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    tipoOperacion?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    modeloUsado?: StringFilter<"Multas_Log_Consumo_IA"> | string
+    tokensPrompt?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    tokensRespuesta?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    costoEstimadoUsd?: FloatFilter<"Multas_Log_Consumo_IA"> | number
+    tiempoRespuestaMs?: IntFilter<"Multas_Log_Consumo_IA"> | number
+    exitoso?: BoolFilter<"Multas_Log_Consumo_IA"> | boolean
+    errorMensaje?: StringNullableFilter<"Multas_Log_Consumo_IA"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Log_Consumo_IA"> | Date | string
+  }, "id">
+
+  export type Multas_Log_Consumo_IAOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrderInput | SortOrder
+    usuario?: SortOrder
+    tipoOperacion?: SortOrder
+    modeloUsado?: SortOrder
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+    exitoso?: SortOrder
+    errorMensaje?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: Multas_Log_Consumo_IACountOrderByAggregateInput
+    _avg?: Multas_Log_Consumo_IAAvgOrderByAggregateInput
+    _max?: Multas_Log_Consumo_IAMaxOrderByAggregateInput
+    _min?: Multas_Log_Consumo_IAMinOrderByAggregateInput
+    _sum?: Multas_Log_Consumo_IASumOrderByAggregateInput
+  }
+
+  export type Multas_Log_Consumo_IAScalarWhereWithAggregatesInput = {
+    AND?: Multas_Log_Consumo_IAScalarWhereWithAggregatesInput | Multas_Log_Consumo_IAScalarWhereWithAggregatesInput[]
+    OR?: Multas_Log_Consumo_IAScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Log_Consumo_IAScalarWhereWithAggregatesInput | Multas_Log_Consumo_IAScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string
+    folio?: StringNullableWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string | null
+    usuario?: StringWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string
+    tipoOperacion?: StringWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string
+    modeloUsado?: StringWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string
+    tokensPrompt?: IntWithAggregatesFilter<"Multas_Log_Consumo_IA"> | number
+    tokensRespuesta?: IntWithAggregatesFilter<"Multas_Log_Consumo_IA"> | number
+    costoEstimadoUsd?: FloatWithAggregatesFilter<"Multas_Log_Consumo_IA"> | number
+    tiempoRespuestaMs?: IntWithAggregatesFilter<"Multas_Log_Consumo_IA"> | number
+    exitoso?: BoolWithAggregatesFilter<"Multas_Log_Consumo_IA"> | boolean
+    errorMensaje?: StringNullableWithAggregatesFilter<"Multas_Log_Consumo_IA"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Log_Consumo_IA"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -204136,6 +206516,209 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Multas_Config_IACreateInput = {
+    id?: string
+    proveedor?: string
+    apiKeyEnc?: string | null
+    modelo?: string
+    limiteGastoMensualUsd?: number
+    gastoAcumuladoMesUsd?: number
+    temperatura?: number
+    activo?: boolean
+    actualizadoPor?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Config_IAUncheckedCreateInput = {
+    id?: string
+    proveedor?: string
+    apiKeyEnc?: string | null
+    modelo?: string
+    limiteGastoMensualUsd?: number
+    gastoAcumuladoMesUsd?: number
+    temperatura?: number
+    activo?: boolean
+    actualizadoPor?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Config_IAUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proveedor?: StringFieldUpdateOperationsInput | string
+    apiKeyEnc?: NullableStringFieldUpdateOperationsInput | string | null
+    modelo?: StringFieldUpdateOperationsInput | string
+    limiteGastoMensualUsd?: FloatFieldUpdateOperationsInput | number
+    gastoAcumuladoMesUsd?: FloatFieldUpdateOperationsInput | number
+    temperatura?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    actualizadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Config_IAUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proveedor?: StringFieldUpdateOperationsInput | string
+    apiKeyEnc?: NullableStringFieldUpdateOperationsInput | string | null
+    modelo?: StringFieldUpdateOperationsInput | string
+    limiteGastoMensualUsd?: FloatFieldUpdateOperationsInput | number
+    gastoAcumuladoMesUsd?: FloatFieldUpdateOperationsInput | number
+    temperatura?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    actualizadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Config_IACreateManyInput = {
+    id?: string
+    proveedor?: string
+    apiKeyEnc?: string | null
+    modelo?: string
+    limiteGastoMensualUsd?: number
+    gastoAcumuladoMesUsd?: number
+    temperatura?: number
+    activo?: boolean
+    actualizadoPor?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Config_IAUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proveedor?: StringFieldUpdateOperationsInput | string
+    apiKeyEnc?: NullableStringFieldUpdateOperationsInput | string | null
+    modelo?: StringFieldUpdateOperationsInput | string
+    limiteGastoMensualUsd?: FloatFieldUpdateOperationsInput | number
+    gastoAcumuladoMesUsd?: FloatFieldUpdateOperationsInput | number
+    temperatura?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    actualizadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Config_IAUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proveedor?: StringFieldUpdateOperationsInput | string
+    apiKeyEnc?: NullableStringFieldUpdateOperationsInput | string | null
+    modelo?: StringFieldUpdateOperationsInput | string
+    limiteGastoMensualUsd?: FloatFieldUpdateOperationsInput | number
+    gastoAcumuladoMesUsd?: FloatFieldUpdateOperationsInput | number
+    temperatura?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    actualizadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Log_Consumo_IACreateInput = {
+    id?: string
+    folio?: string | null
+    usuario: string
+    tipoOperacion: string
+    modeloUsado: string
+    tokensPrompt?: number
+    tokensRespuesta?: number
+    costoEstimadoUsd?: number
+    tiempoRespuestaMs?: number
+    exitoso?: boolean
+    errorMensaje?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Multas_Log_Consumo_IAUncheckedCreateInput = {
+    id?: string
+    folio?: string | null
+    usuario: string
+    tipoOperacion: string
+    modeloUsado: string
+    tokensPrompt?: number
+    tokensRespuesta?: number
+    costoEstimadoUsd?: number
+    tiempoRespuestaMs?: number
+    exitoso?: boolean
+    errorMensaje?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Multas_Log_Consumo_IAUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: StringFieldUpdateOperationsInput | string
+    tipoOperacion?: StringFieldUpdateOperationsInput | string
+    modeloUsado?: StringFieldUpdateOperationsInput | string
+    tokensPrompt?: IntFieldUpdateOperationsInput | number
+    tokensRespuesta?: IntFieldUpdateOperationsInput | number
+    costoEstimadoUsd?: FloatFieldUpdateOperationsInput | number
+    tiempoRespuestaMs?: IntFieldUpdateOperationsInput | number
+    exitoso?: BoolFieldUpdateOperationsInput | boolean
+    errorMensaje?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Log_Consumo_IAUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: StringFieldUpdateOperationsInput | string
+    tipoOperacion?: StringFieldUpdateOperationsInput | string
+    modeloUsado?: StringFieldUpdateOperationsInput | string
+    tokensPrompt?: IntFieldUpdateOperationsInput | number
+    tokensRespuesta?: IntFieldUpdateOperationsInput | number
+    costoEstimadoUsd?: FloatFieldUpdateOperationsInput | number
+    tiempoRespuestaMs?: IntFieldUpdateOperationsInput | number
+    exitoso?: BoolFieldUpdateOperationsInput | boolean
+    errorMensaje?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Log_Consumo_IACreateManyInput = {
+    id?: string
+    folio?: string | null
+    usuario: string
+    tipoOperacion: string
+    modeloUsado: string
+    tokensPrompt?: number
+    tokensRespuesta?: number
+    costoEstimadoUsd?: number
+    tiempoRespuestaMs?: number
+    exitoso?: boolean
+    errorMensaje?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Multas_Log_Consumo_IAUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: StringFieldUpdateOperationsInput | string
+    tipoOperacion?: StringFieldUpdateOperationsInput | string
+    modeloUsado?: StringFieldUpdateOperationsInput | string
+    tokensPrompt?: IntFieldUpdateOperationsInput | number
+    tokensRespuesta?: IntFieldUpdateOperationsInput | number
+    costoEstimadoUsd?: FloatFieldUpdateOperationsInput | number
+    tiempoRespuestaMs?: IntFieldUpdateOperationsInput | number
+    exitoso?: BoolFieldUpdateOperationsInput | boolean
+    errorMensaje?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Log_Consumo_IAUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: StringFieldUpdateOperationsInput | string
+    tipoOperacion?: StringFieldUpdateOperationsInput | string
+    modeloUsado?: StringFieldUpdateOperationsInput | string
+    tokensPrompt?: IntFieldUpdateOperationsInput | number
+    tokensRespuesta?: IntFieldUpdateOperationsInput | number
+    costoEstimadoUsd?: FloatFieldUpdateOperationsInput | number
+    tiempoRespuestaMs?: IntFieldUpdateOperationsInput | number
+    exitoso?: BoolFieldUpdateOperationsInput | boolean
+    errorMensaje?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Descargos_CabCreateInput = {
     id?: string
     folio: string
@@ -217042,6 +219625,119 @@ export namespace Prisma {
     ejecutadoPor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type Multas_Config_IACountOrderByAggregateInput = {
+    id?: SortOrder
+    proveedor?: SortOrder
+    apiKeyEnc?: SortOrder
+    modelo?: SortOrder
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+    activo?: SortOrder
+    actualizadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Config_IAAvgOrderByAggregateInput = {
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+  }
+
+  export type Multas_Config_IAMaxOrderByAggregateInput = {
+    id?: SortOrder
+    proveedor?: SortOrder
+    apiKeyEnc?: SortOrder
+    modelo?: SortOrder
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+    activo?: SortOrder
+    actualizadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Config_IAMinOrderByAggregateInput = {
+    id?: SortOrder
+    proveedor?: SortOrder
+    apiKeyEnc?: SortOrder
+    modelo?: SortOrder
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+    activo?: SortOrder
+    actualizadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Config_IASumOrderByAggregateInput = {
+    limiteGastoMensualUsd?: SortOrder
+    gastoAcumuladoMesUsd?: SortOrder
+    temperatura?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IACountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    usuario?: SortOrder
+    tipoOperacion?: SortOrder
+    modeloUsado?: SortOrder
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+    exitoso?: SortOrder
+    errorMensaje?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IAAvgOrderByAggregateInput = {
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IAMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    usuario?: SortOrder
+    tipoOperacion?: SortOrder
+    modeloUsado?: SortOrder
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+    exitoso?: SortOrder
+    errorMensaje?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IAMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    usuario?: SortOrder
+    tipoOperacion?: SortOrder
+    modeloUsado?: SortOrder
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
+    exitoso?: SortOrder
+    errorMensaje?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Multas_Log_Consumo_IASumOrderByAggregateInput = {
+    tokensPrompt?: SortOrder
+    tokensRespuesta?: SortOrder
+    costoEstimadoUsd?: SortOrder
+    tiempoRespuestaMs?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -250600,6 +253296,14 @@ export namespace Prisma {
      * @deprecated Use Multas_Plan_Accion_ItemDefaultArgs instead
      */
     export type Multas_Plan_Accion_ItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Plan_Accion_ItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Config_IADefaultArgs instead
+     */
+    export type Multas_Config_IAArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Config_IADefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Log_Consumo_IADefaultArgs instead
+     */
+    export type Multas_Log_Consumo_IAArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Log_Consumo_IADefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */
