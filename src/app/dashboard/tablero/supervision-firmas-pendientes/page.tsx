@@ -6,7 +6,7 @@ import { getFirmasPendientesTableroData } from '../firmas-pendientes/actions'
 
 export const metadata = {
     title: 'Supervisión de Firmas Pendientes | Hendaya',
-    description: 'Control, analítica y supervisión ejecutiva de documentos con firma pendiente de personal con ordenamiento dinámico de cerámicas y tabla de detalle.'
+    description: 'Control y supervisión de documentos con firma pendiente de personal mediante filtros y tabla de detalle.'
 }
 
 export default async function SupervisionFirmasPendientesPage() {
@@ -35,7 +35,7 @@ export default async function SupervisionFirmasPendientesPage() {
         userId: session.user.id || null,
         action: 'ACCESO_TABLERO_SUPERVISION_FIRMAS',
         modulo: 'Tableros y Avances · Supervisión',
-        detalle: 'El usuario accedió al Tablero de Supervisión de Firmas Pendientes con selector dinámico de cerámicas.'
+        detalle: 'El usuario accedió al Tablero de Supervisión de Firmas Pendientes (Filtro y Tabla).'
     })
 
     // Cargar datos iniciales
