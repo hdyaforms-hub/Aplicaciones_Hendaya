@@ -124,10 +124,25 @@ function asignarValoresLabels(obs: string, labelsRx: RegExp[]): Record<number, n
 }
 
 /**
- * Calcula las bandejas requeridas según la tabla AQL 6.5.
+ * Calcula las bandejas requeridas según la tabla AQL 6.5 (configurable desde el Hub).
  */
-export function getBandejasRequeridasAQL(raciones: number | null | undefined): number | null {
+export function getBandejasRequeridasAQL(
+    raciones: number | null | undefined,
+    tablaAqlCustom?: Array<{ min: number; max: number | null; muestra: number; ac?: number; re?: number }>
+): number | null {
     if (raciones === null || raciones === undefined || isNaN(raciones) || raciones <= 0) return null
+
+    if (tablaAqlCustom && tablaAqlCustom.length > 0) {
+        const found = tablaAqlCustom.find(f => {
+            const min = f.min
+            const max = (f.max === null || f.max === undefined) ? Infinity : f.max
+            return raciones >= min && raciones <= max
+        })
+        if (found) return found.muestra
+        if (raciones < tablaAqlCustom[0].min) return tablaAqlCustom[0].muestra
+        return tablaAqlCustom[tablaAqlCustom.length - 1].muestra
+    }
+
     for (const [lo, hi, n] of MUESTRA_AQL_G) {
         if (raciones >= lo && raciones <= hi) return n
     }
@@ -161,7 +176,7 @@ export interface EntradaAspectoMotor {
 }
 
 /**
- * Función principal que evalúa las 23 reglas normativas contra los datos del acta.
+ * Función principal que evalúa las 19 reglas normativas contra los datos del acta.
  */
 export function evaluarReglasNC(
     acta: EntradaActaMotor,
@@ -325,7 +340,7 @@ export function evaluarReglasNC(
     if (aspG?.estado === 'NC') {
         const raciones = acta.racionesNivelSupervisado || acta.racionesTotales || 0
         if (raciones > 0) {
-            const requeridas = getBandejasRequeridasAQL(raciones)
+            const requeridas = getBandejasRequeridasAQL(raciones, parametros.tablaAql)
             if (requeridas !== null) {
                 const bandejasEval = acta.bandejasEvaluadas
 
@@ -385,14 +400,28 @@ export function evaluarReglasNC(
     // 7. REGLA: G-AQL-RES-1 / G-AQL-RES-2 (Resultado del lote por criterio Ac/Re)
     if (aspG?.estado === 'NC' && acta.bandejasEvaluadas !== null && acta.bandejasEvaluadas !== undefined) {
         const nEval = acta.bandejasEvaluadas
-        let acRe = AQL_RESULTADO_TABLA[nEval]
+        let acRe: [number, number] | undefined
+
+        // Prioridad: tabla AQL configurada en el Hub
+        if (parametros.tablaAql && parametros.tablaAql.length > 0) {
+            const fila = parametros.tablaAql.find(f => f.muestra === nEval) ||
+                         parametros.tablaAql.slice().sort((a, b) => b.muestra - a.muestra).find(f => f.muestra <= nEval) ||
+                         parametros.tablaAql[0]
+            if (fila && fila.ac !== undefined && fila.re !== undefined) {
+                acRe = [fila.ac, fila.re]
+            }
+        }
+
         if (!acRe) {
-            // Buscar la muestra más cercana inferior
-            const keys = Object.keys(AQL_RESULTADO_TABLA).map(Number).sort((a, b) => b - a)
-            for (const k of keys) {
-                if (k <= nEval) {
-                    acRe = AQL_RESULTADO_TABLA[k]
-                    break
+            acRe = AQL_RESULTADO_TABLA[nEval]
+            if (!acRe) {
+                // Buscar la muestra más cercana inferior
+                const keys = Object.keys(AQL_RESULTADO_TABLA).map(Number).sort((a, b) => b - a)
+                for (const k of keys) {
+                    if (k <= nEval) {
+                        acRe = AQL_RESULTADO_TABLA[k]
+                        break
+                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { getMultasDelegate } from '@/lib/multas/db'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
@@ -21,11 +20,11 @@ import {
     MinutaMesItem
 } from './types'
 
-const dbParametros = () => getMultasDelegate('multas_Parametros_Licitacion')
-const dbHorarios = () => getMultasDelegate('multas_Horario_Servicio')
-const dbEstratos = () => getMultasDelegate('multas_Estrato_Excluido')
-const dbManipuladoras = () => getMultasDelegate('multas_Manipuladora_Mes')
-const dbMinutas = () => getMultasDelegate('multas_Minuta_Mes')
+const dbParametros = () => prisma.multas_Parametros_Licitacion
+const dbHorarios = () => prisma.multas_Horario_Servicio
+const dbEstratos = () => prisma.multas_Estrato_Excluido
+const dbManipuladoras = () => prisma.multas_Manipuladora_Mes
+const dbMinutas = () => prisma.multas_Minuta_Mes
 
 const PATH = '/dashboard/mantenedor/multas/configuracion'
 

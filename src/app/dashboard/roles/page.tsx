@@ -112,7 +112,7 @@ export default async function RolesPage() {
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_descargos', name: 'Descargos de Actas', description: 'Gestionar descargos, resoluciones y no soluciones de aspectos de actas.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_analisis_nc', name: 'Análisis de No Conformidades (NC) (Ver)', description: 'Acceso visual al módulo de Análisis de No Conformidades (NC) y consulta de hallazgos.', category: 'ÁREAS -> MULTAS' },
-        { id: 'manage_analisis_nc', name: 'Análisis de No Conformidades (NC) (Gestionar)', description: 'Auditoría de las 23 reglas normativas IT JUNAEB, descartar o resolver hallazgos y ejecutar evaluaciones.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_analisis_nc', name: 'Análisis de No Conformidades (NC) (Gestionar)', description: 'Auditoría de las 19 reglas normativas IT JUNAEB, descartar o resolver hallazgos y ejecutar evaluaciones.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },

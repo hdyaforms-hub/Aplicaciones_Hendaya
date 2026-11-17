@@ -246,6 +246,7 @@ export interface ModulosActivosLicitacion {
         toleranciaHorarioAnticipadoMin?: number
         toleranciaHorarioPesajeMin?: number
         reglasHabilitadas?: Record<string, boolean>
+        tablaAql?: any[]
     }
     c2Submodulos?: SubModuloCatalogosC2
     c3Submodulos?: SubModuloDatosFolioC3

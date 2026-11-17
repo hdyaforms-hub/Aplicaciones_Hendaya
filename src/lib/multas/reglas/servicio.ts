@@ -3,7 +3,8 @@
  */
 
 import { prisma } from '@/lib/prisma'
-import { getMultasDelegate } from '@/lib/multas/db'
+import { getRacionesFolio } from '@/lib/multas/raciones'
+import { extractFNormativo } from '@/lib/multas/extractor'
 import {
     ModulosActivosLicitacion,
     SUBMODULOS_C2_DEFAULT,
@@ -50,10 +51,7 @@ export async function getModulosActivosLicitacion(licId: number): Promise<Modulo
     if (!licId) return fallback
 
     try {
-        const delegate = getMultasDelegate('multas_Parametros_Licitacion')
-        if (!delegate) return fallback
-
-        const record = await delegate.findUnique({
+        const record = await prisma.multas_Parametros_Licitacion.findUnique({
             where: { licId }
         })
 
@@ -70,6 +68,19 @@ export async function getModulosActivosLicitacion(licId: number): Promise<Modulo
         const mC4 = findModulo('C4')
         const mC5 = findModulo('C5')
 
+        let tablaAql: any[] | undefined
+        if (record.tablaAqlJson) {
+            try {
+                const parsedAql = JSON.parse(record.tablaAqlJson)
+                if (Array.isArray(parsedAql) && parsedAql.length > 0) {
+                    tablaAql = parsedAql.map((r: any) => ({
+                        ...r,
+                        max: (r.max === null || r.max === undefined) ? Infinity : r.max
+                    }))
+                }
+            } catch {}
+        }
+
         return {
             c1: mC1 ? mC1.activo : true,
             c2: mC2 ? mC2.activo : false,
@@ -85,7 +96,8 @@ export async function getModulosActivosLicitacion(licId: number): Promise<Modulo
                 umbralDotacionInasistenciaPct: mC5?.parametros?.umbralDotacionInasistenciaPct ?? 50,
                 toleranciaHorarioAnticipadoMin: mC5?.parametros?.toleranciaHorarioAnticipadoMin ?? 60,
                 toleranciaHorarioPesajeMin: mC5?.parametros?.toleranciaHorarioPesajeMin ?? 10,
-                reglasHabilitadas: mC5?.parametros?.reglasHabilitadas ?? {}
+                reglasHabilitadas: mC5?.parametros?.reglasHabilitadas ?? {},
+                tablaAql
             }
         }
     } catch (e) {
@@ -102,15 +114,12 @@ async function getHorariosLicitacion(licId?: number | null): Promise<Record<stri
     if (!licId) return horarios
 
     try {
-        const delegate = getMultasDelegate('multas_Horario_Servicio')
-        if (!delegate) return horarios
-
-        const rows = await delegate.findMany({
+        const rows = await prisma.multas_Horario_Servicio.findMany({
             where: { licId, activo: true }
         })
 
         for (const row of rows) {
-            const servKey = (row.servicio || '').trim().toLowerCase()
+            const servKey = (row.servicioCodigo || '').trim().toLowerCase()
             if (servKey && row.horaInicio && row.horaFin) {
                 horarios[servKey] = [row.horaInicio, row.horaFin]
             }
@@ -171,14 +180,11 @@ export async function evaluarYGuardarHallazgosFolio(
             const fechaObj = new Date(cab.fechaSupervision)
             const anho = fechaObj.getFullYear()
             const mes = fechaObj.getMonth() + 1
-            const manipDelegate = getMultasDelegate('multas_Manipuladora_Mes')
-            if (manipDelegate) {
-                const regManip = await manipDelegate.findFirst({
-                    where: { rbd: cab.rbd, anho, mes, activo: true }
-                })
-                if (regManip) {
-                    dotacionOficial = regManip.totalManipuladoras
-                }
+            const regManip = await prisma.multas_Manipuladora_Mes.findFirst({
+                where: { rbd: cab.rbd, anio: anho, mes }
+            })
+            if (regManip) {
+                dotacionOficial = regManip.total
             }
         } catch (e) {
             console.warn('[C5] Error al consultar dotación manipuladoras:', e)
@@ -190,19 +196,59 @@ export async function evaluarYGuardarHallazgosFolio(
     let bandejasEvaluadas: number | null = null
     let bandejasRechazadas: number | null = null
     try {
-        const folioDatoDelegate = getMultasDelegate('multas_Folio_Dato')
-        if (folioDatoDelegate) {
-            const fd = await folioDatoDelegate.findUnique({
-                where: { folio }
-            })
-            if (fd) {
-                nivelSupervisado = fd.nivelSupervisado || null
-                bandejasEvaluadas = fd.bandejasEvaluadas ?? null
-                bandejasRechazadas = fd.bandejasRechazadas ?? null
-            }
+        const fd = await prisma.multas_Folio_Dato.findUnique({
+            where: { folio }
+        })
+        if (fd) {
+            nivelSupervisado = fd.nivelSupervisado || null
+            bandejasEvaluadas = fd.bandejasEvaluadas ?? null
+            bandejasRechazadas = fd.bandejasRechazadas ?? null
         }
     } catch (e) {
         console.warn('[C5] Error al consultar datos de folio:', e)
+    }
+
+    // Consultar raciones (C2 / C3): racionesTotales y racionesNivelSupervisado
+    let racionesTotales: number | null = null
+    let racionesNivelSupervisado: number | null = null
+    if (cab.rbd && cab.fechaSupervision) {
+        try {
+            const fechaObj = new Date(cab.fechaSupervision)
+            const anho = fechaObj.getFullYear()
+            const mes = fechaObj.getMonth() + 1
+            const rData = await getRacionesFolio({
+                rbd: cab.rbd,
+                anho,
+                mes,
+                licId: licId || 0,
+                servicioCodigo: cab.servicioManual || cab.servicio,
+                excluirEstratos: !!modulos.c2,
+                nivelSupervisado
+            })
+            if (rData) {
+                racionesTotales = rData.racionesTotal > 0 ? rData.racionesTotal : null
+                racionesNivelSupervisado = rData.racionesNivelSupervisado ?? null
+            }
+        } catch (e) {
+            console.warn('[C5] Error al calcular raciones para motor NC:', e)
+        }
+    }
+
+    // Detección de alerta subcontada en F (C4)
+    let alertaFSubcontada = false
+    const detF = detalles.find(d => {
+        const letraMatch = d.aspecto?.match(/^([A-Z])\./)?.[1] || d.aspecto?.slice(0, 1) || ''
+        return letraMatch.toUpperCase() === 'F'
+    })
+    if (detF && detF.nc && detF.nc.trim().length > 0) {
+        try {
+            const resF = extractFNormativo(detF.observacionesOMedioDeVerificacion)
+            if (resF.alertas && resF.alertas.some(a => a.toLowerCase().includes('subcontada'))) {
+                alertaFSubcontada = true
+            }
+        } catch (e) {
+            console.warn('[C5] Error al evaluar subconteo en F:', e)
+        }
     }
 
     // Cargar parámetros de configuración C5
@@ -211,7 +257,8 @@ export async function evaluarYGuardarHallazgosFolio(
         umbralDotacionInasistenciaPct: modulos.c5Config?.umbralDotacionInasistenciaPct ?? 50,
         toleranciaHorarioAnticipadoMin: modulos.c5Config?.toleranciaHorarioAnticipadoMin ?? 60,
         toleranciaHorarioPesajeMin: modulos.c5Config?.toleranciaHorarioPesajeMin ?? 10,
-        reglasHabilitadas: modulos.c5Config?.reglasHabilitadas ?? {}
+        reglasHabilitadas: modulos.c5Config?.reglasHabilitadas ?? {},
+        tablaAql: modulos.c5Config?.tablaAql
     }
 
     const entradaActa: EntradaActaMotor = {
@@ -223,23 +270,20 @@ export async function evaluarYGuardarHallazgosFolio(
         horaInicio: cab.horaInicio || cab.hora,
         horaTermino: null,
         observacionesGenerales: cab.obsALosIncumplimiento,
-        racionesTotales: null,
-        racionesNivelSupervisado: null,
+        racionesTotales,
+        racionesNivelSupervisado,
         nivelSupervisado,
         bandejasEvaluadas,
         bandejasRechazadas,
         dotacionOficial,
-        alertaFSubcontada: false
+        alertaFSubcontada
     }
 
     // Ejecutar motor determinístico
     const hallazgosGenerados = evaluarReglasNC(entradaActa, aspectos, horarios, paramsMotor)
 
     // Sincronizar con la base de datos preservando estados ACEPTADO y DESCARTADO
-    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
-    if (!hallazgoDelegate) return hallazgosGenerados
-
-    const hallazgosExistentes = await hallazgoDelegate.findMany({
+    const hallazgosExistentes = await prisma.multas_Hallazgo_NC.findMany({
         where: { folio }
     })
 
@@ -256,7 +300,7 @@ export async function evaluarYGuardarHallazgosFolio(
         if (previo) {
             // Si ya existe y fue descartado o aceptado, preservamos el estado, nota y autor intactos
             const estadoFinal = previo.estado
-            await hallazgoDelegate.update({
+            await prisma.multas_Hallazgo_NC.update({
                 where: { id: previo.id },
                 data: {
                     licitacionId: licId,
@@ -277,7 +321,7 @@ export async function evaluarYGuardarHallazgosFolio(
             })
         } else {
             // Si es nuevo, lo creamos en estado PENDIENTE
-            await hallazgoDelegate.create({
+            await prisma.multas_Hallazgo_NC.create({
                 data: {
                     folio,
                     licitacionId: licId,
@@ -303,10 +347,7 @@ export async function evaluarYGuardarHallazgosFolio(
  * Retorna todos los hallazgos registrados para un folio ordenados por severidad.
  */
 export async function obtenerHallazgosFolio(folio: string): Promise<HallazgoNC[]> {
-    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
-    if (!hallazgoDelegate) return []
-
-    const rows = await hallazgoDelegate.findMany({
+    const rows = await prisma.multas_Hallazgo_NC.findMany({
         where: { folio },
         orderBy: [
             { severidad: 'asc' },
@@ -350,10 +391,7 @@ export async function actualizarEstadoHallazgo(params: {
     nota?: string
     usuario: string
 }): Promise<{ ok: boolean; mensaje?: string }> {
-    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
-    if (!hallazgoDelegate) return { ok: false, mensaje: 'Error al conectar con la base de datos' }
-
-    const actual = await hallazgoDelegate.findUnique({
+    const actual = await prisma.multas_Hallazgo_NC.findUnique({
         where: { id: params.id }
     })
 
@@ -382,7 +420,7 @@ export async function actualizarEstadoHallazgo(params: {
         dataUpdate.aceptadoEn = null
     }
 
-    await hallazgoDelegate.update({
+    await prisma.multas_Hallazgo_NC.update({
         where: { id: params.id },
         data: dataUpdate
     })
@@ -406,9 +444,6 @@ export async function obtenerHallazgosLicitacion(filtros: {
     limit?: number
     offset?: number
 }): Promise<{ items: HallazgoNC[]; total: number }> {
-    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
-    if (!hallazgoDelegate) return { items: [], total: 0 }
-
     const where: any = {}
 
     if (filtros.licId) where.licitacionId = filtros.licId
@@ -432,8 +467,8 @@ export async function obtenerHallazgosLicitacion(filtros: {
     const offset = filtros.offset || 0
 
     const [total, rows] = await Promise.all([
-        hallazgoDelegate.count({ where }),
-        hallazgoDelegate.findMany({
+        prisma.multas_Hallazgo_NC.count({ where }),
+        prisma.multas_Hallazgo_NC.findMany({
             where,
             orderBy: [{ updatedAt: 'desc' }],
             take: limit,
@@ -479,20 +514,8 @@ export async function obtenerResumenMetricasNC(licId?: number | null): Promise<{
     porSeveridad: Record<string, number>
     porTipo: Record<string, number>
 }> {
-    const hallazgoDelegate = getMultasDelegate('multas_Hallazgo_NC')
-    if (!hallazgoDelegate) {
-        return {
-            total: 0,
-            pendientes: 0,
-            aceptados: 0,
-            descartados: 0,
-            porSeveridad: { alta: 0, media: 0, info: 0 },
-            porTipo: { mal_imputado: 0, descargo: 0, verificar: 0 }
-        }
-    }
-
     const where: any = licId ? { licitacionId: licId } : {}
-    const items = await hallazgoDelegate.findMany({
+    const items = await prisma.multas_Hallazgo_NC.findMany({
         where,
         select: { estado: true, severidad: true, tipo: true }
     })

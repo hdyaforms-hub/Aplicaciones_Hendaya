@@ -28,7 +28,10 @@ export default async function AnalisisNCPage() {
     const hasAccess = isAdmin ||
         permissions.includes('*') ||
         permissions.includes('view_analisis_nc') ||
-        permissions.includes('manage_analisis_nc')
+        permissions.includes('manage_analisis_nc') ||
+        permissions.includes('manage_calculos_ee') ||
+        permissions.includes('manage_descargos') ||
+        permissions.includes('view_multas_areas')
 
     if (!hasAccess) {
         redirect('/dashboard')

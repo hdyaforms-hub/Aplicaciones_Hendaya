@@ -307,7 +307,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     {
                         name: 'Análisis de No Conformidades (NC)',
                         href: '/dashboard/areas/multas/analisis-nc',
-                        requiredPermission: ['view_analisis_nc', 'manage_analisis_nc']
+                        requiredPermission: ['manage_analisis_nc', 'view_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

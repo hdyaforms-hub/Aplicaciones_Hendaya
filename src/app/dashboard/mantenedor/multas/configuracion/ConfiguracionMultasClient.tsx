@@ -2056,7 +2056,7 @@ export default function ConfiguracionMultasClient({ licitaciones }: Props) {
                                 </h3>
                             </div>
                             <p className="text-xs text-slate-500 mt-1">
-                                Calibra los márgenes de tolerancia metrológica y habilita/deshabilita individualmente cada una de las 23 reglas de auditoría para la Licitación {selectedLicId}.
+                                Calibra los márgenes de tolerancia metrológica y habilita/deshabilita individualmente cada una de las 19 reglas de auditoría para la Licitación {selectedLicId}.
                             </p>
                         </div>
                         <div className="flex items-center gap-2">

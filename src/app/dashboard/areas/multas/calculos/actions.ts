@@ -1,7 +1,6 @@
 'use server'
 
 import { prisma, rawPrisma } from '@/lib/prisma'
-import { getMultasDelegate } from '@/lib/multas/db'
 import { getSession } from '@/lib/session'
 import { ensureMultasEETables } from '@/lib/multas-ee-db-init'
 import { evaluarRestriccionAspecto } from '@/lib/multas/restricciones'
@@ -21,15 +20,15 @@ import {
 } from '@/lib/multas/reglas/servicio'
 import { EstadoHallazgo } from '@/lib/multas/reglas/definiciones'
 
-const dbEECab = () => getMultasDelegate('multas_Elementos_Esenciales_Cab')
-const dbEEDet = () => getMultasDelegate('multas_Elementos_Esenciales_Det')
-const dbParametros = () => getMultasDelegate('multas_Parametros_Licitacion')
-const dbRestricciones = () => getMultasDelegate('multas_Aspecto_EE_Restriccion')
-const dbITCab = () => getMultasDelegate('multas_IT_Elementos_Esenciales_Cab')
-const dbManipuladoras = () => getMultasDelegate('multas_Manipuladora_Mes')
-const dbMinutas = () => getMultasDelegate('multas_Minuta_Mes')
-const dbFolioDato = () => getMultasDelegate('multas_Folio_Dato')
-const dbCantidadOverride = () => getMultasDelegate('multas_Cantidad_Override')
+const dbEECab = () => prisma.multas_Elementos_Esenciales_Cab
+const dbEEDet = () => prisma.multas_Elementos_Esenciales_Det
+const dbParametros = () => prisma.multas_Parametros_Licitacion
+const dbRestricciones = () => prisma.multas_Aspecto_EE_Restriccion
+const dbITCab = () => prisma.multas_IT_Elementos_Esenciales_Cab
+const dbManipuladoras = () => prisma.multas_Manipuladora_Mes
+const dbMinutas = () => prisma.multas_Minuta_Mes
+const dbFolioDato = () => prisma.multas_Folio_Dato
+const dbCantidadOverride = () => prisma.multas_Cantidad_Override
 
 // Utility to check permissions
 async function checkPermission(permission: string) {
@@ -572,10 +571,14 @@ export async function calculateAll(params: {
 
         const excluirEstratosPorLicId = new Map<number, boolean>()
         const c3ActivoPorLicId = new Map<number, boolean>()
+        const c3NivelActivoPorLicId = new Map<number, boolean>()
+        const c3OverridesActivoPorLicId = new Map<number, boolean>()
         const c4ActivoPorLicId = new Map<number, boolean>()
         for (const p of allParametrosLicitacion) {
             let excluir = false
             let c3Activo = false
+            let c3NivelActivo = true
+            let c3OverridesActivo = true
             let c4Activo = false
             if (p.modulosActivosJson) {
                 try {
@@ -588,6 +591,8 @@ export async function calculateAll(params: {
                         const c3 = parsed.find((m: any) => m.codigo === 'C3')
                         if (c3 && c3.activo === true) {
                             c3Activo = true
+                            c3NivelActivo = c3.submodulos?.nivelSupervisado !== false
+                            c3OverridesActivo = c3.submodulos?.correccionManual !== false
                         }
                         const c4 = parsed.find((m: any) => m.codigo === 'C4')
                         if (c4 && c4.activo === true) {
@@ -600,6 +605,8 @@ export async function calculateAll(params: {
             }
             excluirEstratosPorLicId.set(p.licId, excluir)
             c3ActivoPorLicId.set(p.licId, c3Activo)
+            c3NivelActivoPorLicId.set(p.licId, c3NivelActivo)
+            c3OverridesActivoPorLicId.set(p.licId, c3OverridesActivo)
             c4ActivoPorLicId.set(p.licId, c4Activo)
         }
 
@@ -641,6 +648,8 @@ export async function calculateAll(params: {
                 const utmVal = allUtms.find(u => u.anho === anho && u.mes === mes)?.monto || 0
                 
                 const c3Activo = c3ActivoPorLicId.get(licId) === true
+                const c3NivelActivo = c3NivelActivoPorLicId.get(licId) !== false
+                const c3OverridesActivo = c3OverridesActivoPorLicId.get(licId) !== false
                 const folioDato = (allFolioDatos as any[]).find((fd: any) => fd.folio === cab.folio)
                 const overridesForFolio = (allOverrides as any[]).filter((ov: any) => ov.folio === cab.folio)
                 const overridesMap: Record<string, Record<string, OverrideInfo>> = {}
@@ -656,7 +665,7 @@ export async function calculateAll(params: {
                     }
                 }
 
-                const nivelSupervisado = (c3Activo && folioDato?.nivelSupervisado) ? folioDato.nivelSupervisado : null
+                const nivelSupervisado = (c3Activo && c3NivelActivo && folioDato?.nivelSupervisado) ? folioDato.nivelSupervisado : null
                 const excluirEstratos = excluirEstratosPorLicId.get(licId) || false
                 const racionesData = await getRacionesFolio({
                     rbd,
@@ -703,7 +712,7 @@ export async function calculateAll(params: {
                             obsText: d.observacionesOMedioDeVerificacion,
                             variablesGuardadas: savedVars,
                             overridesPorAspecto: letra ? overridesMap[letra] : undefined,
-                            c3Activo,
+                            c3Activo: c3Activo && c3OverridesActivo,
                             c4Activo: c4ActivoPorLicId.get(cab.licId || 0) || false
                         })
                         Object.assign(savedVars, variablesFinales)

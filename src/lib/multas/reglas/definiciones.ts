@@ -290,4 +290,12 @@ export interface ParametrosMotorNC {
     toleranciaHorarioAnticipadoMin?: number // default 60 min
     toleranciaHorarioPesajeMin?: number // default 10 min
     reglasHabilitadas?: Record<string, boolean> // reglaId -> boolean
+    tablaAql?: Array<{
+        min: number
+        max: number | null
+        muestra: number
+        ac: number
+        re: number
+        rangoTexto?: string
+    }>
 }

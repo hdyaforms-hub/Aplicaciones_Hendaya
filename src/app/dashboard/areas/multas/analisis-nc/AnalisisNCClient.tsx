@@ -132,7 +132,7 @@ export default function AnalisisNCClient() {
             alert('Debe seleccionar una licitación específica para ejecutar la evaluación masiva.')
             return
         }
-        const confirm = window.confirm(`¿Desea ejecutar la evaluación de las 23 reglas normativas para la licitación seleccionada? Se preservarán intactos todos los hallazgos ya descartados o aceptados.`)
+        const confirm = window.confirm(`¿Desea ejecutar la evaluación de las 19 reglas normativas para la licitación seleccionada? Se preservarán intactos todos los hallazgos ya descartados o aceptados.`)
         if (!confirm) return
 
         setEvaluandoMasivo(true)
@@ -204,7 +204,7 @@ export default function AnalisisNCClient() {
                         <span>Análisis de No Conformidades (NC)</span>
                     </h1>
                     <p className="text-xs text-slate-500 mt-1">
-                        Auditoría determinística de las 23 reglas de la IT JUNAEB (IT-DAE-SUP026): vicios procedimentales, cruces interaspectos y sugerencias de descargo.
+                        Auditoría determinística de las 19 reglas de la IT JUNAEB (IT-DAE-SUP026): vicios procedimentales, cruces interaspectos y sugerencias de descargo.
                     </p>
                 </div>
 
