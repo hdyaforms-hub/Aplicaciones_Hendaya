@@ -38,6 +38,19 @@ import {
     Info
 } from 'lucide-react'
 
+export type CriterioOrdenCeramica =
+    | 'PENDIENTES_DESC'
+    | 'PENDIENTES_ASC'
+    | 'FECHAS_ANTIGUAS'
+    | 'FECHAS_RECIENTES'
+    | 'SUCURSAL_ASC'
+    | 'SUCURSAL_DESC'
+    | 'TOTAL_DESC'
+    | 'TOTAL_ASC'
+    | 'FIRMADOS_DESC'
+    | 'AVANCE_ASC'
+    | 'AVANCE_DESC'
+
 interface Props {
     initialData: TableroFirmasPendientesResponse
 }
@@ -54,6 +67,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
     const [filtroEstadoFirma, setFiltroEstadoFirma] = useState('TODOS')
     const [search, setSearch] = useState('')
     const [filtroRbd, setFiltroRbd] = useState<number | null>(null)
+    const [ordenCeramicas, setOrdenCeramicas] = useState<CriterioOrdenCeramica>('PENDIENTES_DESC')
 
     // Paginación y ordenamiento
     const [page, setPage] = useState(data.page || 1)
@@ -102,7 +116,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
         return oficiales.filter(s => s.sucursales.length === 0 || s.sucursales.includes(filtroSucursal))
     }, [data.supervisoresOficiales, data.supervisoresDisponibles, filtroSucursal])
 
-    // Supervisores ordenados o filtrados por nivel de urgencia de documento
+    // Supervisores ordenados o filtrados por nivel de urgencia de documento y criterio de cerámicas
     const supervisoresMostrados = useMemo(() => {
         let list = [...(data.graficos.topSupervisores || [])]
         if (filtroUrgenciaSup === 'CONTRATOS') {
@@ -114,12 +128,36 @@ export default function FirmasPendientesClient({ initialData }: Props) {
         } else if (filtroUrgenciaSup === 'INFORMATIVOS') {
             list = list.filter(s => (s.desgloseTipos?.informativos || 0) > 0).sort((a, b) => (b.desgloseTipos?.informativos || 0) - (a.desgloseTipos?.informativos || 0))
         }
+
+        if (ordenCeramicas === 'PENDIENTES_DESC') {
+            list.sort((a, b) => b.pendientes - a.pendientes)
+        } else if (ordenCeramicas === 'PENDIENTES_ASC') {
+            list.sort((a, b) => a.pendientes - b.pendientes)
+        } else if (ordenCeramicas === 'FECHAS_ANTIGUAS') {
+            list.sort((a, b) => (b.maxAtraso || 0) - (a.maxAtraso || 0))
+        } else if (ordenCeramicas === 'FECHAS_RECIENTES') {
+            list.sort((a, b) => (a.maxAtraso || 0) - (b.maxAtraso || 0))
+        } else if (ordenCeramicas === 'SUCURSAL_ASC') {
+            list.sort((a, b) => (a.sucursal || '').localeCompare(b.sucursal || '') || a.supervisor.localeCompare(b.supervisor))
+        } else if (ordenCeramicas === 'SUCURSAL_DESC') {
+            list.sort((a, b) => (b.sucursal || '').localeCompare(a.sucursal || '') || b.supervisor.localeCompare(a.supervisor))
+        } else if (ordenCeramicas === 'TOTAL_DESC') {
+            list.sort((a, b) => b.total - a.total)
+        } else if (ordenCeramicas === 'TOTAL_ASC') {
+            list.sort((a, b) => a.total - b.total)
+        } else if (ordenCeramicas === 'FIRMADOS_DESC') {
+            list.sort((a, b) => b.firmados - a.firmados)
+        } else if (ordenCeramicas === 'AVANCE_ASC') {
+            list.sort((a, b) => a.porcentajeFirma - b.porcentajeFirma)
+        } else if (ordenCeramicas === 'AVANCE_DESC') {
+            list.sort((a, b) => b.porcentajeFirma - a.porcentajeFirma)
+        }
         return list
-    }, [data.graficos.topSupervisores, filtroUrgenciaSup])
+    }, [data.graficos.topSupervisores, filtroUrgenciaSup, ordenCeramicas])
 
     const [filtroUrgenciaRbd, setFiltroUrgenciaRbd] = useState<'TODOS' | 'CONTRATOS' | 'LIQUIDACIONES' | 'VACACIONES' | 'INFORMATIVOS'>('TODOS')
 
-    // Establecimientos (RBDs) ordenados o filtrados por nivel de urgencia de documento
+    // Establecimientos (RBDs) ordenados o filtrados por nivel de urgencia de documento y criterio de cerámicas
     const rbdsMostrados = useMemo(() => {
         let list = [...(data.graficos.porRbd || [])]
         if (filtroUrgenciaRbd === 'CONTRATOS') {
@@ -131,8 +169,94 @@ export default function FirmasPendientesClient({ initialData }: Props) {
         } else if (filtroUrgenciaRbd === 'INFORMATIVOS') {
             list = list.filter(r => (r.desgloseTipos?.informativos || 0) > 0).sort((a, b) => (b.desgloseTipos?.informativos || 0) - (a.desgloseTipos?.informativos || 0))
         }
+
+        if (ordenCeramicas === 'PENDIENTES_DESC') {
+            list.sort((a, b) => b.pendientes - a.pendientes)
+        } else if (ordenCeramicas === 'PENDIENTES_ASC') {
+            list.sort((a, b) => a.pendientes - b.pendientes)
+        } else if (ordenCeramicas === 'FECHAS_ANTIGUAS') {
+            list.sort((a, b) => (b.maxAtraso || 0) - (a.maxAtraso || 0))
+        } else if (ordenCeramicas === 'FECHAS_RECIENTES') {
+            list.sort((a, b) => (a.maxAtraso || 0) - (b.maxAtraso || 0))
+        } else if (ordenCeramicas === 'SUCURSAL_ASC') {
+            list.sort((a, b) => a.sucursal.localeCompare(b.sucursal) || a.establecimiento.localeCompare(b.establecimiento))
+        } else if (ordenCeramicas === 'SUCURSAL_DESC') {
+            list.sort((a, b) => b.sucursal.localeCompare(a.sucursal) || b.establecimiento.localeCompare(a.establecimiento))
+        } else if (ordenCeramicas === 'TOTAL_DESC') {
+            list.sort((a, b) => b.total - a.total)
+        } else if (ordenCeramicas === 'TOTAL_ASC') {
+            list.sort((a, b) => a.total - b.total)
+        } else if (ordenCeramicas === 'FIRMADOS_DESC') {
+            list.sort((a, b) => b.firmados - a.firmados)
+        } else if (ordenCeramicas === 'AVANCE_ASC') {
+            list.sort((a, b) => a.porcentajeFirma - b.porcentajeFirma)
+        } else if (ordenCeramicas === 'AVANCE_DESC') {
+            list.sort((a, b) => b.porcentajeFirma - a.porcentajeFirma)
+        }
         return list
-    }, [data.graficos.porRbd, filtroUrgenciaRbd])
+    }, [data.graficos.porRbd, filtroUrgenciaRbd, ordenCeramicas])
+
+    // Ordenamiento dinámico de Totalizador de Zonas
+    const totalizadorZonasOrdenado = useMemo(() => {
+        const list = [...(data.graficos.totalizadorZonas || [])]
+        switch (ordenCeramicas) {
+            case 'PENDIENTES_DESC':
+                return list.sort((a, b) => b.pendientes - a.pendientes)
+            case 'PENDIENTES_ASC':
+                return list.sort((a, b) => a.pendientes - b.pendientes)
+            case 'FECHAS_ANTIGUAS':
+                return list.sort((a, b) => (b.maxAtraso || 0) - (a.maxAtraso || 0))
+            case 'FECHAS_RECIENTES':
+                return list.sort((a, b) => (a.maxAtraso || 0) - (b.maxAtraso || 0))
+            case 'SUCURSAL_ASC':
+                return list.sort((a, b) => a.sucursal.localeCompare(b.sucursal))
+            case 'SUCURSAL_DESC':
+                return list.sort((a, b) => b.sucursal.localeCompare(a.sucursal))
+            case 'TOTAL_DESC':
+                return list.sort((a, b) => b.total - a.total)
+            case 'TOTAL_ASC':
+                return list.sort((a, b) => a.total - b.total)
+            case 'FIRMADOS_DESC':
+                return list.sort((a, b) => b.firmados - a.firmados)
+            case 'AVANCE_ASC':
+                return list.sort((a, b) => a.porcentajeFirma - b.porcentajeFirma)
+            case 'AVANCE_DESC':
+                return list.sort((a, b) => b.porcentajeFirma - a.porcentajeFirma)
+            default:
+                return list
+        }
+    }, [data.graficos.totalizadorZonas, ordenCeramicas])
+
+    // Ordenamiento dinámico de Concentración por Sucursal
+    const porSucursalOrdenado = useMemo(() => {
+        const list = [...(data.graficos.porSucursal || [])]
+        switch (ordenCeramicas) {
+            case 'PENDIENTES_DESC':
+                return list.sort((a, b) => b.pendientes - a.pendientes)
+            case 'PENDIENTES_ASC':
+                return list.sort((a, b) => a.pendientes - b.pendientes)
+            case 'FECHAS_ANTIGUAS':
+                return list.sort((a, b) => (b.maxAtraso || 0) - (a.maxAtraso || 0))
+            case 'FECHAS_RECIENTES':
+                return list.sort((a, b) => (a.maxAtraso || 0) - (b.maxAtraso || 0))
+            case 'SUCURSAL_ASC':
+                return list.sort((a, b) => a.sucursal.localeCompare(b.sucursal))
+            case 'SUCURSAL_DESC':
+                return list.sort((a, b) => b.sucursal.localeCompare(a.sucursal))
+            case 'TOTAL_DESC':
+                return list.sort((a, b) => b.total - a.total)
+            case 'TOTAL_ASC':
+                return list.sort((a, b) => a.total - b.total)
+            case 'FIRMADOS_DESC':
+                return list.sort((a, b) => b.firmados - a.firmados)
+            case 'AVANCE_ASC':
+                return list.sort((a, b) => a.porcentajeFirma - b.porcentajeFirma)
+            case 'AVANCE_DESC':
+                return list.sort((a, b) => b.porcentajeFirma - a.porcentajeFirma)
+            default:
+                return list
+        }
+    }, [data.graficos.porSucursal, ordenCeramicas])
 
     // Filtrar por un colegio específico al hacer clic en su tarjeta
     const handleFilterByRbd = (rbdNum: number) => {
@@ -232,57 +356,82 @@ export default function FirmasPendientesClient({ initialData }: Props) {
         fetchData(page, pageSize, field, newOrder)
     }
 
-    // Exportación a formato CSV compatible con Excel con BOM UTF-8
-    const handleExportExcel = () => {
-        if (!data.registros || data.registros.length === 0) {
-            alert('No hay registros para exportar.')
-            return
+    const [isExportingExcel, setIsExportingExcel] = useState(false)
+
+    // Exportación a formato CSV compatible con Excel con BOM UTF-8 (Exporta todo el universo filtrado)
+    const handleExportExcel = async () => {
+        try {
+            setIsExportingExcel(true)
+            const res = await getFirmasPendientesTableroData({
+                sucursal: filtroSucursal,
+                supervisor: filtroSupervisor,
+                rbd: filtroRbd || undefined,
+                tipoDocumento: filtroTipoDoc,
+                tramoAntiguedad: filtroTramo,
+                estadoFirma: filtroEstadoFirma,
+                search: search.trim() || undefined,
+                page: 1,
+                pageSize: 50000,
+                sortBy,
+                sortOrder
+            })
+
+            const regsParaExport = (res.success && res.registros && res.registros.length > 0) ? res.registros : data.registros
+            if (!regsParaExport || regsParaExport.length === 0) {
+                alert('No hay registros para exportar con los filtros seleccionados.')
+                return
+            }
+
+            const headers = [
+                'Días Atraso',
+                'RUT Colaborador',
+                'Nombre Colaborador',
+                'Cargo',
+                'Sucursal',
+                'RBD',
+                'Establecimiento',
+                'Supervisor',
+                'Tipo Documento',
+                'Detalle Documento',
+                'Estado Firma',
+                'Fecha Emisión',
+                'Fecha Inicio Firma',
+                'Nombre Apoderado 1',
+                'Fecha Firma Apoderado 1'
+            ]
+
+            const rows = regsParaExport.map(r => [
+                r.diasAtraso,
+                `"${r.empleadoRut}"`,
+                `"${(r.empleadoNombre || '').replace(/"/g, '""')}"`,
+                `"${(r.cargo || '').replace(/"/g, '""')}"`,
+                `"${r.sucursal}"`,
+                r.rbd || '',
+                `"${(r.establecimiento || '').replace(/"/g, '""')}"`,
+                `"${(r.supervisorNombre || '').replace(/"/g, '""')}"`,
+                `"${(r.tipoDocumento || '').replace(/"/g, '""')}"`,
+                `"${(r.detalle || '').replace(/"/g, '""')}"`,
+                `"${(r.documentoFirmado || '').replace(/"/g, '""')}"`,
+                `"${r.fechaEmision || ''}"`,
+                `"${r.fechaInicioFirma || ''}"`,
+                `"${(r.nombreApoderado1 || '').replace(/"/g, '""')}"`,
+                `"${r.fechaFirmaApoderado1 || ''}"`
+            ])
+
+            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(';'), ...rows.map(e => e.join(';'))].join('\n')
+            const encodedUri = encodeURI(csvContent)
+            const link = document.createElement('a')
+            link.setAttribute('href', encodedUri)
+            link.setAttribute('download', `firmas_pendientes_hendaya_${new Date().toISOString().slice(0, 10)}.csv`)
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        } catch (err: any) {
+            console.error('Error al exportar firmas:', err)
+            alert('Ocurrió un error al exportar las firmas a Excel.')
+        } finally {
+            setIsExportingExcel(false)
         }
-
-        const headers = [
-            'Días Atraso',
-            'RUT Colaborador',
-            'Nombre Colaborador',
-            'Cargo',
-            'Sucursal',
-            'RBD',
-            'Establecimiento',
-            'Supervisor',
-            'Tipo Documento',
-            'Detalle Documento',
-            'Estado Firma',
-            'Fecha Emisión',
-            'Fecha Inicio Firma',
-            'Nombre Apoderado 1',
-            'Fecha Firma Apoderado 1'
-        ]
-
-        const rows = data.registros.map(r => [
-            r.diasAtraso,
-            `"${r.empleadoRut}"`,
-            `"${(r.empleadoNombre || '').replace(/"/g, '""')}"`,
-            `"${(r.cargo || '').replace(/"/g, '""')}"`,
-            `"${r.sucursal}"`,
-            r.rbd || '',
-            `"${(r.establecimiento || '').replace(/"/g, '""')}"`,
-            `"${(r.supervisorNombre || '').replace(/"/g, '""')}"`,
-            `"${(r.tipoDocumento || '').replace(/"/g, '""')}"`,
-            `"${(r.detalle || '').replace(/"/g, '""')}"`,
-            `"${(r.documentoFirmado || '').replace(/"/g, '""')}"`,
-            `"${r.fechaEmision || ''}"`,
-            `"${r.fechaInicioFirma || ''}"`,
-            `"${(r.nombreApoderado1 || '').replace(/"/g, '""')}"`,
-            `"${r.fechaFirmaApoderado1 || ''}"`
-        ])
-
-        const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(';'), ...rows.map(e => e.join(';'))].join('\n')
-        const encodedUri = encodeURI(csvContent)
-        const link = document.createElement('a')
-        link.setAttribute('href', encodedUri)
-        link.setAttribute('download', `firmas_pendientes_hendaya_${new Date().toISOString().slice(0, 10)}.csv`)
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
     }
 
     // Exportación a PDF Oficial Hendaya (Métricas y Analítica Visual)
@@ -632,7 +781,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
 
             {/* SECCIÓN ANALÍTICA: NAVEGADOR DE GRÁFICOS INTERACTIVOS */}
             <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm space-y-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
                         <h2 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
                             <span>📊 Analítica y Distribución de Firmas Pendientes</span>
@@ -642,8 +791,34 @@ export default function FirmasPendientesClient({ initialData }: Props) {
                         </p>
                     </div>
 
-                    {/* Switch de Vistas Analíticas */}
-                    <div className="bg-slate-100 p-1 rounded-2xl flex items-center flex-wrap gap-1">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                        {/* Selector de Orden de Cerámicas */}
+                        <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl shadow-xs">
+                            <ArrowUpDown className="w-3.5 h-3.5 text-cyan-700 shrink-0" />
+                            <label className="text-xs font-bold text-slate-700 whitespace-nowrap">
+                                Ordenar cerámicas:
+                            </label>
+                            <select
+                                value={ordenCeramicas}
+                                onChange={e => setOrdenCeramicas(e.target.value as CriterioOrdenCeramica)}
+                                className="text-xs font-semibold text-slate-900 bg-white border border-slate-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 cursor-pointer"
+                            >
+                                <option value="PENDIENTES_DESC">Mayor a menor documentos faltantes por firmar</option>
+                                <option value="PENDIENTES_ASC">Menor a mayor documentos faltantes por firmar</option>
+                                <option value="FECHAS_ANTIGUAS">Fechas más antiguas (Mayor mora / atraso)</option>
+                                <option value="FECHAS_RECIENTES">Fechas más recientes (Menor mora)</option>
+                                <option value="SUCURSAL_ASC">Por Sucursal (A - Z)</option>
+                                <option value="SUCURSAL_DESC">Por Sucursal (Z - A)</option>
+                                <option value="TOTAL_DESC">Mayor total de documentos</option>
+                                <option value="TOTAL_ASC">Menor total de documentos</option>
+                                <option value="FIRMADOS_DESC">Mayor cantidad de firmados</option>
+                                <option value="AVANCE_ASC">Menor % de avance (% firma)</option>
+                                <option value="AVANCE_DESC">Mayor % de avance (% firma)</option>
+                            </select>
+                        </div>
+
+                        {/* Switch de Vistas Analíticas */}
+                        <div className="bg-slate-100 p-1 rounded-2xl flex items-center flex-wrap gap-1">
                         <button
                             type="button"
                             onClick={() => setActiveTabVisual('TOTALIZADOR')}
@@ -700,6 +875,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
                         </button>
                     </div>
                 </div>
+            </div>
 
                 {/* SELECTOR DE SUCURSAL PARA ANÁLISIS POR SEDE */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
@@ -767,7 +943,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {graficos.totalizadorZonas.map(zona => {
+                            {totalizadorZonasOrdenado.map(zona => {
                                 const isSelected = filtroSucursal === zona.sucursal
                                 return (
                                     <div
@@ -896,7 +1072,7 @@ export default function FirmasPendientesClient({ initialData }: Props) {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {graficos.porSucursal.map(s => {
+                            {porSucursalOrdenado.map(s => {
                                 const isSelected = filtroSucursal === s.sucursal
                                 return (
                                     <div

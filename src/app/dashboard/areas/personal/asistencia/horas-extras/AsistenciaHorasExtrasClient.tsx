@@ -42,6 +42,7 @@ interface AsistenciaHorasExtrasClientProps {
         sucursales: string[]
         supervisores: string[]
         establecimientos: EstablecimientoOption[]
+        instituciones?: string[]
     }
     userRbds: number[]
     isAdmin: boolean
@@ -64,6 +65,7 @@ export default function AsistenciaHorasExtrasClient({
     const [filtroRbd, setFiltroRbd] = useState<number | null>(null)
     const [busquedaRbdNombre, setBusquedaRbdNombre] = useState('')
     const [isRbdDropdownOpen, setIsRbdDropdownOpen] = useState(false)
+    const [filtroInstitucion, setFiltroInstitucion] = useState('TODAS')
     const [filtroSucursal, setFiltroSucursal] = useState('TODAS')
     const [filtroSupervisor, setFiltroSupervisor] = useState('TODOS')
     const [filtroFechaDesde, setFiltroFechaDesde] = useState('')
@@ -109,17 +111,37 @@ export default function AsistenciaHorasExtrasClient({
     const cargarDatos = (
         pagina: number = paginaActual,
         sortBy: SortField = sortField,
-        sortDir: 'asc' | 'desc' = sortDirection
+        sortDir: 'asc' | 'desc' = sortDirection,
+        customFilters?: {
+            institucion?: string
+            sucursal?: string
+            supervisor?: string
+            aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
+            rbd?: number | null
+            fechaDesde?: string
+            fechaHasta?: string
+            search?: string
+        }
     ) => {
+        const instActual = customFilters?.institucion !== undefined ? customFilters.institucion : filtroInstitucion
+        const rbdActual = customFilters?.rbd !== undefined ? customFilters.rbd : filtroRbd
+        const sucActual = customFilters?.sucursal !== undefined ? customFilters.sucursal : filtroSucursal
+        const supActual = customFilters?.supervisor !== undefined ? customFilters.supervisor : filtroSupervisor
+        const desdeActual = customFilters?.fechaDesde !== undefined ? customFilters.fechaDesde : filtroFechaDesde
+        const hastaActual = customFilters?.fechaHasta !== undefined ? customFilters.fechaHasta : filtroFechaHasta
+        const aplicaActual = customFilters?.aplica !== undefined ? customFilters.aplica : filtroAplica
+        const searchActual = customFilters?.search !== undefined ? customFilters.search : busquedaTexto
+
         startTransition(async () => {
             const res = await getAsistenciaHorasExtrasAction({
-                rbd: filtroRbd || undefined,
-                sucursal: filtroSucursal,
-                supervisor: filtroSupervisor,
-                fechaDesde: filtroFechaDesde || undefined,
-                fechaHasta: filtroFechaHasta || undefined,
-                aplica: filtroAplica,
-                search: busquedaTexto || undefined,
+                rbd: rbdActual || undefined,
+                institucion: instActual !== 'TODAS' ? instActual : undefined,
+                sucursal: sucActual,
+                supervisor: supActual,
+                fechaDesde: desdeActual || undefined,
+                fechaHasta: hastaActual || undefined,
+                aplica: aplicaActual,
+                search: searchActual || undefined,
                 page: pagina,
                 pageSize,
                 sortBy,
@@ -281,18 +303,28 @@ export default function AsistenciaHorasExtrasClient({
                         <Filter className="w-3.5 h-3.5 text-cyan-600" />
                         <span>Filtros de Búsqueda</span>
                     </div>
-                    {(busquedaRbdNombre || filtroRbd || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || filtroAplica !== 'TODOS' || busquedaTexto) && (
+                    {(busquedaRbdNombre || filtroRbd || filtroInstitucion !== 'TODAS' || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || filtroAplica !== 'TODOS' || busquedaTexto) && (
                         <button
                             onClick={() => {
                                 setBusquedaRbdNombre('')
                                 setFiltroRbd(null)
+                                setFiltroInstitucion('TODAS')
                                 setFiltroSucursal('TODAS')
                                 setFiltroSupervisor('TODOS')
                                 setFiltroFechaDesde('')
                                 setFiltroFechaHasta('')
                                 setFiltroAplica('TODOS')
                                 setBusquedaTexto('')
-                                setTimeout(() => cargarDatos(1), 50)
+                                setTimeout(() => cargarDatos(1, sortField, sortDirection, {
+                                    institucion: 'TODAS',
+                                    rbd: null,
+                                    sucursal: 'TODAS',
+                                    supervisor: 'TODOS',
+                                    fechaDesde: '',
+                                    fechaHasta: '',
+                                    aplica: 'TODOS',
+                                    search: ''
+                                }), 50)
                             }}
                             className="text-[11px] font-semibold text-rose-600 hover:text-rose-800 flex items-center gap-1 transition-colors"
                         >
@@ -360,12 +392,35 @@ export default function AsistenciaHorasExtrasClient({
                         <label className="block text-[11px] font-semibold text-gray-600 mb-1">Estado de Aplicación</label>
                         <select
                             value={filtroAplica}
-                            onChange={e => setFiltroAplica(e.target.value as any)}
+                            onChange={e => {
+                                const val = e.target.value as any
+                                setFiltroAplica(val)
+                                cargarDatos(1, sortField, sortDirection, { aplica: val })
+                            }}
                             className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
                         >
                             <option value="TODOS">Todos los Registros</option>
                             <option value="APLICA">Solo Aplica</option>
                             <option value="NO_APLICA">Solo No Aplica</option>
+                        </select>
+                    </div>
+
+                    {/* Filtro Institución */}
+                    <div>
+                        <label className="block text-[11px] font-semibold text-gray-600 mb-1">Institución</label>
+                        <select
+                            value={filtroInstitucion}
+                            onChange={e => {
+                                const val = e.target.value
+                                setFiltroInstitucion(val)
+                                cargarDatos(1, sortField, sortDirection, { institucion: val })
+                            }}
+                            className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                        >
+                            <option value="TODAS">Todas las Instituciones</option>
+                            {(initialData.instituciones || []).map(inst => (
+                                <option key={inst} value={inst}>{inst}</option>
+                            ))}
                         </select>
                     </div>
 
@@ -540,12 +595,19 @@ export default function AsistenciaHorasExtrasClient({
                                             </td>
 
                                             {/* RBD / Establecimiento */}
-                                            <td className="py-2 px-2.5 max-w-[150px] truncate">
+                                            <td className="py-2 px-2.5 max-w-[170px] truncate">
                                                 <div className="flex flex-col">
                                                     <span className="font-bold text-gray-900 truncate" title={r.establecimiento || ''}>{r.establecimiento}</span>
-                                                    {r.rbd && (
-                                                        <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
-                                                    )}
+                                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                                        {r.rbd && (
+                                                            <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
+                                                        )}
+                                                        {r.institucion && (
+                                                            <span className="text-[9.5px] px-1.5 py-0.2 bg-gray-100 text-gray-600 rounded font-medium truncate max-w-[110px]" title={r.institucion}>
+                                                                {r.institucion}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </td>
 

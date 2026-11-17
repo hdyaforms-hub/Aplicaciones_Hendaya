@@ -107,6 +107,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
     search?: string
     page?: number
     pageSize?: number
+    all?: boolean
     sortBy?: string
     sortDir?: 'asc' | 'desc'
 }) {
@@ -253,10 +254,11 @@ export async function getAdmHorasExtrasAction(filtros?: {
         const countRes: any[] = await rawPrisma.$queryRawUnsafe(countQuery, ...queryParams)
         const total = countRes[0]?.count || 0
 
-        // Paginación (10 registros por defecto)
+        // Paginación (10 registros por defecto, o sin límite si all === true para exportación completa)
+        const isExportAll = Boolean(filtros?.all)
         const page = filtros?.page && filtros.page > 0 ? filtros.page : 1
-        const pageSize = filtros?.pageSize && filtros.pageSize > 0 ? filtros.pageSize : 10
-        const offset = (page - 1) * pageSize
+        const pageSize = isExportAll ? 500000 : (filtros?.pageSize && filtros.pageSize > 0 ? filtros.pageSize : 10)
+        const offset = isExportAll ? 0 : (page - 1) * pageSize
 
         // Ordenamiento seguro
         const sortDir = filtros?.sortDir === 'asc' ? 'ASC' : 'DESC'

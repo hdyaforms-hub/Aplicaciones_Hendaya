@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { decrypt } from '@/lib/session'
+import { decrypt } from '@/lib/session-token'
 
 // Rutas que no requieren autenticación
 const publicRoutes = ['/login', '/api/auth/login']

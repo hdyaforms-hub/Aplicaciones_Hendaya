@@ -70,6 +70,8 @@ export default async function RolesPage() {
         { id: 'view_tablero_control_cargas', name: 'Tablero Control de Cargas Masivas', description: 'Monitoreo y alerta ejecutiva de planillas masivas pendientes y ejecutadas (RRHH, Prevención, Operaciones) para mes actual y próximo mes.', category: 'TABLEROS' },
         { id: 'view_tablero_firmas_pendientes', name: 'Tablero Firmas Pendientes (RRHH)', description: 'Visualización y analítica ejecutiva de documentos con firma pendiente de personal por sucursal, supervisor, RBD y tipo de documento.', category: 'TABLEROS' },
         { id: 'manage_tablero_firmas_pendientes', name: 'Carga Masiva Firmas Pendientes (RRHH)', description: 'Permite cargar el archivo Excel oficial de documentos con firma pendiente reemplazando la nómina anterior.', category: 'TABLEROS' },
+        { id: 'view_tablero_supervision_firmas', name: 'Supervisión de Firmas Pendientes', description: 'Acceso al tablero de supervisión de firmas pendientes con ordenamiento configurable de cerámicas y tabla de detalle.', category: 'TABLEROS' },
+        { id: 'manage_tablero_supervision_firmas', name: 'Gestionar Supervisión de Firmas Pendientes', description: 'Permite administrar y cargar información en el tablero de supervisión de firmas pendientes.', category: 'TABLEROS' },
 
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },

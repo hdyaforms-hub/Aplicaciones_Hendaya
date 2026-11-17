@@ -13,6 +13,9 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Tableros y Avances
     if (path.startsWith('/dashboard/tablero')) {
+        if (path.includes('/supervision-firmas-pendientes')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Supervisión de Firmas Pendientes' }
+        if (path.includes('/firmas-pendientes')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Firmas Pendientes' }
+        if (path.includes('/control-cargas-masivas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Control de Cargas Masivas' }
         if (path.includes('/widgets')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Widgets Personalizables' }
         if (path.includes('/auditoria')) return { modulo: 'Tableros y Avances', detalle: 'Accedió al módulo de Auditoría de Actividad' }
         if (path.includes('/organigrama')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Organigrama por zonas' }

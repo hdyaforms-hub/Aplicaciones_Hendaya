@@ -52,6 +52,8 @@ export interface ItemGraficoSucursal {
     firmados: number
     pendientes: number
     porcentajeFirma: number
+    maxAtraso?: number
+    avgAtraso?: number
     desgloseTipos: DesgloseDocumentos
 }
 
@@ -70,6 +72,8 @@ export interface ItemTotalizadorZona {
     firmados: number
     pendientes: number
     porcentajeFirma: number
+    maxAtraso?: number
+    avgAtraso?: number
     desgloseTipos: DesgloseDocumentos
 }
 
@@ -81,6 +85,8 @@ export interface ItemGraficoSupervisor {
     firmados: number
     pendientes: number
     porcentajeFirma: number
+    maxAtraso?: number
+    avgAtraso?: number
     desgloseTipos: DesgloseDocumentos
 }
 
@@ -98,6 +104,8 @@ export interface ItemGraficoRbd {
     firmados: number
     pendientes: number
     porcentajeFirma: number
+    maxAtraso?: number
+    avgAtraso?: number
     desgloseTipos: DesgloseDocumentos
 }
 
@@ -361,13 +369,14 @@ function matchSupervisorOficial(
     return toTitleCase(rawExcelName)
 }
 
-async function checkPermission(permId: string): Promise<{ authorized: boolean; user: any }> {
+async function checkPermission(permId: string | string[]): Promise<{ authorized: boolean; user: any }> {
     const session = await getSession()
     if (!session || !session.user) return { authorized: false, user: null }
     const roleName = session.user.role?.name?.toLowerCase().trim() || ''
     const perms = session.user.role?.permissions || []
     const isAdmin = roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin' || roleName.includes('gerencia')
-    if (isAdmin || perms.includes(permId)) {
+    const permList = Array.isArray(permId) ? permId : [permId]
+    if (isAdmin || permList.some(p => perms.includes(p))) {
         return { authorized: true, user: session.user }
     }
     return { authorized: false, user: session.user }
@@ -379,7 +388,7 @@ async function checkPermission(permId: string): Promise<{ authorized: boolean; u
  */
 export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): Promise<TableroFirmasPendientesResponse> {
     try {
-        const { authorized: canView, user } = await checkPermission('view_tablero_firmas_pendientes')
+        const { authorized: canView, user } = await checkPermission(['view_tablero_firmas_pendientes', 'view_tablero_supervision_firmas'])
         if (!canView || !user) {
             return {
                 success: false,
@@ -563,6 +572,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                     COUNT(DISTINCT "empleadoRutHash")::int as empleados,
                     COUNT(*) FILTER (WHERE "documentoFirmado" ILIKE '%Si / No%')::int as "firmados",
                     COUNT(*) FILTER (WHERE "documentoFirmado" NOT ILIKE '%Si / No%')::int as "pendientes",
+                    COALESCE(MAX("diasAtraso"), 0)::int as "maxAtraso",
+                    COALESCE(ROUND(AVG("diasAtraso")), 0)::int as "avgAtraso",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Contrato%')::int as "contratos",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Liquidaci%')::int as "liquidaciones",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Vacaci%' OR "tipoDocumento" ILIKE '%Permiso%')::int as "vacaciones",
@@ -581,6 +592,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                     COUNT(DISTINCT "empleadoRutHash")::int as empleados,
                     COUNT(*) FILTER (WHERE "documentoFirmado" ILIKE '%Si / No%')::int as "firmados",
                     COUNT(*) FILTER (WHERE "documentoFirmado" NOT ILIKE '%Si / No%')::int as "pendientes",
+                    COALESCE(MAX("diasAtraso"), 0)::int as "maxAtraso",
+                    COALESCE(ROUND(AVG("diasAtraso")), 0)::int as "avgAtraso",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Contrato%')::int as "contratos",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Liquidaci%')::int as "liquidaciones",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Vacaci%' OR "tipoDocumento" ILIKE '%Permiso%')::int as "vacaciones",
@@ -600,6 +613,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                     COUNT(DISTINCT "empleadoRutHash")::int as empleados,
                     COUNT(*) FILTER (WHERE "documentoFirmado" ILIKE '%Si / No%')::int as "firmados",
                     COUNT(*) FILTER (WHERE "documentoFirmado" NOT ILIKE '%Si / No%')::int as "pendientes",
+                    COALESCE(MAX("diasAtraso"), 0)::int as "maxAtraso",
+                    COALESCE(ROUND(AVG("diasAtraso")), 0)::int as "avgAtraso",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Contrato%')::int as "contratos",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Liquidaci%')::int as "liquidaciones",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Vacaci%' OR "tipoDocumento" ILIKE '%Permiso%')::int as "vacaciones",
@@ -609,7 +624,7 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 WHERE ${whereSql} AND "supervisorNombre" IS NOT NULL AND "supervisorNombre" != ''
                 GROUP BY "supervisorNombre", sucursal
                 ORDER BY total DESC
-                LIMIT 50;
+                LIMIT 300;
             `, ...params),
 
             rawPrisma.$queryRawUnsafe<any[]>(`
@@ -621,6 +636,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                     COUNT(DISTINCT "empleadoRutHash")::int as empleados,
                     COUNT(*) FILTER (WHERE "documentoFirmado" ILIKE '%Si / No%')::int as "firmados",
                     COUNT(*) FILTER (WHERE "documentoFirmado" NOT ILIKE '%Si / No%')::int as "pendientes",
+                    COALESCE(MAX("diasAtraso"), 0)::int as "maxAtraso",
+                    COALESCE(ROUND(AVG("diasAtraso")), 0)::int as "avgAtraso",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Contrato%')::int as "contratos",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Liquidaci%')::int as "liquidaciones",
                     COUNT(*) FILTER (WHERE "tipoDocumento" ILIKE '%Vacaci%' OR "tipoDocumento" ILIKE '%Permiso%')::int as "vacaciones",
@@ -630,7 +647,7 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 WHERE ${whereSql} AND rbd > 0
                 GROUP BY rbd, establecimiento, sucursal
                 ORDER BY total DESC
-                LIMIT 30;
+                LIMIT 300;
             `, ...params),
 
             rawPrisma.$queryRawUnsafe<any[]>(`
@@ -711,6 +728,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 firmados: firm,
                 pendientes: pend,
                 porcentajeFirma: pctFirma,
+                maxAtraso: Number(r.maxAtraso || 0),
+                avgAtraso: Number(r.avgAtraso || 0),
                 desgloseTipos: {
                     contratos: Number(r.contratos || 0),
                     liquidaciones: Number(r.liquidaciones || 0),
@@ -734,6 +753,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 firmados: firm,
                 pendientes: pend,
                 porcentajeFirma: pct,
+                maxAtraso: Number(r.maxAtraso || 0),
+                avgAtraso: Number(r.avgAtraso || 0),
                 desgloseTipos: {
                     contratos: Number(r.contratos || 0),
                     liquidaciones: Number(r.liquidaciones || 0),
@@ -758,6 +779,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 firmados: firm,
                 pendientes: pend,
                 porcentajeFirma: pct,
+                maxAtraso: Number(r.maxAtraso || 0),
+                avgAtraso: Number(r.avgAtraso || 0),
                 desgloseTipos: {
                     contratos: Number(r.contratos || 0),
                     liquidaciones: Number(r.liquidaciones || 0),
@@ -783,6 +806,8 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
                 firmados: firm,
                 pendientes: pend,
                 porcentajeFirma: pctFirma,
+                maxAtraso: Number(r.maxAtraso || 0),
+                avgAtraso: Number(r.avgAtraso || 0),
                 desgloseTipos: {
                     contratos: Number(r.contratos || 0),
                     liquidaciones: Number(r.liquidaciones || 0),
@@ -970,7 +995,7 @@ export async function getFirmasPendientesTableroData(filtros?: FiltrosFirmas): P
  */
 export async function cargarExcelFirmasPendientesAction(formData?: FormData): Promise<{ success: boolean; error?: string; message?: string; totalRegistros?: number }> {
     try {
-        const { authorized: canUpload, user } = await checkPermission('manage_tablero_firmas_pendientes')
+        const { authorized: canUpload, user } = await checkPermission(['manage_tablero_firmas_pendientes', 'manage_tablero_supervision_firmas'])
         if (!canUpload || !user) {
             return { success: false, error: 'No tienes permisos de autorización para cargar planillas en Firmas Pendientes.' }
         }

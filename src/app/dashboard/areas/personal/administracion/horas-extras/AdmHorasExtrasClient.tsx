@@ -311,27 +311,21 @@ export default function AdmHorasExtrasClient({
         ).slice(0, 15)
     }, [initialRegistrosData.establecimientos, busquedaRbdNombre])
 
-    // Cargar / Refrescar datos
-    const recargarDatos = (
-        pagina: number = paginaActual,
-        sortBy: SortField = sortField,
-        sortDir: 'asc' | 'desc' = sortDirection,
-        customFilters?: {
-            rol?: string
-            usuarioId?: string
-            institucion?: string
-            comuna?: string
-            rbd?: number | null
-            cargaId?: string
-            estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
-            aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
-            sucursal?: string
-            supervisor?: string
-            fechaDesde?: string
-            fechaHasta?: string
-            search?: string
-        }
-    ) => {
+    const obtenerFiltrosActuales = (customFilters?: {
+        rol?: string
+        usuarioId?: string
+        institucion?: string
+        comuna?: string
+        rbd?: number | null
+        cargaId?: string
+        estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
+        aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
+        sucursal?: string
+        supervisor?: string
+        fechaDesde?: string
+        fechaHasta?: string
+        search?: string
+    }) => {
         const rolActual = customFilters?.rol !== undefined ? customFilters.rol : filtroRol
         const usuarioIdActual = customFilters?.usuarioId !== undefined ? customFilters.usuarioId : filtroUsuarioId
         const institucionActual = customFilters?.institucion !== undefined ? customFilters.institucion : filtroInstitucion
@@ -377,22 +371,50 @@ export default function AdmHorasExtrasClient({
             }
         }
 
+        return {
+            rbd: rbdActual || undefined,
+            rbds: rbdsFilter,
+            rutHashes: rutHashesFilter,
+            institucion: institucionActual !== 'TODAS' ? institucionActual : undefined,
+            comuna: comunaActual !== 'TODAS' ? comunaActual : undefined,
+            sucursal: sucursalActual,
+            supervisor: supervisorActual,
+            fechaDesde: fechaDesdeActual || undefined,
+            fechaHasta: fechaHastaActual || undefined,
+            aplica: aplicaActual,
+            estado: estadoActual,
+            cargaId: cargaIdActual !== 'TODOS' ? cargaIdActual : undefined,
+            search: searchActual || undefined
+        }
+    }
+
+    // Cargar / Refrescar datos
+    const recargarDatos = (
+        pagina: number = paginaActual,
+        sortBy: SortField = sortField,
+        sortDir: 'asc' | 'desc' = sortDirection,
+        customFilters?: {
+            rol?: string
+            usuarioId?: string
+            institucion?: string
+            comuna?: string
+            rbd?: number | null
+            cargaId?: string
+            estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
+            aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
+            sucursal?: string
+            supervisor?: string
+            fechaDesde?: string
+            fechaHasta?: string
+            search?: string
+        }
+    ) => {
+        const filtrosBase = obtenerFiltrosActuales(customFilters)
+
         startTransition(async () => {
             const [resReg, resCargas] = await Promise.all([
                 getAdmHorasExtrasAction({
-                    rbd: rbdActual || undefined,
-                    rbds: rbdsFilter,
-                    rutHashes: rutHashesFilter,
-                    institucion: institucionActual !== 'TODAS' ? institucionActual : undefined,
-                    comuna: comunaActual !== 'TODAS' ? comunaActual : undefined,
-                    sucursal: sucursalActual,
-                    supervisor: supervisorActual,
-                    fechaDesde: fechaDesdeActual || undefined,
-                    fechaHasta: fechaHastaActual || undefined,
-                    aplica: aplicaActual,
-                    estado: estadoActual,
-                    cargaId: cargaIdActual !== 'TODOS' ? cargaIdActual : undefined,
-                    search: searchActual || undefined,
+                    ...filtrosBase,
                     page: pagina,
                     pageSize,
                     sortBy,
@@ -525,48 +547,70 @@ export default function AdmHorasExtrasClient({
         }
     }
 
-    // Exportar a Excel (Con Auditoría)
+    // Estado para exportación masiva en Registros
+    const [exportandoRegistros, setExportandoRegistros] = useState(false)
+
+    // Exportar a Excel (Con Auditoría) - Exporta la totalidad de registros que coinciden con los filtros
     const exportarExcel = async () => {
-        if (registros.length === 0) {
-            alert('No hay registros para exportar con los filtros seleccionados.')
-            return
+        try {
+            setExportandoRegistros(true)
+            const filtrosBase = obtenerFiltrosActuales()
+            const res = await getAdmHorasExtrasAction({
+                ...filtrosBase,
+                all: true,
+                page: 1,
+                pageSize: 500000,
+                sortBy: sortField,
+                sortDir: sortDirection
+            })
+
+            const regsParaExport = (res.success && (res.allMatchingData || res.data)) ? (res.allMatchingData || res.data) : []
+            if (regsParaExport.length === 0) {
+                alert('No hay registros para exportar con los filtros seleccionados.')
+                return
+            }
+
+            const datosExport = regsParaExport.map(r => ({
+                'Fecha': r.fecha,
+                'RBD': r.rbd || '',
+                'Establecimiento': r.establecimiento || '',
+                'Institución': r.institucion || '',
+                'Comuna': r.comuna || '',
+                'Sucursal': r.sucursal,
+                'Supervisor': r.supervisor || '',
+                'RUT': r.rut,
+                'Colaborador': r.nombreCompleto,
+                'Cargo': r.cargo || '',
+                'Entró': r.entro || '',
+                'Salió': r.salio || '',
+                'Turno': r.turno || '',
+                'HHEE': formatHorasMinutos(r.hhee),
+                'Atraso': r.atraso > 0 ? formatHorasMinutos(r.atraso) : '00:00 hrs',
+                '¿Aplica HHEE?': r.aplica ? 'SÍ (Aplica)' : 'NO (No Aplica)',
+                'Modificado Por': r.aplicaModificadoPor || 'Por Defecto (No Aplica)',
+                'Fecha Modificación': r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : '',
+                'Estado Período': r.estado,
+                'Planilla Origen': r.cargaNombreArchivo || '',
+                'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.aplicaModificadoPor, r.cargadoPor)
+            }))
+
+            const ws = xlsx.utils.json_to_sheet(datosExport)
+            const wb = xlsx.utils.book_new()
+            xlsx.utils.book_append_sheet(wb, ws, 'Adm_Hrs_Extras')
+            const nombreArchivo = `Adm_Hrs_Extras_Reporte_${new Date().toISOString().slice(0, 10)}.xlsx`
+            xlsx.writeFile(wb, nombreArchivo)
+
+            // Registrar auditoría con el total real
+            await registrarAuditoriaExportacionHextraAction(
+                regsParaExport.length,
+                `Filtros: [Estado: ${filtroEstado}, Aplica: ${filtroAplica}, Sucursal: ${filtroSucursal}, Carga: ${filtroCargaId}, Institución: ${filtroInstitucion}, Comuna: ${filtroComuna}]`
+            )
+        } catch (err: any) {
+            console.error('Error al exportar registros de horas extras a Excel:', err)
+            alert('Ocurrió un error al exportar los registros a Excel.')
+        } finally {
+            setExportandoRegistros(false)
         }
-
-        const datosExport = registros.map(r => ({
-            'Fecha': r.fecha,
-            'RBD': r.rbd || '',
-            'Establecimiento': r.establecimiento || '',
-            'Institución': r.institucion || '',
-            'Comuna': r.comuna || '',
-            'Sucursal': r.sucursal,
-            'Supervisor': r.supervisor || '',
-            'RUT': r.rut,
-            'Colaborador': r.nombreCompleto,
-            'Cargo': r.cargo || '',
-            'Entró': r.entro || '',
-            'Salió': r.salio || '',
-            'Turno': r.turno || '',
-            'HHEE': formatHorasMinutos(r.hhee),
-            'Atraso': r.atraso > 0 ? formatHorasMinutos(r.atraso) : '00:00 hrs',
-            '¿Aplica HHEE?': r.aplica ? 'SÍ (Aplica)' : 'NO (No Aplica)',
-            'Modificado Por': r.aplicaModificadoPor || 'Por Defecto (No Aplica)',
-            'Fecha Modificación': r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : '',
-            'Estado Período': r.estado,
-            'Planilla Origen': r.cargaNombreArchivo || '',
-            'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.aplicaModificadoPor, r.cargadoPor)
-        }))
-
-        const ws = xlsx.utils.json_to_sheet(datosExport)
-        const wb = xlsx.utils.book_new()
-        xlsx.utils.book_append_sheet(wb, ws, 'Adm_Hrs_Extras')
-        const nombreArchivo = `Adm_Hrs_Extras_Reporte_${new Date().toISOString().slice(0, 10)}.xlsx`
-        xlsx.writeFile(wb, nombreArchivo)
-
-        // Registrar auditoría
-        await registrarAuditoriaExportacionHextraAction(
-            registros.length,
-            `Filtros: [Estado: ${filtroEstado}, Aplica: ${filtroAplica}, Sucursal: ${filtroSucursal}, Carga: ${filtroCargaId}]`
-        )
     }
 
     // Exportar una carga específica a Excel directamente desde la tabla de períodos (sin entrar a los registros)
@@ -576,18 +620,15 @@ export default function AdmHorasExtrasClient({
         try {
             setCargasExportando(prev => new Set(prev).add(carga.id))
 
-            let regsParaExport = registros.filter(r => r.cargaId === carga.id)
-            if (regsParaExport.length === 0 || regsParaExport.length < carga.totalRegistros) {
-                const res = await getAdmHorasExtrasAction({
-                    cargaId: carga.id,
-                    estado: 'TODOS',
-                    page: 1,
-                    pageSize: 50000
-                })
-                if (res.success && res.data) {
-                    regsParaExport = res.allMatchingData || res.data
-                }
-            }
+            const res = await getAdmHorasExtrasAction({
+                cargaId: carga.id,
+                estado: 'TODOS',
+                all: true,
+                page: 1,
+                pageSize: 500000
+            })
+
+            const regsParaExport = (res.success && (res.allMatchingData || res.data)) ? (res.allMatchingData || res.data) : []
 
             if (regsParaExport.length === 0) {
                 alert('No se encontraron registros para exportar en esta planilla.')
@@ -625,7 +666,7 @@ export default function AdmHorasExtrasClient({
             const nombreArchivo = `HrsExtras_${baseNombre}_${carga.estado}_${new Date().toISOString().slice(0, 10)}.xlsx`
             xlsx.writeFile(wb, nombreArchivo)
 
-            // Registrar auditoría
+            // Registrar auditoría con el total real
             await registrarAuditoriaExportacionHextraAction(
                 regsParaExport.length,
                 `Exportación directa desde planilla: ${carga.nombreArchivo} (ID: ${carga.id}, Estado: ${carga.estado})`
@@ -684,11 +725,16 @@ export default function AdmHorasExtrasClient({
                     {tabActivo === 'registros' && (
                         <button
                             onClick={exportarExcel}
-                            className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors shadow-sm"
+                            disabled={exportandoRegistros}
+                            className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-colors shadow-sm"
                             title="Exportar a Excel con registro de auditoría"
                         >
-                            <Download className="w-3.5 h-3.5" />
-                            <span>Exportar Excel</span>
+                            {exportandoRegistros ? (
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : (
+                                <Download className="w-3.5 h-3.5" />
+                            )}
+                            <span>{exportandoRegistros ? 'Exportando...' : 'Exportar Excel'}</span>
                         </button>
                     )}
                 </div>

@@ -34,7 +34,8 @@ export default async function AsistenciaHorasExtrasPage() {
         pageSize: 10,
         sucursales: [],
         supervisores: [],
-        establecimientos: []
+        establecimientos: [],
+        instituciones: []
     }
 
     const initialData = (dataRes.success && dataRes.data) ? {
@@ -44,7 +45,8 @@ export default async function AsistenciaHorasExtrasPage() {
         pageSize: dataRes.pageSize ?? 10,
         sucursales: dataRes.sucursales ?? [],
         supervisores: dataRes.supervisores ?? [],
-        establecimientos: dataRes.establecimientos ?? []
+        establecimientos: dataRes.establecimientos ?? [],
+        instituciones: (dataRes as any).instituciones ?? []
     } : fallbackData
 
     return (

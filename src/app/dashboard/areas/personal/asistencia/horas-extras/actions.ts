@@ -28,6 +28,7 @@ export interface AsistenciaHextraRegistroDTO {
     fechaSerial: string | null
     rbd: number | null
     establecimiento: string | null
+    institucion?: string | null
     sucursal: string
     supervisor: string | null
     turno: string | null
@@ -52,6 +53,7 @@ export interface AsistenciaHextraRegistroDTO {
 
 export async function getAsistenciaHorasExtrasAction(filtros?: {
     rbd?: number
+    institucion?: string
     sucursal?: string
     supervisor?: string
     fechaDesde?: string
@@ -117,8 +119,17 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
             }
         } else if (filtros?.rbd) {
             // Administrador / Gerencia / Acceso Global con filtro específico
-            whereConditions.push(`rbd = $${paramIndex++}`)
+            whereConditions.push(`r.rbd = $${paramIndex++}`)
             queryParams.push(filtros.rbd)
+        }
+
+        // Filtro por Institución (Colegio)
+        if (filtros?.institucion && filtros.institucion !== 'TODAS') {
+            whereConditions.push(`EXISTS (
+                SELECT 1 FROM "Colegios" col 
+                WHERE col."colRBD" = r.rbd AND TRIM(UPPER(col.institucion)) = TRIM(UPPER($${paramIndex++}))
+            )`)
+            queryParams.push(filtros.institucion)
         }
 
         // 2. Filtro por Sucursal
@@ -168,7 +179,7 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
         const whereSql = whereConditions.join(' AND ')
 
         // Conteo total
-        const countQuery = `SELECT COUNT(*)::int as count FROM "Pers_Hextra_Registro" WHERE ${whereSql};`
+        const countQuery = `SELECT COUNT(*)::int as count FROM "Pers_Hextra_Registro" r WHERE ${whereSql};`
         const countRes: any[] = await rawPrisma.$queryRawUnsafe(countQuery, ...queryParams)
         const total = countRes[0]?.count || 0
 
@@ -179,30 +190,32 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
 
         // Ordenamiento seguro
         const sortDir = filtros?.sortDir === 'asc' ? 'ASC' : 'DESC'
-        let orderClause = `fecha ${sortDir}, rbd ASC, id ASC`
+        let orderClause = `r.fecha ${sortDir}, r.rbd ASC, r.id ASC`
         if (filtros?.sortBy === 'fecha') {
-            orderClause = `fecha ${sortDir}, id ASC`
+            orderClause = `r.fecha ${sortDir}, r.id ASC`
         } else if (filtros?.sortBy === 'rbd') {
-            orderClause = `rbd ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.rbd ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'establecimiento') {
-            orderClause = `establecimiento ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.establecimiento ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'supervisor') {
-            orderClause = `supervisor ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.supervisor ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'sucursal') {
-            orderClause = `sucursal ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.sucursal ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'hhee') {
-            orderClause = `hhee ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.hhee ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'atraso') {
-            orderClause = `atraso ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.atraso ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'aplica') {
-            orderClause = `aplica ${sortDir}, fecha DESC, id ASC`
+            orderClause = `r.aplica ${sortDir}, r.fecha DESC, r.id ASC`
         } else if (filtros?.sortBy === 'nombreCompleto') {
-            orderClause = `"apellidosEnc" ${sortDir}, id ASC`
+            orderClause = `r."apellidosEnc" ${sortDir}, r.id ASC`
         }
 
         // Registros
         const selectQuery = `
-            SELECT * FROM "Pers_Hextra_Registro" 
+            SELECT r.*, col.institucion as "institucion" 
+            FROM "Pers_Hextra_Registro" r
+            LEFT JOIN "Colegios" col ON col."colRBD" = r.rbd
             WHERE ${whereSql}
             ORDER BY ${orderClause}
             LIMIT $${paramIndex++} OFFSET $${paramIndex++};
@@ -213,6 +226,13 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
         let sucursalesResult: any[] = []
         let supervisoresResult: any[] = []
         let establecimientosResult: any[] = []
+
+        const institucionesResult: any[] = (await rawPrisma.$queryRawUnsafe(
+            `SELECT DISTINCT TRIM(UPPER(institucion)) as institucion 
+             FROM "Colegios" 
+             WHERE institucion IS NOT NULL AND TRIM(institucion) != '' 
+             ORDER BY institucion ASC;`
+        ).catch(() => [])) as any[]
 
         if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
             sucursalesResult = await rawPrisma.$queryRawUnsafe(
@@ -256,6 +276,7 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
                 fechaSerial: r.fechaSerial,
                 rbd: r.rbd,
                 establecimiento: r.establecimiento || (r.rbd ? `RBD ${r.rbd}` : 'Sin Establecimiento'),
+                institucion: r.institucion || null,
                 sucursal: r.sucursal,
                 supervisor: r.supervisor,
                 turno: r.turno,
@@ -301,7 +322,8 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
             establecimientos: establecimientosResult.map((e: any) => ({
                 rbd: e.rbd,
                 establecimiento: e.establecimiento || `RBD ${e.rbd}`
-            }))
+            })),
+            instituciones: institucionesResult.map((i: any) => i.institucion).filter(Boolean)
         }
     } catch (error: any) {
         console.error('Error fetching Asistencia Horas Extras:', error)

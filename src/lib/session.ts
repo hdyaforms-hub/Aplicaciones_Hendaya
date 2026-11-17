@@ -1,36 +1,10 @@
-import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import { encrypt, decrypt } from './session-token'
 
-const secretKey = process.env.SESSION_SECRET || 'super-secret-key-change-me'
-const key = new TextEncoder().encode(secretKey)
+export { encrypt, decrypt }
 
 const isSecure = process.env.COOKIE_SECURE === 'true'
-
-export async function encrypt(payload: any) {
-    console.log(`Encrypting payload...`)
-    const res = await new SignJWT(payload)
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('1 day from now')
-        .sign(key)
-    console.log(`Payload encrypted.`)
-    return res
-}
-
-export async function decrypt(input: string): Promise<any> {
-    console.log(`Decrypting token...`)
-    try {
-        const { payload } = await jwtVerify(input, key, {
-            algorithms: ['HS256'],
-        })
-        console.log(`Token decrypted.`)
-        return payload
-    } catch (error) {
-        console.log(`Token decryption failed.`)
-        return null
-    }
-}
 
 export async function login(user: any) {
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -218,7 +192,11 @@ export async function getSession() {
                 'manage_registro_capacitacion',
                 'view_tablero_monitoreo_rrhh',
                 'manage_mantenedor_monitoreo_rrhh',
-                'manage_personal_visualizacion'
+                'manage_personal_visualizacion',
+                'view_tablero_firmas_pendientes',
+                'manage_tablero_firmas_pendientes',
+                'view_tablero_supervision_firmas',
+                'manage_tablero_supervision_firmas'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol
