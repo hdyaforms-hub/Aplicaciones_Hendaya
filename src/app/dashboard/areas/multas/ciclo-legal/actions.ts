@@ -10,7 +10,7 @@ import { checkMultasPermission } from '@/lib/multas/permisos'
 /**
  * Calcula la fecha límite sumando días hábiles (excluyendo sábados y domingos)
  */
-export function calcularFechaPlazoHabil(fechaInicio: Date, diasHabiles: number): Date {
+function calcularFechaPlazoHabil(fechaInicio: Date, diasHabiles: number): Date {
     const res = new Date(fechaInicio)
     let agregados = 0
     while (agregados < diasHabiles) {
