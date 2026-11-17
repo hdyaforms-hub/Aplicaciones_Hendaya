@@ -222,7 +222,7 @@ export async function evaluarYGuardarHallazgosFolio(
                 mes,
                 licId: licId || 0,
                 servicioCodigo: cab.servicioManual || cab.servicio,
-                excluirEstratos: !!modulos.c2,
+                excluirEstratos: !!(modulos.c2 && modulos.c2Submodulos?.estratosExcluidos),
                 nivelSupervisado
             })
             if (rData) {
@@ -236,18 +236,21 @@ export async function evaluarYGuardarHallazgosFolio(
 
     // Detección de alerta subcontada en F (C4)
     let alertaFSubcontada = false
-    const detF = detalles.find(d => {
-        const letraMatch = d.aspecto?.match(/^([A-Z])\./)?.[1] || d.aspecto?.slice(0, 1) || ''
-        return letraMatch.toUpperCase() === 'F'
-    })
-    if (detF && detF.nc && detF.nc.trim().length > 0) {
-        try {
-            const resF = extractFNormativo(detF.observacionesOMedioDeVerificacion)
-            if (resF.alertas && resF.alertas.some(a => a.toLowerCase().includes('subcontada'))) {
-                alertaFSubcontada = true
+    const subconteoActivo = !!(modulos.c4 && modulos.c4Submodulos?.alertasSubcontada !== false)
+    if (subconteoActivo) {
+        const detF = detalles.find(d => {
+            const letraMatch = d.aspecto?.match(/^([A-Z])\./)?.[1] || d.aspecto?.slice(0, 1) || ''
+            return letraMatch.toUpperCase() === 'F'
+        })
+        if (detF && detF.nc && detF.nc.trim().length > 0) {
+            try {
+                const resF = extractFNormativo(detF.observacionesOMedioDeVerificacion)
+                if (resF.alertas && resF.alertas.some(a => a.toLowerCase().includes('subcontada'))) {
+                    alertaFSubcontada = true
+                }
+            } catch (e) {
+                console.warn('[C5] Error al evaluar subconteo en F:', e)
             }
-        } catch (e) {
-            console.warn('[C5] Error al evaluar subconteo en F:', e)
         }
     }
 

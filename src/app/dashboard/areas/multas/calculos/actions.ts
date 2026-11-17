@@ -31,16 +31,21 @@ const dbFolioDato = () => prisma.multas_Folio_Dato
 const dbCantidadOverride = () => prisma.multas_Cantidad_Override
 
 // Utility to check permissions
-async function checkPermission(permission: string) {
+async function checkPermission(permission: string | string[]) {
     const session = await getSession()
-    if (!session) return false
-    const user = await prisma.user.findUnique({
-        where: { id: session.user.id },
-        include: { role: true }
-    })
-    if (!user) return false
-    const permissions = JSON.parse(user.role.permissions as string)
-    return permissions.includes(permission)
+    if (!session?.user) return false
+    const roleName = session.user.role?.name?.toLowerCase().trim() || ''
+    if (roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin' || roleName.includes('gerencia')) {
+        return true
+    }
+    const permissions: string[] = Array.isArray(session.user.role?.permissions)
+        ? (session.user.role.permissions as string[])
+        : typeof session.user.role?.permissions === 'string'
+            ? (() => { try { return JSON.parse(session.user.role.permissions) } catch { return [] } })()
+            : []
+    if (permissions.includes('*')) return true
+    const targets = Array.isArray(permission) ? permission : [permission]
+    return targets.some(p => permissions.includes(p))
 }
 
 export async function getLicitacionesDisponibles() {
@@ -2065,7 +2070,11 @@ export async function getComparacionExtraccionLicitacion(params: {
 export async function getHallazgosFolioAction(folio: string, licId?: number) {
     try {
         const session = await getSession()
-        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+        if (!session?.user) return { error: 'No autorizado' }
+        if (!await checkPermission(['view_analisis_nc', 'manage_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas'])) {
+            return { error: 'No tienes permisos para consultar hallazgos NC.' }
+        }
+        const usuario = session.user.name || session.user.username || 'Usuario'
         const hallazgos = await evaluarYGuardarHallazgosFolio(folio, licId, usuario)
         return { data: hallazgos }
     } catch (e: any) {
@@ -2084,7 +2093,11 @@ export async function updateEstadoHallazgoAction(params: {
 }) {
     try {
         const session = await getSession()
-        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+        if (!session?.user) return { ok: false, mensaje: 'No autorizado' }
+        if (!await checkPermission('manage_analisis_nc')) {
+            return { ok: false, mensaje: 'No tienes permisos para gestionar estados de hallazgos NC.' }
+        }
+        const usuario = session.user.name || session.user.username || 'Usuario'
         const res = await actualizarEstadoHallazgo({
             id: params.id,
             estado: params.estado,
@@ -2096,7 +2109,7 @@ export async function updateEstadoHallazgoAction(params: {
             try {
                 await logAuditAction({
                     username: usuario,
-                    userId: session?.user?.id || null,
+                    userId: session.user.id || null,
                     action: 'ACTUALIZAR_ESTADO_HALLAZGO_NC',
                     modulo: 'Áreas -> Multas',
                     detalle: `Actualizó hallazgo NC #${params.id} a estado '${params.estado}'.${params.nota ? ` Motivo: ${params.nota}` : ''}`
@@ -2130,6 +2143,11 @@ export async function getHallazgosLicitacionAction(filtros: {
     offset?: number
 }) {
     try {
+        const session = await getSession()
+        if (!session?.user) return { error: 'No autorizado' }
+        if (!await checkPermission(['view_analisis_nc', 'manage_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas'])) {
+            return { error: 'No tienes permisos para consultar hallazgos de licitación.' }
+        }
         const res = await obtenerHallazgosLicitacion(filtros)
         return { data: res }
     } catch (e: any) {
@@ -2143,6 +2161,11 @@ export async function getHallazgosLicitacionAction(filtros: {
  */
 export async function getResumenMetricasNCAction(licId?: number | null) {
     try {
+        const session = await getSession()
+        if (!session?.user) return { error: 'No autorizado' }
+        if (!await checkPermission(['view_analisis_nc', 'manage_analisis_nc', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas'])) {
+            return { error: 'No tienes permisos para consultar resumen de hallazgos NC.' }
+        }
         const metricas = await obtenerResumenMetricasNC(licId)
         return { data: metricas }
     } catch (e: any) {
@@ -2157,7 +2180,11 @@ export async function getResumenMetricasNCAction(licId?: number | null) {
 export async function evaluarHallazgosLicitacionMasivoAction(licId: number, mes?: number, anho?: number) {
     try {
         const session = await getSession()
-        const usuario = session?.user?.name || session?.user?.username || 'Usuario'
+        if (!session?.user) return { ok: false, error: 'No autorizado' }
+        if (!await checkPermission('manage_analisis_nc')) {
+            return { ok: false, error: 'No tienes permisos para ejecutar la evaluación masiva de reglas NC.' }
+        }
+        const usuario = session.user.name || session.user.username || 'Usuario'
 
         const where: any = { licitacionId: licId }
         if (mes && anho) {
