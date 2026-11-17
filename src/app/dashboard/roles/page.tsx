@@ -117,6 +117,8 @@ export default async function RolesPage() {
         { id: 'manage_analisis_nc', name: 'Análisis de No Conformidades (NC) (Gestionar)', description: 'Auditoría de las 19 reglas normativas IT JUNAEB, descartar o resolver hallazgos y ejecutar evaluaciones.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_notificaciones_junaeb', name: 'Notificaciones JUNAEB (Ver)', description: 'Permite consultar las resoluciones REX de JUNAEB y el estado de sus conciliaciones.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_notificaciones_junaeb', name: 'Notificaciones JUNAEB (Gestionar)', description: 'Permite cargar nuevas REX, ejecutar conciliaciones automáticas, clasificar discrepancias y exportar Anexo 1.', category: 'ÁREAS -> MULTAS' },
+        { id: 'view_ciclo_legal_multas', name: 'Ciclo Legal de Multas (Ver)', description: 'Permite consultar los descargos formales, resuelves, recursos y expedientes de multas.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_ciclo_legal_multas', name: 'Ciclo Legal de Multas (Gestionar)', description: 'Permite registrar descargos formales, ingresar resuelves de JUNAEB, interponer recursos y gestionar causas judiciales.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },

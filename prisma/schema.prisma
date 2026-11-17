@@ -1015,6 +1015,7 @@ model Multas_Notificacion_REX {
   createdAt            DateTime                 @default(now())
   updatedAt            DateTime                 @updatedAt
   items                Multas_Notificacion_Item[]
+  descargos            Multas_Descargo_Formal[]
 
   @@unique([numeroResolucion, licitacionId], map: "multas_notif_rex_numero_lic_unique")
   @@index([periodoAnio, periodoMes])
@@ -1056,6 +1057,145 @@ model Multas_Notificacion_Item {
   @@index([rbd])
   @@index([aspecto])
   @@map("Multas_Notificacion_Item")
+}
+
+model Multas_Descargo_Formal {
+  id                   String                     @id @default(uuid())
+  notificacionId       String
+  codigoIngreso        String                     @db.VarChar(100) // ej: "ING-2025-0842" o N° Of. Partes JUNAEB
+  fechaIngreso         DateTime
+  fechaPlazoRespuesta  DateTime?
+  diasPlazoLegal       Int                        @default(30)
+  estado               String                     @default("PRESENTADO") @db.VarChar(30) 
+  // 'BORRADOR' | 'PRESENTADO' | 'EN_EVALUACION' | 'PLAZO_VENCIDO' | 'RESPONDIDO_PARCIAL' | 'CERRADO'
+  
+  montoImpugnadoUtm    Float                      @default(0.0)
+  montoImpugnadoPesos  Float?
+  resumenArgumentos    String?                    @db.Text
+  documentoUrl         String?                    @db.Text
+  documentoNombre      String?                    @db.VarChar(255)
+  abogadoResponsable   String?                    @db.VarChar(150)
+  creadoPor            String                     @db.VarChar(100)
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+
+  notificacion         Multas_Notificacion_REX    @relation(fields: [notificacionId], references: [id], onDelete: Cascade)
+  folios               Multas_Descargo_Folio[]
+  resuelves            Multas_Resuelve[]
+  recursos             Multas_Recurso_Admin[]
+  procesosJudiciales   Multas_Proceso_Judicial[]
+
+  @@unique([notificacionId, codigoIngreso], map: "multas_descargo_formal_notif_cod_unique")
+  @@index([notificacionId])
+  @@index([estado])
+  @@index([fechaIngreso])
+  @@map("Multas_Descargo_Formal")
+}
+
+model Multas_Descargo_Folio {
+  id                   String                 @id @default(uuid())
+  descargoId           String
+  notificacionItemId   String?
+  folio                String                 @db.VarChar(50)
+  rbd                  Int?
+  aspecto              String                 @db.VarChar(10)
+  montoNotificadoUtm   Float                  @default(0.0)
+  montoImpugnadoUtm    Float                  @default(0.0)
+  montoRebajadoUtm     Float                  @default(0.0)
+  estado               String                 @default("IMPUGNADO") @db.VarChar(30)
+  // 'IMPUGNADO' | 'ACOGIDO_TOTAL' | 'ACOGIDO_PARCIAL' | 'RECHAZADO'
+  
+  argumentoPrincipal   String?                @db.Text
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  descargo             Multas_Descargo_Formal @relation(fields: [descargoId], references: [id], onDelete: Cascade)
+
+  @@index([descargoId])
+  @@index([folio])
+  @@map("Multas_Descargo_Folio")
+}
+
+model Multas_Resuelve {
+  id                   String                 @id @default(uuid())
+  descargoId           String
+  numeroResolucion     String                 @db.VarChar(100) // ej: "REX Resuelve N° 2104/2025"
+  fechaResolucion      DateTime
+  fechaNotificacion    DateTime?
+  dictamen             String                 @db.VarChar(30) 
+  // 'ACOGIDO_TOTAL' | 'ACOGIDO_PARCIAL' | 'RECHAZADO'
+  
+  montoRatificadoUtm   Float                  @default(0.0) // Monto que JUNAEB mantiene
+  montoRebajadoUtm     Float                  @default(0.0) // Monto que JUNAEB descuenta / rebaja
+  porcentajeRebaja     Float                  @default(0.0) // % de éxito
+  fundamentoResuelve   String?                @db.Text
+  documentoUrl         String?                @db.Text
+  documentoNombre      String?                @db.VarChar(255)
+  registradoPor        String                 @db.VarChar(100)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  descargo             Multas_Descargo_Formal @relation(fields: [descargoId], references: [id], onDelete: Cascade)
+
+  @@index([descargoId])
+  @@index([numeroResolucion])
+  @@map("Multas_Resuelve")
+}
+
+model Multas_Recurso_Admin {
+  id                   String                 @id @default(uuid())
+  descargoId           String
+  tipoRecurso          String                 @db.VarChar(30) 
+  // 'REPOSICION' | 'JERARQUICO' | 'REVISION_EXTRAORDINARIA'
+  
+  codigoPresentacion   String                 @db.VarChar(100)
+  fechaPresentacion    DateTime
+  autoridadDestino     String?                @db.VarChar(150)
+  estado               String                 @default("INGRESADO") @db.VarChar(30) 
+  // 'INGRESADO' | 'EN_TRAMITE' | 'ACOGIDO' | 'RECHAZADO' | 'ACOGIDO_PARCIAL'
+  
+  resolucionRespuesta  String?                @db.VarChar(100)
+  montoRebajaExtraUtm  Float                  @default(0.0)
+  fundamentosRecurso   String?                @db.Text
+  documentoUrl         String?                @db.Text
+  documentoNombre      String?                @db.VarChar(255)
+  abogado              String?                @db.VarChar(150)
+  registradoPor        String                 @db.VarChar(100)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  descargo             Multas_Descargo_Formal @relation(fields: [descargoId], references: [id], onDelete: Cascade)
+
+  @@index([descargoId])
+  @@index([tipoRecurso])
+  @@map("Multas_Recurso_Admin")
+}
+
+model Multas_Proceso_Judicial {
+  id                   String                 @id @default(uuid())
+  descargoId           String
+  tribunal             String                 @db.VarChar(150) // ej: "1° Juzgado Civil de Santiago"
+  rolCausa             String                 @db.VarChar(50)  // ej: "C-14522-2025"
+  caratulado           String?                @db.VarChar(200)
+  fechaIngreso         DateTime
+  cuantiaDemandaPesos  Float?
+  estadoProcesal       String                 @default("DEMANDA") @db.VarChar(50) 
+  // 'DEMANDA' | 'CONTESTACION' | 'CONCILIACION' | 'PRUEBA' | 'SENTENCIA_1RA' | 'APELACION' | 'CASACION' | 'EJECUTORIADO'
+  
+  resultadoSentencia   String?                @db.VarChar(50) // 'FAVORABLE' | 'DESFAVORABLE' | 'ACUERDO'
+  abogadoExterno       String?                @db.VarChar(150)
+  notas                String?                @db.Text
+  documentoUrl         String?                @db.Text
+  documentoNombre      String?                @db.VarChar(255)
+  registradoPor        String                 @db.VarChar(100)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  descargo             Multas_Descargo_Formal @relation(fields: [descargoId], references: [id], onDelete: Cascade)
+
+  @@index([descargoId])
+  @@index([rolCausa])
+  @@map("Multas_Proceso_Judicial")
 }
 
 model Descargos_Cab {

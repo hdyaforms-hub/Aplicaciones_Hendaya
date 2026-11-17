@@ -102,6 +102,8 @@ export async function getSession() {
                 'manage_analisis_nc',
                 'view_notificaciones_junaeb',
                 'manage_notificaciones_junaeb',
+                'view_ciclo_legal_multas',
+                'manage_ciclo_legal_multas',
                 'view_prev_gravedad_preparacion',
                 'manage_prev_gravedad_preparacion',
                 'view_prev_riesgo_minuta',

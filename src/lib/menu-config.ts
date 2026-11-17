@@ -314,6 +314,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Notificaciones JUNAEB (REX)',
                         href: '/dashboard/areas/multas/notificaciones',
                         requiredPermission: ['view_notificaciones_junaeb', 'manage_notificaciones_junaeb', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Ciclo Legal y Expediente',
+                        href: '/dashboard/areas/multas/ciclo-legal',
+                        requiredPermission: ['view_ciclo_legal_multas', 'manage_ciclo_legal_multas', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
                     }
                 ]
             },

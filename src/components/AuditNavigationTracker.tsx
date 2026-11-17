@@ -88,6 +88,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/multas')) {
         if (path.includes('/analisis-nc')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Análisis de No Conformidades (NC)' }
         if (path.includes('/notificaciones')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Notificaciones JUNAEB (REX)' }
+        if (path.includes('/ciclo-legal')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Ciclo Legal y Expedientes' }
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }
     }

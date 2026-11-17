@@ -1041,6 +1041,97 @@ exports.Prisma.Multas_Notificacion_ItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Multas_Descargo_FormalScalarFieldEnum = {
+  id: 'id',
+  notificacionId: 'notificacionId',
+  codigoIngreso: 'codigoIngreso',
+  fechaIngreso: 'fechaIngreso',
+  fechaPlazoRespuesta: 'fechaPlazoRespuesta',
+  diasPlazoLegal: 'diasPlazoLegal',
+  estado: 'estado',
+  montoImpugnadoUtm: 'montoImpugnadoUtm',
+  montoImpugnadoPesos: 'montoImpugnadoPesos',
+  resumenArgumentos: 'resumenArgumentos',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  abogadoResponsable: 'abogadoResponsable',
+  creadoPor: 'creadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Descargo_FolioScalarFieldEnum = {
+  id: 'id',
+  descargoId: 'descargoId',
+  notificacionItemId: 'notificacionItemId',
+  folio: 'folio',
+  rbd: 'rbd',
+  aspecto: 'aspecto',
+  montoNotificadoUtm: 'montoNotificadoUtm',
+  montoImpugnadoUtm: 'montoImpugnadoUtm',
+  montoRebajadoUtm: 'montoRebajadoUtm',
+  estado: 'estado',
+  argumentoPrincipal: 'argumentoPrincipal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_ResuelveScalarFieldEnum = {
+  id: 'id',
+  descargoId: 'descargoId',
+  numeroResolucion: 'numeroResolucion',
+  fechaResolucion: 'fechaResolucion',
+  fechaNotificacion: 'fechaNotificacion',
+  dictamen: 'dictamen',
+  montoRatificadoUtm: 'montoRatificadoUtm',
+  montoRebajadoUtm: 'montoRebajadoUtm',
+  porcentajeRebaja: 'porcentajeRebaja',
+  fundamentoResuelve: 'fundamentoResuelve',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  registradoPor: 'registradoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Recurso_AdminScalarFieldEnum = {
+  id: 'id',
+  descargoId: 'descargoId',
+  tipoRecurso: 'tipoRecurso',
+  codigoPresentacion: 'codigoPresentacion',
+  fechaPresentacion: 'fechaPresentacion',
+  autoridadDestino: 'autoridadDestino',
+  estado: 'estado',
+  resolucionRespuesta: 'resolucionRespuesta',
+  montoRebajaExtraUtm: 'montoRebajaExtraUtm',
+  fundamentosRecurso: 'fundamentosRecurso',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  abogado: 'abogado',
+  registradoPor: 'registradoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Proceso_JudicialScalarFieldEnum = {
+  id: 'id',
+  descargoId: 'descargoId',
+  tribunal: 'tribunal',
+  rolCausa: 'rolCausa',
+  caratulado: 'caratulado',
+  fechaIngreso: 'fechaIngreso',
+  cuantiaDemandaPesos: 'cuantiaDemandaPesos',
+  estadoProcesal: 'estadoProcesal',
+  resultadoSentencia: 'resultadoSentencia',
+  abogadoExterno: 'abogadoExterno',
+  notas: 'notas',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  registradoPor: 'registradoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.Descargos_CabScalarFieldEnum = {
   id: 'id',
   folio: 'folio',
@@ -2263,6 +2354,11 @@ exports.Prisma.ModelName = {
   Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
   Multas_Notificacion_REX: 'Multas_Notificacion_REX',
   Multas_Notificacion_Item: 'Multas_Notificacion_Item',
+  Multas_Descargo_Formal: 'Multas_Descargo_Formal',
+  Multas_Descargo_Folio: 'Multas_Descargo_Folio',
+  Multas_Resuelve: 'Multas_Resuelve',
+  Multas_Recurso_Admin: 'Multas_Recurso_Admin',
+  Multas_Proceso_Judicial: 'Multas_Proceso_Judicial',
   Descargos_Cab: 'Descargos_Cab',
   Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',

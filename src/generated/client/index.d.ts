@@ -324,6 +324,31 @@ export type Multas_Notificacion_REX = $Result.DefaultSelection<Prisma.$Multas_No
  */
 export type Multas_Notificacion_Item = $Result.DefaultSelection<Prisma.$Multas_Notificacion_ItemPayload>
 /**
+ * Model Multas_Descargo_Formal
+ * 
+ */
+export type Multas_Descargo_Formal = $Result.DefaultSelection<Prisma.$Multas_Descargo_FormalPayload>
+/**
+ * Model Multas_Descargo_Folio
+ * 
+ */
+export type Multas_Descargo_Folio = $Result.DefaultSelection<Prisma.$Multas_Descargo_FolioPayload>
+/**
+ * Model Multas_Resuelve
+ * 
+ */
+export type Multas_Resuelve = $Result.DefaultSelection<Prisma.$Multas_ResuelvePayload>
+/**
+ * Model Multas_Recurso_Admin
+ * 
+ */
+export type Multas_Recurso_Admin = $Result.DefaultSelection<Prisma.$Multas_Recurso_AdminPayload>
+/**
+ * Model Multas_Proceso_Judicial
+ * 
+ */
+export type Multas_Proceso_Judicial = $Result.DefaultSelection<Prisma.$Multas_Proceso_JudicialPayload>
+/**
  * Model Descargos_Cab
  * 
  */
@@ -1501,6 +1526,56 @@ export class PrismaClient<
     * ```
     */
   get multas_Notificacion_Item(): Prisma.Multas_Notificacion_ItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Descargo_Formal`: Exposes CRUD operations for the **Multas_Descargo_Formal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Descargo_Formals
+    * const multas_Descargo_Formals = await prisma.multas_Descargo_Formal.findMany()
+    * ```
+    */
+  get multas_Descargo_Formal(): Prisma.Multas_Descargo_FormalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Descargo_Folio`: Exposes CRUD operations for the **Multas_Descargo_Folio** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Descargo_Folios
+    * const multas_Descargo_Folios = await prisma.multas_Descargo_Folio.findMany()
+    * ```
+    */
+  get multas_Descargo_Folio(): Prisma.Multas_Descargo_FolioDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Resuelve`: Exposes CRUD operations for the **Multas_Resuelve** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Resuelves
+    * const multas_Resuelves = await prisma.multas_Resuelve.findMany()
+    * ```
+    */
+  get multas_Resuelve(): Prisma.Multas_ResuelveDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Recurso_Admin`: Exposes CRUD operations for the **Multas_Recurso_Admin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Recurso_Admins
+    * const multas_Recurso_Admins = await prisma.multas_Recurso_Admin.findMany()
+    * ```
+    */
+  get multas_Recurso_Admin(): Prisma.Multas_Recurso_AdminDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Proceso_Judicial`: Exposes CRUD operations for the **Multas_Proceso_Judicial** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Proceso_Judicials
+    * const multas_Proceso_Judicials = await prisma.multas_Proceso_Judicial.findMany()
+    * ```
+    */
+  get multas_Proceso_Judicial(): Prisma.Multas_Proceso_JudicialDelegate<ExtArgs>;
 
   /**
    * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
@@ -2874,6 +2949,11 @@ export namespace Prisma {
     Multas_Hallazgo_NC: 'Multas_Hallazgo_NC',
     Multas_Notificacion_REX: 'Multas_Notificacion_REX',
     Multas_Notificacion_Item: 'Multas_Notificacion_Item',
+    Multas_Descargo_Formal: 'Multas_Descargo_Formal',
+    Multas_Descargo_Folio: 'Multas_Descargo_Folio',
+    Multas_Resuelve: 'Multas_Resuelve',
+    Multas_Recurso_Admin: 'Multas_Recurso_Admin',
+    Multas_Proceso_Judicial: 'Multas_Proceso_Judicial',
     Descargos_Cab: 'Descargos_Cab',
     Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
@@ -2976,7 +3056,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "multas_Privilegio_EE" | "multas_IT_Elementos_Esenciales_Cab" | "multas_IT_Elementos_Esenciales_Det" | "multas_Aspecto_EE_Restriccion" | "multas_Parametros_Licitacion" | "multas_Horario_Servicio" | "multas_Estrato_Excluido" | "multas_Manipuladora_Mes" | "multas_Minuta_Mes" | "multas_Folio_Dato" | "multas_Cantidad_Override" | "multas_Hallazgo_NC" | "multas_Notificacion_REX" | "multas_Notificacion_Item" | "multas_Descargo_Formal" | "multas_Descargo_Folio" | "multas_Resuelve" | "multas_Recurso_Admin" | "multas_Proceso_Judicial" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7317,6 +7397,356 @@ export namespace Prisma {
           count: {
             args: Prisma.Multas_Notificacion_ItemCountArgs<ExtArgs>
             result: $Utils.Optional<Multas_Notificacion_ItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Descargo_Formal: {
+        payload: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>
+        fields: Prisma.Multas_Descargo_FormalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Descargo_FormalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Descargo_FormalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Descargo_FormalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Descargo_FormalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Descargo_FormalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Descargo_FormalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Descargo_FormalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Descargo_FormalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Descargo_FormalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          update: {
+            args: Prisma.Multas_Descargo_FormalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Descargo_FormalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Descargo_FormalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Descargo_FormalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FormalPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Descargo_FormalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Descargo_Formal>
+          }
+          groupBy: {
+            args: Prisma.Multas_Descargo_FormalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Descargo_FormalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Descargo_FormalCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Descargo_FormalCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Descargo_Folio: {
+        payload: Prisma.$Multas_Descargo_FolioPayload<ExtArgs>
+        fields: Prisma.Multas_Descargo_FolioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Descargo_FolioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Descargo_FolioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Descargo_FolioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Descargo_FolioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Descargo_FolioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Descargo_FolioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Descargo_FolioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Descargo_FolioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Descargo_FolioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          update: {
+            args: Prisma.Multas_Descargo_FolioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Descargo_FolioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Descargo_FolioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Descargo_FolioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Descargo_FolioPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Descargo_FolioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Descargo_Folio>
+          }
+          groupBy: {
+            args: Prisma.Multas_Descargo_FolioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Descargo_FolioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Descargo_FolioCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Descargo_FolioCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Resuelve: {
+        payload: Prisma.$Multas_ResuelvePayload<ExtArgs>
+        fields: Prisma.Multas_ResuelveFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_ResuelveFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_ResuelveFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_ResuelveFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_ResuelveFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          findMany: {
+            args: Prisma.Multas_ResuelveFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>[]
+          }
+          create: {
+            args: Prisma.Multas_ResuelveCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          createMany: {
+            args: Prisma.Multas_ResuelveCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_ResuelveCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_ResuelveDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          update: {
+            args: Prisma.Multas_ResuelveUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_ResuelveDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_ResuelveUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_ResuelveUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_ResuelvePayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_ResuelveAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Resuelve>
+          }
+          groupBy: {
+            args: Prisma.Multas_ResuelveGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_ResuelveGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_ResuelveCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_ResuelveCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Recurso_Admin: {
+        payload: Prisma.$Multas_Recurso_AdminPayload<ExtArgs>
+        fields: Prisma.Multas_Recurso_AdminFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Recurso_AdminFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Recurso_AdminFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Recurso_AdminFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Recurso_AdminFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Recurso_AdminFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Recurso_AdminCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Recurso_AdminCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Recurso_AdminCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Recurso_AdminDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          update: {
+            args: Prisma.Multas_Recurso_AdminUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Recurso_AdminDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Recurso_AdminUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Recurso_AdminUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Recurso_AdminPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Recurso_AdminAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Recurso_Admin>
+          }
+          groupBy: {
+            args: Prisma.Multas_Recurso_AdminGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Recurso_AdminGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Recurso_AdminCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Recurso_AdminCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Proceso_Judicial: {
+        payload: Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>
+        fields: Prisma.Multas_Proceso_JudicialFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Proceso_JudicialFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Proceso_JudicialFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Proceso_JudicialFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Proceso_JudicialFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Proceso_JudicialFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Proceso_JudicialCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Proceso_JudicialCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Proceso_JudicialCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Proceso_JudicialDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          update: {
+            args: Prisma.Multas_Proceso_JudicialUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Proceso_JudicialDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Proceso_JudicialUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Proceso_JudicialUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Proceso_JudicialPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Proceso_JudicialAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Proceso_Judicial>
+          }
+          groupBy: {
+            args: Prisma.Multas_Proceso_JudicialGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Proceso_JudicialGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Proceso_JudicialCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Proceso_JudicialCountAggregateOutputType> | number
           }
         }
       }
@@ -14249,10 +14679,12 @@ export namespace Prisma {
 
   export type Multas_Notificacion_REXCountOutputType = {
     items: number
+    descargos: number
   }
 
   export type Multas_Notificacion_REXCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | Multas_Notificacion_REXCountOutputTypeCountItemsArgs
+    descargos?: boolean | Multas_Notificacion_REXCountOutputTypeCountDescargosArgs
   }
 
   // Custom InputTypes
@@ -14271,6 +14703,71 @@ export namespace Prisma {
    */
   export type Multas_Notificacion_REXCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Multas_Notificacion_ItemWhereInput
+  }
+
+  /**
+   * Multas_Notificacion_REXCountOutputType without action
+   */
+  export type Multas_Notificacion_REXCountOutputTypeCountDescargosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+
+  /**
+   * Count Type Multas_Descargo_FormalCountOutputType
+   */
+
+  export type Multas_Descargo_FormalCountOutputType = {
+    folios: number
+    resuelves: number
+    recursos: number
+    procesosJudiciales: number
+  }
+
+  export type Multas_Descargo_FormalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    folios?: boolean | Multas_Descargo_FormalCountOutputTypeCountFoliosArgs
+    resuelves?: boolean | Multas_Descargo_FormalCountOutputTypeCountResuelvesArgs
+    recursos?: boolean | Multas_Descargo_FormalCountOutputTypeCountRecursosArgs
+    procesosJudiciales?: boolean | Multas_Descargo_FormalCountOutputTypeCountProcesosJudicialesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Multas_Descargo_FormalCountOutputType without action
+   */
+  export type Multas_Descargo_FormalCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_FormalCountOutputType
+     */
+    select?: Multas_Descargo_FormalCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Descargo_FormalCountOutputType without action
+   */
+  export type Multas_Descargo_FormalCountOutputTypeCountFoliosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Descargo_FolioWhereInput
+  }
+
+  /**
+   * Multas_Descargo_FormalCountOutputType without action
+   */
+  export type Multas_Descargo_FormalCountOutputTypeCountResuelvesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_ResuelveWhereInput
+  }
+
+  /**
+   * Multas_Descargo_FormalCountOutputType without action
+   */
+  export type Multas_Descargo_FormalCountOutputTypeCountRecursosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Recurso_AdminWhereInput
+  }
+
+  /**
+   * Multas_Descargo_FormalCountOutputType without action
+   */
+  export type Multas_Descargo_FormalCountOutputTypeCountProcesosJudicialesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Proceso_JudicialWhereInput
   }
 
 
@@ -77896,6 +78393,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     items?: boolean | Multas_Notificacion_REX$itemsArgs<ExtArgs>
+    descargos?: boolean | Multas_Notificacion_REX$descargosArgs<ExtArgs>
     _count?: boolean | Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["multas_Notificacion_REX"]>
 
@@ -77943,6 +78441,7 @@ export namespace Prisma {
 
   export type Multas_Notificacion_REXInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | Multas_Notificacion_REX$itemsArgs<ExtArgs>
+    descargos?: boolean | Multas_Notificacion_REX$descargosArgs<ExtArgs>
     _count?: boolean | Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Multas_Notificacion_REXIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -77951,6 +78450,7 @@ export namespace Prisma {
     name: "Multas_Notificacion_REX"
     objects: {
       items: Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>[]
+      descargos: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -78336,6 +78836,7 @@ export namespace Prisma {
   export interface Prisma__Multas_Notificacion_REXClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     items<T extends Multas_Notificacion_REX$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Notificacion_REX$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Notificacion_ItemPayload<ExtArgs>, T, "findMany"> | Null>
+    descargos<T extends Multas_Notificacion_REX$descargosArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Notificacion_REX$descargosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -78714,6 +79215,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Multas_Notificacion_ItemScalarFieldEnum | Multas_Notificacion_ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Notificacion_REX.descargos
+   */
+  export type Multas_Notificacion_REX$descargosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    where?: Multas_Descargo_FormalWhereInput
+    orderBy?: Multas_Descargo_FormalOrderByWithRelationInput | Multas_Descargo_FormalOrderByWithRelationInput[]
+    cursor?: Multas_Descargo_FormalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Descargo_FormalScalarFieldEnum | Multas_Descargo_FormalScalarFieldEnum[]
   }
 
   /**
@@ -79887,6 +80408,5579 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: Multas_Notificacion_ItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Descargo_Formal
+   */
+
+  export type AggregateMultas_Descargo_Formal = {
+    _count: Multas_Descargo_FormalCountAggregateOutputType | null
+    _avg: Multas_Descargo_FormalAvgAggregateOutputType | null
+    _sum: Multas_Descargo_FormalSumAggregateOutputType | null
+    _min: Multas_Descargo_FormalMinAggregateOutputType | null
+    _max: Multas_Descargo_FormalMaxAggregateOutputType | null
+  }
+
+  export type Multas_Descargo_FormalAvgAggregateOutputType = {
+    diasPlazoLegal: number | null
+    montoImpugnadoUtm: number | null
+    montoImpugnadoPesos: number | null
+  }
+
+  export type Multas_Descargo_FormalSumAggregateOutputType = {
+    diasPlazoLegal: number | null
+    montoImpugnadoUtm: number | null
+    montoImpugnadoPesos: number | null
+  }
+
+  export type Multas_Descargo_FormalMinAggregateOutputType = {
+    id: string | null
+    notificacionId: string | null
+    codigoIngreso: string | null
+    fechaIngreso: Date | null
+    fechaPlazoRespuesta: Date | null
+    diasPlazoLegal: number | null
+    estado: string | null
+    montoImpugnadoUtm: number | null
+    montoImpugnadoPesos: number | null
+    resumenArgumentos: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogadoResponsable: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Descargo_FormalMaxAggregateOutputType = {
+    id: string | null
+    notificacionId: string | null
+    codigoIngreso: string | null
+    fechaIngreso: Date | null
+    fechaPlazoRespuesta: Date | null
+    diasPlazoLegal: number | null
+    estado: string | null
+    montoImpugnadoUtm: number | null
+    montoImpugnadoPesos: number | null
+    resumenArgumentos: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogadoResponsable: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Descargo_FormalCountAggregateOutputType = {
+    id: number
+    notificacionId: number
+    codigoIngreso: number
+    fechaIngreso: number
+    fechaPlazoRespuesta: number
+    diasPlazoLegal: number
+    estado: number
+    montoImpugnadoUtm: number
+    montoImpugnadoPesos: number
+    resumenArgumentos: number
+    documentoUrl: number
+    documentoNombre: number
+    abogadoResponsable: number
+    creadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Descargo_FormalAvgAggregateInputType = {
+    diasPlazoLegal?: true
+    montoImpugnadoUtm?: true
+    montoImpugnadoPesos?: true
+  }
+
+  export type Multas_Descargo_FormalSumAggregateInputType = {
+    diasPlazoLegal?: true
+    montoImpugnadoUtm?: true
+    montoImpugnadoPesos?: true
+  }
+
+  export type Multas_Descargo_FormalMinAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    codigoIngreso?: true
+    fechaIngreso?: true
+    fechaPlazoRespuesta?: true
+    diasPlazoLegal?: true
+    estado?: true
+    montoImpugnadoUtm?: true
+    montoImpugnadoPesos?: true
+    resumenArgumentos?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogadoResponsable?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Descargo_FormalMaxAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    codigoIngreso?: true
+    fechaIngreso?: true
+    fechaPlazoRespuesta?: true
+    diasPlazoLegal?: true
+    estado?: true
+    montoImpugnadoUtm?: true
+    montoImpugnadoPesos?: true
+    resumenArgumentos?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogadoResponsable?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Descargo_FormalCountAggregateInputType = {
+    id?: true
+    notificacionId?: true
+    codigoIngreso?: true
+    fechaIngreso?: true
+    fechaPlazoRespuesta?: true
+    diasPlazoLegal?: true
+    estado?: true
+    montoImpugnadoUtm?: true
+    montoImpugnadoPesos?: true
+    resumenArgumentos?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogadoResponsable?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Descargo_FormalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Descargo_Formal to aggregate.
+     */
+    where?: Multas_Descargo_FormalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Formals to fetch.
+     */
+    orderBy?: Multas_Descargo_FormalOrderByWithRelationInput | Multas_Descargo_FormalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Descargo_FormalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Formals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Formals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Descargo_Formals
+    **/
+    _count?: true | Multas_Descargo_FormalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Descargo_FormalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Descargo_FormalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Descargo_FormalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Descargo_FormalMaxAggregateInputType
+  }
+
+  export type GetMultas_Descargo_FormalAggregateType<T extends Multas_Descargo_FormalAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Descargo_Formal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Descargo_Formal[P]>
+      : GetScalarType<T[P], AggregateMultas_Descargo_Formal[P]>
+  }
+
+
+
+
+  export type Multas_Descargo_FormalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Descargo_FormalWhereInput
+    orderBy?: Multas_Descargo_FormalOrderByWithAggregationInput | Multas_Descargo_FormalOrderByWithAggregationInput[]
+    by: Multas_Descargo_FormalScalarFieldEnum[] | Multas_Descargo_FormalScalarFieldEnum
+    having?: Multas_Descargo_FormalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Descargo_FormalCountAggregateInputType | true
+    _avg?: Multas_Descargo_FormalAvgAggregateInputType
+    _sum?: Multas_Descargo_FormalSumAggregateInputType
+    _min?: Multas_Descargo_FormalMinAggregateInputType
+    _max?: Multas_Descargo_FormalMaxAggregateInputType
+  }
+
+  export type Multas_Descargo_FormalGroupByOutputType = {
+    id: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date
+    fechaPlazoRespuesta: Date | null
+    diasPlazoLegal: number
+    estado: string
+    montoImpugnadoUtm: number
+    montoImpugnadoPesos: number | null
+    resumenArgumentos: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogadoResponsable: string | null
+    creadoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Descargo_FormalCountAggregateOutputType | null
+    _avg: Multas_Descargo_FormalAvgAggregateOutputType | null
+    _sum: Multas_Descargo_FormalSumAggregateOutputType | null
+    _min: Multas_Descargo_FormalMinAggregateOutputType | null
+    _max: Multas_Descargo_FormalMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Descargo_FormalGroupByPayload<T extends Multas_Descargo_FormalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Descargo_FormalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Descargo_FormalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Descargo_FormalGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Descargo_FormalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Descargo_FormalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notificacionId?: boolean
+    codigoIngreso?: boolean
+    fechaIngreso?: boolean
+    fechaPlazoRespuesta?: boolean
+    diasPlazoLegal?: boolean
+    estado?: boolean
+    montoImpugnadoUtm?: boolean
+    montoImpugnadoPesos?: boolean
+    resumenArgumentos?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogadoResponsable?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+    folios?: boolean | Multas_Descargo_Formal$foliosArgs<ExtArgs>
+    resuelves?: boolean | Multas_Descargo_Formal$resuelvesArgs<ExtArgs>
+    recursos?: boolean | Multas_Descargo_Formal$recursosArgs<ExtArgs>
+    procesosJudiciales?: boolean | Multas_Descargo_Formal$procesosJudicialesArgs<ExtArgs>
+    _count?: boolean | Multas_Descargo_FormalCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Descargo_Formal"]>
+
+  export type Multas_Descargo_FormalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notificacionId?: boolean
+    codigoIngreso?: boolean
+    fechaIngreso?: boolean
+    fechaPlazoRespuesta?: boolean
+    diasPlazoLegal?: boolean
+    estado?: boolean
+    montoImpugnadoUtm?: boolean
+    montoImpugnadoPesos?: boolean
+    resumenArgumentos?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogadoResponsable?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Descargo_Formal"]>
+
+  export type Multas_Descargo_FormalSelectScalar = {
+    id?: boolean
+    notificacionId?: boolean
+    codigoIngreso?: boolean
+    fechaIngreso?: boolean
+    fechaPlazoRespuesta?: boolean
+    diasPlazoLegal?: boolean
+    estado?: boolean
+    montoImpugnadoUtm?: boolean
+    montoImpugnadoPesos?: boolean
+    resumenArgumentos?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogadoResponsable?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Descargo_FormalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+    folios?: boolean | Multas_Descargo_Formal$foliosArgs<ExtArgs>
+    resuelves?: boolean | Multas_Descargo_Formal$resuelvesArgs<ExtArgs>
+    recursos?: boolean | Multas_Descargo_Formal$recursosArgs<ExtArgs>
+    procesosJudiciales?: boolean | Multas_Descargo_Formal$procesosJudicialesArgs<ExtArgs>
+    _count?: boolean | Multas_Descargo_FormalCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Multas_Descargo_FormalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificacion?: boolean | Multas_Notificacion_REXDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Descargo_FormalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Descargo_Formal"
+    objects: {
+      notificacion: Prisma.$Multas_Notificacion_REXPayload<ExtArgs>
+      folios: Prisma.$Multas_Descargo_FolioPayload<ExtArgs>[]
+      resuelves: Prisma.$Multas_ResuelvePayload<ExtArgs>[]
+      recursos: Prisma.$Multas_Recurso_AdminPayload<ExtArgs>[]
+      procesosJudiciales: Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      notificacionId: string
+      codigoIngreso: string
+      fechaIngreso: Date
+      fechaPlazoRespuesta: Date | null
+      diasPlazoLegal: number
+      estado: string
+      montoImpugnadoUtm: number
+      montoImpugnadoPesos: number | null
+      resumenArgumentos: string | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      abogadoResponsable: string | null
+      creadoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Descargo_Formal"]>
+    composites: {}
+  }
+
+  type Multas_Descargo_FormalGetPayload<S extends boolean | null | undefined | Multas_Descargo_FormalDefaultArgs> = $Result.GetResult<Prisma.$Multas_Descargo_FormalPayload, S>
+
+  type Multas_Descargo_FormalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Descargo_FormalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Descargo_FormalCountAggregateInputType | true
+    }
+
+  export interface Multas_Descargo_FormalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Descargo_Formal'], meta: { name: 'Multas_Descargo_Formal' } }
+    /**
+     * Find zero or one Multas_Descargo_Formal that matches the filter.
+     * @param {Multas_Descargo_FormalFindUniqueArgs} args - Arguments to find a Multas_Descargo_Formal
+     * @example
+     * // Get one Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Descargo_FormalFindUniqueArgs>(args: SelectSubset<T, Multas_Descargo_FormalFindUniqueArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Descargo_Formal that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Descargo_FormalFindUniqueOrThrowArgs} args - Arguments to find a Multas_Descargo_Formal
+     * @example
+     * // Get one Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Descargo_FormalFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Descargo_FormalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Descargo_Formal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalFindFirstArgs} args - Arguments to find a Multas_Descargo_Formal
+     * @example
+     * // Get one Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Descargo_FormalFindFirstArgs>(args?: SelectSubset<T, Multas_Descargo_FormalFindFirstArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Descargo_Formal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalFindFirstOrThrowArgs} args - Arguments to find a Multas_Descargo_Formal
+     * @example
+     * // Get one Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Descargo_FormalFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Descargo_FormalFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Descargo_Formals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Descargo_Formals
+     * const multas_Descargo_Formals = await prisma.multas_Descargo_Formal.findMany()
+     * 
+     * // Get first 10 Multas_Descargo_Formals
+     * const multas_Descargo_Formals = await prisma.multas_Descargo_Formal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Descargo_FormalWithIdOnly = await prisma.multas_Descargo_Formal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Descargo_FormalFindManyArgs>(args?: SelectSubset<T, Multas_Descargo_FormalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Descargo_Formal.
+     * @param {Multas_Descargo_FormalCreateArgs} args - Arguments to create a Multas_Descargo_Formal.
+     * @example
+     * // Create one Multas_Descargo_Formal
+     * const Multas_Descargo_Formal = await prisma.multas_Descargo_Formal.create({
+     *   data: {
+     *     // ... data to create a Multas_Descargo_Formal
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Descargo_FormalCreateArgs>(args: SelectSubset<T, Multas_Descargo_FormalCreateArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Descargo_Formals.
+     * @param {Multas_Descargo_FormalCreateManyArgs} args - Arguments to create many Multas_Descargo_Formals.
+     * @example
+     * // Create many Multas_Descargo_Formals
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Descargo_FormalCreateManyArgs>(args?: SelectSubset<T, Multas_Descargo_FormalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Descargo_Formals and returns the data saved in the database.
+     * @param {Multas_Descargo_FormalCreateManyAndReturnArgs} args - Arguments to create many Multas_Descargo_Formals.
+     * @example
+     * // Create many Multas_Descargo_Formals
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Descargo_Formals and only return the `id`
+     * const multas_Descargo_FormalWithIdOnly = await prisma.multas_Descargo_Formal.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Descargo_FormalCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Descargo_FormalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Descargo_Formal.
+     * @param {Multas_Descargo_FormalDeleteArgs} args - Arguments to delete one Multas_Descargo_Formal.
+     * @example
+     * // Delete one Multas_Descargo_Formal
+     * const Multas_Descargo_Formal = await prisma.multas_Descargo_Formal.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Descargo_Formal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Descargo_FormalDeleteArgs>(args: SelectSubset<T, Multas_Descargo_FormalDeleteArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Descargo_Formal.
+     * @param {Multas_Descargo_FormalUpdateArgs} args - Arguments to update one Multas_Descargo_Formal.
+     * @example
+     * // Update one Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Descargo_FormalUpdateArgs>(args: SelectSubset<T, Multas_Descargo_FormalUpdateArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Descargo_Formals.
+     * @param {Multas_Descargo_FormalDeleteManyArgs} args - Arguments to filter Multas_Descargo_Formals to delete.
+     * @example
+     * // Delete a few Multas_Descargo_Formals
+     * const { count } = await prisma.multas_Descargo_Formal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Descargo_FormalDeleteManyArgs>(args?: SelectSubset<T, Multas_Descargo_FormalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Descargo_Formals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Descargo_Formals
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Descargo_FormalUpdateManyArgs>(args: SelectSubset<T, Multas_Descargo_FormalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Descargo_Formal.
+     * @param {Multas_Descargo_FormalUpsertArgs} args - Arguments to update or create a Multas_Descargo_Formal.
+     * @example
+     * // Update or create a Multas_Descargo_Formal
+     * const multas_Descargo_Formal = await prisma.multas_Descargo_Formal.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Descargo_Formal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Descargo_Formal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Descargo_FormalUpsertArgs>(args: SelectSubset<T, Multas_Descargo_FormalUpsertArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Descargo_Formals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalCountArgs} args - Arguments to filter Multas_Descargo_Formals to count.
+     * @example
+     * // Count the number of Multas_Descargo_Formals
+     * const count = await prisma.multas_Descargo_Formal.count({
+     *   where: {
+     *     // ... the filter for the Multas_Descargo_Formals we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Descargo_FormalCountArgs>(
+      args?: Subset<T, Multas_Descargo_FormalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Descargo_FormalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Descargo_Formal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Descargo_FormalAggregateArgs>(args: Subset<T, Multas_Descargo_FormalAggregateArgs>): Prisma.PrismaPromise<GetMultas_Descargo_FormalAggregateType<T>>
+
+    /**
+     * Group by Multas_Descargo_Formal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FormalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Descargo_FormalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Descargo_FormalGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Descargo_FormalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Descargo_FormalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Descargo_FormalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Descargo_Formal model
+   */
+  readonly fields: Multas_Descargo_FormalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Descargo_Formal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Descargo_FormalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    notificacion<T extends Multas_Notificacion_REXDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Notificacion_REXDefaultArgs<ExtArgs>>): Prisma__Multas_Notificacion_REXClient<$Result.GetResult<Prisma.$Multas_Notificacion_REXPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    folios<T extends Multas_Descargo_Formal$foliosArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_Formal$foliosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findMany"> | Null>
+    resuelves<T extends Multas_Descargo_Formal$resuelvesArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_Formal$resuelvesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findMany"> | Null>
+    recursos<T extends Multas_Descargo_Formal$recursosArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_Formal$recursosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findMany"> | Null>
+    procesosJudiciales<T extends Multas_Descargo_Formal$procesosJudicialesArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_Formal$procesosJudicialesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Descargo_Formal model
+   */ 
+  interface Multas_Descargo_FormalFieldRefs {
+    readonly id: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly notificacionId: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly codigoIngreso: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly fechaIngreso: FieldRef<"Multas_Descargo_Formal", 'DateTime'>
+    readonly fechaPlazoRespuesta: FieldRef<"Multas_Descargo_Formal", 'DateTime'>
+    readonly diasPlazoLegal: FieldRef<"Multas_Descargo_Formal", 'Int'>
+    readonly estado: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly montoImpugnadoUtm: FieldRef<"Multas_Descargo_Formal", 'Float'>
+    readonly montoImpugnadoPesos: FieldRef<"Multas_Descargo_Formal", 'Float'>
+    readonly resumenArgumentos: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly documentoUrl: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly documentoNombre: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly abogadoResponsable: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly creadoPor: FieldRef<"Multas_Descargo_Formal", 'String'>
+    readonly createdAt: FieldRef<"Multas_Descargo_Formal", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Descargo_Formal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Descargo_Formal findUnique
+   */
+  export type Multas_Descargo_FormalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Formal to fetch.
+     */
+    where: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Formal findUniqueOrThrow
+   */
+  export type Multas_Descargo_FormalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Formal to fetch.
+     */
+    where: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Formal findFirst
+   */
+  export type Multas_Descargo_FormalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Formal to fetch.
+     */
+    where?: Multas_Descargo_FormalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Formals to fetch.
+     */
+    orderBy?: Multas_Descargo_FormalOrderByWithRelationInput | Multas_Descargo_FormalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Descargo_Formals.
+     */
+    cursor?: Multas_Descargo_FormalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Formals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Formals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Descargo_Formals.
+     */
+    distinct?: Multas_Descargo_FormalScalarFieldEnum | Multas_Descargo_FormalScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal findFirstOrThrow
+   */
+  export type Multas_Descargo_FormalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Formal to fetch.
+     */
+    where?: Multas_Descargo_FormalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Formals to fetch.
+     */
+    orderBy?: Multas_Descargo_FormalOrderByWithRelationInput | Multas_Descargo_FormalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Descargo_Formals.
+     */
+    cursor?: Multas_Descargo_FormalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Formals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Formals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Descargo_Formals.
+     */
+    distinct?: Multas_Descargo_FormalScalarFieldEnum | Multas_Descargo_FormalScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal findMany
+   */
+  export type Multas_Descargo_FormalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Formals to fetch.
+     */
+    where?: Multas_Descargo_FormalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Formals to fetch.
+     */
+    orderBy?: Multas_Descargo_FormalOrderByWithRelationInput | Multas_Descargo_FormalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Descargo_Formals.
+     */
+    cursor?: Multas_Descargo_FormalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Formals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Formals.
+     */
+    skip?: number
+    distinct?: Multas_Descargo_FormalScalarFieldEnum | Multas_Descargo_FormalScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal create
+   */
+  export type Multas_Descargo_FormalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Descargo_Formal.
+     */
+    data: XOR<Multas_Descargo_FormalCreateInput, Multas_Descargo_FormalUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Descargo_Formal createMany
+   */
+  export type Multas_Descargo_FormalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Descargo_Formals.
+     */
+    data: Multas_Descargo_FormalCreateManyInput | Multas_Descargo_FormalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Descargo_Formal createManyAndReturn
+   */
+  export type Multas_Descargo_FormalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Descargo_Formals.
+     */
+    data: Multas_Descargo_FormalCreateManyInput | Multas_Descargo_FormalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Descargo_Formal update
+   */
+  export type Multas_Descargo_FormalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Descargo_Formal.
+     */
+    data: XOR<Multas_Descargo_FormalUpdateInput, Multas_Descargo_FormalUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Descargo_Formal to update.
+     */
+    where: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Formal updateMany
+   */
+  export type Multas_Descargo_FormalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Descargo_Formals.
+     */
+    data: XOR<Multas_Descargo_FormalUpdateManyMutationInput, Multas_Descargo_FormalUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Descargo_Formals to update
+     */
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  /**
+   * Multas_Descargo_Formal upsert
+   */
+  export type Multas_Descargo_FormalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Descargo_Formal to update in case it exists.
+     */
+    where: Multas_Descargo_FormalWhereUniqueInput
+    /**
+     * In case the Multas_Descargo_Formal found by the `where` argument doesn't exist, create a new Multas_Descargo_Formal with this data.
+     */
+    create: XOR<Multas_Descargo_FormalCreateInput, Multas_Descargo_FormalUncheckedCreateInput>
+    /**
+     * In case the Multas_Descargo_Formal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Descargo_FormalUpdateInput, Multas_Descargo_FormalUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Descargo_Formal delete
+   */
+  export type Multas_Descargo_FormalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Descargo_Formal to delete.
+     */
+    where: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Formal deleteMany
+   */
+  export type Multas_Descargo_FormalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Descargo_Formals to delete
+     */
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  /**
+   * Multas_Descargo_Formal.folios
+   */
+  export type Multas_Descargo_Formal$foliosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    where?: Multas_Descargo_FolioWhereInput
+    orderBy?: Multas_Descargo_FolioOrderByWithRelationInput | Multas_Descargo_FolioOrderByWithRelationInput[]
+    cursor?: Multas_Descargo_FolioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Descargo_FolioScalarFieldEnum | Multas_Descargo_FolioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal.resuelves
+   */
+  export type Multas_Descargo_Formal$resuelvesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    where?: Multas_ResuelveWhereInput
+    orderBy?: Multas_ResuelveOrderByWithRelationInput | Multas_ResuelveOrderByWithRelationInput[]
+    cursor?: Multas_ResuelveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_ResuelveScalarFieldEnum | Multas_ResuelveScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal.recursos
+   */
+  export type Multas_Descargo_Formal$recursosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    where?: Multas_Recurso_AdminWhereInput
+    orderBy?: Multas_Recurso_AdminOrderByWithRelationInput | Multas_Recurso_AdminOrderByWithRelationInput[]
+    cursor?: Multas_Recurso_AdminWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Recurso_AdminScalarFieldEnum | Multas_Recurso_AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal.procesosJudiciales
+   */
+  export type Multas_Descargo_Formal$procesosJudicialesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    where?: Multas_Proceso_JudicialWhereInput
+    orderBy?: Multas_Proceso_JudicialOrderByWithRelationInput | Multas_Proceso_JudicialOrderByWithRelationInput[]
+    cursor?: Multas_Proceso_JudicialWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Proceso_JudicialScalarFieldEnum | Multas_Proceso_JudicialScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Formal without action
+   */
+  export type Multas_Descargo_FormalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Formal
+     */
+    select?: Multas_Descargo_FormalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FormalInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Descargo_Folio
+   */
+
+  export type AggregateMultas_Descargo_Folio = {
+    _count: Multas_Descargo_FolioCountAggregateOutputType | null
+    _avg: Multas_Descargo_FolioAvgAggregateOutputType | null
+    _sum: Multas_Descargo_FolioSumAggregateOutputType | null
+    _min: Multas_Descargo_FolioMinAggregateOutputType | null
+    _max: Multas_Descargo_FolioMaxAggregateOutputType | null
+  }
+
+  export type Multas_Descargo_FolioAvgAggregateOutputType = {
+    rbd: number | null
+    montoNotificadoUtm: number | null
+    montoImpugnadoUtm: number | null
+    montoRebajadoUtm: number | null
+  }
+
+  export type Multas_Descargo_FolioSumAggregateOutputType = {
+    rbd: number | null
+    montoNotificadoUtm: number | null
+    montoImpugnadoUtm: number | null
+    montoRebajadoUtm: number | null
+  }
+
+  export type Multas_Descargo_FolioMinAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    notificacionItemId: string | null
+    folio: string | null
+    rbd: number | null
+    aspecto: string | null
+    montoNotificadoUtm: number | null
+    montoImpugnadoUtm: number | null
+    montoRebajadoUtm: number | null
+    estado: string | null
+    argumentoPrincipal: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Descargo_FolioMaxAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    notificacionItemId: string | null
+    folio: string | null
+    rbd: number | null
+    aspecto: string | null
+    montoNotificadoUtm: number | null
+    montoImpugnadoUtm: number | null
+    montoRebajadoUtm: number | null
+    estado: string | null
+    argumentoPrincipal: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Descargo_FolioCountAggregateOutputType = {
+    id: number
+    descargoId: number
+    notificacionItemId: number
+    folio: number
+    rbd: number
+    aspecto: number
+    montoNotificadoUtm: number
+    montoImpugnadoUtm: number
+    montoRebajadoUtm: number
+    estado: number
+    argumentoPrincipal: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Descargo_FolioAvgAggregateInputType = {
+    rbd?: true
+    montoNotificadoUtm?: true
+    montoImpugnadoUtm?: true
+    montoRebajadoUtm?: true
+  }
+
+  export type Multas_Descargo_FolioSumAggregateInputType = {
+    rbd?: true
+    montoNotificadoUtm?: true
+    montoImpugnadoUtm?: true
+    montoRebajadoUtm?: true
+  }
+
+  export type Multas_Descargo_FolioMinAggregateInputType = {
+    id?: true
+    descargoId?: true
+    notificacionItemId?: true
+    folio?: true
+    rbd?: true
+    aspecto?: true
+    montoNotificadoUtm?: true
+    montoImpugnadoUtm?: true
+    montoRebajadoUtm?: true
+    estado?: true
+    argumentoPrincipal?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Descargo_FolioMaxAggregateInputType = {
+    id?: true
+    descargoId?: true
+    notificacionItemId?: true
+    folio?: true
+    rbd?: true
+    aspecto?: true
+    montoNotificadoUtm?: true
+    montoImpugnadoUtm?: true
+    montoRebajadoUtm?: true
+    estado?: true
+    argumentoPrincipal?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Descargo_FolioCountAggregateInputType = {
+    id?: true
+    descargoId?: true
+    notificacionItemId?: true
+    folio?: true
+    rbd?: true
+    aspecto?: true
+    montoNotificadoUtm?: true
+    montoImpugnadoUtm?: true
+    montoRebajadoUtm?: true
+    estado?: true
+    argumentoPrincipal?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Descargo_FolioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Descargo_Folio to aggregate.
+     */
+    where?: Multas_Descargo_FolioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Folios to fetch.
+     */
+    orderBy?: Multas_Descargo_FolioOrderByWithRelationInput | Multas_Descargo_FolioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Descargo_FolioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Folios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Folios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Descargo_Folios
+    **/
+    _count?: true | Multas_Descargo_FolioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Descargo_FolioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Descargo_FolioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Descargo_FolioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Descargo_FolioMaxAggregateInputType
+  }
+
+  export type GetMultas_Descargo_FolioAggregateType<T extends Multas_Descargo_FolioAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Descargo_Folio]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Descargo_Folio[P]>
+      : GetScalarType<T[P], AggregateMultas_Descargo_Folio[P]>
+  }
+
+
+
+
+  export type Multas_Descargo_FolioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Descargo_FolioWhereInput
+    orderBy?: Multas_Descargo_FolioOrderByWithAggregationInput | Multas_Descargo_FolioOrderByWithAggregationInput[]
+    by: Multas_Descargo_FolioScalarFieldEnum[] | Multas_Descargo_FolioScalarFieldEnum
+    having?: Multas_Descargo_FolioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Descargo_FolioCountAggregateInputType | true
+    _avg?: Multas_Descargo_FolioAvgAggregateInputType
+    _sum?: Multas_Descargo_FolioSumAggregateInputType
+    _min?: Multas_Descargo_FolioMinAggregateInputType
+    _max?: Multas_Descargo_FolioMaxAggregateInputType
+  }
+
+  export type Multas_Descargo_FolioGroupByOutputType = {
+    id: string
+    descargoId: string
+    notificacionItemId: string | null
+    folio: string
+    rbd: number | null
+    aspecto: string
+    montoNotificadoUtm: number
+    montoImpugnadoUtm: number
+    montoRebajadoUtm: number
+    estado: string
+    argumentoPrincipal: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Descargo_FolioCountAggregateOutputType | null
+    _avg: Multas_Descargo_FolioAvgAggregateOutputType | null
+    _sum: Multas_Descargo_FolioSumAggregateOutputType | null
+    _min: Multas_Descargo_FolioMinAggregateOutputType | null
+    _max: Multas_Descargo_FolioMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Descargo_FolioGroupByPayload<T extends Multas_Descargo_FolioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Descargo_FolioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Descargo_FolioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Descargo_FolioGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Descargo_FolioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Descargo_FolioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    notificacionItemId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    aspecto?: boolean
+    montoNotificadoUtm?: boolean
+    montoImpugnadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    estado?: boolean
+    argumentoPrincipal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Descargo_Folio"]>
+
+  export type Multas_Descargo_FolioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    notificacionItemId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    aspecto?: boolean
+    montoNotificadoUtm?: boolean
+    montoImpugnadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    estado?: boolean
+    argumentoPrincipal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Descargo_Folio"]>
+
+  export type Multas_Descargo_FolioSelectScalar = {
+    id?: boolean
+    descargoId?: boolean
+    notificacionItemId?: boolean
+    folio?: boolean
+    rbd?: boolean
+    aspecto?: boolean
+    montoNotificadoUtm?: boolean
+    montoImpugnadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    estado?: boolean
+    argumentoPrincipal?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Descargo_FolioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+  export type Multas_Descargo_FolioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Descargo_FolioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Descargo_Folio"
+    objects: {
+      descargo: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      descargoId: string
+      notificacionItemId: string | null
+      folio: string
+      rbd: number | null
+      aspecto: string
+      montoNotificadoUtm: number
+      montoImpugnadoUtm: number
+      montoRebajadoUtm: number
+      estado: string
+      argumentoPrincipal: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Descargo_Folio"]>
+    composites: {}
+  }
+
+  type Multas_Descargo_FolioGetPayload<S extends boolean | null | undefined | Multas_Descargo_FolioDefaultArgs> = $Result.GetResult<Prisma.$Multas_Descargo_FolioPayload, S>
+
+  type Multas_Descargo_FolioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Descargo_FolioFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Descargo_FolioCountAggregateInputType | true
+    }
+
+  export interface Multas_Descargo_FolioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Descargo_Folio'], meta: { name: 'Multas_Descargo_Folio' } }
+    /**
+     * Find zero or one Multas_Descargo_Folio that matches the filter.
+     * @param {Multas_Descargo_FolioFindUniqueArgs} args - Arguments to find a Multas_Descargo_Folio
+     * @example
+     * // Get one Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Descargo_FolioFindUniqueArgs>(args: SelectSubset<T, Multas_Descargo_FolioFindUniqueArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Descargo_Folio that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Descargo_FolioFindUniqueOrThrowArgs} args - Arguments to find a Multas_Descargo_Folio
+     * @example
+     * // Get one Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Descargo_FolioFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Descargo_FolioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Descargo_Folio that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioFindFirstArgs} args - Arguments to find a Multas_Descargo_Folio
+     * @example
+     * // Get one Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Descargo_FolioFindFirstArgs>(args?: SelectSubset<T, Multas_Descargo_FolioFindFirstArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Descargo_Folio that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioFindFirstOrThrowArgs} args - Arguments to find a Multas_Descargo_Folio
+     * @example
+     * // Get one Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Descargo_FolioFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Descargo_FolioFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Descargo_Folios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Descargo_Folios
+     * const multas_Descargo_Folios = await prisma.multas_Descargo_Folio.findMany()
+     * 
+     * // Get first 10 Multas_Descargo_Folios
+     * const multas_Descargo_Folios = await prisma.multas_Descargo_Folio.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Descargo_FolioWithIdOnly = await prisma.multas_Descargo_Folio.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Descargo_FolioFindManyArgs>(args?: SelectSubset<T, Multas_Descargo_FolioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Descargo_Folio.
+     * @param {Multas_Descargo_FolioCreateArgs} args - Arguments to create a Multas_Descargo_Folio.
+     * @example
+     * // Create one Multas_Descargo_Folio
+     * const Multas_Descargo_Folio = await prisma.multas_Descargo_Folio.create({
+     *   data: {
+     *     // ... data to create a Multas_Descargo_Folio
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Descargo_FolioCreateArgs>(args: SelectSubset<T, Multas_Descargo_FolioCreateArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Descargo_Folios.
+     * @param {Multas_Descargo_FolioCreateManyArgs} args - Arguments to create many Multas_Descargo_Folios.
+     * @example
+     * // Create many Multas_Descargo_Folios
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Descargo_FolioCreateManyArgs>(args?: SelectSubset<T, Multas_Descargo_FolioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Descargo_Folios and returns the data saved in the database.
+     * @param {Multas_Descargo_FolioCreateManyAndReturnArgs} args - Arguments to create many Multas_Descargo_Folios.
+     * @example
+     * // Create many Multas_Descargo_Folios
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Descargo_Folios and only return the `id`
+     * const multas_Descargo_FolioWithIdOnly = await prisma.multas_Descargo_Folio.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Descargo_FolioCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Descargo_FolioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Descargo_Folio.
+     * @param {Multas_Descargo_FolioDeleteArgs} args - Arguments to delete one Multas_Descargo_Folio.
+     * @example
+     * // Delete one Multas_Descargo_Folio
+     * const Multas_Descargo_Folio = await prisma.multas_Descargo_Folio.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Descargo_Folio
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Descargo_FolioDeleteArgs>(args: SelectSubset<T, Multas_Descargo_FolioDeleteArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Descargo_Folio.
+     * @param {Multas_Descargo_FolioUpdateArgs} args - Arguments to update one Multas_Descargo_Folio.
+     * @example
+     * // Update one Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Descargo_FolioUpdateArgs>(args: SelectSubset<T, Multas_Descargo_FolioUpdateArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Descargo_Folios.
+     * @param {Multas_Descargo_FolioDeleteManyArgs} args - Arguments to filter Multas_Descargo_Folios to delete.
+     * @example
+     * // Delete a few Multas_Descargo_Folios
+     * const { count } = await prisma.multas_Descargo_Folio.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Descargo_FolioDeleteManyArgs>(args?: SelectSubset<T, Multas_Descargo_FolioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Descargo_Folios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Descargo_Folios
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Descargo_FolioUpdateManyArgs>(args: SelectSubset<T, Multas_Descargo_FolioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Descargo_Folio.
+     * @param {Multas_Descargo_FolioUpsertArgs} args - Arguments to update or create a Multas_Descargo_Folio.
+     * @example
+     * // Update or create a Multas_Descargo_Folio
+     * const multas_Descargo_Folio = await prisma.multas_Descargo_Folio.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Descargo_Folio
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Descargo_Folio we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Descargo_FolioUpsertArgs>(args: SelectSubset<T, Multas_Descargo_FolioUpsertArgs<ExtArgs>>): Prisma__Multas_Descargo_FolioClient<$Result.GetResult<Prisma.$Multas_Descargo_FolioPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Descargo_Folios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioCountArgs} args - Arguments to filter Multas_Descargo_Folios to count.
+     * @example
+     * // Count the number of Multas_Descargo_Folios
+     * const count = await prisma.multas_Descargo_Folio.count({
+     *   where: {
+     *     // ... the filter for the Multas_Descargo_Folios we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Descargo_FolioCountArgs>(
+      args?: Subset<T, Multas_Descargo_FolioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Descargo_FolioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Descargo_Folio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Descargo_FolioAggregateArgs>(args: Subset<T, Multas_Descargo_FolioAggregateArgs>): Prisma.PrismaPromise<GetMultas_Descargo_FolioAggregateType<T>>
+
+    /**
+     * Group by Multas_Descargo_Folio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Descargo_FolioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Descargo_FolioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Descargo_FolioGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Descargo_FolioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Descargo_FolioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Descargo_FolioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Descargo_Folio model
+   */
+  readonly fields: Multas_Descargo_FolioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Descargo_Folio.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Descargo_FolioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    descargo<T extends Multas_Descargo_FormalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_FormalDefaultArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Descargo_Folio model
+   */ 
+  interface Multas_Descargo_FolioFieldRefs {
+    readonly id: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly descargoId: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly notificacionItemId: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly folio: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly rbd: FieldRef<"Multas_Descargo_Folio", 'Int'>
+    readonly aspecto: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly montoNotificadoUtm: FieldRef<"Multas_Descargo_Folio", 'Float'>
+    readonly montoImpugnadoUtm: FieldRef<"Multas_Descargo_Folio", 'Float'>
+    readonly montoRebajadoUtm: FieldRef<"Multas_Descargo_Folio", 'Float'>
+    readonly estado: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly argumentoPrincipal: FieldRef<"Multas_Descargo_Folio", 'String'>
+    readonly createdAt: FieldRef<"Multas_Descargo_Folio", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Descargo_Folio", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Descargo_Folio findUnique
+   */
+  export type Multas_Descargo_FolioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Folio to fetch.
+     */
+    where: Multas_Descargo_FolioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Folio findUniqueOrThrow
+   */
+  export type Multas_Descargo_FolioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Folio to fetch.
+     */
+    where: Multas_Descargo_FolioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Folio findFirst
+   */
+  export type Multas_Descargo_FolioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Folio to fetch.
+     */
+    where?: Multas_Descargo_FolioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Folios to fetch.
+     */
+    orderBy?: Multas_Descargo_FolioOrderByWithRelationInput | Multas_Descargo_FolioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Descargo_Folios.
+     */
+    cursor?: Multas_Descargo_FolioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Folios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Folios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Descargo_Folios.
+     */
+    distinct?: Multas_Descargo_FolioScalarFieldEnum | Multas_Descargo_FolioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Folio findFirstOrThrow
+   */
+  export type Multas_Descargo_FolioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Folio to fetch.
+     */
+    where?: Multas_Descargo_FolioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Folios to fetch.
+     */
+    orderBy?: Multas_Descargo_FolioOrderByWithRelationInput | Multas_Descargo_FolioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Descargo_Folios.
+     */
+    cursor?: Multas_Descargo_FolioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Folios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Folios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Descargo_Folios.
+     */
+    distinct?: Multas_Descargo_FolioScalarFieldEnum | Multas_Descargo_FolioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Folio findMany
+   */
+  export type Multas_Descargo_FolioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Descargo_Folios to fetch.
+     */
+    where?: Multas_Descargo_FolioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Descargo_Folios to fetch.
+     */
+    orderBy?: Multas_Descargo_FolioOrderByWithRelationInput | Multas_Descargo_FolioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Descargo_Folios.
+     */
+    cursor?: Multas_Descargo_FolioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Descargo_Folios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Descargo_Folios.
+     */
+    skip?: number
+    distinct?: Multas_Descargo_FolioScalarFieldEnum | Multas_Descargo_FolioScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Descargo_Folio create
+   */
+  export type Multas_Descargo_FolioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Descargo_Folio.
+     */
+    data: XOR<Multas_Descargo_FolioCreateInput, Multas_Descargo_FolioUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Descargo_Folio createMany
+   */
+  export type Multas_Descargo_FolioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Descargo_Folios.
+     */
+    data: Multas_Descargo_FolioCreateManyInput | Multas_Descargo_FolioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Descargo_Folio createManyAndReturn
+   */
+  export type Multas_Descargo_FolioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Descargo_Folios.
+     */
+    data: Multas_Descargo_FolioCreateManyInput | Multas_Descargo_FolioCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Descargo_Folio update
+   */
+  export type Multas_Descargo_FolioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Descargo_Folio.
+     */
+    data: XOR<Multas_Descargo_FolioUpdateInput, Multas_Descargo_FolioUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Descargo_Folio to update.
+     */
+    where: Multas_Descargo_FolioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Folio updateMany
+   */
+  export type Multas_Descargo_FolioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Descargo_Folios.
+     */
+    data: XOR<Multas_Descargo_FolioUpdateManyMutationInput, Multas_Descargo_FolioUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Descargo_Folios to update
+     */
+    where?: Multas_Descargo_FolioWhereInput
+  }
+
+  /**
+   * Multas_Descargo_Folio upsert
+   */
+  export type Multas_Descargo_FolioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Descargo_Folio to update in case it exists.
+     */
+    where: Multas_Descargo_FolioWhereUniqueInput
+    /**
+     * In case the Multas_Descargo_Folio found by the `where` argument doesn't exist, create a new Multas_Descargo_Folio with this data.
+     */
+    create: XOR<Multas_Descargo_FolioCreateInput, Multas_Descargo_FolioUncheckedCreateInput>
+    /**
+     * In case the Multas_Descargo_Folio was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Descargo_FolioUpdateInput, Multas_Descargo_FolioUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Descargo_Folio delete
+   */
+  export type Multas_Descargo_FolioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Descargo_Folio to delete.
+     */
+    where: Multas_Descargo_FolioWhereUniqueInput
+  }
+
+  /**
+   * Multas_Descargo_Folio deleteMany
+   */
+  export type Multas_Descargo_FolioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Descargo_Folios to delete
+     */
+    where?: Multas_Descargo_FolioWhereInput
+  }
+
+  /**
+   * Multas_Descargo_Folio without action
+   */
+  export type Multas_Descargo_FolioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Descargo_Folio
+     */
+    select?: Multas_Descargo_FolioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Descargo_FolioInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Resuelve
+   */
+
+  export type AggregateMultas_Resuelve = {
+    _count: Multas_ResuelveCountAggregateOutputType | null
+    _avg: Multas_ResuelveAvgAggregateOutputType | null
+    _sum: Multas_ResuelveSumAggregateOutputType | null
+    _min: Multas_ResuelveMinAggregateOutputType | null
+    _max: Multas_ResuelveMaxAggregateOutputType | null
+  }
+
+  export type Multas_ResuelveAvgAggregateOutputType = {
+    montoRatificadoUtm: number | null
+    montoRebajadoUtm: number | null
+    porcentajeRebaja: number | null
+  }
+
+  export type Multas_ResuelveSumAggregateOutputType = {
+    montoRatificadoUtm: number | null
+    montoRebajadoUtm: number | null
+    porcentajeRebaja: number | null
+  }
+
+  export type Multas_ResuelveMinAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    numeroResolucion: string | null
+    fechaResolucion: Date | null
+    fechaNotificacion: Date | null
+    dictamen: string | null
+    montoRatificadoUtm: number | null
+    montoRebajadoUtm: number | null
+    porcentajeRebaja: number | null
+    fundamentoResuelve: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_ResuelveMaxAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    numeroResolucion: string | null
+    fechaResolucion: Date | null
+    fechaNotificacion: Date | null
+    dictamen: string | null
+    montoRatificadoUtm: number | null
+    montoRebajadoUtm: number | null
+    porcentajeRebaja: number | null
+    fundamentoResuelve: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_ResuelveCountAggregateOutputType = {
+    id: number
+    descargoId: number
+    numeroResolucion: number
+    fechaResolucion: number
+    fechaNotificacion: number
+    dictamen: number
+    montoRatificadoUtm: number
+    montoRebajadoUtm: number
+    porcentajeRebaja: number
+    fundamentoResuelve: number
+    documentoUrl: number
+    documentoNombre: number
+    registradoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_ResuelveAvgAggregateInputType = {
+    montoRatificadoUtm?: true
+    montoRebajadoUtm?: true
+    porcentajeRebaja?: true
+  }
+
+  export type Multas_ResuelveSumAggregateInputType = {
+    montoRatificadoUtm?: true
+    montoRebajadoUtm?: true
+    porcentajeRebaja?: true
+  }
+
+  export type Multas_ResuelveMinAggregateInputType = {
+    id?: true
+    descargoId?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    fechaNotificacion?: true
+    dictamen?: true
+    montoRatificadoUtm?: true
+    montoRebajadoUtm?: true
+    porcentajeRebaja?: true
+    fundamentoResuelve?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_ResuelveMaxAggregateInputType = {
+    id?: true
+    descargoId?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    fechaNotificacion?: true
+    dictamen?: true
+    montoRatificadoUtm?: true
+    montoRebajadoUtm?: true
+    porcentajeRebaja?: true
+    fundamentoResuelve?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_ResuelveCountAggregateInputType = {
+    id?: true
+    descargoId?: true
+    numeroResolucion?: true
+    fechaResolucion?: true
+    fechaNotificacion?: true
+    dictamen?: true
+    montoRatificadoUtm?: true
+    montoRebajadoUtm?: true
+    porcentajeRebaja?: true
+    fundamentoResuelve?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_ResuelveAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Resuelve to aggregate.
+     */
+    where?: Multas_ResuelveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Resuelves to fetch.
+     */
+    orderBy?: Multas_ResuelveOrderByWithRelationInput | Multas_ResuelveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_ResuelveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Resuelves from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Resuelves.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Resuelves
+    **/
+    _count?: true | Multas_ResuelveCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_ResuelveAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_ResuelveSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_ResuelveMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_ResuelveMaxAggregateInputType
+  }
+
+  export type GetMultas_ResuelveAggregateType<T extends Multas_ResuelveAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Resuelve]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Resuelve[P]>
+      : GetScalarType<T[P], AggregateMultas_Resuelve[P]>
+  }
+
+
+
+
+  export type Multas_ResuelveGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_ResuelveWhereInput
+    orderBy?: Multas_ResuelveOrderByWithAggregationInput | Multas_ResuelveOrderByWithAggregationInput[]
+    by: Multas_ResuelveScalarFieldEnum[] | Multas_ResuelveScalarFieldEnum
+    having?: Multas_ResuelveScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_ResuelveCountAggregateInputType | true
+    _avg?: Multas_ResuelveAvgAggregateInputType
+    _sum?: Multas_ResuelveSumAggregateInputType
+    _min?: Multas_ResuelveMinAggregateInputType
+    _max?: Multas_ResuelveMaxAggregateInputType
+  }
+
+  export type Multas_ResuelveGroupByOutputType = {
+    id: string
+    descargoId: string
+    numeroResolucion: string
+    fechaResolucion: Date
+    fechaNotificacion: Date | null
+    dictamen: string
+    montoRatificadoUtm: number
+    montoRebajadoUtm: number
+    porcentajeRebaja: number
+    fundamentoResuelve: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_ResuelveCountAggregateOutputType | null
+    _avg: Multas_ResuelveAvgAggregateOutputType | null
+    _sum: Multas_ResuelveSumAggregateOutputType | null
+    _min: Multas_ResuelveMinAggregateOutputType | null
+    _max: Multas_ResuelveMaxAggregateOutputType | null
+  }
+
+  type GetMultas_ResuelveGroupByPayload<T extends Multas_ResuelveGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_ResuelveGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_ResuelveGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_ResuelveGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_ResuelveGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_ResuelveSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    fechaNotificacion?: boolean
+    dictamen?: boolean
+    montoRatificadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    porcentajeRebaja?: boolean
+    fundamentoResuelve?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Resuelve"]>
+
+  export type Multas_ResuelveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    fechaNotificacion?: boolean
+    dictamen?: boolean
+    montoRatificadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    porcentajeRebaja?: boolean
+    fundamentoResuelve?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Resuelve"]>
+
+  export type Multas_ResuelveSelectScalar = {
+    id?: boolean
+    descargoId?: boolean
+    numeroResolucion?: boolean
+    fechaResolucion?: boolean
+    fechaNotificacion?: boolean
+    dictamen?: boolean
+    montoRatificadoUtm?: boolean
+    montoRebajadoUtm?: boolean
+    porcentajeRebaja?: boolean
+    fundamentoResuelve?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_ResuelveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+  export type Multas_ResuelveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_ResuelvePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Resuelve"
+    objects: {
+      descargo: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      descargoId: string
+      numeroResolucion: string
+      fechaResolucion: Date
+      fechaNotificacion: Date | null
+      dictamen: string
+      montoRatificadoUtm: number
+      montoRebajadoUtm: number
+      porcentajeRebaja: number
+      fundamentoResuelve: string | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      registradoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Resuelve"]>
+    composites: {}
+  }
+
+  type Multas_ResuelveGetPayload<S extends boolean | null | undefined | Multas_ResuelveDefaultArgs> = $Result.GetResult<Prisma.$Multas_ResuelvePayload, S>
+
+  type Multas_ResuelveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_ResuelveFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_ResuelveCountAggregateInputType | true
+    }
+
+  export interface Multas_ResuelveDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Resuelve'], meta: { name: 'Multas_Resuelve' } }
+    /**
+     * Find zero or one Multas_Resuelve that matches the filter.
+     * @param {Multas_ResuelveFindUniqueArgs} args - Arguments to find a Multas_Resuelve
+     * @example
+     * // Get one Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_ResuelveFindUniqueArgs>(args: SelectSubset<T, Multas_ResuelveFindUniqueArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Resuelve that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_ResuelveFindUniqueOrThrowArgs} args - Arguments to find a Multas_Resuelve
+     * @example
+     * // Get one Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_ResuelveFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_ResuelveFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Resuelve that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveFindFirstArgs} args - Arguments to find a Multas_Resuelve
+     * @example
+     * // Get one Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_ResuelveFindFirstArgs>(args?: SelectSubset<T, Multas_ResuelveFindFirstArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Resuelve that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveFindFirstOrThrowArgs} args - Arguments to find a Multas_Resuelve
+     * @example
+     * // Get one Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_ResuelveFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_ResuelveFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Resuelves that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Resuelves
+     * const multas_Resuelves = await prisma.multas_Resuelve.findMany()
+     * 
+     * // Get first 10 Multas_Resuelves
+     * const multas_Resuelves = await prisma.multas_Resuelve.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_ResuelveWithIdOnly = await prisma.multas_Resuelve.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_ResuelveFindManyArgs>(args?: SelectSubset<T, Multas_ResuelveFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Resuelve.
+     * @param {Multas_ResuelveCreateArgs} args - Arguments to create a Multas_Resuelve.
+     * @example
+     * // Create one Multas_Resuelve
+     * const Multas_Resuelve = await prisma.multas_Resuelve.create({
+     *   data: {
+     *     // ... data to create a Multas_Resuelve
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_ResuelveCreateArgs>(args: SelectSubset<T, Multas_ResuelveCreateArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Resuelves.
+     * @param {Multas_ResuelveCreateManyArgs} args - Arguments to create many Multas_Resuelves.
+     * @example
+     * // Create many Multas_Resuelves
+     * const multas_Resuelve = await prisma.multas_Resuelve.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_ResuelveCreateManyArgs>(args?: SelectSubset<T, Multas_ResuelveCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Resuelves and returns the data saved in the database.
+     * @param {Multas_ResuelveCreateManyAndReturnArgs} args - Arguments to create many Multas_Resuelves.
+     * @example
+     * // Create many Multas_Resuelves
+     * const multas_Resuelve = await prisma.multas_Resuelve.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Resuelves and only return the `id`
+     * const multas_ResuelveWithIdOnly = await prisma.multas_Resuelve.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_ResuelveCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_ResuelveCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Resuelve.
+     * @param {Multas_ResuelveDeleteArgs} args - Arguments to delete one Multas_Resuelve.
+     * @example
+     * // Delete one Multas_Resuelve
+     * const Multas_Resuelve = await prisma.multas_Resuelve.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Resuelve
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_ResuelveDeleteArgs>(args: SelectSubset<T, Multas_ResuelveDeleteArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Resuelve.
+     * @param {Multas_ResuelveUpdateArgs} args - Arguments to update one Multas_Resuelve.
+     * @example
+     * // Update one Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_ResuelveUpdateArgs>(args: SelectSubset<T, Multas_ResuelveUpdateArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Resuelves.
+     * @param {Multas_ResuelveDeleteManyArgs} args - Arguments to filter Multas_Resuelves to delete.
+     * @example
+     * // Delete a few Multas_Resuelves
+     * const { count } = await prisma.multas_Resuelve.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_ResuelveDeleteManyArgs>(args?: SelectSubset<T, Multas_ResuelveDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Resuelves.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Resuelves
+     * const multas_Resuelve = await prisma.multas_Resuelve.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_ResuelveUpdateManyArgs>(args: SelectSubset<T, Multas_ResuelveUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Resuelve.
+     * @param {Multas_ResuelveUpsertArgs} args - Arguments to update or create a Multas_Resuelve.
+     * @example
+     * // Update or create a Multas_Resuelve
+     * const multas_Resuelve = await prisma.multas_Resuelve.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Resuelve
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Resuelve we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_ResuelveUpsertArgs>(args: SelectSubset<T, Multas_ResuelveUpsertArgs<ExtArgs>>): Prisma__Multas_ResuelveClient<$Result.GetResult<Prisma.$Multas_ResuelvePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Resuelves.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveCountArgs} args - Arguments to filter Multas_Resuelves to count.
+     * @example
+     * // Count the number of Multas_Resuelves
+     * const count = await prisma.multas_Resuelve.count({
+     *   where: {
+     *     // ... the filter for the Multas_Resuelves we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_ResuelveCountArgs>(
+      args?: Subset<T, Multas_ResuelveCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_ResuelveCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Resuelve.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_ResuelveAggregateArgs>(args: Subset<T, Multas_ResuelveAggregateArgs>): Prisma.PrismaPromise<GetMultas_ResuelveAggregateType<T>>
+
+    /**
+     * Group by Multas_Resuelve.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_ResuelveGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_ResuelveGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_ResuelveGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_ResuelveGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_ResuelveGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_ResuelveGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Resuelve model
+   */
+  readonly fields: Multas_ResuelveFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Resuelve.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_ResuelveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    descargo<T extends Multas_Descargo_FormalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_FormalDefaultArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Resuelve model
+   */ 
+  interface Multas_ResuelveFieldRefs {
+    readonly id: FieldRef<"Multas_Resuelve", 'String'>
+    readonly descargoId: FieldRef<"Multas_Resuelve", 'String'>
+    readonly numeroResolucion: FieldRef<"Multas_Resuelve", 'String'>
+    readonly fechaResolucion: FieldRef<"Multas_Resuelve", 'DateTime'>
+    readonly fechaNotificacion: FieldRef<"Multas_Resuelve", 'DateTime'>
+    readonly dictamen: FieldRef<"Multas_Resuelve", 'String'>
+    readonly montoRatificadoUtm: FieldRef<"Multas_Resuelve", 'Float'>
+    readonly montoRebajadoUtm: FieldRef<"Multas_Resuelve", 'Float'>
+    readonly porcentajeRebaja: FieldRef<"Multas_Resuelve", 'Float'>
+    readonly fundamentoResuelve: FieldRef<"Multas_Resuelve", 'String'>
+    readonly documentoUrl: FieldRef<"Multas_Resuelve", 'String'>
+    readonly documentoNombre: FieldRef<"Multas_Resuelve", 'String'>
+    readonly registradoPor: FieldRef<"Multas_Resuelve", 'String'>
+    readonly createdAt: FieldRef<"Multas_Resuelve", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Resuelve", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Resuelve findUnique
+   */
+  export type Multas_ResuelveFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Resuelve to fetch.
+     */
+    where: Multas_ResuelveWhereUniqueInput
+  }
+
+  /**
+   * Multas_Resuelve findUniqueOrThrow
+   */
+  export type Multas_ResuelveFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Resuelve to fetch.
+     */
+    where: Multas_ResuelveWhereUniqueInput
+  }
+
+  /**
+   * Multas_Resuelve findFirst
+   */
+  export type Multas_ResuelveFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Resuelve to fetch.
+     */
+    where?: Multas_ResuelveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Resuelves to fetch.
+     */
+    orderBy?: Multas_ResuelveOrderByWithRelationInput | Multas_ResuelveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Resuelves.
+     */
+    cursor?: Multas_ResuelveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Resuelves from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Resuelves.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Resuelves.
+     */
+    distinct?: Multas_ResuelveScalarFieldEnum | Multas_ResuelveScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Resuelve findFirstOrThrow
+   */
+  export type Multas_ResuelveFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Resuelve to fetch.
+     */
+    where?: Multas_ResuelveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Resuelves to fetch.
+     */
+    orderBy?: Multas_ResuelveOrderByWithRelationInput | Multas_ResuelveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Resuelves.
+     */
+    cursor?: Multas_ResuelveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Resuelves from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Resuelves.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Resuelves.
+     */
+    distinct?: Multas_ResuelveScalarFieldEnum | Multas_ResuelveScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Resuelve findMany
+   */
+  export type Multas_ResuelveFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Resuelves to fetch.
+     */
+    where?: Multas_ResuelveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Resuelves to fetch.
+     */
+    orderBy?: Multas_ResuelveOrderByWithRelationInput | Multas_ResuelveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Resuelves.
+     */
+    cursor?: Multas_ResuelveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Resuelves from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Resuelves.
+     */
+    skip?: number
+    distinct?: Multas_ResuelveScalarFieldEnum | Multas_ResuelveScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Resuelve create
+   */
+  export type Multas_ResuelveCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Resuelve.
+     */
+    data: XOR<Multas_ResuelveCreateInput, Multas_ResuelveUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Resuelve createMany
+   */
+  export type Multas_ResuelveCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Resuelves.
+     */
+    data: Multas_ResuelveCreateManyInput | Multas_ResuelveCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Resuelve createManyAndReturn
+   */
+  export type Multas_ResuelveCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Resuelves.
+     */
+    data: Multas_ResuelveCreateManyInput | Multas_ResuelveCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Resuelve update
+   */
+  export type Multas_ResuelveUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Resuelve.
+     */
+    data: XOR<Multas_ResuelveUpdateInput, Multas_ResuelveUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Resuelve to update.
+     */
+    where: Multas_ResuelveWhereUniqueInput
+  }
+
+  /**
+   * Multas_Resuelve updateMany
+   */
+  export type Multas_ResuelveUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Resuelves.
+     */
+    data: XOR<Multas_ResuelveUpdateManyMutationInput, Multas_ResuelveUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Resuelves to update
+     */
+    where?: Multas_ResuelveWhereInput
+  }
+
+  /**
+   * Multas_Resuelve upsert
+   */
+  export type Multas_ResuelveUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Resuelve to update in case it exists.
+     */
+    where: Multas_ResuelveWhereUniqueInput
+    /**
+     * In case the Multas_Resuelve found by the `where` argument doesn't exist, create a new Multas_Resuelve with this data.
+     */
+    create: XOR<Multas_ResuelveCreateInput, Multas_ResuelveUncheckedCreateInput>
+    /**
+     * In case the Multas_Resuelve was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_ResuelveUpdateInput, Multas_ResuelveUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Resuelve delete
+   */
+  export type Multas_ResuelveDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Resuelve to delete.
+     */
+    where: Multas_ResuelveWhereUniqueInput
+  }
+
+  /**
+   * Multas_Resuelve deleteMany
+   */
+  export type Multas_ResuelveDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Resuelves to delete
+     */
+    where?: Multas_ResuelveWhereInput
+  }
+
+  /**
+   * Multas_Resuelve without action
+   */
+  export type Multas_ResuelveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Resuelve
+     */
+    select?: Multas_ResuelveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_ResuelveInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Recurso_Admin
+   */
+
+  export type AggregateMultas_Recurso_Admin = {
+    _count: Multas_Recurso_AdminCountAggregateOutputType | null
+    _avg: Multas_Recurso_AdminAvgAggregateOutputType | null
+    _sum: Multas_Recurso_AdminSumAggregateOutputType | null
+    _min: Multas_Recurso_AdminMinAggregateOutputType | null
+    _max: Multas_Recurso_AdminMaxAggregateOutputType | null
+  }
+
+  export type Multas_Recurso_AdminAvgAggregateOutputType = {
+    montoRebajaExtraUtm: number | null
+  }
+
+  export type Multas_Recurso_AdminSumAggregateOutputType = {
+    montoRebajaExtraUtm: number | null
+  }
+
+  export type Multas_Recurso_AdminMinAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    tipoRecurso: string | null
+    codigoPresentacion: string | null
+    fechaPresentacion: Date | null
+    autoridadDestino: string | null
+    estado: string | null
+    resolucionRespuesta: string | null
+    montoRebajaExtraUtm: number | null
+    fundamentosRecurso: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogado: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Recurso_AdminMaxAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    tipoRecurso: string | null
+    codigoPresentacion: string | null
+    fechaPresentacion: Date | null
+    autoridadDestino: string | null
+    estado: string | null
+    resolucionRespuesta: string | null
+    montoRebajaExtraUtm: number | null
+    fundamentosRecurso: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogado: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Recurso_AdminCountAggregateOutputType = {
+    id: number
+    descargoId: number
+    tipoRecurso: number
+    codigoPresentacion: number
+    fechaPresentacion: number
+    autoridadDestino: number
+    estado: number
+    resolucionRespuesta: number
+    montoRebajaExtraUtm: number
+    fundamentosRecurso: number
+    documentoUrl: number
+    documentoNombre: number
+    abogado: number
+    registradoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Recurso_AdminAvgAggregateInputType = {
+    montoRebajaExtraUtm?: true
+  }
+
+  export type Multas_Recurso_AdminSumAggregateInputType = {
+    montoRebajaExtraUtm?: true
+  }
+
+  export type Multas_Recurso_AdminMinAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tipoRecurso?: true
+    codigoPresentacion?: true
+    fechaPresentacion?: true
+    autoridadDestino?: true
+    estado?: true
+    resolucionRespuesta?: true
+    montoRebajaExtraUtm?: true
+    fundamentosRecurso?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogado?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Recurso_AdminMaxAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tipoRecurso?: true
+    codigoPresentacion?: true
+    fechaPresentacion?: true
+    autoridadDestino?: true
+    estado?: true
+    resolucionRespuesta?: true
+    montoRebajaExtraUtm?: true
+    fundamentosRecurso?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogado?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Recurso_AdminCountAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tipoRecurso?: true
+    codigoPresentacion?: true
+    fechaPresentacion?: true
+    autoridadDestino?: true
+    estado?: true
+    resolucionRespuesta?: true
+    montoRebajaExtraUtm?: true
+    fundamentosRecurso?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    abogado?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Recurso_AdminAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Recurso_Admin to aggregate.
+     */
+    where?: Multas_Recurso_AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Recurso_Admins to fetch.
+     */
+    orderBy?: Multas_Recurso_AdminOrderByWithRelationInput | Multas_Recurso_AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Recurso_AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Recurso_Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Recurso_Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Recurso_Admins
+    **/
+    _count?: true | Multas_Recurso_AdminCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Recurso_AdminAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Recurso_AdminSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Recurso_AdminMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Recurso_AdminMaxAggregateInputType
+  }
+
+  export type GetMultas_Recurso_AdminAggregateType<T extends Multas_Recurso_AdminAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Recurso_Admin]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Recurso_Admin[P]>
+      : GetScalarType<T[P], AggregateMultas_Recurso_Admin[P]>
+  }
+
+
+
+
+  export type Multas_Recurso_AdminGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Recurso_AdminWhereInput
+    orderBy?: Multas_Recurso_AdminOrderByWithAggregationInput | Multas_Recurso_AdminOrderByWithAggregationInput[]
+    by: Multas_Recurso_AdminScalarFieldEnum[] | Multas_Recurso_AdminScalarFieldEnum
+    having?: Multas_Recurso_AdminScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Recurso_AdminCountAggregateInputType | true
+    _avg?: Multas_Recurso_AdminAvgAggregateInputType
+    _sum?: Multas_Recurso_AdminSumAggregateInputType
+    _min?: Multas_Recurso_AdminMinAggregateInputType
+    _max?: Multas_Recurso_AdminMaxAggregateInputType
+  }
+
+  export type Multas_Recurso_AdminGroupByOutputType = {
+    id: string
+    descargoId: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date
+    autoridadDestino: string | null
+    estado: string
+    resolucionRespuesta: string | null
+    montoRebajaExtraUtm: number
+    fundamentosRecurso: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    abogado: string | null
+    registradoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Recurso_AdminCountAggregateOutputType | null
+    _avg: Multas_Recurso_AdminAvgAggregateOutputType | null
+    _sum: Multas_Recurso_AdminSumAggregateOutputType | null
+    _min: Multas_Recurso_AdminMinAggregateOutputType | null
+    _max: Multas_Recurso_AdminMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Recurso_AdminGroupByPayload<T extends Multas_Recurso_AdminGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Recurso_AdminGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Recurso_AdminGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Recurso_AdminGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Recurso_AdminGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Recurso_AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    tipoRecurso?: boolean
+    codigoPresentacion?: boolean
+    fechaPresentacion?: boolean
+    autoridadDestino?: boolean
+    estado?: boolean
+    resolucionRespuesta?: boolean
+    montoRebajaExtraUtm?: boolean
+    fundamentosRecurso?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogado?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Recurso_Admin"]>
+
+  export type Multas_Recurso_AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    tipoRecurso?: boolean
+    codigoPresentacion?: boolean
+    fechaPresentacion?: boolean
+    autoridadDestino?: boolean
+    estado?: boolean
+    resolucionRespuesta?: boolean
+    montoRebajaExtraUtm?: boolean
+    fundamentosRecurso?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogado?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Recurso_Admin"]>
+
+  export type Multas_Recurso_AdminSelectScalar = {
+    id?: boolean
+    descargoId?: boolean
+    tipoRecurso?: boolean
+    codigoPresentacion?: boolean
+    fechaPresentacion?: boolean
+    autoridadDestino?: boolean
+    estado?: boolean
+    resolucionRespuesta?: boolean
+    montoRebajaExtraUtm?: boolean
+    fundamentosRecurso?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    abogado?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Recurso_AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+  export type Multas_Recurso_AdminIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Recurso_AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Recurso_Admin"
+    objects: {
+      descargo: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      descargoId: string
+      tipoRecurso: string
+      codigoPresentacion: string
+      fechaPresentacion: Date
+      autoridadDestino: string | null
+      estado: string
+      resolucionRespuesta: string | null
+      montoRebajaExtraUtm: number
+      fundamentosRecurso: string | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      abogado: string | null
+      registradoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Recurso_Admin"]>
+    composites: {}
+  }
+
+  type Multas_Recurso_AdminGetPayload<S extends boolean | null | undefined | Multas_Recurso_AdminDefaultArgs> = $Result.GetResult<Prisma.$Multas_Recurso_AdminPayload, S>
+
+  type Multas_Recurso_AdminCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Recurso_AdminFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Recurso_AdminCountAggregateInputType | true
+    }
+
+  export interface Multas_Recurso_AdminDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Recurso_Admin'], meta: { name: 'Multas_Recurso_Admin' } }
+    /**
+     * Find zero or one Multas_Recurso_Admin that matches the filter.
+     * @param {Multas_Recurso_AdminFindUniqueArgs} args - Arguments to find a Multas_Recurso_Admin
+     * @example
+     * // Get one Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Recurso_AdminFindUniqueArgs>(args: SelectSubset<T, Multas_Recurso_AdminFindUniqueArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Recurso_Admin that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Recurso_AdminFindUniqueOrThrowArgs} args - Arguments to find a Multas_Recurso_Admin
+     * @example
+     * // Get one Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Recurso_AdminFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Recurso_AdminFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Recurso_Admin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminFindFirstArgs} args - Arguments to find a Multas_Recurso_Admin
+     * @example
+     * // Get one Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Recurso_AdminFindFirstArgs>(args?: SelectSubset<T, Multas_Recurso_AdminFindFirstArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Recurso_Admin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminFindFirstOrThrowArgs} args - Arguments to find a Multas_Recurso_Admin
+     * @example
+     * // Get one Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Recurso_AdminFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Recurso_AdminFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Recurso_Admins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Recurso_Admins
+     * const multas_Recurso_Admins = await prisma.multas_Recurso_Admin.findMany()
+     * 
+     * // Get first 10 Multas_Recurso_Admins
+     * const multas_Recurso_Admins = await prisma.multas_Recurso_Admin.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Recurso_AdminWithIdOnly = await prisma.multas_Recurso_Admin.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Recurso_AdminFindManyArgs>(args?: SelectSubset<T, Multas_Recurso_AdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Recurso_Admin.
+     * @param {Multas_Recurso_AdminCreateArgs} args - Arguments to create a Multas_Recurso_Admin.
+     * @example
+     * // Create one Multas_Recurso_Admin
+     * const Multas_Recurso_Admin = await prisma.multas_Recurso_Admin.create({
+     *   data: {
+     *     // ... data to create a Multas_Recurso_Admin
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Recurso_AdminCreateArgs>(args: SelectSubset<T, Multas_Recurso_AdminCreateArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Recurso_Admins.
+     * @param {Multas_Recurso_AdminCreateManyArgs} args - Arguments to create many Multas_Recurso_Admins.
+     * @example
+     * // Create many Multas_Recurso_Admins
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Recurso_AdminCreateManyArgs>(args?: SelectSubset<T, Multas_Recurso_AdminCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Recurso_Admins and returns the data saved in the database.
+     * @param {Multas_Recurso_AdminCreateManyAndReturnArgs} args - Arguments to create many Multas_Recurso_Admins.
+     * @example
+     * // Create many Multas_Recurso_Admins
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Recurso_Admins and only return the `id`
+     * const multas_Recurso_AdminWithIdOnly = await prisma.multas_Recurso_Admin.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Recurso_AdminCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Recurso_AdminCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Recurso_Admin.
+     * @param {Multas_Recurso_AdminDeleteArgs} args - Arguments to delete one Multas_Recurso_Admin.
+     * @example
+     * // Delete one Multas_Recurso_Admin
+     * const Multas_Recurso_Admin = await prisma.multas_Recurso_Admin.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Recurso_Admin
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Recurso_AdminDeleteArgs>(args: SelectSubset<T, Multas_Recurso_AdminDeleteArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Recurso_Admin.
+     * @param {Multas_Recurso_AdminUpdateArgs} args - Arguments to update one Multas_Recurso_Admin.
+     * @example
+     * // Update one Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Recurso_AdminUpdateArgs>(args: SelectSubset<T, Multas_Recurso_AdminUpdateArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Recurso_Admins.
+     * @param {Multas_Recurso_AdminDeleteManyArgs} args - Arguments to filter Multas_Recurso_Admins to delete.
+     * @example
+     * // Delete a few Multas_Recurso_Admins
+     * const { count } = await prisma.multas_Recurso_Admin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Recurso_AdminDeleteManyArgs>(args?: SelectSubset<T, Multas_Recurso_AdminDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Recurso_Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Recurso_Admins
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Recurso_AdminUpdateManyArgs>(args: SelectSubset<T, Multas_Recurso_AdminUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Recurso_Admin.
+     * @param {Multas_Recurso_AdminUpsertArgs} args - Arguments to update or create a Multas_Recurso_Admin.
+     * @example
+     * // Update or create a Multas_Recurso_Admin
+     * const multas_Recurso_Admin = await prisma.multas_Recurso_Admin.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Recurso_Admin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Recurso_Admin we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Recurso_AdminUpsertArgs>(args: SelectSubset<T, Multas_Recurso_AdminUpsertArgs<ExtArgs>>): Prisma__Multas_Recurso_AdminClient<$Result.GetResult<Prisma.$Multas_Recurso_AdminPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Recurso_Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminCountArgs} args - Arguments to filter Multas_Recurso_Admins to count.
+     * @example
+     * // Count the number of Multas_Recurso_Admins
+     * const count = await prisma.multas_Recurso_Admin.count({
+     *   where: {
+     *     // ... the filter for the Multas_Recurso_Admins we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Recurso_AdminCountArgs>(
+      args?: Subset<T, Multas_Recurso_AdminCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Recurso_AdminCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Recurso_Admin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Recurso_AdminAggregateArgs>(args: Subset<T, Multas_Recurso_AdminAggregateArgs>): Prisma.PrismaPromise<GetMultas_Recurso_AdminAggregateType<T>>
+
+    /**
+     * Group by Multas_Recurso_Admin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Recurso_AdminGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Recurso_AdminGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Recurso_AdminGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Recurso_AdminGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Recurso_AdminGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Recurso_AdminGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Recurso_Admin model
+   */
+  readonly fields: Multas_Recurso_AdminFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Recurso_Admin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Recurso_AdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    descargo<T extends Multas_Descargo_FormalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_FormalDefaultArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Recurso_Admin model
+   */ 
+  interface Multas_Recurso_AdminFieldRefs {
+    readonly id: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly descargoId: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly tipoRecurso: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly codigoPresentacion: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly fechaPresentacion: FieldRef<"Multas_Recurso_Admin", 'DateTime'>
+    readonly autoridadDestino: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly estado: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly resolucionRespuesta: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly montoRebajaExtraUtm: FieldRef<"Multas_Recurso_Admin", 'Float'>
+    readonly fundamentosRecurso: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly documentoUrl: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly documentoNombre: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly abogado: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly registradoPor: FieldRef<"Multas_Recurso_Admin", 'String'>
+    readonly createdAt: FieldRef<"Multas_Recurso_Admin", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Recurso_Admin", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Recurso_Admin findUnique
+   */
+  export type Multas_Recurso_AdminFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Recurso_Admin to fetch.
+     */
+    where: Multas_Recurso_AdminWhereUniqueInput
+  }
+
+  /**
+   * Multas_Recurso_Admin findUniqueOrThrow
+   */
+  export type Multas_Recurso_AdminFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Recurso_Admin to fetch.
+     */
+    where: Multas_Recurso_AdminWhereUniqueInput
+  }
+
+  /**
+   * Multas_Recurso_Admin findFirst
+   */
+  export type Multas_Recurso_AdminFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Recurso_Admin to fetch.
+     */
+    where?: Multas_Recurso_AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Recurso_Admins to fetch.
+     */
+    orderBy?: Multas_Recurso_AdminOrderByWithRelationInput | Multas_Recurso_AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Recurso_Admins.
+     */
+    cursor?: Multas_Recurso_AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Recurso_Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Recurso_Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Recurso_Admins.
+     */
+    distinct?: Multas_Recurso_AdminScalarFieldEnum | Multas_Recurso_AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Recurso_Admin findFirstOrThrow
+   */
+  export type Multas_Recurso_AdminFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Recurso_Admin to fetch.
+     */
+    where?: Multas_Recurso_AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Recurso_Admins to fetch.
+     */
+    orderBy?: Multas_Recurso_AdminOrderByWithRelationInput | Multas_Recurso_AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Recurso_Admins.
+     */
+    cursor?: Multas_Recurso_AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Recurso_Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Recurso_Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Recurso_Admins.
+     */
+    distinct?: Multas_Recurso_AdminScalarFieldEnum | Multas_Recurso_AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Recurso_Admin findMany
+   */
+  export type Multas_Recurso_AdminFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Recurso_Admins to fetch.
+     */
+    where?: Multas_Recurso_AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Recurso_Admins to fetch.
+     */
+    orderBy?: Multas_Recurso_AdminOrderByWithRelationInput | Multas_Recurso_AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Recurso_Admins.
+     */
+    cursor?: Multas_Recurso_AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Recurso_Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Recurso_Admins.
+     */
+    skip?: number
+    distinct?: Multas_Recurso_AdminScalarFieldEnum | Multas_Recurso_AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Recurso_Admin create
+   */
+  export type Multas_Recurso_AdminCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Recurso_Admin.
+     */
+    data: XOR<Multas_Recurso_AdminCreateInput, Multas_Recurso_AdminUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Recurso_Admin createMany
+   */
+  export type Multas_Recurso_AdminCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Recurso_Admins.
+     */
+    data: Multas_Recurso_AdminCreateManyInput | Multas_Recurso_AdminCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Recurso_Admin createManyAndReturn
+   */
+  export type Multas_Recurso_AdminCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Recurso_Admins.
+     */
+    data: Multas_Recurso_AdminCreateManyInput | Multas_Recurso_AdminCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Recurso_Admin update
+   */
+  export type Multas_Recurso_AdminUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Recurso_Admin.
+     */
+    data: XOR<Multas_Recurso_AdminUpdateInput, Multas_Recurso_AdminUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Recurso_Admin to update.
+     */
+    where: Multas_Recurso_AdminWhereUniqueInput
+  }
+
+  /**
+   * Multas_Recurso_Admin updateMany
+   */
+  export type Multas_Recurso_AdminUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Recurso_Admins.
+     */
+    data: XOR<Multas_Recurso_AdminUpdateManyMutationInput, Multas_Recurso_AdminUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Recurso_Admins to update
+     */
+    where?: Multas_Recurso_AdminWhereInput
+  }
+
+  /**
+   * Multas_Recurso_Admin upsert
+   */
+  export type Multas_Recurso_AdminUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Recurso_Admin to update in case it exists.
+     */
+    where: Multas_Recurso_AdminWhereUniqueInput
+    /**
+     * In case the Multas_Recurso_Admin found by the `where` argument doesn't exist, create a new Multas_Recurso_Admin with this data.
+     */
+    create: XOR<Multas_Recurso_AdminCreateInput, Multas_Recurso_AdminUncheckedCreateInput>
+    /**
+     * In case the Multas_Recurso_Admin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Recurso_AdminUpdateInput, Multas_Recurso_AdminUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Recurso_Admin delete
+   */
+  export type Multas_Recurso_AdminDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Recurso_Admin to delete.
+     */
+    where: Multas_Recurso_AdminWhereUniqueInput
+  }
+
+  /**
+   * Multas_Recurso_Admin deleteMany
+   */
+  export type Multas_Recurso_AdminDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Recurso_Admins to delete
+     */
+    where?: Multas_Recurso_AdminWhereInput
+  }
+
+  /**
+   * Multas_Recurso_Admin without action
+   */
+  export type Multas_Recurso_AdminDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Recurso_Admin
+     */
+    select?: Multas_Recurso_AdminSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Recurso_AdminInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Proceso_Judicial
+   */
+
+  export type AggregateMultas_Proceso_Judicial = {
+    _count: Multas_Proceso_JudicialCountAggregateOutputType | null
+    _avg: Multas_Proceso_JudicialAvgAggregateOutputType | null
+    _sum: Multas_Proceso_JudicialSumAggregateOutputType | null
+    _min: Multas_Proceso_JudicialMinAggregateOutputType | null
+    _max: Multas_Proceso_JudicialMaxAggregateOutputType | null
+  }
+
+  export type Multas_Proceso_JudicialAvgAggregateOutputType = {
+    cuantiaDemandaPesos: number | null
+  }
+
+  export type Multas_Proceso_JudicialSumAggregateOutputType = {
+    cuantiaDemandaPesos: number | null
+  }
+
+  export type Multas_Proceso_JudicialMinAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    tribunal: string | null
+    rolCausa: string | null
+    caratulado: string | null
+    fechaIngreso: Date | null
+    cuantiaDemandaPesos: number | null
+    estadoProcesal: string | null
+    resultadoSentencia: string | null
+    abogadoExterno: string | null
+    notas: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Proceso_JudicialMaxAggregateOutputType = {
+    id: string | null
+    descargoId: string | null
+    tribunal: string | null
+    rolCausa: string | null
+    caratulado: string | null
+    fechaIngreso: Date | null
+    cuantiaDemandaPesos: number | null
+    estadoProcesal: string | null
+    resultadoSentencia: string | null
+    abogadoExterno: string | null
+    notas: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Multas_Proceso_JudicialCountAggregateOutputType = {
+    id: number
+    descargoId: number
+    tribunal: number
+    rolCausa: number
+    caratulado: number
+    fechaIngreso: number
+    cuantiaDemandaPesos: number
+    estadoProcesal: number
+    resultadoSentencia: number
+    abogadoExterno: number
+    notas: number
+    documentoUrl: number
+    documentoNombre: number
+    registradoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Multas_Proceso_JudicialAvgAggregateInputType = {
+    cuantiaDemandaPesos?: true
+  }
+
+  export type Multas_Proceso_JudicialSumAggregateInputType = {
+    cuantiaDemandaPesos?: true
+  }
+
+  export type Multas_Proceso_JudicialMinAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tribunal?: true
+    rolCausa?: true
+    caratulado?: true
+    fechaIngreso?: true
+    cuantiaDemandaPesos?: true
+    estadoProcesal?: true
+    resultadoSentencia?: true
+    abogadoExterno?: true
+    notas?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Proceso_JudicialMaxAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tribunal?: true
+    rolCausa?: true
+    caratulado?: true
+    fechaIngreso?: true
+    cuantiaDemandaPesos?: true
+    estadoProcesal?: true
+    resultadoSentencia?: true
+    abogadoExterno?: true
+    notas?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Multas_Proceso_JudicialCountAggregateInputType = {
+    id?: true
+    descargoId?: true
+    tribunal?: true
+    rolCausa?: true
+    caratulado?: true
+    fechaIngreso?: true
+    cuantiaDemandaPesos?: true
+    estadoProcesal?: true
+    resultadoSentencia?: true
+    abogadoExterno?: true
+    notas?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    registradoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Multas_Proceso_JudicialAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Proceso_Judicial to aggregate.
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Proceso_Judicials to fetch.
+     */
+    orderBy?: Multas_Proceso_JudicialOrderByWithRelationInput | Multas_Proceso_JudicialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Proceso_JudicialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Proceso_Judicials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Proceso_Judicials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Proceso_Judicials
+    **/
+    _count?: true | Multas_Proceso_JudicialCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Proceso_JudicialAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Proceso_JudicialSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Proceso_JudicialMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Proceso_JudicialMaxAggregateInputType
+  }
+
+  export type GetMultas_Proceso_JudicialAggregateType<T extends Multas_Proceso_JudicialAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Proceso_Judicial]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Proceso_Judicial[P]>
+      : GetScalarType<T[P], AggregateMultas_Proceso_Judicial[P]>
+  }
+
+
+
+
+  export type Multas_Proceso_JudicialGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Proceso_JudicialWhereInput
+    orderBy?: Multas_Proceso_JudicialOrderByWithAggregationInput | Multas_Proceso_JudicialOrderByWithAggregationInput[]
+    by: Multas_Proceso_JudicialScalarFieldEnum[] | Multas_Proceso_JudicialScalarFieldEnum
+    having?: Multas_Proceso_JudicialScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Proceso_JudicialCountAggregateInputType | true
+    _avg?: Multas_Proceso_JudicialAvgAggregateInputType
+    _sum?: Multas_Proceso_JudicialSumAggregateInputType
+    _min?: Multas_Proceso_JudicialMinAggregateInputType
+    _max?: Multas_Proceso_JudicialMaxAggregateInputType
+  }
+
+  export type Multas_Proceso_JudicialGroupByOutputType = {
+    id: string
+    descargoId: string
+    tribunal: string
+    rolCausa: string
+    caratulado: string | null
+    fechaIngreso: Date
+    cuantiaDemandaPesos: number | null
+    estadoProcesal: string
+    resultadoSentencia: string | null
+    abogadoExterno: string | null
+    notas: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    registradoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Multas_Proceso_JudicialCountAggregateOutputType | null
+    _avg: Multas_Proceso_JudicialAvgAggregateOutputType | null
+    _sum: Multas_Proceso_JudicialSumAggregateOutputType | null
+    _min: Multas_Proceso_JudicialMinAggregateOutputType | null
+    _max: Multas_Proceso_JudicialMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Proceso_JudicialGroupByPayload<T extends Multas_Proceso_JudicialGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Proceso_JudicialGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Proceso_JudicialGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Proceso_JudicialGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Proceso_JudicialGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Proceso_JudicialSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    tribunal?: boolean
+    rolCausa?: boolean
+    caratulado?: boolean
+    fechaIngreso?: boolean
+    cuantiaDemandaPesos?: boolean
+    estadoProcesal?: boolean
+    resultadoSentencia?: boolean
+    abogadoExterno?: boolean
+    notas?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Proceso_Judicial"]>
+
+  export type Multas_Proceso_JudicialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descargoId?: boolean
+    tribunal?: boolean
+    rolCausa?: boolean
+    caratulado?: boolean
+    fechaIngreso?: boolean
+    cuantiaDemandaPesos?: boolean
+    estadoProcesal?: boolean
+    resultadoSentencia?: boolean
+    abogadoExterno?: boolean
+    notas?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Proceso_Judicial"]>
+
+  export type Multas_Proceso_JudicialSelectScalar = {
+    id?: boolean
+    descargoId?: boolean
+    tribunal?: boolean
+    rolCausa?: boolean
+    caratulado?: boolean
+    fechaIngreso?: boolean
+    cuantiaDemandaPesos?: boolean
+    estadoProcesal?: boolean
+    resultadoSentencia?: boolean
+    abogadoExterno?: boolean
+    notas?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    registradoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Multas_Proceso_JudicialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+  export type Multas_Proceso_JudicialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    descargo?: boolean | Multas_Descargo_FormalDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Proceso_JudicialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Proceso_Judicial"
+    objects: {
+      descargo: Prisma.$Multas_Descargo_FormalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      descargoId: string
+      tribunal: string
+      rolCausa: string
+      caratulado: string | null
+      fechaIngreso: Date
+      cuantiaDemandaPesos: number | null
+      estadoProcesal: string
+      resultadoSentencia: string | null
+      abogadoExterno: string | null
+      notas: string | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      registradoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["multas_Proceso_Judicial"]>
+    composites: {}
+  }
+
+  type Multas_Proceso_JudicialGetPayload<S extends boolean | null | undefined | Multas_Proceso_JudicialDefaultArgs> = $Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload, S>
+
+  type Multas_Proceso_JudicialCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Proceso_JudicialFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Proceso_JudicialCountAggregateInputType | true
+    }
+
+  export interface Multas_Proceso_JudicialDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Proceso_Judicial'], meta: { name: 'Multas_Proceso_Judicial' } }
+    /**
+     * Find zero or one Multas_Proceso_Judicial that matches the filter.
+     * @param {Multas_Proceso_JudicialFindUniqueArgs} args - Arguments to find a Multas_Proceso_Judicial
+     * @example
+     * // Get one Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Proceso_JudicialFindUniqueArgs>(args: SelectSubset<T, Multas_Proceso_JudicialFindUniqueArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Proceso_Judicial that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Proceso_JudicialFindUniqueOrThrowArgs} args - Arguments to find a Multas_Proceso_Judicial
+     * @example
+     * // Get one Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Proceso_JudicialFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Proceso_JudicialFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Proceso_Judicial that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialFindFirstArgs} args - Arguments to find a Multas_Proceso_Judicial
+     * @example
+     * // Get one Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Proceso_JudicialFindFirstArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialFindFirstArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Proceso_Judicial that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialFindFirstOrThrowArgs} args - Arguments to find a Multas_Proceso_Judicial
+     * @example
+     * // Get one Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Proceso_JudicialFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Proceso_Judicials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Proceso_Judicials
+     * const multas_Proceso_Judicials = await prisma.multas_Proceso_Judicial.findMany()
+     * 
+     * // Get first 10 Multas_Proceso_Judicials
+     * const multas_Proceso_Judicials = await prisma.multas_Proceso_Judicial.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Proceso_JudicialWithIdOnly = await prisma.multas_Proceso_Judicial.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Proceso_JudicialFindManyArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Proceso_Judicial.
+     * @param {Multas_Proceso_JudicialCreateArgs} args - Arguments to create a Multas_Proceso_Judicial.
+     * @example
+     * // Create one Multas_Proceso_Judicial
+     * const Multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.create({
+     *   data: {
+     *     // ... data to create a Multas_Proceso_Judicial
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Proceso_JudicialCreateArgs>(args: SelectSubset<T, Multas_Proceso_JudicialCreateArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Proceso_Judicials.
+     * @param {Multas_Proceso_JudicialCreateManyArgs} args - Arguments to create many Multas_Proceso_Judicials.
+     * @example
+     * // Create many Multas_Proceso_Judicials
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Proceso_JudicialCreateManyArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Proceso_Judicials and returns the data saved in the database.
+     * @param {Multas_Proceso_JudicialCreateManyAndReturnArgs} args - Arguments to create many Multas_Proceso_Judicials.
+     * @example
+     * // Create many Multas_Proceso_Judicials
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Proceso_Judicials and only return the `id`
+     * const multas_Proceso_JudicialWithIdOnly = await prisma.multas_Proceso_Judicial.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Proceso_JudicialCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Proceso_Judicial.
+     * @param {Multas_Proceso_JudicialDeleteArgs} args - Arguments to delete one Multas_Proceso_Judicial.
+     * @example
+     * // Delete one Multas_Proceso_Judicial
+     * const Multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Proceso_Judicial
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Proceso_JudicialDeleteArgs>(args: SelectSubset<T, Multas_Proceso_JudicialDeleteArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Proceso_Judicial.
+     * @param {Multas_Proceso_JudicialUpdateArgs} args - Arguments to update one Multas_Proceso_Judicial.
+     * @example
+     * // Update one Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Proceso_JudicialUpdateArgs>(args: SelectSubset<T, Multas_Proceso_JudicialUpdateArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Proceso_Judicials.
+     * @param {Multas_Proceso_JudicialDeleteManyArgs} args - Arguments to filter Multas_Proceso_Judicials to delete.
+     * @example
+     * // Delete a few Multas_Proceso_Judicials
+     * const { count } = await prisma.multas_Proceso_Judicial.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Proceso_JudicialDeleteManyArgs>(args?: SelectSubset<T, Multas_Proceso_JudicialDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Proceso_Judicials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Proceso_Judicials
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Proceso_JudicialUpdateManyArgs>(args: SelectSubset<T, Multas_Proceso_JudicialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Proceso_Judicial.
+     * @param {Multas_Proceso_JudicialUpsertArgs} args - Arguments to update or create a Multas_Proceso_Judicial.
+     * @example
+     * // Update or create a Multas_Proceso_Judicial
+     * const multas_Proceso_Judicial = await prisma.multas_Proceso_Judicial.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Proceso_Judicial
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Proceso_Judicial we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Proceso_JudicialUpsertArgs>(args: SelectSubset<T, Multas_Proceso_JudicialUpsertArgs<ExtArgs>>): Prisma__Multas_Proceso_JudicialClient<$Result.GetResult<Prisma.$Multas_Proceso_JudicialPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Proceso_Judicials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialCountArgs} args - Arguments to filter Multas_Proceso_Judicials to count.
+     * @example
+     * // Count the number of Multas_Proceso_Judicials
+     * const count = await prisma.multas_Proceso_Judicial.count({
+     *   where: {
+     *     // ... the filter for the Multas_Proceso_Judicials we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Proceso_JudicialCountArgs>(
+      args?: Subset<T, Multas_Proceso_JudicialCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Proceso_JudicialCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Proceso_Judicial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Proceso_JudicialAggregateArgs>(args: Subset<T, Multas_Proceso_JudicialAggregateArgs>): Prisma.PrismaPromise<GetMultas_Proceso_JudicialAggregateType<T>>
+
+    /**
+     * Group by Multas_Proceso_Judicial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Proceso_JudicialGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Proceso_JudicialGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Proceso_JudicialGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Proceso_JudicialGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Proceso_JudicialGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Proceso_JudicialGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Proceso_Judicial model
+   */
+  readonly fields: Multas_Proceso_JudicialFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Proceso_Judicial.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Proceso_JudicialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    descargo<T extends Multas_Descargo_FormalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Descargo_FormalDefaultArgs<ExtArgs>>): Prisma__Multas_Descargo_FormalClient<$Result.GetResult<Prisma.$Multas_Descargo_FormalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Proceso_Judicial model
+   */ 
+  interface Multas_Proceso_JudicialFieldRefs {
+    readonly id: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly descargoId: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly tribunal: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly rolCausa: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly caratulado: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly fechaIngreso: FieldRef<"Multas_Proceso_Judicial", 'DateTime'>
+    readonly cuantiaDemandaPesos: FieldRef<"Multas_Proceso_Judicial", 'Float'>
+    readonly estadoProcesal: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly resultadoSentencia: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly abogadoExterno: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly notas: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly documentoUrl: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly documentoNombre: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly registradoPor: FieldRef<"Multas_Proceso_Judicial", 'String'>
+    readonly createdAt: FieldRef<"Multas_Proceso_Judicial", 'DateTime'>
+    readonly updatedAt: FieldRef<"Multas_Proceso_Judicial", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Proceso_Judicial findUnique
+   */
+  export type Multas_Proceso_JudicialFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Proceso_Judicial to fetch.
+     */
+    where: Multas_Proceso_JudicialWhereUniqueInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial findUniqueOrThrow
+   */
+  export type Multas_Proceso_JudicialFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Proceso_Judicial to fetch.
+     */
+    where: Multas_Proceso_JudicialWhereUniqueInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial findFirst
+   */
+  export type Multas_Proceso_JudicialFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Proceso_Judicial to fetch.
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Proceso_Judicials to fetch.
+     */
+    orderBy?: Multas_Proceso_JudicialOrderByWithRelationInput | Multas_Proceso_JudicialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Proceso_Judicials.
+     */
+    cursor?: Multas_Proceso_JudicialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Proceso_Judicials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Proceso_Judicials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Proceso_Judicials.
+     */
+    distinct?: Multas_Proceso_JudicialScalarFieldEnum | Multas_Proceso_JudicialScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Proceso_Judicial findFirstOrThrow
+   */
+  export type Multas_Proceso_JudicialFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Proceso_Judicial to fetch.
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Proceso_Judicials to fetch.
+     */
+    orderBy?: Multas_Proceso_JudicialOrderByWithRelationInput | Multas_Proceso_JudicialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Proceso_Judicials.
+     */
+    cursor?: Multas_Proceso_JudicialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Proceso_Judicials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Proceso_Judicials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Proceso_Judicials.
+     */
+    distinct?: Multas_Proceso_JudicialScalarFieldEnum | Multas_Proceso_JudicialScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Proceso_Judicial findMany
+   */
+  export type Multas_Proceso_JudicialFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Proceso_Judicials to fetch.
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Proceso_Judicials to fetch.
+     */
+    orderBy?: Multas_Proceso_JudicialOrderByWithRelationInput | Multas_Proceso_JudicialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Proceso_Judicials.
+     */
+    cursor?: Multas_Proceso_JudicialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Proceso_Judicials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Proceso_Judicials.
+     */
+    skip?: number
+    distinct?: Multas_Proceso_JudicialScalarFieldEnum | Multas_Proceso_JudicialScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Proceso_Judicial create
+   */
+  export type Multas_Proceso_JudicialCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Proceso_Judicial.
+     */
+    data: XOR<Multas_Proceso_JudicialCreateInput, Multas_Proceso_JudicialUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Proceso_Judicial createMany
+   */
+  export type Multas_Proceso_JudicialCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Proceso_Judicials.
+     */
+    data: Multas_Proceso_JudicialCreateManyInput | Multas_Proceso_JudicialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Proceso_Judicial createManyAndReturn
+   */
+  export type Multas_Proceso_JudicialCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Proceso_Judicials.
+     */
+    data: Multas_Proceso_JudicialCreateManyInput | Multas_Proceso_JudicialCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Proceso_Judicial update
+   */
+  export type Multas_Proceso_JudicialUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Proceso_Judicial.
+     */
+    data: XOR<Multas_Proceso_JudicialUpdateInput, Multas_Proceso_JudicialUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Proceso_Judicial to update.
+     */
+    where: Multas_Proceso_JudicialWhereUniqueInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial updateMany
+   */
+  export type Multas_Proceso_JudicialUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Proceso_Judicials.
+     */
+    data: XOR<Multas_Proceso_JudicialUpdateManyMutationInput, Multas_Proceso_JudicialUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Proceso_Judicials to update
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial upsert
+   */
+  export type Multas_Proceso_JudicialUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Proceso_Judicial to update in case it exists.
+     */
+    where: Multas_Proceso_JudicialWhereUniqueInput
+    /**
+     * In case the Multas_Proceso_Judicial found by the `where` argument doesn't exist, create a new Multas_Proceso_Judicial with this data.
+     */
+    create: XOR<Multas_Proceso_JudicialCreateInput, Multas_Proceso_JudicialUncheckedCreateInput>
+    /**
+     * In case the Multas_Proceso_Judicial was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Proceso_JudicialUpdateInput, Multas_Proceso_JudicialUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Proceso_Judicial delete
+   */
+  export type Multas_Proceso_JudicialDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Proceso_Judicial to delete.
+     */
+    where: Multas_Proceso_JudicialWhereUniqueInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial deleteMany
+   */
+  export type Multas_Proceso_JudicialDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Proceso_Judicials to delete
+     */
+    where?: Multas_Proceso_JudicialWhereInput
+  }
+
+  /**
+   * Multas_Proceso_Judicial without action
+   */
+  export type Multas_Proceso_JudicialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Proceso_Judicial
+     */
+    select?: Multas_Proceso_JudicialSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Proceso_JudicialInclude<ExtArgs> | null
   }
 
 
@@ -170204,6 +176298,112 @@ export namespace Prisma {
   export type Multas_Notificacion_ItemScalarFieldEnum = (typeof Multas_Notificacion_ItemScalarFieldEnum)[keyof typeof Multas_Notificacion_ItemScalarFieldEnum]
 
 
+  export const Multas_Descargo_FormalScalarFieldEnum: {
+    id: 'id',
+    notificacionId: 'notificacionId',
+    codigoIngreso: 'codigoIngreso',
+    fechaIngreso: 'fechaIngreso',
+    fechaPlazoRespuesta: 'fechaPlazoRespuesta',
+    diasPlazoLegal: 'diasPlazoLegal',
+    estado: 'estado',
+    montoImpugnadoUtm: 'montoImpugnadoUtm',
+    montoImpugnadoPesos: 'montoImpugnadoPesos',
+    resumenArgumentos: 'resumenArgumentos',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    abogadoResponsable: 'abogadoResponsable',
+    creadoPor: 'creadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Descargo_FormalScalarFieldEnum = (typeof Multas_Descargo_FormalScalarFieldEnum)[keyof typeof Multas_Descargo_FormalScalarFieldEnum]
+
+
+  export const Multas_Descargo_FolioScalarFieldEnum: {
+    id: 'id',
+    descargoId: 'descargoId',
+    notificacionItemId: 'notificacionItemId',
+    folio: 'folio',
+    rbd: 'rbd',
+    aspecto: 'aspecto',
+    montoNotificadoUtm: 'montoNotificadoUtm',
+    montoImpugnadoUtm: 'montoImpugnadoUtm',
+    montoRebajadoUtm: 'montoRebajadoUtm',
+    estado: 'estado',
+    argumentoPrincipal: 'argumentoPrincipal',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Descargo_FolioScalarFieldEnum = (typeof Multas_Descargo_FolioScalarFieldEnum)[keyof typeof Multas_Descargo_FolioScalarFieldEnum]
+
+
+  export const Multas_ResuelveScalarFieldEnum: {
+    id: 'id',
+    descargoId: 'descargoId',
+    numeroResolucion: 'numeroResolucion',
+    fechaResolucion: 'fechaResolucion',
+    fechaNotificacion: 'fechaNotificacion',
+    dictamen: 'dictamen',
+    montoRatificadoUtm: 'montoRatificadoUtm',
+    montoRebajadoUtm: 'montoRebajadoUtm',
+    porcentajeRebaja: 'porcentajeRebaja',
+    fundamentoResuelve: 'fundamentoResuelve',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    registradoPor: 'registradoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_ResuelveScalarFieldEnum = (typeof Multas_ResuelveScalarFieldEnum)[keyof typeof Multas_ResuelveScalarFieldEnum]
+
+
+  export const Multas_Recurso_AdminScalarFieldEnum: {
+    id: 'id',
+    descargoId: 'descargoId',
+    tipoRecurso: 'tipoRecurso',
+    codigoPresentacion: 'codigoPresentacion',
+    fechaPresentacion: 'fechaPresentacion',
+    autoridadDestino: 'autoridadDestino',
+    estado: 'estado',
+    resolucionRespuesta: 'resolucionRespuesta',
+    montoRebajaExtraUtm: 'montoRebajaExtraUtm',
+    fundamentosRecurso: 'fundamentosRecurso',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    abogado: 'abogado',
+    registradoPor: 'registradoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Recurso_AdminScalarFieldEnum = (typeof Multas_Recurso_AdminScalarFieldEnum)[keyof typeof Multas_Recurso_AdminScalarFieldEnum]
+
+
+  export const Multas_Proceso_JudicialScalarFieldEnum: {
+    id: 'id',
+    descargoId: 'descargoId',
+    tribunal: 'tribunal',
+    rolCausa: 'rolCausa',
+    caratulado: 'caratulado',
+    fechaIngreso: 'fechaIngreso',
+    cuantiaDemandaPesos: 'cuantiaDemandaPesos',
+    estadoProcesal: 'estadoProcesal',
+    resultadoSentencia: 'resultadoSentencia',
+    abogadoExterno: 'abogadoExterno',
+    notas: 'notas',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    registradoPor: 'registradoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Multas_Proceso_JudicialScalarFieldEnum = (typeof Multas_Proceso_JudicialScalarFieldEnum)[keyof typeof Multas_Proceso_JudicialScalarFieldEnum]
+
+
   export const Descargos_CabScalarFieldEnum: {
     id: 'id',
     folio: 'folio',
@@ -177149,6 +183349,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
     updatedAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
     items?: Multas_Notificacion_ItemListRelationFilter
+    descargos?: Multas_Descargo_FormalListRelationFilter
   }
 
   export type Multas_Notificacion_REXOrderByWithRelationInput = {
@@ -177171,6 +183372,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     items?: Multas_Notificacion_ItemOrderByRelationAggregateInput
+    descargos?: Multas_Descargo_FormalOrderByRelationAggregateInput
   }
 
   export type Multas_Notificacion_REXWhereUniqueInput = Prisma.AtLeast<{
@@ -177197,6 +183399,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
     updatedAt?: DateTimeFilter<"Multas_Notificacion_REX"> | Date | string
     items?: Multas_Notificacion_ItemListRelationFilter
+    descargos?: Multas_Descargo_FormalListRelationFilter
   }, "id" | "numeroResolucion_licitacionId">
 
   export type Multas_Notificacion_REXOrderByWithAggregationInput = {
@@ -177379,6 +183582,559 @@ export namespace Prisma {
     clasificadoEn?: DateTimeNullableWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Multas_Notificacion_Item"> | Date | string
+  }
+
+  export type Multas_Descargo_FormalWhereInput = {
+    AND?: Multas_Descargo_FormalWhereInput | Multas_Descargo_FormalWhereInput[]
+    OR?: Multas_Descargo_FormalWhereInput[]
+    NOT?: Multas_Descargo_FormalWhereInput | Multas_Descargo_FormalWhereInput[]
+    id?: StringFilter<"Multas_Descargo_Formal"> | string
+    notificacionId?: StringFilter<"Multas_Descargo_Formal"> | string
+    codigoIngreso?: StringFilter<"Multas_Descargo_Formal"> | string
+    fechaIngreso?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    fechaPlazoRespuesta?: DateTimeNullableFilter<"Multas_Descargo_Formal"> | Date | string | null
+    diasPlazoLegal?: IntFilter<"Multas_Descargo_Formal"> | number
+    estado?: StringFilter<"Multas_Descargo_Formal"> | string
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Formal"> | number
+    montoImpugnadoPesos?: FloatNullableFilter<"Multas_Descargo_Formal"> | number | null
+    resumenArgumentos?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    abogadoResponsable?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    creadoPor?: StringFilter<"Multas_Descargo_Formal"> | string
+    createdAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    notificacion?: XOR<Multas_Notificacion_REXRelationFilter, Multas_Notificacion_REXWhereInput>
+    folios?: Multas_Descargo_FolioListRelationFilter
+    resuelves?: Multas_ResuelveListRelationFilter
+    recursos?: Multas_Recurso_AdminListRelationFilter
+    procesosJudiciales?: Multas_Proceso_JudicialListRelationFilter
+  }
+
+  export type Multas_Descargo_FormalOrderByWithRelationInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    codigoIngreso?: SortOrder
+    fechaIngreso?: SortOrder
+    fechaPlazoRespuesta?: SortOrderInput | SortOrder
+    diasPlazoLegal?: SortOrder
+    estado?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrderInput | SortOrder
+    resumenArgumentos?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    abogadoResponsable?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notificacion?: Multas_Notificacion_REXOrderByWithRelationInput
+    folios?: Multas_Descargo_FolioOrderByRelationAggregateInput
+    resuelves?: Multas_ResuelveOrderByRelationAggregateInput
+    recursos?: Multas_Recurso_AdminOrderByRelationAggregateInput
+    procesosJudiciales?: Multas_Proceso_JudicialOrderByRelationAggregateInput
+  }
+
+  export type Multas_Descargo_FormalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    notificacionId_codigoIngreso?: Multas_Descargo_FormalNotificacionIdCodigoIngresoCompoundUniqueInput
+    AND?: Multas_Descargo_FormalWhereInput | Multas_Descargo_FormalWhereInput[]
+    OR?: Multas_Descargo_FormalWhereInput[]
+    NOT?: Multas_Descargo_FormalWhereInput | Multas_Descargo_FormalWhereInput[]
+    notificacionId?: StringFilter<"Multas_Descargo_Formal"> | string
+    codigoIngreso?: StringFilter<"Multas_Descargo_Formal"> | string
+    fechaIngreso?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    fechaPlazoRespuesta?: DateTimeNullableFilter<"Multas_Descargo_Formal"> | Date | string | null
+    diasPlazoLegal?: IntFilter<"Multas_Descargo_Formal"> | number
+    estado?: StringFilter<"Multas_Descargo_Formal"> | string
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Formal"> | number
+    montoImpugnadoPesos?: FloatNullableFilter<"Multas_Descargo_Formal"> | number | null
+    resumenArgumentos?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    abogadoResponsable?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    creadoPor?: StringFilter<"Multas_Descargo_Formal"> | string
+    createdAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    notificacion?: XOR<Multas_Notificacion_REXRelationFilter, Multas_Notificacion_REXWhereInput>
+    folios?: Multas_Descargo_FolioListRelationFilter
+    resuelves?: Multas_ResuelveListRelationFilter
+    recursos?: Multas_Recurso_AdminListRelationFilter
+    procesosJudiciales?: Multas_Proceso_JudicialListRelationFilter
+  }, "id" | "notificacionId_codigoIngreso">
+
+  export type Multas_Descargo_FormalOrderByWithAggregationInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    codigoIngreso?: SortOrder
+    fechaIngreso?: SortOrder
+    fechaPlazoRespuesta?: SortOrderInput | SortOrder
+    diasPlazoLegal?: SortOrder
+    estado?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrderInput | SortOrder
+    resumenArgumentos?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    abogadoResponsable?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Descargo_FormalCountOrderByAggregateInput
+    _avg?: Multas_Descargo_FormalAvgOrderByAggregateInput
+    _max?: Multas_Descargo_FormalMaxOrderByAggregateInput
+    _min?: Multas_Descargo_FormalMinOrderByAggregateInput
+    _sum?: Multas_Descargo_FormalSumOrderByAggregateInput
+  }
+
+  export type Multas_Descargo_FormalScalarWhereWithAggregatesInput = {
+    AND?: Multas_Descargo_FormalScalarWhereWithAggregatesInput | Multas_Descargo_FormalScalarWhereWithAggregatesInput[]
+    OR?: Multas_Descargo_FormalScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Descargo_FormalScalarWhereWithAggregatesInput | Multas_Descargo_FormalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Descargo_Formal"> | string
+    notificacionId?: StringWithAggregatesFilter<"Multas_Descargo_Formal"> | string
+    codigoIngreso?: StringWithAggregatesFilter<"Multas_Descargo_Formal"> | string
+    fechaIngreso?: DateTimeWithAggregatesFilter<"Multas_Descargo_Formal"> | Date | string
+    fechaPlazoRespuesta?: DateTimeNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | Date | string | null
+    diasPlazoLegal?: IntWithAggregatesFilter<"Multas_Descargo_Formal"> | number
+    estado?: StringWithAggregatesFilter<"Multas_Descargo_Formal"> | string
+    montoImpugnadoUtm?: FloatWithAggregatesFilter<"Multas_Descargo_Formal"> | number
+    montoImpugnadoPesos?: FloatNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | number | null
+    resumenArgumentos?: StringNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | string | null
+    abogadoResponsable?: StringNullableWithAggregatesFilter<"Multas_Descargo_Formal"> | string | null
+    creadoPor?: StringWithAggregatesFilter<"Multas_Descargo_Formal"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Descargo_Formal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Descargo_Formal"> | Date | string
+  }
+
+  export type Multas_Descargo_FolioWhereInput = {
+    AND?: Multas_Descargo_FolioWhereInput | Multas_Descargo_FolioWhereInput[]
+    OR?: Multas_Descargo_FolioWhereInput[]
+    NOT?: Multas_Descargo_FolioWhereInput | Multas_Descargo_FolioWhereInput[]
+    id?: StringFilter<"Multas_Descargo_Folio"> | string
+    descargoId?: StringFilter<"Multas_Descargo_Folio"> | string
+    notificacionItemId?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    folio?: StringFilter<"Multas_Descargo_Folio"> | string
+    rbd?: IntNullableFilter<"Multas_Descargo_Folio"> | number | null
+    aspecto?: StringFilter<"Multas_Descargo_Folio"> | string
+    montoNotificadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    estado?: StringFilter<"Multas_Descargo_Folio"> | string
+    argumentoPrincipal?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }
+
+  export type Multas_Descargo_FolioOrderByWithRelationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    notificacionItemId?: SortOrderInput | SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    estado?: SortOrder
+    argumentoPrincipal?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    descargo?: Multas_Descargo_FormalOrderByWithRelationInput
+  }
+
+  export type Multas_Descargo_FolioWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Descargo_FolioWhereInput | Multas_Descargo_FolioWhereInput[]
+    OR?: Multas_Descargo_FolioWhereInput[]
+    NOT?: Multas_Descargo_FolioWhereInput | Multas_Descargo_FolioWhereInput[]
+    descargoId?: StringFilter<"Multas_Descargo_Folio"> | string
+    notificacionItemId?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    folio?: StringFilter<"Multas_Descargo_Folio"> | string
+    rbd?: IntNullableFilter<"Multas_Descargo_Folio"> | number | null
+    aspecto?: StringFilter<"Multas_Descargo_Folio"> | string
+    montoNotificadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    estado?: StringFilter<"Multas_Descargo_Folio"> | string
+    argumentoPrincipal?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }, "id">
+
+  export type Multas_Descargo_FolioOrderByWithAggregationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    notificacionItemId?: SortOrderInput | SortOrder
+    folio?: SortOrder
+    rbd?: SortOrderInput | SortOrder
+    aspecto?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    estado?: SortOrder
+    argumentoPrincipal?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Descargo_FolioCountOrderByAggregateInput
+    _avg?: Multas_Descargo_FolioAvgOrderByAggregateInput
+    _max?: Multas_Descargo_FolioMaxOrderByAggregateInput
+    _min?: Multas_Descargo_FolioMinOrderByAggregateInput
+    _sum?: Multas_Descargo_FolioSumOrderByAggregateInput
+  }
+
+  export type Multas_Descargo_FolioScalarWhereWithAggregatesInput = {
+    AND?: Multas_Descargo_FolioScalarWhereWithAggregatesInput | Multas_Descargo_FolioScalarWhereWithAggregatesInput[]
+    OR?: Multas_Descargo_FolioScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Descargo_FolioScalarWhereWithAggregatesInput | Multas_Descargo_FolioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Descargo_Folio"> | string
+    descargoId?: StringWithAggregatesFilter<"Multas_Descargo_Folio"> | string
+    notificacionItemId?: StringNullableWithAggregatesFilter<"Multas_Descargo_Folio"> | string | null
+    folio?: StringWithAggregatesFilter<"Multas_Descargo_Folio"> | string
+    rbd?: IntNullableWithAggregatesFilter<"Multas_Descargo_Folio"> | number | null
+    aspecto?: StringWithAggregatesFilter<"Multas_Descargo_Folio"> | string
+    montoNotificadoUtm?: FloatWithAggregatesFilter<"Multas_Descargo_Folio"> | number
+    montoImpugnadoUtm?: FloatWithAggregatesFilter<"Multas_Descargo_Folio"> | number
+    montoRebajadoUtm?: FloatWithAggregatesFilter<"Multas_Descargo_Folio"> | number
+    estado?: StringWithAggregatesFilter<"Multas_Descargo_Folio"> | string
+    argumentoPrincipal?: StringNullableWithAggregatesFilter<"Multas_Descargo_Folio"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Descargo_Folio"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Descargo_Folio"> | Date | string
+  }
+
+  export type Multas_ResuelveWhereInput = {
+    AND?: Multas_ResuelveWhereInput | Multas_ResuelveWhereInput[]
+    OR?: Multas_ResuelveWhereInput[]
+    NOT?: Multas_ResuelveWhereInput | Multas_ResuelveWhereInput[]
+    id?: StringFilter<"Multas_Resuelve"> | string
+    descargoId?: StringFilter<"Multas_Resuelve"> | string
+    numeroResolucion?: StringFilter<"Multas_Resuelve"> | string
+    fechaResolucion?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    fechaNotificacion?: DateTimeNullableFilter<"Multas_Resuelve"> | Date | string | null
+    dictamen?: StringFilter<"Multas_Resuelve"> | string
+    montoRatificadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    porcentajeRebaja?: FloatFilter<"Multas_Resuelve"> | number
+    fundamentoResuelve?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    registradoPor?: StringFilter<"Multas_Resuelve"> | string
+    createdAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }
+
+  export type Multas_ResuelveOrderByWithRelationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    fechaNotificacion?: SortOrderInput | SortOrder
+    dictamen?: SortOrder
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+    fundamentoResuelve?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    descargo?: Multas_Descargo_FormalOrderByWithRelationInput
+  }
+
+  export type Multas_ResuelveWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_ResuelveWhereInput | Multas_ResuelveWhereInput[]
+    OR?: Multas_ResuelveWhereInput[]
+    NOT?: Multas_ResuelveWhereInput | Multas_ResuelveWhereInput[]
+    descargoId?: StringFilter<"Multas_Resuelve"> | string
+    numeroResolucion?: StringFilter<"Multas_Resuelve"> | string
+    fechaResolucion?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    fechaNotificacion?: DateTimeNullableFilter<"Multas_Resuelve"> | Date | string | null
+    dictamen?: StringFilter<"Multas_Resuelve"> | string
+    montoRatificadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    porcentajeRebaja?: FloatFilter<"Multas_Resuelve"> | number
+    fundamentoResuelve?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    registradoPor?: StringFilter<"Multas_Resuelve"> | string
+    createdAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }, "id">
+
+  export type Multas_ResuelveOrderByWithAggregationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    fechaNotificacion?: SortOrderInput | SortOrder
+    dictamen?: SortOrder
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+    fundamentoResuelve?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_ResuelveCountOrderByAggregateInput
+    _avg?: Multas_ResuelveAvgOrderByAggregateInput
+    _max?: Multas_ResuelveMaxOrderByAggregateInput
+    _min?: Multas_ResuelveMinOrderByAggregateInput
+    _sum?: Multas_ResuelveSumOrderByAggregateInput
+  }
+
+  export type Multas_ResuelveScalarWhereWithAggregatesInput = {
+    AND?: Multas_ResuelveScalarWhereWithAggregatesInput | Multas_ResuelveScalarWhereWithAggregatesInput[]
+    OR?: Multas_ResuelveScalarWhereWithAggregatesInput[]
+    NOT?: Multas_ResuelveScalarWhereWithAggregatesInput | Multas_ResuelveScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Resuelve"> | string
+    descargoId?: StringWithAggregatesFilter<"Multas_Resuelve"> | string
+    numeroResolucion?: StringWithAggregatesFilter<"Multas_Resuelve"> | string
+    fechaResolucion?: DateTimeWithAggregatesFilter<"Multas_Resuelve"> | Date | string
+    fechaNotificacion?: DateTimeNullableWithAggregatesFilter<"Multas_Resuelve"> | Date | string | null
+    dictamen?: StringWithAggregatesFilter<"Multas_Resuelve"> | string
+    montoRatificadoUtm?: FloatWithAggregatesFilter<"Multas_Resuelve"> | number
+    montoRebajadoUtm?: FloatWithAggregatesFilter<"Multas_Resuelve"> | number
+    porcentajeRebaja?: FloatWithAggregatesFilter<"Multas_Resuelve"> | number
+    fundamentoResuelve?: StringNullableWithAggregatesFilter<"Multas_Resuelve"> | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Multas_Resuelve"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Multas_Resuelve"> | string | null
+    registradoPor?: StringWithAggregatesFilter<"Multas_Resuelve"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Resuelve"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Resuelve"> | Date | string
+  }
+
+  export type Multas_Recurso_AdminWhereInput = {
+    AND?: Multas_Recurso_AdminWhereInput | Multas_Recurso_AdminWhereInput[]
+    OR?: Multas_Recurso_AdminWhereInput[]
+    NOT?: Multas_Recurso_AdminWhereInput | Multas_Recurso_AdminWhereInput[]
+    id?: StringFilter<"Multas_Recurso_Admin"> | string
+    descargoId?: StringFilter<"Multas_Recurso_Admin"> | string
+    tipoRecurso?: StringFilter<"Multas_Recurso_Admin"> | string
+    codigoPresentacion?: StringFilter<"Multas_Recurso_Admin"> | string
+    fechaPresentacion?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    autoridadDestino?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    estado?: StringFilter<"Multas_Recurso_Admin"> | string
+    resolucionRespuesta?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    montoRebajaExtraUtm?: FloatFilter<"Multas_Recurso_Admin"> | number
+    fundamentosRecurso?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    abogado?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    registradoPor?: StringFilter<"Multas_Recurso_Admin"> | string
+    createdAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }
+
+  export type Multas_Recurso_AdminOrderByWithRelationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tipoRecurso?: SortOrder
+    codigoPresentacion?: SortOrder
+    fechaPresentacion?: SortOrder
+    autoridadDestino?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    resolucionRespuesta?: SortOrderInput | SortOrder
+    montoRebajaExtraUtm?: SortOrder
+    fundamentosRecurso?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    abogado?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    descargo?: Multas_Descargo_FormalOrderByWithRelationInput
+  }
+
+  export type Multas_Recurso_AdminWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Recurso_AdminWhereInput | Multas_Recurso_AdminWhereInput[]
+    OR?: Multas_Recurso_AdminWhereInput[]
+    NOT?: Multas_Recurso_AdminWhereInput | Multas_Recurso_AdminWhereInput[]
+    descargoId?: StringFilter<"Multas_Recurso_Admin"> | string
+    tipoRecurso?: StringFilter<"Multas_Recurso_Admin"> | string
+    codigoPresentacion?: StringFilter<"Multas_Recurso_Admin"> | string
+    fechaPresentacion?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    autoridadDestino?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    estado?: StringFilter<"Multas_Recurso_Admin"> | string
+    resolucionRespuesta?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    montoRebajaExtraUtm?: FloatFilter<"Multas_Recurso_Admin"> | number
+    fundamentosRecurso?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    abogado?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    registradoPor?: StringFilter<"Multas_Recurso_Admin"> | string
+    createdAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }, "id">
+
+  export type Multas_Recurso_AdminOrderByWithAggregationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tipoRecurso?: SortOrder
+    codigoPresentacion?: SortOrder
+    fechaPresentacion?: SortOrder
+    autoridadDestino?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    resolucionRespuesta?: SortOrderInput | SortOrder
+    montoRebajaExtraUtm?: SortOrder
+    fundamentosRecurso?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    abogado?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Recurso_AdminCountOrderByAggregateInput
+    _avg?: Multas_Recurso_AdminAvgOrderByAggregateInput
+    _max?: Multas_Recurso_AdminMaxOrderByAggregateInput
+    _min?: Multas_Recurso_AdminMinOrderByAggregateInput
+    _sum?: Multas_Recurso_AdminSumOrderByAggregateInput
+  }
+
+  export type Multas_Recurso_AdminScalarWhereWithAggregatesInput = {
+    AND?: Multas_Recurso_AdminScalarWhereWithAggregatesInput | Multas_Recurso_AdminScalarWhereWithAggregatesInput[]
+    OR?: Multas_Recurso_AdminScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Recurso_AdminScalarWhereWithAggregatesInput | Multas_Recurso_AdminScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    descargoId?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    tipoRecurso?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    codigoPresentacion?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    fechaPresentacion?: DateTimeWithAggregatesFilter<"Multas_Recurso_Admin"> | Date | string
+    autoridadDestino?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    estado?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    resolucionRespuesta?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    montoRebajaExtraUtm?: FloatWithAggregatesFilter<"Multas_Recurso_Admin"> | number
+    fundamentosRecurso?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    abogado?: StringNullableWithAggregatesFilter<"Multas_Recurso_Admin"> | string | null
+    registradoPor?: StringWithAggregatesFilter<"Multas_Recurso_Admin"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Recurso_Admin"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Recurso_Admin"> | Date | string
+  }
+
+  export type Multas_Proceso_JudicialWhereInput = {
+    AND?: Multas_Proceso_JudicialWhereInput | Multas_Proceso_JudicialWhereInput[]
+    OR?: Multas_Proceso_JudicialWhereInput[]
+    NOT?: Multas_Proceso_JudicialWhereInput | Multas_Proceso_JudicialWhereInput[]
+    id?: StringFilter<"Multas_Proceso_Judicial"> | string
+    descargoId?: StringFilter<"Multas_Proceso_Judicial"> | string
+    tribunal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    rolCausa?: StringFilter<"Multas_Proceso_Judicial"> | string
+    caratulado?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    fechaIngreso?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    cuantiaDemandaPesos?: FloatNullableFilter<"Multas_Proceso_Judicial"> | number | null
+    estadoProcesal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    resultadoSentencia?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    abogadoExterno?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    notas?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    registradoPor?: StringFilter<"Multas_Proceso_Judicial"> | string
+    createdAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }
+
+  export type Multas_Proceso_JudicialOrderByWithRelationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tribunal?: SortOrder
+    rolCausa?: SortOrder
+    caratulado?: SortOrderInput | SortOrder
+    fechaIngreso?: SortOrder
+    cuantiaDemandaPesos?: SortOrderInput | SortOrder
+    estadoProcesal?: SortOrder
+    resultadoSentencia?: SortOrderInput | SortOrder
+    abogadoExterno?: SortOrderInput | SortOrder
+    notas?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    descargo?: Multas_Descargo_FormalOrderByWithRelationInput
+  }
+
+  export type Multas_Proceso_JudicialWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Proceso_JudicialWhereInput | Multas_Proceso_JudicialWhereInput[]
+    OR?: Multas_Proceso_JudicialWhereInput[]
+    NOT?: Multas_Proceso_JudicialWhereInput | Multas_Proceso_JudicialWhereInput[]
+    descargoId?: StringFilter<"Multas_Proceso_Judicial"> | string
+    tribunal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    rolCausa?: StringFilter<"Multas_Proceso_Judicial"> | string
+    caratulado?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    fechaIngreso?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    cuantiaDemandaPesos?: FloatNullableFilter<"Multas_Proceso_Judicial"> | number | null
+    estadoProcesal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    resultadoSentencia?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    abogadoExterno?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    notas?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    registradoPor?: StringFilter<"Multas_Proceso_Judicial"> | string
+    createdAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    descargo?: XOR<Multas_Descargo_FormalRelationFilter, Multas_Descargo_FormalWhereInput>
+  }, "id">
+
+  export type Multas_Proceso_JudicialOrderByWithAggregationInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tribunal?: SortOrder
+    rolCausa?: SortOrder
+    caratulado?: SortOrderInput | SortOrder
+    fechaIngreso?: SortOrder
+    cuantiaDemandaPesos?: SortOrderInput | SortOrder
+    estadoProcesal?: SortOrder
+    resultadoSentencia?: SortOrderInput | SortOrder
+    abogadoExterno?: SortOrderInput | SortOrder
+    notas?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Multas_Proceso_JudicialCountOrderByAggregateInput
+    _avg?: Multas_Proceso_JudicialAvgOrderByAggregateInput
+    _max?: Multas_Proceso_JudicialMaxOrderByAggregateInput
+    _min?: Multas_Proceso_JudicialMinOrderByAggregateInput
+    _sum?: Multas_Proceso_JudicialSumOrderByAggregateInput
+  }
+
+  export type Multas_Proceso_JudicialScalarWhereWithAggregatesInput = {
+    AND?: Multas_Proceso_JudicialScalarWhereWithAggregatesInput | Multas_Proceso_JudicialScalarWhereWithAggregatesInput[]
+    OR?: Multas_Proceso_JudicialScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Proceso_JudicialScalarWhereWithAggregatesInput | Multas_Proceso_JudicialScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    descargoId?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    tribunal?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    rolCausa?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    caratulado?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    fechaIngreso?: DateTimeWithAggregatesFilter<"Multas_Proceso_Judicial"> | Date | string
+    cuantiaDemandaPesos?: FloatNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | number | null
+    estadoProcesal?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    resultadoSentencia?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    abogadoExterno?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    notas?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Multas_Proceso_Judicial"> | string | null
+    registradoPor?: StringWithAggregatesFilter<"Multas_Proceso_Judicial"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Multas_Proceso_Judicial"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Multas_Proceso_Judicial"> | Date | string
   }
 
   export type Descargos_CabWhereInput = {
@@ -190941,6 +197697,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: Multas_Notificacion_ItemCreateNestedManyWithoutNotificacionInput
+    descargos?: Multas_Descargo_FormalCreateNestedManyWithoutNotificacionInput
   }
 
   export type Multas_Notificacion_REXUncheckedCreateInput = {
@@ -190963,6 +197720,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: Multas_Notificacion_ItemUncheckedCreateNestedManyWithoutNotificacionInput
+    descargos?: Multas_Descargo_FormalUncheckedCreateNestedManyWithoutNotificacionInput
   }
 
   export type Multas_Notificacion_REXUpdateInput = {
@@ -190985,6 +197743,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: Multas_Notificacion_ItemUpdateManyWithoutNotificacionNestedInput
+    descargos?: Multas_Descargo_FormalUpdateManyWithoutNotificacionNestedInput
   }
 
   export type Multas_Notificacion_REXUncheckedUpdateInput = {
@@ -191007,6 +197766,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionNestedInput
+    descargos?: Multas_Descargo_FormalUncheckedUpdateManyWithoutNotificacionNestedInput
   }
 
   export type Multas_Notificacion_REXCreateManyInput = {
@@ -191228,6 +197988,654 @@ export namespace Prisma {
     resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
     clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FormalCreateInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput
+    folios?: Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput
+    folios?: Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalCreateManyInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FormalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioCreateInput = {
+    id?: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    descargo: Multas_Descargo_FormalCreateNestedOneWithoutFoliosInput
+  }
+
+  export type Multas_Descargo_FolioUncheckedCreateInput = {
+    id?: string
+    descargoId: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FolioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargo?: Multas_Descargo_FormalUpdateOneRequiredWithoutFoliosNestedInput
+  }
+
+  export type Multas_Descargo_FolioUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioCreateManyInput = {
+    id?: string
+    descargoId: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FolioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveCreateInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    descargo: Multas_Descargo_FormalCreateNestedOneWithoutResuelvesInput
+  }
+
+  export type Multas_ResuelveUncheckedCreateInput = {
+    id?: string
+    descargoId: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_ResuelveUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargo?: Multas_Descargo_FormalUpdateOneRequiredWithoutResuelvesNestedInput
+  }
+
+  export type Multas_ResuelveUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveCreateManyInput = {
+    id?: string
+    descargoId: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_ResuelveUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminCreateInput = {
+    id?: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    descargo: Multas_Descargo_FormalCreateNestedOneWithoutRecursosInput
+  }
+
+  export type Multas_Recurso_AdminUncheckedCreateInput = {
+    id?: string
+    descargoId: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Recurso_AdminUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargo?: Multas_Descargo_FormalUpdateOneRequiredWithoutRecursosNestedInput
+  }
+
+  export type Multas_Recurso_AdminUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminCreateManyInput = {
+    id?: string
+    descargoId: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Recurso_AdminUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialCreateInput = {
+    id?: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    descargo: Multas_Descargo_FormalCreateNestedOneWithoutProcesosJudicialesInput
+  }
+
+  export type Multas_Proceso_JudicialUncheckedCreateInput = {
+    id?: string
+    descargoId: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Proceso_JudicialUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargo?: Multas_Descargo_FormalUpdateOneRequiredWithoutProcesosJudicialesNestedInput
+  }
+
+  export type Multas_Proceso_JudicialUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialCreateManyInput = {
+    id?: string
+    descargoId: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Proceso_JudicialUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    descargoId?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -203323,7 +210731,17 @@ export namespace Prisma {
     none?: Multas_Notificacion_ItemWhereInput
   }
 
+  export type Multas_Descargo_FormalListRelationFilter = {
+    every?: Multas_Descargo_FormalWhereInput
+    some?: Multas_Descargo_FormalWhereInput
+    none?: Multas_Descargo_FormalWhereInput
+  }
+
   export type Multas_Notificacion_ItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -203503,6 +210921,383 @@ export namespace Prisma {
     montoNotificado?: SortOrder
     montoCalculado?: SortOrder
     diferenciaMonto?: SortOrder
+  }
+
+  export type Multas_Descargo_FolioListRelationFilter = {
+    every?: Multas_Descargo_FolioWhereInput
+    some?: Multas_Descargo_FolioWhereInput
+    none?: Multas_Descargo_FolioWhereInput
+  }
+
+  export type Multas_ResuelveListRelationFilter = {
+    every?: Multas_ResuelveWhereInput
+    some?: Multas_ResuelveWhereInput
+    none?: Multas_ResuelveWhereInput
+  }
+
+  export type Multas_Recurso_AdminListRelationFilter = {
+    every?: Multas_Recurso_AdminWhereInput
+    some?: Multas_Recurso_AdminWhereInput
+    none?: Multas_Recurso_AdminWhereInput
+  }
+
+  export type Multas_Proceso_JudicialListRelationFilter = {
+    every?: Multas_Proceso_JudicialWhereInput
+    some?: Multas_Proceso_JudicialWhereInput
+    none?: Multas_Proceso_JudicialWhereInput
+  }
+
+  export type Multas_Descargo_FolioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_ResuelveOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalNotificacionIdCodigoIngresoCompoundUniqueInput = {
+    notificacionId: string
+    codigoIngreso: string
+  }
+
+  export type Multas_Descargo_FormalCountOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    codigoIngreso?: SortOrder
+    fechaIngreso?: SortOrder
+    fechaPlazoRespuesta?: SortOrder
+    diasPlazoLegal?: SortOrder
+    estado?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrder
+    resumenArgumentos?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogadoResponsable?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalAvgOrderByAggregateInput = {
+    diasPlazoLegal?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    codigoIngreso?: SortOrder
+    fechaIngreso?: SortOrder
+    fechaPlazoRespuesta?: SortOrder
+    diasPlazoLegal?: SortOrder
+    estado?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrder
+    resumenArgumentos?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogadoResponsable?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalMinOrderByAggregateInput = {
+    id?: SortOrder
+    notificacionId?: SortOrder
+    codigoIngreso?: SortOrder
+    fechaIngreso?: SortOrder
+    fechaPlazoRespuesta?: SortOrder
+    diasPlazoLegal?: SortOrder
+    estado?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrder
+    resumenArgumentos?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogadoResponsable?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalSumOrderByAggregateInput = {
+    diasPlazoLegal?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoImpugnadoPesos?: SortOrder
+  }
+
+  export type Multas_Descargo_FormalRelationFilter = {
+    is?: Multas_Descargo_FormalWhereInput
+    isNot?: Multas_Descargo_FormalWhereInput
+  }
+
+  export type Multas_Descargo_FolioCountOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    notificacionItemId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    aspecto?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    estado?: SortOrder
+    argumentoPrincipal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FolioAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+  }
+
+  export type Multas_Descargo_FolioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    notificacionItemId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    aspecto?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    estado?: SortOrder
+    argumentoPrincipal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FolioMinOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    notificacionItemId?: SortOrder
+    folio?: SortOrder
+    rbd?: SortOrder
+    aspecto?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    estado?: SortOrder
+    argumentoPrincipal?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Descargo_FolioSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoNotificadoUtm?: SortOrder
+    montoImpugnadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+  }
+
+  export type Multas_ResuelveCountOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    fechaNotificacion?: SortOrder
+    dictamen?: SortOrder
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+    fundamentoResuelve?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_ResuelveAvgOrderByAggregateInput = {
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+  }
+
+  export type Multas_ResuelveMaxOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    fechaNotificacion?: SortOrder
+    dictamen?: SortOrder
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+    fundamentoResuelve?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_ResuelveMinOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
+    fechaNotificacion?: SortOrder
+    dictamen?: SortOrder
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+    fundamentoResuelve?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_ResuelveSumOrderByAggregateInput = {
+    montoRatificadoUtm?: SortOrder
+    montoRebajadoUtm?: SortOrder
+    porcentajeRebaja?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminCountOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tipoRecurso?: SortOrder
+    codigoPresentacion?: SortOrder
+    fechaPresentacion?: SortOrder
+    autoridadDestino?: SortOrder
+    estado?: SortOrder
+    resolucionRespuesta?: SortOrder
+    montoRebajaExtraUtm?: SortOrder
+    fundamentosRecurso?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogado?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminAvgOrderByAggregateInput = {
+    montoRebajaExtraUtm?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminMaxOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tipoRecurso?: SortOrder
+    codigoPresentacion?: SortOrder
+    fechaPresentacion?: SortOrder
+    autoridadDestino?: SortOrder
+    estado?: SortOrder
+    resolucionRespuesta?: SortOrder
+    montoRebajaExtraUtm?: SortOrder
+    fundamentosRecurso?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogado?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminMinOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tipoRecurso?: SortOrder
+    codigoPresentacion?: SortOrder
+    fechaPresentacion?: SortOrder
+    autoridadDestino?: SortOrder
+    estado?: SortOrder
+    resolucionRespuesta?: SortOrder
+    montoRebajaExtraUtm?: SortOrder
+    fundamentosRecurso?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    abogado?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Recurso_AdminSumOrderByAggregateInput = {
+    montoRebajaExtraUtm?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialCountOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tribunal?: SortOrder
+    rolCausa?: SortOrder
+    caratulado?: SortOrder
+    fechaIngreso?: SortOrder
+    cuantiaDemandaPesos?: SortOrder
+    estadoProcesal?: SortOrder
+    resultadoSentencia?: SortOrder
+    abogadoExterno?: SortOrder
+    notas?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialAvgOrderByAggregateInput = {
+    cuantiaDemandaPesos?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialMaxOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tribunal?: SortOrder
+    rolCausa?: SortOrder
+    caratulado?: SortOrder
+    fechaIngreso?: SortOrder
+    cuantiaDemandaPesos?: SortOrder
+    estadoProcesal?: SortOrder
+    resultadoSentencia?: SortOrder
+    abogadoExterno?: SortOrder
+    notas?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialMinOrderByAggregateInput = {
+    id?: SortOrder
+    descargoId?: SortOrder
+    tribunal?: SortOrder
+    rolCausa?: SortOrder
+    caratulado?: SortOrder
+    fechaIngreso?: SortOrder
+    cuantiaDemandaPesos?: SortOrder
+    estadoProcesal?: SortOrder
+    resultadoSentencia?: SortOrder
+    abogadoExterno?: SortOrder
+    notas?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    registradoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Multas_Proceso_JudicialSumOrderByAggregateInput = {
+    cuantiaDemandaPesos?: SortOrder
   }
 
   export type Descargos_DetListRelationFilter = {
@@ -210396,11 +218191,25 @@ export namespace Prisma {
     connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
   }
 
+  export type Multas_Descargo_FormalCreateNestedManyWithoutNotificacionInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput> | Multas_Descargo_FormalCreateWithoutNotificacionInput[] | Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput | Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput[]
+    createMany?: Multas_Descargo_FormalCreateManyNotificacionInputEnvelope
+    connect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+  }
+
   export type Multas_Notificacion_ItemUncheckedCreateNestedManyWithoutNotificacionInput = {
     create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
     connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
     createMany?: Multas_Notificacion_ItemCreateManyNotificacionInputEnvelope
     connect?: Multas_Notificacion_ItemWhereUniqueInput | Multas_Notificacion_ItemWhereUniqueInput[]
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateNestedManyWithoutNotificacionInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput> | Multas_Descargo_FormalCreateWithoutNotificacionInput[] | Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput | Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput[]
+    createMany?: Multas_Descargo_FormalCreateManyNotificacionInputEnvelope
+    connect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
   }
 
   export type Multas_Notificacion_ItemUpdateManyWithoutNotificacionNestedInput = {
@@ -210417,6 +218226,20 @@ export namespace Prisma {
     deleteMany?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
   }
 
+  export type Multas_Descargo_FormalUpdateManyWithoutNotificacionNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput> | Multas_Descargo_FormalCreateWithoutNotificacionInput[] | Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput | Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput[]
+    upsert?: Multas_Descargo_FormalUpsertWithWhereUniqueWithoutNotificacionInput | Multas_Descargo_FormalUpsertWithWhereUniqueWithoutNotificacionInput[]
+    createMany?: Multas_Descargo_FormalCreateManyNotificacionInputEnvelope
+    set?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    disconnect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    delete?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    connect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    update?: Multas_Descargo_FormalUpdateWithWhereUniqueWithoutNotificacionInput | Multas_Descargo_FormalUpdateWithWhereUniqueWithoutNotificacionInput[]
+    updateMany?: Multas_Descargo_FormalUpdateManyWithWhereWithoutNotificacionInput | Multas_Descargo_FormalUpdateManyWithWhereWithoutNotificacionInput[]
+    deleteMany?: Multas_Descargo_FormalScalarWhereInput | Multas_Descargo_FormalScalarWhereInput[]
+  }
+
   export type Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionNestedInput = {
     create?: XOR<Multas_Notificacion_ItemCreateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput> | Multas_Notificacion_ItemCreateWithoutNotificacionInput[] | Multas_Notificacion_ItemUncheckedCreateWithoutNotificacionInput[]
     connectOrCreate?: Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput | Multas_Notificacion_ItemCreateOrConnectWithoutNotificacionInput[]
@@ -210431,6 +218254,20 @@ export namespace Prisma {
     deleteMany?: Multas_Notificacion_ItemScalarWhereInput | Multas_Notificacion_ItemScalarWhereInput[]
   }
 
+  export type Multas_Descargo_FormalUncheckedUpdateManyWithoutNotificacionNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput> | Multas_Descargo_FormalCreateWithoutNotificacionInput[] | Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput[]
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput | Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput[]
+    upsert?: Multas_Descargo_FormalUpsertWithWhereUniqueWithoutNotificacionInput | Multas_Descargo_FormalUpsertWithWhereUniqueWithoutNotificacionInput[]
+    createMany?: Multas_Descargo_FormalCreateManyNotificacionInputEnvelope
+    set?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    disconnect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    delete?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    connect?: Multas_Descargo_FormalWhereUniqueInput | Multas_Descargo_FormalWhereUniqueInput[]
+    update?: Multas_Descargo_FormalUpdateWithWhereUniqueWithoutNotificacionInput | Multas_Descargo_FormalUpdateWithWhereUniqueWithoutNotificacionInput[]
+    updateMany?: Multas_Descargo_FormalUpdateManyWithWhereWithoutNotificacionInput | Multas_Descargo_FormalUpdateManyWithWhereWithoutNotificacionInput[]
+    deleteMany?: Multas_Descargo_FormalScalarWhereInput | Multas_Descargo_FormalScalarWhereInput[]
+  }
+
   export type Multas_Notificacion_REXCreateNestedOneWithoutItemsInput = {
     create?: XOR<Multas_Notificacion_REXCreateWithoutItemsInput, Multas_Notificacion_REXUncheckedCreateWithoutItemsInput>
     connectOrCreate?: Multas_Notificacion_REXCreateOrConnectWithoutItemsInput
@@ -210443,6 +218280,244 @@ export namespace Prisma {
     upsert?: Multas_Notificacion_REXUpsertWithoutItemsInput
     connect?: Multas_Notificacion_REXWhereUniqueInput
     update?: XOR<XOR<Multas_Notificacion_REXUpdateToOneWithWhereWithoutItemsInput, Multas_Notificacion_REXUpdateWithoutItemsInput>, Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput = {
+    create?: XOR<Multas_Notificacion_REXCreateWithoutDescargosInput, Multas_Notificacion_REXUncheckedCreateWithoutDescargosInput>
+    connectOrCreate?: Multas_Notificacion_REXCreateOrConnectWithoutDescargosInput
+    connect?: Multas_Notificacion_REXWhereUniqueInput
+  }
+
+  export type Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput> | Multas_Descargo_FolioCreateWithoutDescargoInput[] | Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput | Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Descargo_FolioCreateManyDescargoInputEnvelope
+    connect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+  }
+
+  export type Multas_ResuelveCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput> | Multas_ResuelveCreateWithoutDescargoInput[] | Multas_ResuelveUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_ResuelveCreateOrConnectWithoutDescargoInput | Multas_ResuelveCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_ResuelveCreateManyDescargoInputEnvelope
+    connect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+  }
+
+  export type Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput> | Multas_Recurso_AdminCreateWithoutDescargoInput[] | Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput | Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Recurso_AdminCreateManyDescargoInputEnvelope
+    connect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+  }
+
+  export type Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput> | Multas_Proceso_JudicialCreateWithoutDescargoInput[] | Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput | Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Proceso_JudicialCreateManyDescargoInputEnvelope
+    connect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+  }
+
+  export type Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput> | Multas_Descargo_FolioCreateWithoutDescargoInput[] | Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput | Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Descargo_FolioCreateManyDescargoInputEnvelope
+    connect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+  }
+
+  export type Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput> | Multas_ResuelveCreateWithoutDescargoInput[] | Multas_ResuelveUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_ResuelveCreateOrConnectWithoutDescargoInput | Multas_ResuelveCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_ResuelveCreateManyDescargoInputEnvelope
+    connect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+  }
+
+  export type Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput> | Multas_Recurso_AdminCreateWithoutDescargoInput[] | Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput | Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Recurso_AdminCreateManyDescargoInputEnvelope
+    connect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+  }
+
+  export type Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput = {
+    create?: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput> | Multas_Proceso_JudicialCreateWithoutDescargoInput[] | Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput | Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput[]
+    createMany?: Multas_Proceso_JudicialCreateManyDescargoInputEnvelope
+    connect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+  }
+
+  export type Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput = {
+    create?: XOR<Multas_Notificacion_REXCreateWithoutDescargosInput, Multas_Notificacion_REXUncheckedCreateWithoutDescargosInput>
+    connectOrCreate?: Multas_Notificacion_REXCreateOrConnectWithoutDescargosInput
+    upsert?: Multas_Notificacion_REXUpsertWithoutDescargosInput
+    connect?: Multas_Notificacion_REXWhereUniqueInput
+    update?: XOR<XOR<Multas_Notificacion_REXUpdateToOneWithWhereWithoutDescargosInput, Multas_Notificacion_REXUpdateWithoutDescargosInput>, Multas_Notificacion_REXUncheckedUpdateWithoutDescargosInput>
+  }
+
+  export type Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput> | Multas_Descargo_FolioCreateWithoutDescargoInput[] | Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput | Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Descargo_FolioUpsertWithWhereUniqueWithoutDescargoInput | Multas_Descargo_FolioUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Descargo_FolioCreateManyDescargoInputEnvelope
+    set?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    disconnect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    delete?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    connect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    update?: Multas_Descargo_FolioUpdateWithWhereUniqueWithoutDescargoInput | Multas_Descargo_FolioUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Descargo_FolioUpdateManyWithWhereWithoutDescargoInput | Multas_Descargo_FolioUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Descargo_FolioScalarWhereInput | Multas_Descargo_FolioScalarWhereInput[]
+  }
+
+  export type Multas_ResuelveUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput> | Multas_ResuelveCreateWithoutDescargoInput[] | Multas_ResuelveUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_ResuelveCreateOrConnectWithoutDescargoInput | Multas_ResuelveCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_ResuelveUpsertWithWhereUniqueWithoutDescargoInput | Multas_ResuelveUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_ResuelveCreateManyDescargoInputEnvelope
+    set?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    disconnect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    delete?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    connect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    update?: Multas_ResuelveUpdateWithWhereUniqueWithoutDescargoInput | Multas_ResuelveUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_ResuelveUpdateManyWithWhereWithoutDescargoInput | Multas_ResuelveUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_ResuelveScalarWhereInput | Multas_ResuelveScalarWhereInput[]
+  }
+
+  export type Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput> | Multas_Recurso_AdminCreateWithoutDescargoInput[] | Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput | Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Recurso_AdminUpsertWithWhereUniqueWithoutDescargoInput | Multas_Recurso_AdminUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Recurso_AdminCreateManyDescargoInputEnvelope
+    set?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    disconnect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    delete?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    connect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    update?: Multas_Recurso_AdminUpdateWithWhereUniqueWithoutDescargoInput | Multas_Recurso_AdminUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Recurso_AdminUpdateManyWithWhereWithoutDescargoInput | Multas_Recurso_AdminUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Recurso_AdminScalarWhereInput | Multas_Recurso_AdminScalarWhereInput[]
+  }
+
+  export type Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput> | Multas_Proceso_JudicialCreateWithoutDescargoInput[] | Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput | Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Proceso_JudicialUpsertWithWhereUniqueWithoutDescargoInput | Multas_Proceso_JudicialUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Proceso_JudicialCreateManyDescargoInputEnvelope
+    set?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    disconnect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    delete?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    connect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    update?: Multas_Proceso_JudicialUpdateWithWhereUniqueWithoutDescargoInput | Multas_Proceso_JudicialUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Proceso_JudicialUpdateManyWithWhereWithoutDescargoInput | Multas_Proceso_JudicialUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Proceso_JudicialScalarWhereInput | Multas_Proceso_JudicialScalarWhereInput[]
+  }
+
+  export type Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput> | Multas_Descargo_FolioCreateWithoutDescargoInput[] | Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput | Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Descargo_FolioUpsertWithWhereUniqueWithoutDescargoInput | Multas_Descargo_FolioUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Descargo_FolioCreateManyDescargoInputEnvelope
+    set?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    disconnect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    delete?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    connect?: Multas_Descargo_FolioWhereUniqueInput | Multas_Descargo_FolioWhereUniqueInput[]
+    update?: Multas_Descargo_FolioUpdateWithWhereUniqueWithoutDescargoInput | Multas_Descargo_FolioUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Descargo_FolioUpdateManyWithWhereWithoutDescargoInput | Multas_Descargo_FolioUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Descargo_FolioScalarWhereInput | Multas_Descargo_FolioScalarWhereInput[]
+  }
+
+  export type Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput> | Multas_ResuelveCreateWithoutDescargoInput[] | Multas_ResuelveUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_ResuelveCreateOrConnectWithoutDescargoInput | Multas_ResuelveCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_ResuelveUpsertWithWhereUniqueWithoutDescargoInput | Multas_ResuelveUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_ResuelveCreateManyDescargoInputEnvelope
+    set?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    disconnect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    delete?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    connect?: Multas_ResuelveWhereUniqueInput | Multas_ResuelveWhereUniqueInput[]
+    update?: Multas_ResuelveUpdateWithWhereUniqueWithoutDescargoInput | Multas_ResuelveUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_ResuelveUpdateManyWithWhereWithoutDescargoInput | Multas_ResuelveUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_ResuelveScalarWhereInput | Multas_ResuelveScalarWhereInput[]
+  }
+
+  export type Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput> | Multas_Recurso_AdminCreateWithoutDescargoInput[] | Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput | Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Recurso_AdminUpsertWithWhereUniqueWithoutDescargoInput | Multas_Recurso_AdminUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Recurso_AdminCreateManyDescargoInputEnvelope
+    set?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    disconnect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    delete?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    connect?: Multas_Recurso_AdminWhereUniqueInput | Multas_Recurso_AdminWhereUniqueInput[]
+    update?: Multas_Recurso_AdminUpdateWithWhereUniqueWithoutDescargoInput | Multas_Recurso_AdminUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Recurso_AdminUpdateManyWithWhereWithoutDescargoInput | Multas_Recurso_AdminUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Recurso_AdminScalarWhereInput | Multas_Recurso_AdminScalarWhereInput[]
+  }
+
+  export type Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput = {
+    create?: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput> | Multas_Proceso_JudicialCreateWithoutDescargoInput[] | Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput[]
+    connectOrCreate?: Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput | Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput[]
+    upsert?: Multas_Proceso_JudicialUpsertWithWhereUniqueWithoutDescargoInput | Multas_Proceso_JudicialUpsertWithWhereUniqueWithoutDescargoInput[]
+    createMany?: Multas_Proceso_JudicialCreateManyDescargoInputEnvelope
+    set?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    disconnect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    delete?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    connect?: Multas_Proceso_JudicialWhereUniqueInput | Multas_Proceso_JudicialWhereUniqueInput[]
+    update?: Multas_Proceso_JudicialUpdateWithWhereUniqueWithoutDescargoInput | Multas_Proceso_JudicialUpdateWithWhereUniqueWithoutDescargoInput[]
+    updateMany?: Multas_Proceso_JudicialUpdateManyWithWhereWithoutDescargoInput | Multas_Proceso_JudicialUpdateManyWithWhereWithoutDescargoInput[]
+    deleteMany?: Multas_Proceso_JudicialScalarWhereInput | Multas_Proceso_JudicialScalarWhereInput[]
+  }
+
+  export type Multas_Descargo_FormalCreateNestedOneWithoutFoliosInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutFoliosInput, Multas_Descargo_FormalUncheckedCreateWithoutFoliosInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutFoliosInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  export type Multas_Descargo_FormalUpdateOneRequiredWithoutFoliosNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutFoliosInput, Multas_Descargo_FormalUncheckedCreateWithoutFoliosInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutFoliosInput
+    upsert?: Multas_Descargo_FormalUpsertWithoutFoliosInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+    update?: XOR<XOR<Multas_Descargo_FormalUpdateToOneWithWhereWithoutFoliosInput, Multas_Descargo_FormalUpdateWithoutFoliosInput>, Multas_Descargo_FormalUncheckedUpdateWithoutFoliosInput>
+  }
+
+  export type Multas_Descargo_FormalCreateNestedOneWithoutResuelvesInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedCreateWithoutResuelvesInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutResuelvesInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  export type Multas_Descargo_FormalUpdateOneRequiredWithoutResuelvesNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedCreateWithoutResuelvesInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutResuelvesInput
+    upsert?: Multas_Descargo_FormalUpsertWithoutResuelvesInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+    update?: XOR<XOR<Multas_Descargo_FormalUpdateToOneWithWhereWithoutResuelvesInput, Multas_Descargo_FormalUpdateWithoutResuelvesInput>, Multas_Descargo_FormalUncheckedUpdateWithoutResuelvesInput>
+  }
+
+  export type Multas_Descargo_FormalCreateNestedOneWithoutRecursosInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutRecursosInput, Multas_Descargo_FormalUncheckedCreateWithoutRecursosInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutRecursosInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  export type Multas_Descargo_FormalUpdateOneRequiredWithoutRecursosNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutRecursosInput, Multas_Descargo_FormalUncheckedCreateWithoutRecursosInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutRecursosInput
+    upsert?: Multas_Descargo_FormalUpsertWithoutRecursosInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+    update?: XOR<XOR<Multas_Descargo_FormalUpdateToOneWithWhereWithoutRecursosInput, Multas_Descargo_FormalUpdateWithoutRecursosInput>, Multas_Descargo_FormalUncheckedUpdateWithoutRecursosInput>
+  }
+
+  export type Multas_Descargo_FormalCreateNestedOneWithoutProcesosJudicialesInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedCreateWithoutProcesosJudicialesInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutProcesosJudicialesInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+  }
+
+  export type Multas_Descargo_FormalUpdateOneRequiredWithoutProcesosJudicialesNestedInput = {
+    create?: XOR<Multas_Descargo_FormalCreateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedCreateWithoutProcesosJudicialesInput>
+    connectOrCreate?: Multas_Descargo_FormalCreateOrConnectWithoutProcesosJudicialesInput
+    upsert?: Multas_Descargo_FormalUpsertWithoutProcesosJudicialesInput
+    connect?: Multas_Descargo_FormalWhereUniqueInput
+    update?: XOR<XOR<Multas_Descargo_FormalUpdateToOneWithWhereWithoutProcesosJudicialesInput, Multas_Descargo_FormalUpdateWithoutProcesosJudicialesInput>, Multas_Descargo_FormalUncheckedUpdateWithoutProcesosJudicialesInput>
   }
 
   export type Descargos_DetCreateNestedManyWithoutCabInput = {
@@ -219223,6 +227298,60 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type Multas_Descargo_FormalCreateWithoutNotificacionInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalCreateOrConnectWithoutNotificacionInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    create: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput>
+  }
+
+  export type Multas_Descargo_FormalCreateManyNotificacionInputEnvelope = {
+    data: Multas_Descargo_FormalCreateManyNotificacionInput | Multas_Descargo_FormalCreateManyNotificacionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type Multas_Notificacion_ItemUpsertWithWhereUniqueWithoutNotificacionInput = {
     where: Multas_Notificacion_ItemWhereUniqueInput
     update: XOR<Multas_Notificacion_ItemUpdateWithoutNotificacionInput, Multas_Notificacion_ItemUncheckedUpdateWithoutNotificacionInput>
@@ -219265,6 +227394,44 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Multas_Notificacion_Item"> | Date | string
   }
 
+  export type Multas_Descargo_FormalUpsertWithWhereUniqueWithoutNotificacionInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    update: XOR<Multas_Descargo_FormalUpdateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedUpdateWithoutNotificacionInput>
+    create: XOR<Multas_Descargo_FormalCreateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedCreateWithoutNotificacionInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateWithWhereUniqueWithoutNotificacionInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    data: XOR<Multas_Descargo_FormalUpdateWithoutNotificacionInput, Multas_Descargo_FormalUncheckedUpdateWithoutNotificacionInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateManyWithWhereWithoutNotificacionInput = {
+    where: Multas_Descargo_FormalScalarWhereInput
+    data: XOR<Multas_Descargo_FormalUpdateManyMutationInput, Multas_Descargo_FormalUncheckedUpdateManyWithoutNotificacionInput>
+  }
+
+  export type Multas_Descargo_FormalScalarWhereInput = {
+    AND?: Multas_Descargo_FormalScalarWhereInput | Multas_Descargo_FormalScalarWhereInput[]
+    OR?: Multas_Descargo_FormalScalarWhereInput[]
+    NOT?: Multas_Descargo_FormalScalarWhereInput | Multas_Descargo_FormalScalarWhereInput[]
+    id?: StringFilter<"Multas_Descargo_Formal"> | string
+    notificacionId?: StringFilter<"Multas_Descargo_Formal"> | string
+    codigoIngreso?: StringFilter<"Multas_Descargo_Formal"> | string
+    fechaIngreso?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    fechaPlazoRespuesta?: DateTimeNullableFilter<"Multas_Descargo_Formal"> | Date | string | null
+    diasPlazoLegal?: IntFilter<"Multas_Descargo_Formal"> | number
+    estado?: StringFilter<"Multas_Descargo_Formal"> | string
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Formal"> | number
+    montoImpugnadoPesos?: FloatNullableFilter<"Multas_Descargo_Formal"> | number | null
+    resumenArgumentos?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    abogadoResponsable?: StringNullableFilter<"Multas_Descargo_Formal"> | string | null
+    creadoPor?: StringFilter<"Multas_Descargo_Formal"> | string
+    createdAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Formal"> | Date | string
+  }
+
   export type Multas_Notificacion_REXCreateWithoutItemsInput = {
     id?: string
     numeroResolucion: string
@@ -219284,6 +227451,7 @@ export namespace Prisma {
     observaciones?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    descargos?: Multas_Descargo_FormalCreateNestedManyWithoutNotificacionInput
   }
 
   export type Multas_Notificacion_REXUncheckedCreateWithoutItemsInput = {
@@ -219305,6 +227473,7 @@ export namespace Prisma {
     observaciones?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    descargos?: Multas_Descargo_FormalUncheckedCreateNestedManyWithoutNotificacionInput
   }
 
   export type Multas_Notificacion_REXCreateOrConnectWithoutItemsInput = {
@@ -219342,6 +227511,7 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargos?: Multas_Descargo_FormalUpdateManyWithoutNotificacionNestedInput
   }
 
   export type Multas_Notificacion_REXUncheckedUpdateWithoutItemsInput = {
@@ -219363,6 +227533,851 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    descargos?: Multas_Descargo_FormalUncheckedUpdateManyWithoutNotificacionNestedInput
+  }
+
+  export type Multas_Notificacion_REXCreateWithoutDescargosInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Notificacion_ItemCreateNestedManyWithoutNotificacionInput
+  }
+
+  export type Multas_Notificacion_REXUncheckedCreateWithoutDescargosInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion?: Date | string | null
+    periodoMes: number
+    periodoAnio: number
+    licitacionId?: number | null
+    licitacionNombre?: string | null
+    nombreArchivo: string
+    totalFilasNotif?: number
+    totalFoliosNotif?: number
+    montoTotalNotificado?: number
+    montoTotalCalculado?: number
+    montoTotalDiferencia?: number
+    estado?: string
+    cargadoPor: string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Multas_Notificacion_ItemUncheckedCreateNestedManyWithoutNotificacionInput
+  }
+
+  export type Multas_Notificacion_REXCreateOrConnectWithoutDescargosInput = {
+    where: Multas_Notificacion_REXWhereUniqueInput
+    create: XOR<Multas_Notificacion_REXCreateWithoutDescargosInput, Multas_Notificacion_REXUncheckedCreateWithoutDescargosInput>
+  }
+
+  export type Multas_Descargo_FolioCreateWithoutDescargoInput = {
+    id?: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput = {
+    id?: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FolioCreateOrConnectWithoutDescargoInput = {
+    where: Multas_Descargo_FolioWhereUniqueInput
+    create: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Descargo_FolioCreateManyDescargoInputEnvelope = {
+    data: Multas_Descargo_FolioCreateManyDescargoInput | Multas_Descargo_FolioCreateManyDescargoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_ResuelveCreateWithoutDescargoInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_ResuelveUncheckedCreateWithoutDescargoInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_ResuelveCreateOrConnectWithoutDescargoInput = {
+    where: Multas_ResuelveWhereUniqueInput
+    create: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_ResuelveCreateManyDescargoInputEnvelope = {
+    data: Multas_ResuelveCreateManyDescargoInput | Multas_ResuelveCreateManyDescargoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Recurso_AdminCreateWithoutDescargoInput = {
+    id?: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput = {
+    id?: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Recurso_AdminCreateOrConnectWithoutDescargoInput = {
+    where: Multas_Recurso_AdminWhereUniqueInput
+    create: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Recurso_AdminCreateManyDescargoInputEnvelope = {
+    data: Multas_Recurso_AdminCreateManyDescargoInput | Multas_Recurso_AdminCreateManyDescargoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Proceso_JudicialCreateWithoutDescargoInput = {
+    id?: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput = {
+    id?: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Proceso_JudicialCreateOrConnectWithoutDescargoInput = {
+    where: Multas_Proceso_JudicialWhereUniqueInput
+    create: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Proceso_JudicialCreateManyDescargoInputEnvelope = {
+    data: Multas_Proceso_JudicialCreateManyDescargoInput | Multas_Proceso_JudicialCreateManyDescargoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Notificacion_REXUpsertWithoutDescargosInput = {
+    update: XOR<Multas_Notificacion_REXUpdateWithoutDescargosInput, Multas_Notificacion_REXUncheckedUpdateWithoutDescargosInput>
+    create: XOR<Multas_Notificacion_REXCreateWithoutDescargosInput, Multas_Notificacion_REXUncheckedCreateWithoutDescargosInput>
+    where?: Multas_Notificacion_REXWhereInput
+  }
+
+  export type Multas_Notificacion_REXUpdateToOneWithWhereWithoutDescargosInput = {
+    where?: Multas_Notificacion_REXWhereInput
+    data: XOR<Multas_Notificacion_REXUpdateWithoutDescargosInput, Multas_Notificacion_REXUncheckedUpdateWithoutDescargosInput>
+  }
+
+  export type Multas_Notificacion_REXUpdateWithoutDescargosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Notificacion_ItemUpdateManyWithoutNotificacionNestedInput
+  }
+
+  export type Multas_Notificacion_REXUncheckedUpdateWithoutDescargosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    periodoMes?: IntFieldUpdateOperationsInput | number
+    periodoAnio?: IntFieldUpdateOperationsInput | number
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    licitacionNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalFilasNotif?: IntFieldUpdateOperationsInput | number
+    totalFoliosNotif?: IntFieldUpdateOperationsInput | number
+    montoTotalNotificado?: FloatFieldUpdateOperationsInput | number
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    montoTotalDiferencia?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Multas_Notificacion_ItemUncheckedUpdateManyWithoutNotificacionNestedInput
+  }
+
+  export type Multas_Descargo_FolioUpsertWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Descargo_FolioWhereUniqueInput
+    update: XOR<Multas_Descargo_FolioUpdateWithoutDescargoInput, Multas_Descargo_FolioUncheckedUpdateWithoutDescargoInput>
+    create: XOR<Multas_Descargo_FolioCreateWithoutDescargoInput, Multas_Descargo_FolioUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Descargo_FolioUpdateWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Descargo_FolioWhereUniqueInput
+    data: XOR<Multas_Descargo_FolioUpdateWithoutDescargoInput, Multas_Descargo_FolioUncheckedUpdateWithoutDescargoInput>
+  }
+
+  export type Multas_Descargo_FolioUpdateManyWithWhereWithoutDescargoInput = {
+    where: Multas_Descargo_FolioScalarWhereInput
+    data: XOR<Multas_Descargo_FolioUpdateManyMutationInput, Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoInput>
+  }
+
+  export type Multas_Descargo_FolioScalarWhereInput = {
+    AND?: Multas_Descargo_FolioScalarWhereInput | Multas_Descargo_FolioScalarWhereInput[]
+    OR?: Multas_Descargo_FolioScalarWhereInput[]
+    NOT?: Multas_Descargo_FolioScalarWhereInput | Multas_Descargo_FolioScalarWhereInput[]
+    id?: StringFilter<"Multas_Descargo_Folio"> | string
+    descargoId?: StringFilter<"Multas_Descargo_Folio"> | string
+    notificacionItemId?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    folio?: StringFilter<"Multas_Descargo_Folio"> | string
+    rbd?: IntNullableFilter<"Multas_Descargo_Folio"> | number | null
+    aspecto?: StringFilter<"Multas_Descargo_Folio"> | string
+    montoNotificadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoImpugnadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Descargo_Folio"> | number
+    estado?: StringFilter<"Multas_Descargo_Folio"> | string
+    argumentoPrincipal?: StringNullableFilter<"Multas_Descargo_Folio"> | string | null
+    createdAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Descargo_Folio"> | Date | string
+  }
+
+  export type Multas_ResuelveUpsertWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_ResuelveWhereUniqueInput
+    update: XOR<Multas_ResuelveUpdateWithoutDescargoInput, Multas_ResuelveUncheckedUpdateWithoutDescargoInput>
+    create: XOR<Multas_ResuelveCreateWithoutDescargoInput, Multas_ResuelveUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_ResuelveUpdateWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_ResuelveWhereUniqueInput
+    data: XOR<Multas_ResuelveUpdateWithoutDescargoInput, Multas_ResuelveUncheckedUpdateWithoutDescargoInput>
+  }
+
+  export type Multas_ResuelveUpdateManyWithWhereWithoutDescargoInput = {
+    where: Multas_ResuelveScalarWhereInput
+    data: XOR<Multas_ResuelveUpdateManyMutationInput, Multas_ResuelveUncheckedUpdateManyWithoutDescargoInput>
+  }
+
+  export type Multas_ResuelveScalarWhereInput = {
+    AND?: Multas_ResuelveScalarWhereInput | Multas_ResuelveScalarWhereInput[]
+    OR?: Multas_ResuelveScalarWhereInput[]
+    NOT?: Multas_ResuelveScalarWhereInput | Multas_ResuelveScalarWhereInput[]
+    id?: StringFilter<"Multas_Resuelve"> | string
+    descargoId?: StringFilter<"Multas_Resuelve"> | string
+    numeroResolucion?: StringFilter<"Multas_Resuelve"> | string
+    fechaResolucion?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    fechaNotificacion?: DateTimeNullableFilter<"Multas_Resuelve"> | Date | string | null
+    dictamen?: StringFilter<"Multas_Resuelve"> | string
+    montoRatificadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    montoRebajadoUtm?: FloatFilter<"Multas_Resuelve"> | number
+    porcentajeRebaja?: FloatFilter<"Multas_Resuelve"> | number
+    fundamentoResuelve?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Resuelve"> | string | null
+    registradoPor?: StringFilter<"Multas_Resuelve"> | string
+    createdAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Resuelve"> | Date | string
+  }
+
+  export type Multas_Recurso_AdminUpsertWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Recurso_AdminWhereUniqueInput
+    update: XOR<Multas_Recurso_AdminUpdateWithoutDescargoInput, Multas_Recurso_AdminUncheckedUpdateWithoutDescargoInput>
+    create: XOR<Multas_Recurso_AdminCreateWithoutDescargoInput, Multas_Recurso_AdminUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Recurso_AdminUpdateWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Recurso_AdminWhereUniqueInput
+    data: XOR<Multas_Recurso_AdminUpdateWithoutDescargoInput, Multas_Recurso_AdminUncheckedUpdateWithoutDescargoInput>
+  }
+
+  export type Multas_Recurso_AdminUpdateManyWithWhereWithoutDescargoInput = {
+    where: Multas_Recurso_AdminScalarWhereInput
+    data: XOR<Multas_Recurso_AdminUpdateManyMutationInput, Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoInput>
+  }
+
+  export type Multas_Recurso_AdminScalarWhereInput = {
+    AND?: Multas_Recurso_AdminScalarWhereInput | Multas_Recurso_AdminScalarWhereInput[]
+    OR?: Multas_Recurso_AdminScalarWhereInput[]
+    NOT?: Multas_Recurso_AdminScalarWhereInput | Multas_Recurso_AdminScalarWhereInput[]
+    id?: StringFilter<"Multas_Recurso_Admin"> | string
+    descargoId?: StringFilter<"Multas_Recurso_Admin"> | string
+    tipoRecurso?: StringFilter<"Multas_Recurso_Admin"> | string
+    codigoPresentacion?: StringFilter<"Multas_Recurso_Admin"> | string
+    fechaPresentacion?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    autoridadDestino?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    estado?: StringFilter<"Multas_Recurso_Admin"> | string
+    resolucionRespuesta?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    montoRebajaExtraUtm?: FloatFilter<"Multas_Recurso_Admin"> | number
+    fundamentosRecurso?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    abogado?: StringNullableFilter<"Multas_Recurso_Admin"> | string | null
+    registradoPor?: StringFilter<"Multas_Recurso_Admin"> | string
+    createdAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Recurso_Admin"> | Date | string
+  }
+
+  export type Multas_Proceso_JudicialUpsertWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Proceso_JudicialWhereUniqueInput
+    update: XOR<Multas_Proceso_JudicialUpdateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedUpdateWithoutDescargoInput>
+    create: XOR<Multas_Proceso_JudicialCreateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedCreateWithoutDescargoInput>
+  }
+
+  export type Multas_Proceso_JudicialUpdateWithWhereUniqueWithoutDescargoInput = {
+    where: Multas_Proceso_JudicialWhereUniqueInput
+    data: XOR<Multas_Proceso_JudicialUpdateWithoutDescargoInput, Multas_Proceso_JudicialUncheckedUpdateWithoutDescargoInput>
+  }
+
+  export type Multas_Proceso_JudicialUpdateManyWithWhereWithoutDescargoInput = {
+    where: Multas_Proceso_JudicialScalarWhereInput
+    data: XOR<Multas_Proceso_JudicialUpdateManyMutationInput, Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoInput>
+  }
+
+  export type Multas_Proceso_JudicialScalarWhereInput = {
+    AND?: Multas_Proceso_JudicialScalarWhereInput | Multas_Proceso_JudicialScalarWhereInput[]
+    OR?: Multas_Proceso_JudicialScalarWhereInput[]
+    NOT?: Multas_Proceso_JudicialScalarWhereInput | Multas_Proceso_JudicialScalarWhereInput[]
+    id?: StringFilter<"Multas_Proceso_Judicial"> | string
+    descargoId?: StringFilter<"Multas_Proceso_Judicial"> | string
+    tribunal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    rolCausa?: StringFilter<"Multas_Proceso_Judicial"> | string
+    caratulado?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    fechaIngreso?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    cuantiaDemandaPesos?: FloatNullableFilter<"Multas_Proceso_Judicial"> | number | null
+    estadoProcesal?: StringFilter<"Multas_Proceso_Judicial"> | string
+    resultadoSentencia?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    abogadoExterno?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    notas?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoUrl?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    documentoNombre?: StringNullableFilter<"Multas_Proceso_Judicial"> | string | null
+    registradoPor?: StringFilter<"Multas_Proceso_Judicial"> | string
+    createdAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+    updatedAt?: DateTimeFilter<"Multas_Proceso_Judicial"> | Date | string
+  }
+
+  export type Multas_Descargo_FormalCreateWithoutFoliosInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput
+    resuelves?: Multas_ResuelveCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateWithoutFoliosInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resuelves?: Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalCreateOrConnectWithoutFoliosInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    create: XOR<Multas_Descargo_FormalCreateWithoutFoliosInput, Multas_Descargo_FormalUncheckedCreateWithoutFoliosInput>
+  }
+
+  export type Multas_Descargo_FormalUpsertWithoutFoliosInput = {
+    update: XOR<Multas_Descargo_FormalUpdateWithoutFoliosInput, Multas_Descargo_FormalUncheckedUpdateWithoutFoliosInput>
+    create: XOR<Multas_Descargo_FormalCreateWithoutFoliosInput, Multas_Descargo_FormalUncheckedCreateWithoutFoliosInput>
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  export type Multas_Descargo_FormalUpdateToOneWithWhereWithoutFoliosInput = {
+    where?: Multas_Descargo_FormalWhereInput
+    data: XOR<Multas_Descargo_FormalUpdateWithoutFoliosInput, Multas_Descargo_FormalUncheckedUpdateWithoutFoliosInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateWithoutFoliosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput
+    resuelves?: Multas_ResuelveUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateWithoutFoliosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalCreateWithoutResuelvesInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput
+    folios?: Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateWithoutResuelvesInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalCreateOrConnectWithoutResuelvesInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    create: XOR<Multas_Descargo_FormalCreateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedCreateWithoutResuelvesInput>
+  }
+
+  export type Multas_Descargo_FormalUpsertWithoutResuelvesInput = {
+    update: XOR<Multas_Descargo_FormalUpdateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedUpdateWithoutResuelvesInput>
+    create: XOR<Multas_Descargo_FormalCreateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedCreateWithoutResuelvesInput>
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  export type Multas_Descargo_FormalUpdateToOneWithWhereWithoutResuelvesInput = {
+    where?: Multas_Descargo_FormalWhereInput
+    data: XOR<Multas_Descargo_FormalUpdateWithoutResuelvesInput, Multas_Descargo_FormalUncheckedUpdateWithoutResuelvesInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateWithoutResuelvesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput
+    folios?: Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateWithoutResuelvesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalCreateWithoutRecursosInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput
+    folios?: Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateWithoutRecursosInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalCreateOrConnectWithoutRecursosInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    create: XOR<Multas_Descargo_FormalCreateWithoutRecursosInput, Multas_Descargo_FormalUncheckedCreateWithoutRecursosInput>
+  }
+
+  export type Multas_Descargo_FormalUpsertWithoutRecursosInput = {
+    update: XOR<Multas_Descargo_FormalUpdateWithoutRecursosInput, Multas_Descargo_FormalUncheckedUpdateWithoutRecursosInput>
+    create: XOR<Multas_Descargo_FormalCreateWithoutRecursosInput, Multas_Descargo_FormalUncheckedCreateWithoutRecursosInput>
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  export type Multas_Descargo_FormalUpdateToOneWithWhereWithoutRecursosInput = {
+    where?: Multas_Descargo_FormalWhereInput
+    data: XOR<Multas_Descargo_FormalUpdateWithoutRecursosInput, Multas_Descargo_FormalUncheckedUpdateWithoutRecursosInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateWithoutRecursosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput
+    folios?: Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateWithoutRecursosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalCreateWithoutProcesosJudicialesInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notificacion: Multas_Notificacion_REXCreateNestedOneWithoutDescargosInput
+    folios?: Multas_Descargo_FolioCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedCreateWithoutProcesosJudicialesInput = {
+    id?: string
+    notificacionId: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    folios?: Multas_Descargo_FolioUncheckedCreateNestedManyWithoutDescargoInput
+    resuelves?: Multas_ResuelveUncheckedCreateNestedManyWithoutDescargoInput
+    recursos?: Multas_Recurso_AdminUncheckedCreateNestedManyWithoutDescargoInput
+  }
+
+  export type Multas_Descargo_FormalCreateOrConnectWithoutProcesosJudicialesInput = {
+    where: Multas_Descargo_FormalWhereUniqueInput
+    create: XOR<Multas_Descargo_FormalCreateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedCreateWithoutProcesosJudicialesInput>
+  }
+
+  export type Multas_Descargo_FormalUpsertWithoutProcesosJudicialesInput = {
+    update: XOR<Multas_Descargo_FormalUpdateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedUpdateWithoutProcesosJudicialesInput>
+    create: XOR<Multas_Descargo_FormalCreateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedCreateWithoutProcesosJudicialesInput>
+    where?: Multas_Descargo_FormalWhereInput
+  }
+
+  export type Multas_Descargo_FormalUpdateToOneWithWhereWithoutProcesosJudicialesInput = {
+    where?: Multas_Descargo_FormalWhereInput
+    data: XOR<Multas_Descargo_FormalUpdateWithoutProcesosJudicialesInput, Multas_Descargo_FormalUncheckedUpdateWithoutProcesosJudicialesInput>
+  }
+
+  export type Multas_Descargo_FormalUpdateWithoutProcesosJudicialesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificacion?: Multas_Notificacion_REXUpdateOneRequiredWithoutDescargosNestedInput
+    folios?: Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateWithoutProcesosJudicialesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionId?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
   }
 
   export type Descargos_DetCreateWithoutCabInput = {
@@ -231299,6 +240314,24 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type Multas_Descargo_FormalCreateManyNotificacionInput = {
+    id?: string
+    codigoIngreso: string
+    fechaIngreso: Date | string
+    fechaPlazoRespuesta?: Date | string | null
+    diasPlazoLegal?: number
+    estado?: string
+    montoImpugnadoUtm?: number
+    montoImpugnadoPesos?: number | null
+    resumenArgumentos?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogadoResponsable?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type Multas_Notificacion_ItemUpdateWithoutNotificacionInput = {
     id?: StringFieldUpdateOperationsInput | string
     folio?: StringFieldUpdateOperationsInput | string
@@ -231361,6 +240394,340 @@ export namespace Prisma {
     resolucionAnterior?: NullableStringFieldUpdateOperationsInput | string | null
     clasificadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     clasificadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FormalUpdateWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    folios?: Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoNestedInput
+    resuelves?: Multas_ResuelveUncheckedUpdateManyWithoutDescargoNestedInput
+    recursos?: Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoNestedInput
+    procesosJudiciales?: Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoNestedInput
+  }
+
+  export type Multas_Descargo_FormalUncheckedUpdateManyWithoutNotificacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigoIngreso?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaPlazoRespuesta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    diasPlazoLegal?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    resumenArgumentos?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoResponsable?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioCreateManyDescargoInput = {
+    id?: string
+    notificacionItemId?: string | null
+    folio: string
+    rbd?: number | null
+    aspecto: string
+    montoNotificadoUtm?: number
+    montoImpugnadoUtm?: number
+    montoRebajadoUtm?: number
+    estado?: string
+    argumentoPrincipal?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_ResuelveCreateManyDescargoInput = {
+    id?: string
+    numeroResolucion: string
+    fechaResolucion: Date | string
+    fechaNotificacion?: Date | string | null
+    dictamen: string
+    montoRatificadoUtm?: number
+    montoRebajadoUtm?: number
+    porcentajeRebaja?: number
+    fundamentoResuelve?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Recurso_AdminCreateManyDescargoInput = {
+    id?: string
+    tipoRecurso: string
+    codigoPresentacion: string
+    fechaPresentacion: Date | string
+    autoridadDestino?: string | null
+    estado?: string
+    resolucionRespuesta?: string | null
+    montoRebajaExtraUtm?: number
+    fundamentosRecurso?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    abogado?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Proceso_JudicialCreateManyDescargoInput = {
+    id?: string
+    tribunal: string
+    rolCausa: string
+    caratulado?: string | null
+    fechaIngreso: Date | string
+    cuantiaDemandaPesos?: number | null
+    estadoProcesal?: string
+    resultadoSentencia?: string | null
+    abogadoExterno?: string | null
+    notas?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    registradoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Multas_Descargo_FolioUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioUncheckedUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Descargo_FolioUncheckedUpdateManyWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notificacionItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folio?: StringFieldUpdateOperationsInput | string
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    aspecto?: StringFieldUpdateOperationsInput | string
+    montoNotificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoImpugnadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    argumentoPrincipal?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveUncheckedUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_ResuelveUncheckedUpdateManyWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: StringFieldUpdateOperationsInput | string
+    fechaResolucion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaNotificacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dictamen?: StringFieldUpdateOperationsInput | string
+    montoRatificadoUtm?: FloatFieldUpdateOperationsInput | number
+    montoRebajadoUtm?: FloatFieldUpdateOperationsInput | number
+    porcentajeRebaja?: FloatFieldUpdateOperationsInput | number
+    fundamentoResuelve?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminUncheckedUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Recurso_AdminUncheckedUpdateManyWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipoRecurso?: StringFieldUpdateOperationsInput | string
+    codigoPresentacion?: StringFieldUpdateOperationsInput | string
+    fechaPresentacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    autoridadDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    resolucionRespuesta?: NullableStringFieldUpdateOperationsInput | string | null
+    montoRebajaExtraUtm?: FloatFieldUpdateOperationsInput | number
+    fundamentosRecurso?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    abogado?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialUncheckedUpdateWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Proceso_JudicialUncheckedUpdateManyWithoutDescargoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tribunal?: StringFieldUpdateOperationsInput | string
+    rolCausa?: StringFieldUpdateOperationsInput | string
+    caratulado?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    cuantiaDemandaPesos?: NullableFloatFieldUpdateOperationsInput | number | null
+    estadoProcesal?: StringFieldUpdateOperationsInput | string
+    resultadoSentencia?: NullableStringFieldUpdateOperationsInput | string | null
+    abogadoExterno?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -234774,6 +244141,10 @@ export namespace Prisma {
      */
     export type Multas_Notificacion_REXCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Notificacion_REXCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Multas_Descargo_FormalCountOutputTypeDefaultArgs instead
+     */
+    export type Multas_Descargo_FormalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Descargo_FormalCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use Descargos_CabCountOutputTypeDefaultArgs instead
      */
     export type Descargos_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
@@ -235165,6 +244536,26 @@ export namespace Prisma {
      * @deprecated Use Multas_Notificacion_ItemDefaultArgs instead
      */
     export type Multas_Notificacion_ItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Notificacion_ItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Descargo_FormalDefaultArgs instead
+     */
+    export type Multas_Descargo_FormalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Descargo_FormalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Descargo_FolioDefaultArgs instead
+     */
+    export type Multas_Descargo_FolioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Descargo_FolioDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_ResuelveDefaultArgs instead
+     */
+    export type Multas_ResuelveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_ResuelveDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Recurso_AdminDefaultArgs instead
+     */
+    export type Multas_Recurso_AdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Recurso_AdminDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Proceso_JudicialDefaultArgs instead
+     */
+    export type Multas_Proceso_JudicialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Proceso_JudicialDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Descargos_CabDefaultArgs instead
      */
