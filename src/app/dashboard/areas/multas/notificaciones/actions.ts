@@ -278,14 +278,17 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
         const arrayBuffer = await file.arrayBuffer()
         const workbook = xlsx.read(Buffer.from(arrayBuffer), { type: 'buffer' })
         
-        // Buscar la hoja "Cálculo de multa" o similar (como en sigs)
+        // Buscar estrictamente la hoja "Cálculo de multa" o "Anexo 1"
         const targetSheetName = workbook.SheetNames.find(n => {
             const clean = n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             return clean.includes("calculo de multa") || clean.includes("calculo") || clean.includes("anexo 1")
-        }) || workbook.SheetNames[0]
+        })
 
         if (!targetSheetName) {
-            return { success: false, error: 'El archivo Excel no contiene ninguna hoja válida.' }
+            return {
+                success: false,
+                error: `No se encontró la hoja de cálculo requerida ("Cálculo de multa" o "Anexo 1") en el archivo Excel. Hojas disponibles: [${workbook.SheetNames.join(', ')}].`
+            }
         }
 
         const sheet = workbook.Sheets[targetSheetName]
@@ -305,28 +308,91 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
         }
 
         const headerRow = rawRows[headerRowIdx] || []
-        // Posiciones estándar sigs: col 2 (ID_ACTA/folio), col 10 (ASPECTO), col 19 (MULTA_UTM), col 20 (MONTO_PESOS)
-        let colFolio = 2
-        let colAspecto = 10
-        let colUtm = 19
-        let colClp = 20
-        let colRbd = 0
-        let colEstablecimiento = 1
-        let colSucursal = 3
-        let colFecha = 5
+        // Posiciones estándar sigs por defecto si no están presentes por texto explícito:
+        // col 2 (ID_ACTA/folio), col 10 (ASPECTO), col 19 (MULTA_UTM), col 20 (MONTO_PESOS)
+        let colFolio = -1
+        let colAspecto = -1
+        let colUtm = -1
+        let colClp = -1
+        let colRbd = -1
+        let colEstablecimiento = -1
+        let colSucursal = -1
+        let colFecha = -1
 
-        // Si los encabezados existen por nombre, detectarlos dinámicamente
+        // Detectar columnas priorizando nombres canónicos de Anexo 1 para evitar falsos positivos
         headerRow.forEach((cellVal, idx) => {
-            const c = String(cellVal).toLowerCase().trim()
-            if (c === 'id_acta' || c === 'folio' || c === 'n° acta' || c === 'acta' || c.includes('id_acta')) colFolio = idx
-            else if (c === 'aspecto' || c === 'letra' || c.includes('aspecto')) colAspecto = idx
-            else if (c.includes('multa_utm') || c.includes('multa utm') || c === 'utm') colUtm = idx
-            else if (c.includes('monto_pesos') || c.includes('monto pesos') || c.includes('pesos') || (c.includes('monto') && !c.includes('utm'))) colClp = idx
-            else if (c === 'rbd' || c.includes('rbd')) colRbd = idx
-            else if (c.includes('establecimiento') || c.includes('colegio')) colEstablecimiento = idx
-            else if (c.includes('sucursal') || c.includes('zona') || c.includes('sede')) colSucursal = idx
-            else if (c.includes('fecha')) colFecha = idx
+            const raw = String(cellVal).toLowerCase().trim()
+            const clean = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[\s_\-]/g, "")
+            
+            // Folio / ID Acta
+            if (clean === 'idacta' || clean === 'folio' || clean === 'nacta' || clean === 'numacta' || clean === 'numeroacta' || clean === 'acta') {
+                colFolio = idx
+            } else if (colFolio === -1 && (clean.includes('idacta') || clean.includes('folioacta'))) {
+                colFolio = idx
+            }
+
+            // Aspecto: Debe ser código/letra, NUNCA descripción ni glosa
+            const isAspectoDesc = clean.includes('desc') || clean.includes('glosa') || clean.includes('nombre') || clean.includes('det') || clean.includes('infraccion')
+            if (!isAspectoDesc) {
+                if (clean === 'aspecto' || clean === 'codaspecto' || clean === 'codigoaspecto' || clean === 'letra' || clean === 'letraaspecto' || clean === 'idaspecto') {
+                    colAspecto = idx
+                } else if (colAspecto === -1 && (clean.startsWith('aspecto') || clean.endsWith('aspecto'))) {
+                    colAspecto = idx
+                }
+            }
+
+            // Multa UTM
+            if (clean === 'multautm' || clean === 'montoutm' || clean === 'totalutm' || clean === 'utm' || clean === 'valorutm') {
+                colUtm = idx
+            } else if (colUtm === -1 && clean.includes('utm')) {
+                colUtm = idx
+            }
+
+            // Monto Pesos (CLP): descartar monto base, monto gravedad, etc.
+            if (clean === 'montopesos' || clean === 'multapesos' || clean === 'totalpesos' || clean === 'pesos' || clean === 'valorpesos' || clean === 'clp' || clean === 'montoclp') {
+                colClp = idx
+            } else if (colClp === -1 && (clean.includes('pesos') || clean.includes('clp') || (clean.includes('monto') && !clean.includes('utm') && !clean.includes('base') && !clean.includes('gravedad')))) {
+                colClp = idx
+            }
+
+            // RBD
+            if (clean === 'rbd' || clean === 'codrbd' || clean === 'rbdestablecimiento') {
+                colRbd = idx
+            } else if (colRbd === -1 && clean.includes('rbd')) {
+                colRbd = idx
+            }
+
+            // Establecimiento
+            if (clean === 'establecimiento' || clean === 'colegio' || clean === 'nombreestablecimiento' || clean === 'nomestablecimiento') {
+                colEstablecimiento = idx
+            } else if (colEstablecimiento === -1 && (clean.includes('establecimiento') || clean.includes('colegio'))) {
+                colEstablecimiento = idx
+            }
+
+            // Sucursal / Sede
+            if (clean === 'sucursal' || clean === 'sede' || clean === 'zona' || clean === 'comuna') {
+                colSucursal = idx
+            } else if (colSucursal === -1 && (clean.includes('sucursal') || clean.includes('zona'))) {
+                colSucursal = idx
+            }
+
+            // Fecha
+            if (clean === 'fecha' || clean === 'fechasupervision' || clean === 'fechavisita' || clean === 'fechafiscalizacion') {
+                colFecha = idx
+            } else if (colFecha === -1 && clean.includes('fecha')) {
+                colFecha = idx
+            }
         })
+
+        // Respaldo de orden posicional estándar de SIGS (hoja Anexo 1 tradicional) si no se encontró por cabecera
+        if (colFolio === -1) colFolio = 2
+        if (colAspecto === -1) colAspecto = 10
+        if (colUtm === -1) colUtm = 19
+        if (colClp === -1) colClp = 20
+        if (colRbd === -1) colRbd = 0
+        if (colEstablecimiento === -1) colEstablecimiento = 1
+        if (colSucursal === -1) colSucursal = 3
+        if (colFecha === -1) colFecha = 5
 
         // Validar unicidad previa considerando licitacionId nulo
         const existingRex = await prisma.multas_Notificacion_REX.findFirst({
@@ -396,12 +462,12 @@ export async function cargarNotificacionRexAction(formData: FormData): Promise<{
                 aspecto,
                 infraccionDetalle: null,
                 montoNotificadoUtm: montoUtm,
-                montoNotificadoPesos: montoPesos
+                montoNotificadoPesos: Math.round(montoPesos)
             })
 
             foliosSet.add(folio)
             totalMontoNotificadoUtm += montoUtm
-            totalMontoNotificadoPesos += montoPesos
+            totalMontoNotificadoPesos += Math.round(montoPesos)
         }
 
         if (itemsToInsert.length === 0) {

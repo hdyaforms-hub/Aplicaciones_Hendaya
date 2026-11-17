@@ -87,7 +87,7 @@ export default function AnalisisIaClient({
                 setResultadoAnalisis(res.data)
                 setFeedback({
                     tipo: 'success',
-                    texto: `Análisis completado ${res.data.usandoFallbackLocal ? '(Modo Heurístico Local Hendaya)' : '(Google Gemini API)'}`
+                    texto: `Análisis completado ${res.data.usandoFallbackLocal ? '(Plantilla base - Revisar antes de usar)' : '(Google Gemini API)'}`
                 })
             } else {
                 setFeedback({ tipo: 'error', texto: res.error || 'Error al ejecutar análisis con IA.' })
@@ -138,7 +138,7 @@ export default function AnalisisIaClient({
                 setResultadoPesaje(res.data)
                 setFeedback({
                     tipo: 'success',
-                    texto: `Valores extraídos con éxito ${res.data.usandoFallbackLocal ? '(Fallback Asistido)' : '(Visión Multimodal)'}`
+                    texto: 'Valores extraídos con éxito (Visión Multimodal)'
                 })
             } else {
                 setFeedback({ tipo: 'error', texto: res.error || 'Error al extraer pesaje de la imagen.' })
@@ -408,7 +408,7 @@ export default function AnalisisIaClient({
                             <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-100">
                                 <span>Tiempo de procesamiento: {resultadoAnalisis.tiempoMs}ms</span>
                                 <span>
-                                    {resultadoAnalisis.usandoFallbackLocal ? 'Procesado con Inteligencia Heurística Interna' : `Tokens consumidos: ${resultadoAnalisis.tokensConsumidos} · Costo: $${resultadoAnalisis.costoUsd.toFixed(5)} USD`}
+                                    {resultadoAnalisis.usandoFallbackLocal ? 'Plantilla base estructurada (Revisar antes de usar)' : `Tokens consumidos: ${resultadoAnalisis.tokensConsumidos} · Costo: $${resultadoAnalisis.costoUsd.toFixed(5)} USD`}
                                 </span>
                             </div>
                         </div>

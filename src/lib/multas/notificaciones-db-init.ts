@@ -29,6 +29,9 @@ export async function ensureNotificacionesJunaebTables(): Promise<void> {
                 "montoTotalNotificado" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
                 "montoTotalCalculado" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
                 "montoTotalDiferencia" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+                "montoTotalNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0,
+                "montoTotalCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0,
+                "montoTotalDiferenciaPesos" DOUBLE PRECISION DEFAULT 0.0,
                 "estado" VARCHAR(30) NOT NULL DEFAULT 'BORRADOR',
                 "cargadoPor" VARCHAR(100) NOT NULL,
                 "observaciones" TEXT,
@@ -57,16 +60,6 @@ export async function ensureNotificacionesJunaebTables(): Promise<void> {
             ON "Multas_Notificacion_REX" ("estado");
         `)
 
-        // Migraciones de columnas adicionales idempotentes
-        await rawPrisma.$executeRawUnsafe(`
-            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;
-            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;
-            ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalDiferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;
-            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;
-            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;
-            ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "diferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;
-        `)
-
         // 2. Detalle de Items de Notificación REX
         await rawPrisma.$executeRawUnsafe(`
             CREATE TABLE IF NOT EXISTS "Multas_Notificacion_Item" (
@@ -82,6 +75,9 @@ export async function ensureNotificacionesJunaebTables(): Promise<void> {
                 "montoNotificado" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
                 "montoCalculado" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
                 "diferenciaMonto" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+                "montoNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0,
+                "montoCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0,
+                "diferenciaPesos" DOUBLE PRECISION DEFAULT 0.0,
                 "estadoConciliacion" VARCHAR(30) NOT NULL DEFAULT 'PENDIENTE',
                 "clasificacionError" VARCHAR(30),
                 "motivoClasificacion" TEXT,
@@ -114,6 +110,14 @@ export async function ensureNotificacionesJunaebTables(): Promise<void> {
             CREATE INDEX IF NOT EXISTS "multas_notif_item_aspecto_idx"
             ON "Multas_Notificacion_Item" ("aspecto");
         `)
+
+        // 3. Migraciones de columnas adicionales idempotentes ejecutadas UNA POR UNA después de crear ambas tablas
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_REX" ADD COLUMN IF NOT EXISTS "montoTotalDiferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoNotificadoPesos" DOUBLE PRECISION DEFAULT 0.0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "montoCalculadoPesos" DOUBLE PRECISION DEFAULT 0.0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Multas_Notificacion_Item" ADD COLUMN IF NOT EXISTS "diferenciaPesos" DOUBLE PRECISION DEFAULT 0.0;`)
 
         isInitialized = true
     } catch (error) {

@@ -82,6 +82,35 @@ export async function getIaConfigActiva() {
         where: { activo: true },
         orderBy: { updatedAt: 'desc' }
     })
+    if (!config) return null
+
+    // Sincronizar el gasto acumulado del mes en curso (YYYY-MM)
+    const now = new Date()
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0)
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
+
+    const consumoMes = await prisma.multas_Log_Consumo_IA.aggregate({
+        _sum: { costoEstimadoUsd: true },
+        where: {
+            createdAt: {
+                gte: startOfMonth,
+                lte: endOfMonth
+            },
+            exitoso: true
+        }
+    }).catch(() => ({ _sum: { costoEstimadoUsd: 0 } }))
+
+    const gastoRealMes = consumoMes._sum.costoEstimadoUsd || 0.0
+
+    // Si el valor acumulado difiere (ej: nuevo mes donde debe reiniciar en 0), actualizar
+    if (Math.abs(config.gastoAcumuladoMesUsd - gastoRealMes) > 0.0001) {
+        await prisma.multas_Config_IA.update({
+            where: { id: config.id },
+            data: { gastoAcumuladoMesUsd: gastoRealMes }
+        }).catch(() => {})
+        config.gastoAcumuladoMesUsd = gastoRealMes
+    }
+
     return config
 }
 
@@ -185,7 +214,7 @@ Genera una respuesta en formato JSON con la siguiente estructura:
                 } catch {
                     parsed = {
                         resumenEjecutivo: candidateText.slice(0, 200),
-                        viciosProcedimiento: ['Falta de motivación fáctica en el acta'],
+                        viciosProcedimiento: ['Revisión requerida: el modelo devolvió texto en formato libre que debe ser evaluado por el equipo jurídico'],
                         descargoPropuesto: candidateText,
                         fundamentoNormativo: 'Bases Administrativas JUNAEB y Ley N° 19.880',
                         probabilidadExito: 'MEDIA'
@@ -264,58 +293,47 @@ Genera una respuesta en formato JSON con la siguiente estructura:
     }
 
     // ==========================================
-    // MOTOR HEURÍSTICO LOCAL (FALLBACK DE CONTINGENCIA)
+    // PLANTILLA BASE ESTRUCTURADA (FALLBACK LOCAL)
+    // No afirma hechos no constatados; provee la estructura legal para revisión.
     // ==========================================
     const duration = Date.now() - startTime
 
-    const vicios: string[] = []
-    let fundamentacion = 'Instrucción de Trabajo de Elementos Esenciales JUNAEB, Anexo 3 NCh 44; Ley N° 19.880 sobre Procedimiento Administrativo.'
-
-    if (letrasAspectos.includes('G')) {
-        vicios.push('Vulneración de la tabla de muestreo representativo AQL (Norma Chilena NCh 44) en pesaje de preparaciones.')
-        if (letrasAspectos.includes('J')) {
-            vicios.push('Inconsistencia insubsanable: Constatación de balanza ausente o descalibrada en Aspecto J inhabilita cualquier medición cuantitativa en Aspecto G.')
-        }
-    }
-    if (letrasAspectos.includes('K')) {
-        vicios.push('Medición térmica carente de certificación de calibración del instrumento de vástago en terreno.')
-    }
-    if (letrasAspectos.includes('B')) {
-        vicios.push('Ausencia fortuita justificada por contingencia de fuerza mayor sin merma comprobada en la entrega de raciones alimentarias.')
-    }
-    if (vicios.length === 0) {
-        vicios.push('Falta de motivación suficiente y proporcionalidad en la cuantificación de la sanción administrativa impuesta.')
-    }
+    const vicios: string[] = [
+        'Revisión requerida: Verificar en terreno la rigurosidad del procedimiento inspectivo y la congruencia fáctica de las observaciones.',
+        'Revisión requerida: Contrastar los antecedentes probatorios con los criterios normativos de JUNAEB para los aspectos observados.'
+    ]
+    const fundamentacion = 'Instrucción de Trabajo de Elementos Esenciales JUNAEB; Bases Administrativas y Técnicas del Contrato; Ley N° 19.880 sobre Bases de los Procedimientos Administrativos.'
 
     const totalMontoClp = aspectosSancionados.reduce((acc, d) => acc + (d.montoMulta || 0), 0)
 
-    const textoDescargo = `SEÑORA DIRECTORA REGIONAL DE JUNAEB
+    const textoDescargo = `[PLANTILLA BASE - REVISAR ANTES DE USAR]
+SEÑORA DIRECTORA REGIONAL DE JUNAEB
 PRESENTE
 
 De nuestra consideración:
 
-Por medio de la presente, y encontrándonos dentro del plazo reglamentario contemplado en las Bases de Licitación, venimos en formular formal DESCARGO respecto de las imputaciones contenidas en el Acta de Supervisión Folio N° ${params.folio}, correspondiente al establecimiento educacional RBD ${acta?.rbd || 'respectivo'}.
+Por medio de la presente, y encontrándonos dentro del plazo reglamentario contemplado en las Bases de Licitación, venimos en formular formal DESCARGO respecto de las observaciones contenidas en el Acta de Supervisión Folio N° ${params.folio}, correspondiente al establecimiento educacional RBD ${acta?.rbd || 'respectivo'}.
 
-I. ANTECEDENTES Y ASPECTOS SANCIONADOS:
-En el acta de fiscalización referida, el funcionario supervisor consignó supuestos incumplimientos en los Aspectos ${letrasAspectos.join(', ')}, determinando multas estimadas por un total de $${Math.round(totalMontoClp).toLocaleString('es-CL')} CLP.
+I. ANTECEDENTES Y ASPECTOS OBSERVADOS:
+En el acta de fiscalización referida, el funcionario supervisor consignó observaciones en los Aspectos ${letrasAspectos.length > 0 ? letrasAspectos.join(', ') : 'consignados en acta'}, determinando multas estimadas por un total de $${Math.round(totalMontoClp).toLocaleString('es-CL')} CLP.
 
-II. FUNDAMENTOS DE HECHO Y DE DERECHO:
-1. Conforme a las instrucciones técnicas oficiales de JUNAEB y las normas chilenas de muestreo estadístico, las observaciones consignadas adolecen de vicios de verificación en terreno que impiden dotarlas de certeza jurídica.
-2. Particularmente: ${vicios.join(' ')}
-3. Esta empresa concesionaria mantuvo en todo momento la continuidad, inocuidad y calidad del servicio alimentario para la totalidad de los alumnos beneficiarios del establecimiento.
+II. FUNDAMENTOS DE HECHO Y DE DERECHO (A COMPLETAR POR EL EQUIPO JURÍDICO):
+1. [INCORPORAR ANTECEDENTES DE HECHO]: El equipo de litigios debe detallar las circunstancias de hecho verificadas en el establecimiento durante la fiscalización.
+2. [INCORPORAR ANTECEDENTES TÉCNICOS / PROBATORIOS]: Adjuntar minutas, guías de despacho, registros de pesaje o bitácoras que acrediten el cumplimiento de la concesionaria.
+3. [NORMATIVA APLICABLE]: Contrastar las imputaciones con la Instrucción de Trabajo de Elementos Esenciales, las Bases de Licitación y los principios de debida motivación y proporcionalidad consagrados en la Ley N° 19.880.
 
 III. PETITORIO:
-En virtud de lo expuesto y de los principios de congruencia y proporcionalidad que rigen la potestad sancionatoria de la Administración del Estado (Ley N° 19.880), solicitamos a Ud. tener por presentado este descargo, acogerlo a tramitación y, en definitiva, DEJAR SIN EFECTO las multas propuestas respecto del Acta Folio N° ${params.folio}.
+En virtud de los antecedentes expuestos y los medios probatorios que se acompañan, solicitamos a Ud. tener por formulado este descargo, acogerlo a tramitación y resolver dejando sin efecto o rebajando las multas propuestas conforme a derecho.
 
 Atentamente,
 ÁREA DE GESTIÓN Y LITIGIOS PAE · HENDAYA`
 
     return {
-        resumenEjecutivo: `Acta Folio #${params.folio} analizada mediante motor jurídico local. Se detectaron ${vicios.length} vicios impugnables respecto de los aspectos sancionados (${letrasAspectos.join(', ')}).`,
+        resumenEjecutivo: `Plantilla base generada localmente para el Acta Folio #${params.folio} (revisar antes de usar). Se requiere que el equipo legal verifique los hechos y adjunte los medios probatorios correspondientes a los aspectos observados (${letrasAspectos.join(', ')}).`,
         viciosProcedimiento: vicios,
         descargoPropuesto: textoDescargo,
         fundamentoNormativo: fundamentacion,
-        probabilidadExito: letrasAspectos.includes('G') && letrasAspectos.includes('J') ? 'ALTA' : (letrasAspectos.length > 0 ? 'MEDIA' : 'BAJA'),
+        probabilidadExito: 'MEDIA',
         aspectosAnalizados: letrasAspectos,
         tokensConsumidos: 0,
         costoUsd: 0,

@@ -148,10 +148,10 @@ export default function TableroConsolidadoClient({
                         <Scale className="w-4 h-4 text-slate-500" />
                     </span>
                     <p className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
-                        ${Math.round(metricas.montoTotalCalculadoPesos || (metricas.montoTotalNotificadoUtm * 65000)).toLocaleString('es-CL')}
+                        ${Math.round(metricas.montoTotalCalculadoPesos || 0).toLocaleString('es-CL')}
                     </p>
                     <span className="text-[10px] text-slate-400 mt-0.5">
-                        {metricas.totalActasCalculadas} actas ({metricas.montoTotalNotificadoUtm.toFixed(1)} UTM est.)
+                        {metricas.totalActasCalculadas} actas ({(metricas.montoTotalCalculadoUtm ?? metricas.montoTotalNotificadoUtm ?? 0).toFixed(1)} UTM calculada)
                     </span>
                 </div>
 
