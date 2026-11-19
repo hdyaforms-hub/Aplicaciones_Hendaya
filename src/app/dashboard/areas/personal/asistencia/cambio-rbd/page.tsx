@@ -41,6 +41,7 @@ export default async function CambioRbdPage() {
             initialData={initialRes.data || []}
             initialTotal={initialRes.total || 0}
             initialTotalPages={initialRes.totalPages || 1}
+            initialConteos={initialRes.conteos}
             currentUser={{
                 name: session.user.name || session.user.username,
                 role: session.user.role?.name || 'Usuario'

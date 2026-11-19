@@ -11,13 +11,18 @@ import {
     getHistorialCambiosColaboradorAction,
     getReporteCompletoCambiosRbdAction
 } from './actions'
-import { Download, RefreshCw, FileSpreadsheet } from 'lucide-react'
+import { Download, RefreshCw, FileSpreadsheet, Briefcase, ArrowRightLeft } from 'lucide-react'
 import * as xlsx from 'xlsx'
 
 type Props = {
     initialData: ColaboradorDotacionItemDTO[]
     initialTotal: number
     initialTotalPages: number
+    initialConteos?: {
+        comisionServicio: number
+        anexoTraslado: number
+        totalCambios: number
+    }
     currentUser: {
         name: string
         role: string
@@ -32,6 +37,7 @@ export default function CambioRbdClient({
     initialData,
     initialTotal,
     initialTotalPages,
+    initialConteos,
     currentUser
 }: Props) {
     // Estado de la tabla
@@ -40,6 +46,17 @@ export default function CambioRbdClient({
     const [totalPages, setTotalPages] = useState<number>(initialTotalPages)
     const [page, setPage] = useState<number>(1)
     const pageSize = 10
+
+    // Conteos de documentos de cambio de RBD (Comisión de Servicio y Anexo de Traslado)
+    const [conteos, setConteos] = useState<{
+        comisionServicio: number
+        anexoTraslado: number
+        totalCambios: number
+    }>(initialConteos || {
+        comisionServicio: 0,
+        anexoTraslado: 0,
+        totalCambios: 0
+    })
 
     // Ordenamiento
     const [sortBy, setSortBy] = useState<SortField>('rbd')
@@ -99,6 +116,9 @@ export default function CambioRbdClient({
                 setTotal(res.total)
                 setTotalPages(res.totalPages)
                 setPage(res.page ?? targetPage)
+                if (res.conteos) {
+                    setConteos(res.conteos)
+                }
             } else {
                 showToast(res.error || 'Error al cargar registros', 'error')
             }
@@ -276,21 +296,29 @@ export default function CambioRbdClient({
         }
     }
 
-    // Descargar reporte Excel consolidado de solo personas con cambio de RBD
-    const [isDownloading, setIsDownloading] = useState<boolean>(false)
+    // Descargar reporte Excel segregado por tipo (Comisión de Servicio vs Anexo de Traslado)
+    const [downloadingType, setDownloadingType] = useState<'COMISION_SERVICIO' | 'ANEXO_TRASLADO' | null>(null)
 
-    const handleDescargarCambiosRbd = async () => {
+    const handleDescargar = async (tipo: 'COMISION_SERVICIO' | 'ANEXO_TRASLADO') => {
+        const nombreDoc = tipo === 'COMISION_SERVICIO' ? 'Comisión de Servicio' : 'Anexo de Traslado'
+        const count = tipo === 'COMISION_SERVICIO' ? conteos.comisionServicio : conteos.anexoTraslado
+
+        if (count === 0) {
+            showToast(`No hay registros de ${nombreDoc} para descargar`, 'error')
+            return
+        }
+
         try {
-            setIsDownloading(true)
-            const res = await getReporteCompletoCambiosRbdAction()
+            setDownloadingType(tipo)
+            const res = await getReporteCompletoCambiosRbdAction(tipo)
 
             if (!res.success || !res.data) {
-                showToast(res.error || 'Error al obtener la información de personas con cambio de RBD', 'error')
+                showToast(res.error || `Error al obtener la información de ${nombreDoc}`, 'error')
                 return
             }
 
             if (res.data.length === 0) {
-                showToast('No se encontraron registros de personas que se hayan cambiado de RBD', 'error')
+                showToast(`No se encontraron registros de ${nombreDoc}`, 'error')
                 return
             }
 
@@ -315,9 +343,10 @@ export default function CambioRbdClient({
                 'Fecha Registro': item.createdAt
             }))
 
+            const sheetName = tipo === 'COMISION_SERVICIO' ? 'Comision_Servicio' : 'Anexo_Traslado'
             const ws = xlsx.utils.json_to_sheet(exportData)
             const wb = xlsx.utils.book_new()
-            xlsx.utils.book_append_sheet(wb, ws, 'Cambios_RBD')
+            xlsx.utils.book_append_sheet(wb, ws, sheetName)
 
             // Configuración de anchos de columna recomendados
             ws['!cols'] = [
@@ -342,14 +371,15 @@ export default function CambioRbdClient({
             ]
 
             const fechaStr = new Date().toISOString().slice(0, 10)
-            xlsx.writeFile(wb, `Reporte_Personas_Cambio_RBD_${fechaStr}.xlsx`)
+            const filePrefix = tipo === 'COMISION_SERVICIO' ? 'Comision_de_Servicio' : 'Anexo_de_Traslado'
+            xlsx.writeFile(wb, `${filePrefix}_Cambio_RBD_${fechaStr}.xlsx`)
 
-            showToast(`Descarga completada: ${res.data.length} registro(s) de personas con cambio de RBD`)
+            showToast(`Descarga completada: ${res.data.length} registro(s) de ${nombreDoc}`)
         } catch (error: any) {
-            console.error('Error al exportar cambios de RBD:', error)
-            showToast('Ocurrió un error al generar la descarga del archivo Excel', 'error')
+            console.error(`Error al exportar ${nombreDoc}:`, error)
+            showToast(`Ocurrió un error al generar la descarga de ${nombreDoc}`, 'error')
         } finally {
-            setIsDownloading(false)
+            setDownloadingType(null)
         }
     }
 
@@ -404,21 +434,79 @@ export default function CambioRbdClient({
                             </div>
                         </div>
 
+                        {/* Botón 1: Descarga de Comisión de Servicios */}
                         <button
                             type="button"
-                            onClick={handleDescargarCambiosRbd}
-                            disabled={isDownloading}
-                            className="bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400/40 rounded-2xl p-3 px-4.5 flex items-center gap-3 shadow-lg hover:shadow-emerald-900/30 transition-all font-bold text-xs disabled:opacity-50 shrink-0"
-                            title="Descargar toda la información de solo las personas que se cambiaron de RBD"
+                            onClick={() => handleDescargar('COMISION_SERVICIO')}
+                            disabled={conteos.comisionServicio === 0 || downloadingType !== null}
+                            className={`rounded-2xl p-3 px-4 flex items-center gap-3 shadow-lg transition-all font-bold text-xs shrink-0 border ${
+                                conteos.comisionServicio === 0
+                                    ? 'bg-slate-800/80 text-slate-400 border-slate-700 cursor-not-allowed opacity-60'
+                                    : 'bg-sky-600 hover:bg-sky-500 text-white border-sky-400/40 hover:shadow-sky-900/30 cursor-pointer'
+                            }`}
+                            title={
+                                conteos.comisionServicio === 0
+                                    ? 'No hay registros de Comisión de Servicios para descargar'
+                                    : `Descargar ${conteos.comisionServicio} registro(s) de Comisión de Servicios`
+                            }
                         >
-                            {isDownloading ? (
+                            {downloadingType === 'COMISION_SERVICIO' ? (
                                 <RefreshCw className="w-4 h-4 animate-spin text-white" />
                             ) : (
-                                <Download className="w-4 h-4 text-emerald-100" />
+                                <Briefcase className="w-4 h-4 text-sky-100" />
                             )}
                             <div className="text-left">
-                                <span className="text-[10px] uppercase tracking-wider block text-emerald-200">Exportar a Excel</span>
-                                <span className="text-sm font-extrabold">Descargar Cambios de RBD</span>
+                                <span className="text-[10px] uppercase tracking-wider block text-sky-200">
+                                    {conteos.comisionServicio === 0 ? 'Sin registros' : 'Exportar a Excel'}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm font-extrabold">Comisión de Servicios</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-xs font-black ${
+                                        conteos.comisionServicio === 0
+                                            ? 'bg-slate-700 text-slate-400'
+                                            : 'bg-white/20 text-white'
+                                    }`}>
+                                        {conteos.comisionServicio}
+                                    </span>
+                                </div>
+                            </div>
+                        </button>
+
+                        {/* Botón 2: Descarga de Anexo de Traslado */}
+                        <button
+                            type="button"
+                            onClick={() => handleDescargar('ANEXO_TRASLADO')}
+                            disabled={conteos.anexoTraslado === 0 || downloadingType !== null}
+                            className={`rounded-2xl p-3 px-4 flex items-center gap-3 shadow-lg transition-all font-bold text-xs shrink-0 border ${
+                                conteos.anexoTraslado === 0
+                                    ? 'bg-slate-800/80 text-slate-400 border-slate-700 cursor-not-allowed opacity-60'
+                                    : 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-400/40 hover:shadow-emerald-900/30 cursor-pointer'
+                            }`}
+                            title={
+                                conteos.anexoTraslado === 0
+                                    ? 'No hay registros de Anexo de Traslado para descargar'
+                                    : `Descargar ${conteos.anexoTraslado} registro(s) de Anexo de Traslado`
+                            }
+                        >
+                            {downloadingType === 'ANEXO_TRASLADO' ? (
+                                <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                            ) : (
+                                <ArrowRightLeft className="w-4 h-4 text-emerald-100" />
+                            )}
+                            <div className="text-left">
+                                <span className="text-[10px] uppercase tracking-wider block text-emerald-200">
+                                    {conteos.anexoTraslado === 0 ? 'Sin registros' : 'Exportar a Excel'}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm font-extrabold">Anexo de Traslado</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-xs font-black ${
+                                        conteos.anexoTraslado === 0
+                                            ? 'bg-slate-700 text-slate-400'
+                                            : 'bg-white/20 text-white'
+                                    }`}>
+                                        {conteos.anexoTraslado}
+                                    </span>
+                                </div>
                             </div>
                         </button>
                     </div>
@@ -458,23 +546,54 @@ export default function CambioRbdClient({
                     )}
                 </form>
 
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
                     <button
                         type="button"
-                        onClick={handleDescargarCambiosRbd}
-                        disabled={isDownloading}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold transition-all disabled:opacity-50 shadow-2xs"
-                        title="Descargar toda la información de solo las personas que se cambiaron de RBD"
+                        onClick={() => handleDescargar('COMISION_SERVICIO')}
+                        disabled={conteos.comisionServicio === 0 || downloadingType !== null}
+                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all border ${
+                            conteos.comisionServicio === 0
+                                ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed opacity-60'
+                                : 'bg-sky-50 hover:bg-sky-100 text-sky-800 border-sky-200 cursor-pointer shadow-2xs'
+                        }`}
+                        title={
+                            conteos.comisionServicio === 0
+                                ? 'No hay registros de Comisión de Servicios para descargar'
+                                : `Descargar ${conteos.comisionServicio} registro(s) de Comisión de Servicios`
+                        }
                     >
-                        {isDownloading ? (
-                            <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                        {downloadingType === 'COMISION_SERVICIO' ? (
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin text-sky-600" />
                         ) : (
-                            <Download className="w-3.5 h-3.5 text-emerald-600" />
+                            <Briefcase className="w-3.5 h-3.5 text-sky-600" />
                         )}
-                        <span>Descargar Cambios de RBD</span>
+                        <span>Comisión de Servicios ({conteos.comisionServicio})</span>
                     </button>
 
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <button
+                        type="button"
+                        onClick={() => handleDescargar('ANEXO_TRASLADO')}
+                        disabled={conteos.anexoTraslado === 0 || downloadingType !== null}
+                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all border ${
+                            conteos.anexoTraslado === 0
+                                ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed opacity-60'
+                                : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200 cursor-pointer shadow-2xs'
+                        }`}
+                        title={
+                            conteos.anexoTraslado === 0
+                                ? 'No hay registros de Anexo de Traslado para descargar'
+                                : `Descargar ${conteos.anexoTraslado} registro(s) de Anexo de Traslado`
+                        }
+                    >
+                        {downloadingType === 'ANEXO_TRASLADO' ? (
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                        ) : (
+                            <ArrowRightLeft className="w-3.5 h-3.5 text-emerald-600" />
+                        )}
+                        <span>Anexo de Traslado ({conteos.anexoTraslado})</span>
+                    </button>
+
+                    <div className="flex items-center gap-2 text-xs text-gray-500 ml-1">
                         <span>Orden:</span>
                         <span className="font-bold text-cyan-700 bg-cyan-50 px-2 py-1 rounded-lg border border-cyan-100">
                             {sortBy.toUpperCase()} ({sortDir === 'asc' ? '▲' : '▼'})

@@ -239,13 +239,47 @@ export async function getPersonalDotacionCambioRbdAction(params?: {
             }
         })
 
+        // Consultar conteo de personas con cambios por tipo para alimentar los botones de descarga
+        let whereCambios = ''
+        const queryParamsCambios: any[] = []
+        if (authorizedRbds !== null) {
+            if (authorizedRbds.length === 0) {
+                whereCambios = `WHERE "rbdOrigen" = -999999`
+            } else {
+                whereCambios = `WHERE ("rbdOrigen" = ANY($1::int[]) OR "rbdDestino" = ANY($1::int[]))`
+                queryParamsCambios.push(authorizedRbds)
+            }
+        }
+
+        const conteosRaw = ((await prisma.$queryRawUnsafe<any[]>(`
+            SELECT "tipoCambio", COUNT(*)::int as count
+            FROM "Pers_Cambio_Rbd"
+            ${whereCambios}
+            GROUP BY "tipoCambio";
+        `, ...queryParamsCambios).catch(() => [])) || []) as any[]
+
+        let countComision = 0
+        let countTraslado = 0
+        for (const row of conteosRaw) {
+            if (row.tipoCambio === 'COMISION_SERVICIO') {
+                countComision += Number(row.count || 0)
+            } else {
+                countTraslado += Number(row.count || 0)
+            }
+        }
+
         return {
             success: true,
             data: items,
             total,
             page,
             pageSize,
-            totalPages: Math.ceil(total / pageSize) || 1
+            totalPages: Math.ceil(total / pageSize) || 1,
+            conteos: {
+                comisionServicio: countComision,
+                anexoTraslado: countTraslado,
+                totalCambios: countComision + countTraslado
+            }
         }
     } catch (error: any) {
         console.error('Error al consultar dotación para cambio de RBD:', error)
@@ -608,9 +642,70 @@ export interface ReporteCambioRbdItemDTO {
 }
 
 /**
- * Server Action: Descarga toda la información consolidada de solo las personas que se cambiaron de RBD.
+ * Server Action: Obtiene los conteos de registros de cambios de RBD según tipo
+ * (Comisión de Servicio vs Anexo de Traslado) para alimentar los botones de descarga.
  */
-export async function getReporteCompletoCambiosRbdAction(): Promise<{
+export async function getCambiosRbdConteosAction(): Promise<{
+    success: boolean
+    conteos: {
+        comisionServicio: number
+        anexoTraslado: number
+        totalCambios: number
+    }
+    error?: string
+}> {
+    if (!await checkPermission()) {
+        return { success: false, conteos: { comisionServicio: 0, anexoTraslado: 0, totalCambios: 0 }, error: 'Sin permisos' }
+    }
+    await ensurePersonalCambioRbdTables()
+    const authorizedRbds = await getUserEffectiveRbds()
+
+    try {
+        let whereCambios = ''
+        const queryParamsCambios: any[] = []
+        if (authorizedRbds !== null) {
+            if (authorizedRbds.length === 0) {
+                return { success: true, conteos: { comisionServicio: 0, anexoTraslado: 0, totalCambios: 0 } }
+            }
+            whereCambios = `WHERE ("rbdOrigen" = ANY($1::int[]) OR "rbdDestino" = ANY($1::int[]))`
+            queryParamsCambios.push(authorizedRbds)
+        }
+
+        const conteosRaw = ((await prisma.$queryRawUnsafe<any[]>(`
+            SELECT "tipoCambio", COUNT(*)::int as count
+            FROM "Pers_Cambio_Rbd"
+            ${whereCambios}
+            GROUP BY "tipoCambio";
+        `, ...queryParamsCambios).catch(() => [])) || []) as any[]
+
+        let countComision = 0
+        let countTraslado = 0
+        for (const row of conteosRaw) {
+            if (row.tipoCambio === 'COMISION_SERVICIO') {
+                countComision += Number(row.count || 0)
+            } else {
+                countTraslado += Number(row.count || 0)
+            }
+        }
+
+        return {
+            success: true,
+            conteos: {
+                comisionServicio: countComision,
+                anexoTraslado: countTraslado,
+                totalCambios: countComision + countTraslado
+            }
+        }
+    } catch (e: any) {
+        return { success: false, conteos: { comisionServicio: 0, anexoTraslado: 0, totalCambios: 0 }, error: e?.message }
+    }
+}
+
+/**
+ * Server Action: Descarga la información de personas que se cambiaron de RBD,
+ * filtrable por tipo de cambio ('COMISION_SERVICIO' o 'ANEXO_TRASLADO').
+ */
+export async function getReporteCompletoCambiosRbdAction(tipo?: 'COMISION_SERVICIO' | 'ANEXO_TRASLADO'): Promise<{
     success: boolean
     data?: ReporteCambioRbdItemDTO[]
     error?: string
@@ -625,16 +720,25 @@ export async function getReporteCompletoCambiosRbdAction(): Promise<{
     const authorizedRbds = await getUserEffectiveRbds()
 
     try {
-        let whereClause = ''
+        const whereConditions: string[] = []
         const queryParams: any[] = []
+        let paramIndex = 1
 
         if (authorizedRbds !== null) {
             if (authorizedRbds.length === 0) {
                 return { success: true, data: [] }
             }
-            whereClause = `WHERE "rbdOrigen" = ANY($1::int[]) OR "rbdDestino" = ANY($1::int[])`
+            whereConditions.push(`("rbdOrigen" = ANY($${paramIndex++}::int[]) OR "rbdDestino" = ANY($${paramIndex - 1}::int[]))`)
             queryParams.push(authorizedRbds)
         }
+
+        if (tipo === 'COMISION_SERVICIO') {
+            whereConditions.push(`"tipoCambio" = 'COMISION_SERVICIO'`)
+        } else if (tipo === 'ANEXO_TRASLADO') {
+            whereConditions.push(`"tipoCambio" = 'ANEXO_TRASLADO'`)
+        }
+
+        const whereClause = whereConditions.length > 0 ? `WHERE ${whereConditions.join(' AND ')}` : ''
 
         const rows: any[] = await prisma.$queryRawUnsafe(`
             SELECT id, "colaboradorId", "rutEnc", "rutHash", "nombreEnc",
@@ -695,12 +799,13 @@ export async function getReporteCompletoCambiosRbdAction(): Promise<{
         })
 
         // Auditoría
+        const labelTipo = tipo === 'COMISION_SERVICIO' ? 'Comisión de Servicio' : tipo === 'ANEXO_TRASLADO' ? 'Anexo de Traslado' : 'Consolidado'
         await logAuditAction({
             username: session?.user?.name || session?.user?.username || 'Usuario',
             userId: session?.user?.id || null,
             action: 'EXPORTAR_EXCEL_CAMBIO_RBD',
             modulo: 'Cambio de RBD',
-            detalle: `Descarga de reporte Excel de solo personas con cambio de RBD (${data.length} registros).`
+            detalle: `Descarga de reporte Excel de ${labelTipo} (${data.length} registros).`
         })
 
         return { success: true, data }
