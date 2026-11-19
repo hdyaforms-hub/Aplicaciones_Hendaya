@@ -370,12 +370,9 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
         })
     }
 
-    // Filtrado de colaboradores
-    const filteredColaboradores = useMemo(() => {
+    // 1. Filtrado base por Rol, Sucursal y Búsqueda (sin Semáforo) con acotamiento de métricas a la sucursal seleccionada
+    const baseColaboradoresScope = useMemo(() => {
         return (currentData.colaboradores || []).filter((c) => {
-            if (filterSemaforo !== 'TODOS' && c.semaforoGlobal !== filterSemaforo) {
-                return false
-            }
             if (filterRole !== 'TODOS' && c.roleName !== filterRole) {
                 return false
             }
@@ -392,8 +389,91 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 return matchesUsername || matchesName || matchesEmail || matchesRbd
             }
             return true
+        }).map(c => {
+            if (filterSucursal === 'TODOS') return c
+
+            // Si hay una sucursal específica seleccionada, acotamos los colegios y métricas del colaborador a dicha sucursal
+            const colegiosSucursal = (c.colegiosDetalle || []).filter(col => col.sucursal === filterSucursal)
+            if (colegiosSucursal.length === 0) return c
+
+            const abiertos = colegiosSucursal.reduce((acc, col) => acc + col.totalGeneralAbiertos, 0)
+            const gest = colegiosSucursal.reduce((acc, col) => acc + col.totalGeneralGestionados, 0)
+            const pend = Math.max(0, abiertos - gest)
+            const pct = abiertos > 0 ? (pend === 0 ? 100 : Math.min(99, Math.round((gest / abiertos) * 100))) : 100
+            const semaforo: 'VERDE' | 'AMARILLO' | 'ROJO' = pct >= 95 ? 'VERDE' : pct >= 70 ? 'AMARILLO' : 'ROJO'
+
+            const ausTotal = colegiosSucursal.reduce((acc, col) => acc + col.ausentismo.total, 0)
+            const ausGest = colegiosSucursal.reduce((acc, col) => acc + col.ausentismo.gestionados, 0)
+            const ausPend = colegiosSucursal.reduce((acc, col) => acc + col.ausentismo.pendientes, 0)
+            const pctAus = ausTotal > 0 ? (ausPend === 0 ? 100 : Math.min(99, Math.round((ausGest / ausTotal) * 100))) : 100
+
+            const hheeTotal = colegiosSucursal.reduce((acc, col) => acc + col.horasExtras.total, 0)
+            const hheeGest = colegiosSucursal.reduce((acc, col) => acc + col.horasExtras.gestionados, 0)
+            const hheePend = colegiosSucursal.reduce((acc, col) => acc + col.horasExtras.pendientes, 0)
+            const pctHhee = hheeTotal > 0 ? (hheePend === 0 ? 100 : Math.min(99, Math.round((hheeGest / hheeTotal) * 100))) : 100
+
+            const atrTotal = colegiosSucursal.reduce((acc, col) => acc + col.atrasos.total, 0)
+            const atrGest = colegiosSucursal.reduce((acc, col) => acc + col.atrasos.gestionados, 0)
+            const atrPend = colegiosSucursal.reduce((acc, col) => acc + col.atrasos.pendientes, 0)
+            const pctAtr = atrTotal > 0 ? (atrPend === 0 ? 100 : Math.min(99, Math.round((atrGest / atrTotal) * 100))) : 100
+
+            const adeTotal = colegiosSucursal.reduce((acc, col) => acc + col.adelantos.total, 0)
+            const adeGest = colegiosSucursal.reduce((acc, col) => acc + col.adelantos.gestionados, 0)
+            const adePend = colegiosSucursal.reduce((acc, col) => acc + col.adelantos.pendientes, 0)
+            const pctAde = adeTotal > 0 ? (adePend === 0 ? 100 : Math.min(99, Math.round((adeGest / adeTotal) * 100))) : 100
+
+            return {
+                ...c,
+                rbdsCount: colegiosSucursal.length,
+                sucursales: [filterSucursal],
+                totalRegistrosAbiertos: abiertos,
+                totalGestionados: gest,
+                totalPendientes: pend,
+                porcentajeGlobal: pct,
+                semaforoGlobal: semaforo,
+                colegiosDetalle: colegiosSucursal,
+                modulos: [
+                    { nombre: 'Ausentismo', tipo: 'AUSENTISMO' as const, totalAbiertos: ausTotal, gestionados: ausGest, pendientes: ausPend, porcentaje: pctAus, semaforo: (pctAus >= 95 ? 'VERDE' : pctAus >= 70 ? 'AMARILLO' : 'ROJO') as 'VERDE' | 'AMARILLO' | 'ROJO' },
+                    { nombre: 'Horas Extras', tipo: 'HORAS_EXTRAS' as const, totalAbiertos: hheeTotal, gestionados: hheeGest, pendientes: hheePend, porcentaje: pctHhee, semaforo: (pctHhee >= 95 ? 'VERDE' : pctHhee >= 70 ? 'AMARILLO' : 'ROJO') as 'VERDE' | 'AMARILLO' | 'ROJO' },
+                    { nombre: 'Atrasos', tipo: 'ATRASOS' as const, totalAbiertos: atrTotal, gestionados: atrGest, pendientes: atrPend, porcentaje: pctAtr, semaforo: (pctAtr >= 95 ? 'VERDE' : pctAtr >= 70 ? 'AMARILLO' : 'ROJO') as 'VERDE' | 'AMARILLO' | 'ROJO' },
+                    { nombre: 'Adelantos', tipo: 'ADELANTOS' as const, totalAbiertos: adeTotal, gestionados: adeGest, pendientes: adePend, porcentaje: pctAde, semaforo: (pctAde >= 95 ? 'VERDE' : pctAde >= 70 ? 'AMARILLO' : 'ROJO') as 'VERDE' | 'AMARILLO' | 'ROJO' },
+                ]
+            }
         })
-    }, [currentData.colaboradores, filterSemaforo, filterRole, filterSucursal, searchUserQuery])
+    }, [currentData.colaboradores, filterRole, filterSucursal, searchUserQuery])
+
+    // 2. KPIs dinámicos calculados a partir de los colaboradores bajo los filtros activos
+    const dynamicColaboradoresKpis = useMemo(() => {
+        const total = baseColaboradoresScope.length
+        const alDia = baseColaboradoresScope.filter(c => c.semaforoGlobal === 'VERDE').length
+        const leve = baseColaboradoresScope.filter(c => c.semaforoGlobal === 'AMARILLO').length
+        const grave = baseColaboradoresScope.filter(c => c.semaforoGlobal === 'ROJO').length
+        const gest = baseColaboradoresScope.reduce((acc, c) => acc + c.totalGestionados, 0)
+        const pend = baseColaboradoresScope.reduce((acc, c) => acc + c.totalPendientes, 0)
+        const abiertos = baseColaboradoresScope.reduce((acc, c) => acc + c.totalRegistrosAbiertos, 0)
+        const pct = abiertos > 0 ? (pend === 0 ? 100 : Math.min(99, Math.round((gest / abiertos) * 100))) : 100
+
+        return {
+            totalColaboradores: total,
+            totalAlDia: alDia,
+            totalAtrasoLeve: leve,
+            totalAtrasoGrave: grave,
+            totalRegistrosAbiertos: abiertos,
+            totalRegistrosGestionados: gest,
+            totalRegistrosPendientes: pend,
+            cumplimientoGlobalPorcentaje: pct
+        }
+    }, [baseColaboradoresScope])
+
+    // 3. Filtrado final por semáforo para visualización en pantalla
+    const filteredColaboradores = useMemo(() => {
+        return baseColaboradoresScope.filter((c) => {
+            if (filterSemaforo !== 'TODOS' && c.semaforoGlobal !== filterSemaforo) {
+                return false
+            }
+            return true
+        })
+    }, [baseColaboradoresScope, filterSemaforo])
 
     // Filtrado de sucursales
     const filteredSucursales = useMemo(() => {
@@ -1060,7 +1140,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span className="p-1 bg-slate-100 rounded-lg text-slate-700">👥</span>
                     </div>
                     <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">
-                        {currentData.kpis.totalColaboradores}
+                        {dynamicColaboradoresKpis.totalColaboradores}
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
                         Roles monitoreados
@@ -1084,10 +1164,10 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span className="p-1 bg-emerald-100/70 rounded-lg text-emerald-700">🟢</span>
                     </div>
                     <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-emerald-600">
-                        {currentData.kpis.totalAlDia}
+                        {dynamicColaboradoresKpis.totalAlDia}
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
-                        {currentData.kpis.totalColaboradores > 0 ? Math.round((currentData.kpis.totalAlDia / currentData.kpis.totalColaboradores) * 100) : 0}% al día
+                        {dynamicColaboradoresKpis.totalColaboradores > 0 ? Math.round((dynamicColaboradoresKpis.totalAlDia / dynamicColaboradoresKpis.totalColaboradores) * 100) : 0}% al día
                     </div>
                 </div>
 
@@ -1108,10 +1188,10 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span className="p-1 bg-amber-100/70 rounded-lg text-amber-700">🟡</span>
                     </div>
                     <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-amber-600">
-                        {currentData.kpis.totalAtrasoLeve}
+                        {dynamicColaboradoresKpis.totalAtrasoLeve}
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
-                        {currentData.kpis.totalColaboradores > 0 ? Math.round((currentData.kpis.totalAtrasoLeve / currentData.kpis.totalColaboradores) * 100) : 0}% en gestión
+                        {dynamicColaboradoresKpis.totalColaboradores > 0 ? Math.round((dynamicColaboradoresKpis.totalAtrasoLeve / dynamicColaboradoresKpis.totalColaboradores) * 100) : 0}% en gestión
                     </div>
                 </div>
 
@@ -1132,7 +1212,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span className="p-1 bg-rose-100/70 rounded-lg text-rose-700">🔴</span>
                     </div>
                     <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-rose-600">
-                        {currentData.kpis.totalAtrasoGrave}
+                        {dynamicColaboradoresKpis.totalAtrasoGrave}
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
                         Requiere regularización
@@ -1146,17 +1226,17 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span className="p-1 bg-cyan-100/70 rounded-lg text-cyan-800">📈</span>
                     </div>
                     <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-cyan-700">
-                        {currentData.kpis.cumplimientoGlobalPorcentaje}%
+                        {dynamicColaboradoresKpis.cumplimientoGlobalPorcentaje}%
                     </div>
                     <div className="w-full bg-slate-100 h-2 rounded-full mt-1.5 overflow-hidden">
                         <div
                             className="bg-gradient-to-r from-cyan-500 to-emerald-500 h-full rounded-full transition-all duration-500"
-                            style={{ width: `${currentData.kpis.cumplimientoGlobalPorcentaje}%` }}
+                            style={{ width: `${dynamicColaboradoresKpis.cumplimientoGlobalPorcentaje}%` }}
                         />
                     </div>
                     <div className="text-[10px] text-slate-500 mt-1 flex justify-between font-mono">
-                        <span>Gest: {currentData.kpis.totalRegistrosGestionados}</span>
-                        <span>Pend: {currentData.kpis.totalRegistrosPendientes}</span>
+                        <span>Gest: {dynamicColaboradoresKpis.totalRegistrosGestionados}</span>
+                        <span>Pend: {dynamicColaboradoresKpis.totalRegistrosPendientes}</span>
                     </div>
                 </div>
             </div>
@@ -1408,7 +1488,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                             }`}
                         >
-                            Todos ({currentData.kpis.totalColaboradores})
+                            Todos ({dynamicColaboradoresKpis.totalColaboradores})
                         </button>
                         <button
                             type="button"
@@ -1420,7 +1500,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             }`}
                         >
                             <span>🟢</span>
-                            <span>Al Día ({currentData.kpis.totalAlDia})</span>
+                            <span>Al Día ({dynamicColaboradoresKpis.totalAlDia})</span>
                         </button>
                         <button
                             type="button"
@@ -1432,7 +1512,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             }`}
                         >
                             <span>🟡</span>
-                            <span>Atraso Leve ({currentData.kpis.totalAtrasoLeve})</span>
+                            <span>Atraso Leve ({dynamicColaboradoresKpis.totalAtrasoLeve})</span>
                         </button>
                         <button
                             type="button"
@@ -1444,12 +1524,12 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             }`}
                         >
                             <span>🔴</span>
-                            <span>Atraso Grave ({currentData.kpis.totalAtrasoGrave})</span>
+                            <span>Atraso Grave ({dynamicColaboradoresKpis.totalAtrasoGrave})</span>
                         </button>
                     </div>
 
                     <div className="text-xs text-slate-500 font-medium">
-                        Mostrando <strong className="text-sky-700 font-bold">{filteredColaboradores.length}</strong> de {currentData.colaboradores.length} colaboradores
+                        Mostrando <strong className="text-sky-700 font-bold">{filteredColaboradores.length}</strong> de {dynamicColaboradoresKpis.totalColaboradores} colaboradores
                     </div>
                 </div>
             </div>

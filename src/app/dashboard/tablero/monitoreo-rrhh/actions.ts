@@ -710,7 +710,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
         // REGLA ALTERNATIVA 1: Normalización automática de Horas Extras, Atrasos y Adelantos por Establecimiento y Sucursal
         for (const m of metricsByRbd.values()) {
-            const ausCompletado = m.ausentismo.total > 0 && m.ausentismo.pendientes === 0
+            const ausCompletado = m.ausentismo.pendientes === 0
             const hheeResuelto = m.horasExtras.total > 0 && (m.horasExtras.gestionados > 0 || ausCompletado)
             if (hheeResuelto) {
                 m.horasExtras.gestionados = m.horasExtras.total
@@ -740,7 +740,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             let recomputedAdePend = 0
 
             for (const estItem of agg.establecimientosMap.values()) {
-                const estAusCompletado = estItem.ausentismo.total > 0 && estItem.ausentismo.pendientes === 0
+                const estAusCompletado = estItem.ausentismo.pendientes === 0
                 const estHheeResuelto = estItem.horasExtras.total > 0 && (estItem.horasExtras.gestionados > 0 || estAusCompletado)
                 if (estHheeResuelto) {
                     estItem.horasExtras.gestionados = estItem.horasExtras.total
@@ -1110,7 +1110,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 ausPend = ausTotal - ausGest
 
                 // REGLA ALTERNATIVA 1: Consolidación y deducción automática por gestión integral de nómina
-                const ausCompletado = ausTotal > 0 && ausPend === 0
+                const ausCompletado = ausPend === 0
                 // Horas Extras: En nómina, 'No Aplica' es el estado por defecto. Si el colaborador gestionó/autorizó horas extras
                 // o completó Ausentismo, los registros no modificados se confirman como 'No Aplica' legítimamente -> 100%
                 const userHheeResuelto = hheeManualGest > 0 || (hheeTotal > 0 && ausCompletado)
