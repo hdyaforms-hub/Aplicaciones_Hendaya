@@ -26,6 +26,8 @@ export async function ensurePersonalCambioRbdTables() {
                 "tipoCambio" TEXT NOT NULL,
                 "fechaDesde" TEXT NOT NULL,
                 "fechaHasta" TEXT,
+                "horaInicio" TEXT,
+                "horaTermino" TEXT,
                 observacion TEXT,
                 estado TEXT NOT NULL DEFAULT 'REGISTRADO',
                 "creadoPor" TEXT NOT NULL,
@@ -38,6 +40,10 @@ export async function ensurePersonalCambioRbdTables() {
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_cambio_rbd_origen_idx" ON "Pers_Cambio_Rbd"("rbdOrigen");`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_cambio_rbd_destino_idx" ON "Pers_Cambio_Rbd"("rbdDestino");`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_cambio_rbd_ruthash_idx" ON "Pers_Cambio_Rbd"("rutHash");`)
+
+        // Nuevas columnas de Horario de Jornada en nuevo RBD (Auto-recuperación idempotente)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Cambio_Rbd" ADD COLUMN IF NOT EXISTS "horaInicio" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Cambio_Rbd" ADD COLUMN IF NOT EXISTS "horaTermino" TEXT;`)
 
         initialized = true
     } catch (error) {

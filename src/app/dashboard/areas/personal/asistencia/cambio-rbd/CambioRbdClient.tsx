@@ -82,6 +82,8 @@ export default function CambioRbdClient({
     const [tipoCambio, setTipoCambio] = useState<TipoCambio>('ANEXO_TRASLADO')
     const [fechaDesde, setFechaDesde] = useState<string>('')
     const [fechaHasta, setFechaHasta] = useState<string>('')
+    const [horaInicio, setHoraInicio] = useState<string>('')
+    const [horaTermino, setHoraTermino] = useState<string>('')
     const [observacion, setObservacion] = useState<string>('')
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
@@ -170,6 +172,8 @@ export default function CambioRbdClient({
         setTipoCambio('ANEXO_TRASLADO')
         setFechaDesde(new Date().toISOString().slice(0, 10))
         setFechaHasta('')
+        setHoraInicio('')
+        setHoraTermino('')
         setObservacion('')
         setShowHistorialInModal(false)
         setColabHistorial([])
@@ -269,6 +273,22 @@ export default function CambioRbdClient({
             return
         }
 
+        const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/
+        if (horaInicio && !timeRegex.test(horaInicio.trim())) {
+            showToast('La hora de inicio de jornada no es válida (formato HH:mm, ej. 08:00)', 'error')
+            return
+        }
+
+        if (horaTermino && !timeRegex.test(horaTermino.trim())) {
+            showToast('La hora de término de jornada no es válida (formato HH:mm, ej. 16:30)', 'error')
+            return
+        }
+
+        if ((horaInicio && !horaTermino) || (!horaInicio && horaTermino)) {
+            showToast('Si defines un horario de jornada, debes ingresar tanto la hora de inicio como la de término', 'error')
+            return
+        }
+
         setIsSaving(true)
         try {
             const res = await guardarCambioRbdAction({
@@ -277,6 +297,8 @@ export default function CambioRbdClient({
                 tipoCambio,
                 fechaDesde,
                 fechaHasta: fechaHasta || undefined,
+                horaInicio: horaInicio.trim() || undefined,
+                horaTermino: horaTermino.trim() || undefined,
                 observacion: observacion || undefined
             })
 
@@ -337,6 +359,8 @@ export default function CambioRbdClient({
                 'Tipo de Traslado': item.tipoCambio,
                 'Fecha Desde': item.fechaDesde,
                 'Fecha Hasta': item.fechaHasta,
+                'Hora Inicio Jornada': item.horaInicio || 'Sin especificar',
+                'Hora Término Jornada': item.horaTermino || 'Sin especificar',
                 'Observación / Motivo': item.observacion || '',
                 'Estado': item.estado,
                 'Registrado Por': item.creadoPor,
@@ -364,6 +388,8 @@ export default function CambioRbdClient({
                 { wch: 24 },
                 { wch: 14 },
                 { wch: 14 },
+                { wch: 18 },
+                { wch: 18 },
                 { wch: 35 },
                 { wch: 14 },
                 { wch: 22 },
@@ -1056,6 +1082,49 @@ export default function CambioRbdClient({
                                 )}
                             </div>
 
+                            {/* HORARIO DE JORNADA EN NUEVO RBD */}
+                            <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block">
+                                        Horario de Jornada en Nuevo RBD
+                                    </span>
+                                    <span className="text-[10px] text-gray-400 font-medium">Formato 24 hrs (HH:mm)</span>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center justify-between">
+                                            <span className="flex items-center gap-1.5">
+                                                <span>⏰</span> Hora Inicio Jornada
+                                            </span>
+                                            <span className="text-[10px] text-cyan-700 font-mono font-bold">Nuevo RBD</span>
+                                        </label>
+                                        <input
+                                            type="time"
+                                            value={horaInicio}
+                                            onChange={(e) => setHoraInicio(e.target.value)}
+                                            className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-semibold bg-white text-gray-900"
+                                        />
+                                        <span className="text-[10px] text-gray-500 mt-1 block">Ejemplo: 08:00 hrs</span>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-700 mb-1 flex items-center justify-between">
+                                            <span className="flex items-center gap-1.5">
+                                                <span>⏱️</span> Hora Término Jornada
+                                            </span>
+                                            <span className="text-[10px] text-cyan-700 font-mono font-bold">Nuevo RBD</span>
+                                        </label>
+                                        <input
+                                            type="time"
+                                            value={horaTermino}
+                                            onChange={(e) => setHoraTermino(e.target.value)}
+                                            className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-semibold bg-white text-gray-900"
+                                        />
+                                        <span className="text-[10px] text-gray-500 mt-1 block">Ejemplo: 16:30 hrs</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* OBSERVACIÓN OPCIONAL */}
                             <div>
                                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
@@ -1098,9 +1167,14 @@ export default function CambioRbdClient({
                                                             {new Date(hist.createdAt).toLocaleDateString('es-CL')}
                                                         </span>
                                                     </div>
-                                                    <div className="text-[11px] text-slate-600">
+                                                    <div className="text-[11px] text-slate-600 flex flex-wrap items-center gap-1.5">
                                                         <span>Desde: <b>{hist.fechaDesde}</b> {hist.fechaHasta ? `hasta <b>${hist.fechaHasta}</b>` : ''}</span>
-                                                        <span className="ml-2 text-slate-400">• Registrado por: {hist.creadoPor}</span>
+                                                        {(hist.horaInicio || hist.horaTermino) && (
+                                                            <span className="font-mono text-[10px] bg-cyan-50 border border-cyan-200 text-cyan-800 px-1.5 py-0.5 rounded font-bold">
+                                                                ⏰ {hist.horaInicio || '--:--'} a {hist.horaTermino || '--:--'}
+                                                            </span>
+                                                        )}
+                                                        <span className="text-slate-400">• Por: {hist.creadoPor}</span>
                                                     </div>
                                                     {hist.observacion && (
                                                         <p className="text-[11px] text-slate-500 italic bg-slate-50 p-1.5 rounded">
@@ -1253,13 +1327,18 @@ export default function CambioRbdClient({
 
                                             {/* VIGENCIA Y RESPONSABLE */}
                                             <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600 pt-1 border-t border-slate-100">
-                                                <div>
+                                                <div className="flex flex-wrap items-center gap-2">
                                                     <span>Vigencia: </span>
                                                     <b className="text-slate-800">{hist.fechaDesde}</b>
                                                     {hist.fechaHasta ? (
                                                         <span> al <b className="text-slate-800">{hist.fechaHasta}</b></span>
                                                     ) : (
                                                         <span className="text-slate-500"> (Indefinido)</span>
+                                                    )}
+                                                    {(hist.horaInicio || hist.horaTermino) && (
+                                                        <span className="font-mono text-[10px] bg-cyan-50 border border-cyan-200 text-cyan-800 px-2 py-0.5 rounded font-bold">
+                                                            ⏰ {hist.horaInicio || '--:--'} a {hist.horaTermino || '--:--'} hrs
+                                                        </span>
                                                     )}
                                                 </div>
                                                 <div className="text-[11px] text-slate-500">

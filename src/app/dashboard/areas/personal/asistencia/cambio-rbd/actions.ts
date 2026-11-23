@@ -34,6 +34,8 @@ export interface CambioRbdRegistroDTO {
     tipoCambio: 'ANEXO_TRASLADO' | 'COMISION_SERVICIO' | string
     fechaDesde: string
     fechaHasta?: string | null
+    horaInicio?: string | null
+    horaTermino?: string | null
     observacion?: string | null
     estado: string
     creadoPor: string
@@ -177,6 +179,7 @@ export async function getPersonalDotacionCambioRbdAction(params?: {
                 const cambiosRows: any[] = await prisma.$queryRawUnsafe(`
                     SELECT id, "colaboradorId", "rutHash", "rbdOrigen", "establecimientoOrigen", "sucursalOrigen",
                            "rbdDestino", "establecimientoDestino", "sucursalDestino", "tipoCambio", "fechaDesde", "fechaHasta",
+                           "horaInicio", "horaTermino",
                            observacion, estado, "creadoPor", "createdAt"
                     FROM "Pers_Cambio_Rbd"
                     WHERE "colaboradorId" = ANY($1::text[]) OR "rutHash" = ANY($2::text[])
@@ -231,6 +234,8 @@ export async function getPersonalDotacionCambioRbdAction(params?: {
                     tipoCambio: cambioData.ultimo.tipoCambio,
                     fechaDesde: cambioData.ultimo.fechaDesde,
                     fechaHasta: cambioData.ultimo.fechaHasta,
+                    horaInicio: cambioData.ultimo.horaInicio || null,
+                    horaTermino: cambioData.ultimo.horaTermino || null,
                     observacion: cambioData.ultimo.observacion,
                     estado: cambioData.ultimo.estado,
                     creadoPor: cambioData.ultimo.creadoPor,
@@ -367,6 +372,8 @@ export async function guardarCambioRbdAction(payload: {
     tipoCambio: 'ANEXO_TRASLADO' | 'COMISION_SERVICIO'
     fechaDesde: string
     fechaHasta?: string
+    horaInicio?: string
+    horaTermino?: string
     observacion?: string
 }) {
     if (!await checkPermission()) {
@@ -391,6 +398,15 @@ export async function guardarCambioRbdAction(payload: {
 
     if (payload.fechaHasta && payload.fechaDesde > payload.fechaHasta) {
         return { success: false, error: 'La fecha de término no puede ser anterior a la fecha de inicio' }
+    }
+
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/
+    if (payload.horaInicio && payload.horaInicio.trim() && !timeRegex.test(payload.horaInicio.trim())) {
+        return { success: false, error: 'La hora de inicio de jornada no es válida (formato HH:mm, ej. 08:00)' }
+    }
+
+    if (payload.horaTermino && payload.horaTermino.trim() && !timeRegex.test(payload.horaTermino.trim())) {
+        return { success: false, error: 'La hora de término de jornada no es válida (formato HH:mm, ej. 16:30)' }
     }
 
     const session = await getSession()
@@ -432,19 +448,24 @@ export async function guardarCambioRbdAction(payload: {
 
         // 3. Registrar físicamente en Pers_Cambio_Rbd
         const cambioId = uuidv4()
+        const cleanHoraInicio = payload.horaInicio?.trim() || null
+        const cleanHoraTermino = payload.horaTermino?.trim() || null
+
         await prisma.$executeRawUnsafe(`
             INSERT INTO "Pers_Cambio_Rbd" (
                 id, "colaboradorId", "rutEnc", "rutHash", "nombreEnc",
                 "rbdOrigen", "establecimientoOrigen", "sucursalOrigen", supervisor,
                 "rbdDestino", "establecimientoDestino", "sucursalDestino",
-                "tipoCambio", "fechaDesde", "fechaHasta", observacion, estado,
+                "tipoCambio", "fechaDesde", "fechaHasta", "horaInicio", "horaTermino",
+                observacion, estado,
                 "creadoPor", "creadoPorId", "createdAt", "updatedAt"
             ) VALUES (
                 $1, $2, $3, $4, $5,
                 $6, $7, $8, $9,
                 $10, $11, $12,
                 $13, $14, $15, $16, $17,
-                $18, $19, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+                $18, $19,
+                $20, $21, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
             );
         `,
             cambioId,
@@ -462,6 +483,8 @@ export async function guardarCambioRbdAction(payload: {
             payload.tipoCambio,
             payload.fechaDesde,
             payload.fechaHasta || null,
+            cleanHoraInicio,
+            cleanHoraTermino,
             payload.observacion || null,
             'REGISTRADO',
             session.user.name || session.user.username,
@@ -471,12 +494,13 @@ export async function guardarCambioRbdAction(payload: {
         const tipoCambioTexto = payload.tipoCambio === 'ANEXO_TRASLADO' ? 'Anexos de traslado' : 'Comisión de servicio'
 
         // 4. Auditoría de usuarios
+        const horarioDetalle = cleanHoraInicio && cleanHoraTermino ? ` [Horario Nuevo RBD: ${cleanHoraInicio} - ${cleanHoraTermino}]` : ''
         await logAuditAction({
             username: session.user.username,
             userId: session.user.id,
             action: 'REGISTRO_CAMBIO_RBD',
             modulo: 'Áreas -> Recursos Humanos',
-            detalle: `Se registró ${tipoCambioTexto} para ${nombreDecrypted} (${rutDecrypted}): Origen RBD ${rbdOrigen} -> Destino RBD ${payload.rbdDestino} (${establecimientoDestino})`
+            detalle: `Se registró ${tipoCambioTexto} para ${nombreDecrypted} (${rutDecrypted}): Origen RBD ${rbdOrigen} -> Destino RBD ${payload.rbdDestino} (${establecimientoDestino})${horarioDetalle}`
         })
 
         // 5. Envío de correo a lista de distribución configurada para 'cambio-rbd-personal'
@@ -491,9 +515,18 @@ export async function guardarCambioRbdAction(payload: {
             TipoCambio: tipoCambioTexto,
             FechaDesde: payload.fechaDesde,
             FechaHasta: payload.fechaHasta || 'No aplica (Indefinido)',
+            HoraInicio: cleanHoraInicio || 'No especificada',
+            HoraTermino: cleanHoraTermino || 'No especificada',
             Supervisor: supervisor,
             Usuario: session.user.name || session.user.username
         }
+
+        const horarioFilaEmail = cleanHoraInicio && cleanHoraTermino ? `
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px; font-weight: bold; color: #64748b;">Horario Jornada (Nuevo RBD):</td>
+                <td style="padding: 8px; font-weight: bold; color: #0891b2;">${cleanHoraInicio} a ${cleanHoraTermino} hrs</td>
+            </tr>
+        ` : ''
 
         const emailResult = await sendGenericaNotification({
             codigoPantalla: 'cambio-rbd-personal',
@@ -532,6 +565,7 @@ export async function guardarCambioRbdAction(payload: {
                             <td style="padding: 8px; font-weight: bold; color: #64748b;">Vigencia:</td>
                             <td style="padding: 8px; color: #0f172a;">Desde: <b>${payload.fechaDesde}</b> ${payload.fechaHasta ? `hasta: <b>${payload.fechaHasta}</b>` : ''}</td>
                         </tr>
+                        ${horarioFilaEmail}
                         <tr style="border-bottom: 1px solid #f1f5f9;">
                             <td style="padding: 8px; font-weight: bold; color: #64748b;">Supervisor:</td>
                             <td style="padding: 8px; color: #0f172a;">${supervisor}</td>
@@ -588,6 +622,7 @@ export async function getHistorialCambiosColaboradorAction(colaboradorId: string
         const rows: any[] = await prisma.$queryRawUnsafe(`
             SELECT id, "colaboradorId", "rbdOrigen", "establecimientoOrigen", "sucursalOrigen",
                    "rbdDestino", "establecimientoDestino", "sucursalDestino", "tipoCambio", "fechaDesde", "fechaHasta",
+                   "horaInicio", "horaTermino",
                    observacion, estado, "creadoPor", "createdAt"
             FROM "Pers_Cambio_Rbd"
             WHERE "colaboradorId" = $1 OR ($2 != '' AND "rutHash" = $2)
@@ -606,6 +641,8 @@ export async function getHistorialCambiosColaboradorAction(colaboradorId: string
             tipoCambio: r.tipoCambio,
             fechaDesde: r.fechaDesde,
             fechaHasta: r.fechaHasta,
+            horaInicio: r.horaInicio || null,
+            horaTermino: r.horaTermino || null,
             observacion: r.observacion,
             estado: r.estado,
             creadoPor: r.creadoPor,
@@ -635,6 +672,8 @@ export interface ReporteCambioRbdItemDTO {
     tipoCambio: string
     fechaDesde: string
     fechaHasta: string
+    horaInicio?: string
+    horaTermino?: string
     observacion: string
     estado: string
     creadoPor: string
@@ -744,7 +783,7 @@ export async function getReporteCompletoCambiosRbdAction(tipo?: 'COMISION_SERVIC
             SELECT id, "colaboradorId", "rutEnc", "rutHash", "nombreEnc",
                    "rbdOrigen", "establecimientoOrigen", "sucursalOrigen", supervisor,
                    "rbdDestino", "establecimientoDestino", "sucursalDestino",
-                   "tipoCambio", "fechaDesde", "fechaHasta", observacion, estado,
+                   "tipoCambio", "fechaDesde", "fechaHasta", "horaInicio", "horaTermino", observacion, estado,
                    "creadoPor", "createdAt"
             FROM "Pers_Cambio_Rbd"
             ${whereClause}
@@ -791,6 +830,8 @@ export async function getReporteCompletoCambiosRbdAction(tipo?: 'COMISION_SERVIC
                 tipoCambio: r.tipoCambio === 'ANEXO_TRASLADO' ? 'Anexo de Traslado' : r.tipoCambio === 'COMISION_SERVICIO' ? 'Comisión de Servicio' : (r.tipoCambio || 'Traslado'),
                 fechaDesde: r.fechaDesde || '',
                 fechaHasta: r.fechaHasta || 'Indefinido',
+                horaInicio: r.horaInicio || '',
+                horaTermino: r.horaTermino || '',
                 observacion: r.observacion || '',
                 estado: r.estado || 'REGISTRADO',
                 creadoPor: r.creadoPor || 'Usuario',
