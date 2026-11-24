@@ -652,6 +652,10 @@ exports.Prisma.RetornoProductosMovimientoScalarFieldEnum = {
   ubicacion: 'ubicacion',
   cantidadDespachada: 'cantidadDespachada',
   cantidadMermada: 'cantidadMermada',
+  tipoDestino: 'tipoDestino',
+  rbd: 'rbd',
+  establecimiento: 'establecimiento',
+  cantidadRbd: 'cantidadRbd',
   archivos: 'archivos',
   fechaRegistro: 'fechaRegistro'
 };

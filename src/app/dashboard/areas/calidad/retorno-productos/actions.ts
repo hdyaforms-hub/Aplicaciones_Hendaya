@@ -187,27 +187,74 @@ export async function cambiarEstadoBloqueoAlerta(alertaId: string, nuevoTipoBloq
     }
 }
 
+export async function getColegiosParaRetorno(sucursalNombre?: string) {
+    try {
+        const colegios = await prisma.colegios.findMany({
+            where: {
+                activo: true
+            },
+            select: {
+                colRBD: true,
+                nombreEstablecimiento: true,
+                sucursal: true,
+                comuna: true
+            },
+            orderBy: { colRBD: 'asc' }
+        })
+        return colegios.map(c => ({
+            rbd: c.colRBD,
+            establecimiento: c.nombreEstablecimiento,
+            sucursal: c.sucursal,
+            comuna: c.comuna
+        }))
+    } catch (e) {
+        console.error('Error fetching colegios:', e)
+        return []
+    }
+}
+
 export async function registrarMovimiento(formData: FormData, alertaId: string, sucursalId: string, username: string) {
     try {
         await ensureRetornoProductosTables()
         const comentario = formData.get('comentario') as string
         const finalizar = formData.get('finalizar') === 'true'
+        const tipoDestino = (formData.get('tipoDestino') as string) || 'BODEGA'
 
-        // Nuevos campos de inventario y movimiento
-        const numeroDocumento = (formData.get('numeroDocumento') as string) || null
-        const codigoProducto = (formData.get('codigoProducto') as string) || null
-        const loteInterno = (formData.get('loteInterno') as string) || null
-        const ubicacion = (formData.get('ubicacion') as string) || null
+        let numeroDocumento: string | null = null
+        let codigoProducto: string | null = null
+        let loteInterno: string | null = null
+        let ubicacion: string | null = null
+        let cantidadRecepcionada = 0
+        let stockBodega = 0
+        let cantidadDespachada = 0
+        let cantidadMermada = 0
 
-        const rawRecepcionada = formData.get('cantidadRecepcionada') as string
-        const rawStock = formData.get('stockBodega') as string
-        const rawDespachada = formData.get('cantidadDespachada') as string
-        const rawMermada = formData.get('cantidadMermada') as string
+        let rbd: number | null = null
+        let establecimiento: string | null = null
+        let cantidadRbd = 0
 
-        const cantidadRecepcionada = rawRecepcionada ? parseFloat(rawRecepcionada) || 0 : 0
-        const stockBodega = rawStock ? parseFloat(rawStock) || 0 : 0
-        const cantidadDespachada = rawDespachada ? parseFloat(rawDespachada) || 0 : 0
-        const cantidadMermada = rawMermada ? parseFloat(rawMermada) || 0 : 0
+        if (tipoDestino === 'ESTABLECIMIENTO') {
+            const rawRbd = formData.get('rbd') as string
+            rbd = rawRbd ? parseInt(rawRbd, 10) || null : null
+            establecimiento = (formData.get('establecimiento') as string) || null
+            const rawCantidadRbd = formData.get('cantidadRbd') as string
+            cantidadRbd = rawCantidadRbd ? parseFloat(rawCantidadRbd) || 0 : 0
+        } else {
+            numeroDocumento = (formData.get('numeroDocumento') as string) || null
+            codigoProducto = (formData.get('codigoProducto') as string) || null
+            loteInterno = (formData.get('loteInterno') as string) || null
+            ubicacion = (formData.get('ubicacion') as string) || null
+
+            const rawRecepcionada = formData.get('cantidadRecepcionada') as string
+            const rawStock = formData.get('stockBodega') as string
+            const rawDespachada = formData.get('cantidadDespachada') as string
+            const rawMermada = formData.get('cantidadMermada') as string
+
+            cantidadRecepcionada = rawRecepcionada ? parseFloat(rawRecepcionada) || 0 : 0
+            stockBodega = rawStock ? parseFloat(rawStock) || 0 : 0
+            cantidadDespachada = rawDespachada ? parseFloat(rawDespachada) || 0 : 0
+            cantidadMermada = rawMermada ? parseFloat(rawMermada) || 0 : 0
+        }
 
         // Archivos
         const archivosGuardados: string[] = []
@@ -231,6 +278,7 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
                 usuarioRegistro: username,
                 comentario,
                 archivos: JSON.stringify(archivosGuardados),
+                tipoDestino,
                 numeroDocumento,
                 codigoProducto,
                 loteInterno,
@@ -238,7 +286,10 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
                 cantidadRecepcionada,
                 stockBodega,
                 cantidadDespachada,
-                cantidadMermada
+                cantidadMermada,
+                rbd,
+                establecimiento,
+                cantidadRbd
             },
             include: {
                 alerta: true,
@@ -264,11 +315,17 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
             <div style="font-family: sans-serif; background: #e0f2fe; padding: 20px; border-radius: 10px; border: 1px solid #7dd3fc;">
                 <h2 style="color: #0369a1;">🔔 Registro de Movimiento - ${movimiento.sucursal.nombre}</h2>
                 <p><strong>Alerta:</strong> ${movimiento.alerta.titulo}</p>
+                <p><strong>Destino:</strong> ${tipoDestino}</p>
                 <p><strong>Comentarios:</strong> <br/>${comentario}</p>
                 <div style="background: #ffffff; padding: 10px; border-radius: 6px; margin: 10px 0; border: 1px solid #bae6fd;">
-                    <p style="margin: 3px 0;"><strong>N° Doc / Guía:</strong> ${numeroDocumento || 'N/A'}</p>
-                    <p style="margin: 3px 0;"><strong>Cant. Recepcionada:</strong> ${cantidadRecepcionada} | <strong>Stock Bodega:</strong> ${stockBodega}</p>
-                    <p style="margin: 3px 0;"><strong>Cant. Despachada:</strong> ${cantidadDespachada} | <strong>Cant. Mermada:</strong> ${cantidadMermada}</p>
+                    ${tipoDestino === 'ESTABLECIMIENTO' ? `
+                        <p style="margin: 3px 0;"><strong>Establecimiento:</strong> RBD ${rbd || 'N/A'} - ${establecimiento || 'N/A'}</p>
+                        <p style="margin: 3px 0;"><strong>Cantidad:</strong> ${cantidadRbd}</p>
+                    ` : `
+                        <p style="margin: 3px 0;"><strong>N° Doc / Guía:</strong> ${numeroDocumento || 'N/A'}</p>
+                        <p style="margin: 3px 0;"><strong>Cant. Recepcionada:</strong> ${cantidadRecepcionada} | <strong>Stock Bodega:</strong> ${stockBodega}</p>
+                        <p style="margin: 3px 0;"><strong>Cant. Despachada:</strong> ${cantidadDespachada} | <strong>Cant. Mermada:</strong> ${cantidadMermada}</p>
+                    `}
                 </div>
                 ${finalizar ? '<p style="color: #15803d; font-weight: bold;">✅ La sucursal ha finalizado su gestión.</p>' : ''}
                 <hr style="border: none; border-top: 1px dashed #38bdf8; margin: 15px 0;"/>
@@ -278,7 +335,7 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
 
         await sendGenericaNotification({
             codigoPantalla: 'RETORNO_PRODUCTOS', 
-            subject: `[Movimiento Bloqueo/Retirada] ${movimiento.alerta.titulo} - ${movimiento.sucursal.nombre}`,
+            subject: `[Movimiento Bloqueo/Retirada] [${tipoDestino}] ${movimiento.alerta.titulo} - ${movimiento.sucursal.nombre}`,
             bodyHtml,
             tags: {
                 Titulo: movimiento.alerta.titulo,

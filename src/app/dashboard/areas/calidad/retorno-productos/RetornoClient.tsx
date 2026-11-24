@@ -162,9 +162,18 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                                 </span>
                                             )}
                                             {(alerta.fechaElaboracion || alerta.fechaVencimiento) && (
-                                                <span className="text-[10px] text-gray-600">
-                                                    {alerta.fechaVencimiento ? `Vence: ${alerta.fechaVencimiento}` : `Elab: ${alerta.fechaElaboracion}`}
-                                                </span>
+                                                <div className="flex flex-col text-[10px] text-gray-700 text-right">
+                                                    {alerta.fechaElaboracion && (
+                                                        <span>
+                                                            <strong className="text-gray-900 font-semibold">Elab:</strong> {alerta.fechaElaboracion}
+                                                        </span>
+                                                    )}
+                                                    {alerta.fechaVencimiento && (
+                                                        <span className="text-red-700 font-semibold">
+                                                            <strong className="text-red-900 font-bold">Vence:</strong> {alerta.fechaVencimiento}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             )}
                                         </div>
                                     </div>

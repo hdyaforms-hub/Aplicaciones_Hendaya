@@ -28,6 +28,10 @@ export async function ensureRetornoProductosTables() {
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "ubicacion" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "cantidadDespachada" DOUBLE PRECISION DEFAULT 0;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "cantidadMermada" DOUBLE PRECISION DEFAULT 0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "tipoDestino" TEXT DEFAULT 'BODEGA';`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "rbd" INTEGER;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "establecimiento" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "RetornoProductosMovimiento" ADD COLUMN IF NOT EXISTS "cantidadRbd" DOUBLE PRECISION DEFAULT 0;`)
 
         initialized = true
     } catch (error) {

@@ -603,6 +603,10 @@ model RetornoProductosMovimiento {
   ubicacion            String?
   cantidadDespachada   Float?                 @default(0)
   cantidadMermada      Float?                 @default(0)
+  tipoDestino          String?                @default("BODEGA")
+  rbd                  Int?
+  establecimiento      String?
+  cantidadRbd          Float?                 @default(0)
   archivos             String?
   fechaRegistro        DateTime               @default(now())
   alerta               RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)

@@ -54055,6 +54055,8 @@ export namespace Prisma {
     stockBodega: number | null
     cantidadDespachada: number | null
     cantidadMermada: number | null
+    rbd: number | null
+    cantidadRbd: number | null
   }
 
   export type RetornoProductosMovimientoSumAggregateOutputType = {
@@ -54062,6 +54064,8 @@ export namespace Prisma {
     stockBodega: number | null
     cantidadDespachada: number | null
     cantidadMermada: number | null
+    rbd: number | null
+    cantidadRbd: number | null
   }
 
   export type RetornoProductosMovimientoMinAggregateOutputType = {
@@ -54078,6 +54082,10 @@ export namespace Prisma {
     ubicacion: string | null
     cantidadDespachada: number | null
     cantidadMermada: number | null
+    tipoDestino: string | null
+    rbd: number | null
+    establecimiento: string | null
+    cantidadRbd: number | null
     archivos: string | null
     fechaRegistro: Date | null
   }
@@ -54096,6 +54104,10 @@ export namespace Prisma {
     ubicacion: string | null
     cantidadDespachada: number | null
     cantidadMermada: number | null
+    tipoDestino: string | null
+    rbd: number | null
+    establecimiento: string | null
+    cantidadRbd: number | null
     archivos: string | null
     fechaRegistro: Date | null
   }
@@ -54114,6 +54126,10 @@ export namespace Prisma {
     ubicacion: number
     cantidadDespachada: number
     cantidadMermada: number
+    tipoDestino: number
+    rbd: number
+    establecimiento: number
+    cantidadRbd: number
     archivos: number
     fechaRegistro: number
     _all: number
@@ -54125,6 +54141,8 @@ export namespace Prisma {
     stockBodega?: true
     cantidadDespachada?: true
     cantidadMermada?: true
+    rbd?: true
+    cantidadRbd?: true
   }
 
   export type RetornoProductosMovimientoSumAggregateInputType = {
@@ -54132,6 +54150,8 @@ export namespace Prisma {
     stockBodega?: true
     cantidadDespachada?: true
     cantidadMermada?: true
+    rbd?: true
+    cantidadRbd?: true
   }
 
   export type RetornoProductosMovimientoMinAggregateInputType = {
@@ -54148,6 +54168,10 @@ export namespace Prisma {
     ubicacion?: true
     cantidadDespachada?: true
     cantidadMermada?: true
+    tipoDestino?: true
+    rbd?: true
+    establecimiento?: true
+    cantidadRbd?: true
     archivos?: true
     fechaRegistro?: true
   }
@@ -54166,6 +54190,10 @@ export namespace Prisma {
     ubicacion?: true
     cantidadDespachada?: true
     cantidadMermada?: true
+    tipoDestino?: true
+    rbd?: true
+    establecimiento?: true
+    cantidadRbd?: true
     archivos?: true
     fechaRegistro?: true
   }
@@ -54184,6 +54212,10 @@ export namespace Prisma {
     ubicacion?: true
     cantidadDespachada?: true
     cantidadMermada?: true
+    tipoDestino?: true
+    rbd?: true
+    establecimiento?: true
+    cantidadRbd?: true
     archivos?: true
     fechaRegistro?: true
     _all?: true
@@ -54289,6 +54321,10 @@ export namespace Prisma {
     ubicacion: string | null
     cantidadDespachada: number | null
     cantidadMermada: number | null
+    tipoDestino: string | null
+    rbd: number | null
+    establecimiento: string | null
+    cantidadRbd: number | null
     archivos: string | null
     fechaRegistro: Date
     _count: RetornoProductosMovimientoCountAggregateOutputType | null
@@ -54326,6 +54362,10 @@ export namespace Prisma {
     ubicacion?: boolean
     cantidadDespachada?: boolean
     cantidadMermada?: boolean
+    tipoDestino?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    cantidadRbd?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
     alerta?: boolean | RetornoProductosAlertaDefaultArgs<ExtArgs>
@@ -54346,6 +54386,10 @@ export namespace Prisma {
     ubicacion?: boolean
     cantidadDespachada?: boolean
     cantidadMermada?: boolean
+    tipoDestino?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    cantidadRbd?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
     alerta?: boolean | RetornoProductosAlertaDefaultArgs<ExtArgs>
@@ -54366,6 +54410,10 @@ export namespace Prisma {
     ubicacion?: boolean
     cantidadDespachada?: boolean
     cantidadMermada?: boolean
+    tipoDestino?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    cantidadRbd?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
   }
@@ -54399,6 +54447,10 @@ export namespace Prisma {
       ubicacion: string | null
       cantidadDespachada: number | null
       cantidadMermada: number | null
+      tipoDestino: string | null
+      rbd: number | null
+      establecimiento: string | null
+      cantidadRbd: number | null
       archivos: string | null
       fechaRegistro: Date
     }, ExtArgs["result"]["retornoProductosMovimiento"]>
@@ -54809,6 +54861,10 @@ export namespace Prisma {
     readonly ubicacion: FieldRef<"RetornoProductosMovimiento", 'String'>
     readonly cantidadDespachada: FieldRef<"RetornoProductosMovimiento", 'Float'>
     readonly cantidadMermada: FieldRef<"RetornoProductosMovimiento", 'Float'>
+    readonly tipoDestino: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly rbd: FieldRef<"RetornoProductosMovimiento", 'Int'>
+    readonly establecimiento: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly cantidadRbd: FieldRef<"RetornoProductosMovimiento", 'Float'>
     readonly archivos: FieldRef<"RetornoProductosMovimiento", 'String'>
     readonly fechaRegistro: FieldRef<"RetornoProductosMovimiento", 'DateTime'>
   }
@@ -182887,6 +182943,10 @@ export namespace Prisma {
     ubicacion: 'ubicacion',
     cantidadDespachada: 'cantidadDespachada',
     cantidadMermada: 'cantidadMermada',
+    tipoDestino: 'tipoDestino',
+    rbd: 'rbd',
+    establecimiento: 'establecimiento',
+    cantidadRbd: 'cantidadRbd',
     archivos: 'archivos',
     fechaRegistro: 'fechaRegistro'
   };
@@ -188369,6 +188429,10 @@ export namespace Prisma {
     ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    tipoDestino?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    rbd?: IntNullableFilter<"RetornoProductosMovimiento"> | number | null
+    establecimiento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRbd?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
     alerta?: XOR<RetornoProductosAlertaRelationFilter, RetornoProductosAlertaWhereInput>
@@ -188389,6 +188453,10 @@ export namespace Prisma {
     ubicacion?: SortOrderInput | SortOrder
     cantidadDespachada?: SortOrderInput | SortOrder
     cantidadMermada?: SortOrderInput | SortOrder
+    tipoDestino?: SortOrderInput | SortOrder
+    rbd?: SortOrderInput | SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    cantidadRbd?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     fechaRegistro?: SortOrder
     alerta?: RetornoProductosAlertaOrderByWithRelationInput
@@ -188412,6 +188480,10 @@ export namespace Prisma {
     ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    tipoDestino?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    rbd?: IntNullableFilter<"RetornoProductosMovimiento"> | number | null
+    establecimiento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRbd?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
     alerta?: XOR<RetornoProductosAlertaRelationFilter, RetornoProductosAlertaWhereInput>
@@ -188432,6 +188504,10 @@ export namespace Prisma {
     ubicacion?: SortOrderInput | SortOrder
     cantidadDespachada?: SortOrderInput | SortOrder
     cantidadMermada?: SortOrderInput | SortOrder
+    tipoDestino?: SortOrderInput | SortOrder
+    rbd?: SortOrderInput | SortOrder
+    establecimiento?: SortOrderInput | SortOrder
+    cantidadRbd?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     fechaRegistro?: SortOrder
     _count?: RetornoProductosMovimientoCountOrderByAggregateInput
@@ -188458,6 +188534,10 @@ export namespace Prisma {
     ubicacion?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
     cantidadDespachada?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
     cantidadMermada?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
+    tipoDestino?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    rbd?: IntNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
+    establecimiento?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRbd?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeWithAggregatesFilter<"RetornoProductosMovimiento"> | Date | string
   }
@@ -203043,6 +203123,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     alerta: RetornoProductosAlertaCreateNestedOneWithoutMovimientosInput
@@ -203063,6 +203147,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -203079,6 +203167,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     alerta?: RetornoProductosAlertaUpdateOneRequiredWithoutMovimientosNestedInput
@@ -203099,6 +203191,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -203117,6 +203213,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -203133,6 +203233,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -203151,6 +203255,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -217949,6 +218057,10 @@ export namespace Prisma {
     ubicacion?: SortOrder
     cantidadDespachada?: SortOrder
     cantidadMermada?: SortOrder
+    tipoDestino?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    cantidadRbd?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
   }
@@ -217958,6 +218070,8 @@ export namespace Prisma {
     stockBodega?: SortOrder
     cantidadDespachada?: SortOrder
     cantidadMermada?: SortOrder
+    rbd?: SortOrder
+    cantidadRbd?: SortOrder
   }
 
   export type RetornoProductosMovimientoMaxOrderByAggregateInput = {
@@ -217974,6 +218088,10 @@ export namespace Prisma {
     ubicacion?: SortOrder
     cantidadDespachada?: SortOrder
     cantidadMermada?: SortOrder
+    tipoDestino?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    cantidadRbd?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
   }
@@ -217992,6 +218110,10 @@ export namespace Prisma {
     ubicacion?: SortOrder
     cantidadDespachada?: SortOrder
     cantidadMermada?: SortOrder
+    tipoDestino?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    cantidadRbd?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
   }
@@ -218001,6 +218123,8 @@ export namespace Prisma {
     stockBodega?: SortOrder
     cantidadDespachada?: SortOrder
     cantidadMermada?: SortOrder
+    rbd?: SortOrder
+    cantidadRbd?: SortOrder
   }
 
   export type RetornoProductosAlertaHistorialEliminadoCountOrderByAggregateInput = {
@@ -233252,6 +233376,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     alerta: RetornoProductosAlertaCreateNestedOneWithoutMovimientosInput
@@ -233270,6 +233398,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -233814,6 +233946,10 @@ export namespace Prisma {
     ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    tipoDestino?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    rbd?: IntNullableFilter<"RetornoProductosMovimiento"> | number | null
+    establecimiento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRbd?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
   }
@@ -235220,6 +235356,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     sucursal: SucursalCreateNestedOneWithoutRetornoProductosMovimientoInput
@@ -235238,6 +235378,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -248577,6 +248721,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -248759,6 +248907,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     alerta?: RetornoProductosAlertaUpdateOneRequiredWithoutMovimientosNestedInput
@@ -248777,6 +248929,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -248794,6 +248950,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -249616,6 +249776,10 @@ export namespace Prisma {
     ubicacion?: string | null
     cantidadDespachada?: number | null
     cantidadMermada?: number | null
+    tipoDestino?: string | null
+    rbd?: number | null
+    establecimiento?: string | null
+    cantidadRbd?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -249640,6 +249804,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursal?: SucursalUpdateOneRequiredWithoutRetornoProductosMovimientoNestedInput
@@ -249658,6 +249826,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -249675,6 +249847,10 @@ export namespace Prisma {
     ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
     cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
     cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
+    tipoDestino?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRbd?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
