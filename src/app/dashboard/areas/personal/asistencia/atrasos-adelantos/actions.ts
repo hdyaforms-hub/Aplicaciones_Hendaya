@@ -78,7 +78,7 @@ export interface AsistenciaAtrasosResponse {
     pageSize: number
     sucursales: string[]
     supervisores: string[]
-    establecimientos: { rbd: number; establecimiento: string }[]
+    establecimientos: { rbd: number; establecimiento: string; sucursal?: string; comuna?: string }[]
     resumen?: {
         totalRegistros: number
         totalMinutosAtraso: number
@@ -262,10 +262,27 @@ export async function getAsistenciaAtrasosAction(filtros?: {
         `, ...baseQueryParams)
 
         const establecimientosResult: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT DISTINCT rbd, establecimiento FROM "Pers_Atrasos_Registro"
+            SELECT DISTINCT rbd, establecimiento, sucursal FROM "Pers_Atrasos_Registro"
             ${baseWhereSql} AND rbd IS NOT NULL
             ORDER BY rbd ASC;
         `, ...baseQueryParams)
+
+        // Enriquecer establecimientos con comuna desde Colegios para potenciar búsqueda por comuna y sucursal
+        const rbdList = establecimientosResult.map((e: any) => Number(e.rbd)).filter(Boolean)
+        const comunaMap = new Map<number, string>()
+        if (rbdList.length > 0) {
+            try {
+                const cols = await rawPrisma.colegios.findMany({
+                    where: { colRBD: { in: rbdList } },
+                    select: { colRBD: true, comuna: true }
+                })
+                cols.forEach(c => {
+                    if (c.colRBD && c.comuna) comunaMap.set(c.colRBD, c.comuna)
+                })
+            } catch (err) {
+                console.error('Error fetching colegios comuna in getAsistenciaAtrasosAction:', err)
+            }
+        }
 
         // Traer registros coincidentes
         const rawRegistros: any[] = await rawPrisma.$queryRawUnsafe(`
@@ -378,8 +395,10 @@ export async function getAsistenciaAtrasosAction(filtros?: {
             sucursales: sucursalesResult.map((s: any) => s.sucursal).filter(Boolean),
             supervisores: supervisoresResult.map((s: any) => s.supervisor).filter(Boolean),
             establecimientos: establecimientosResult.map((e: any) => ({
-                rbd: e.rbd,
-                establecimiento: e.establecimiento || `RBD ${e.rbd}`
+                rbd: Number(e.rbd),
+                establecimiento: e.establecimiento || `RBD ${e.rbd}`,
+                sucursal: e.sucursal || '',
+                comuna: comunaMap.get(Number(e.rbd)) || ''
             })),
             resumen: {
                 totalRegistros: total,

@@ -319,10 +319,26 @@ export async function getAdmAtrasosAction(filtros?: {
         }
 
         const establecimientosResult: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT DISTINCT r.rbd, r.establecimiento FROM "Pers_Atrasos_Registro" r
+            SELECT DISTINCT r.rbd, r.establecimiento, r.sucursal FROM "Pers_Atrasos_Registro" r
             ${baseAdmWhere}
             ORDER BY r.rbd ASC;
         `, ...baseAdmParams)
+
+        const rbdListAdm = establecimientosResult.map((e: any) => Number(e.rbd)).filter(Boolean)
+        const comunaMapAdm = new Map<number, string>()
+        if (rbdListAdm.length > 0) {
+            try {
+                const cols = await rawPrisma.colegios.findMany({
+                    where: { colRBD: { in: rbdListAdm } },
+                    select: { colRBD: true, comuna: true }
+                })
+                cols.forEach(c => {
+                    if (c.colRBD && c.comuna) comunaMapAdm.set(c.colRBD, c.comuna)
+                })
+            } catch (err) {
+                console.error('Error fetching colegios comuna in getAdmAtrasosAction:', err)
+            }
+        }
 
         // Traer todos los registros coincidentes con institución y comuna de colegios
         const rawRegistros: any[] = await rawPrisma.$queryRawUnsafe(`
@@ -466,8 +482,10 @@ export async function getAdmAtrasosAction(filtros?: {
             ])).sort(),
             supervisores: supervisoresResult.map((s: any) => s.supervisor).filter(Boolean),
             establecimientos: establecimientosResult.map((e: any) => ({
-                rbd: e.rbd,
-                establecimiento: e.establecimiento || `RBD ${e.rbd}`
+                rbd: Number(e.rbd),
+                establecimiento: e.establecimiento || `RBD ${e.rbd}`,
+                sucursal: e.sucursal || '',
+                comuna: comunaMapAdm.get(Number(e.rbd)) || ''
             })),
             resumen: {
                 totalRegistros: total,

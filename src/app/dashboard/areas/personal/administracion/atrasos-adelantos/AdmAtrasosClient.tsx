@@ -55,6 +55,8 @@ import {
 interface EstablecimientoOption {
     rbd: number
     establecimiento: string
+    sucursal?: string
+    comuna?: string
 }
 
 interface Props {
@@ -822,12 +824,19 @@ export default function AdmAtrasosClient({
 
     const totalPagesRegistros = Math.ceil(totalRegistros / pageSize) || 1
 
-    // Establecimientos filtrados
+    // Establecimientos filtrados con normalización de tildes y búsqueda por RBD, establecimiento, sucursal o comuna
     const establecimientosFiltrados = initialRegistrosData.establecimientos.filter(e => {
         if (!busquedaRbdNombre.trim()) return true
-        const term = busquedaRbdNombre.toLowerCase()
-        return e.rbd.toString().includes(term) || e.establecimiento.toLowerCase().includes(term)
-    }).slice(0, 15)
+        const term = busquedaRbdNombre
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .trim()
+        const normEst = (e.establecimiento || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+        const normSuc = (e.sucursal || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+        const normCom = (e.comuna || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+        return e.rbd.toString().includes(term) || normEst.includes(term) || normSuc.includes(term) || normCom.includes(term)
+    }).slice(0, 25)
 
     return (
         <div className="space-y-6">
@@ -1277,10 +1286,22 @@ export default function AdmAtrasosClient({
                                                     setIsRbdDropdownOpen(false)
                                                     recargarDatos(1, sortField, sortDirection, tipoActivo, { rbd: est.rbd })
                                                 }}
-                                                className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700 flex items-center justify-between"
+                                                className="p-2.5 hover:bg-cyan-50 cursor-pointer text-gray-700 flex items-center justify-between transition-colors"
                                             >
-                                                <span className="truncate">{est.establecimiento}</span>
-                                                <strong className="text-gray-900 ml-2 bg-gray-100 px-1.5 py-0.5 rounded text-[11px] whitespace-nowrap">RBD {est.rbd}</strong>
+                                                <div className="flex flex-col min-w-0 pr-2">
+                                                    <span className="font-medium text-gray-900 truncate">{est.establecimiento}</span>
+                                                    <div className="flex items-center gap-1.5 text-[10px] text-gray-500 mt-0.5">
+                                                        {est.sucursal && (
+                                                            <span className="px-1.5 py-0.5 bg-gray-100 text-gray-700 rounded font-semibold">
+                                                                {est.sucursal}
+                                                            </span>
+                                                        )}
+                                                        {est.comuna && (
+                                                            <span className="text-gray-400">· {est.comuna}</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <strong className="text-cyan-800 bg-cyan-100/70 px-2 py-0.5 rounded text-[11px] whitespace-nowrap font-mono">RBD {est.rbd}</strong>
                                             </div>
                                         ))}
                                     </div>

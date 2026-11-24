@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useState, useTransition, useMemo } from 'react'
 import {
     AsistenciaAtrasosRegistroDTO,
     getAsistenciaAtrasosAction,
@@ -43,7 +43,7 @@ interface InitialData {
     pageSize: number
     sucursales: string[]
     supervisores: string[]
-    establecimientos: { rbd: number; establecimiento: string }[]
+    establecimientos: { rbd: number; establecimiento: string; sucursal?: string; comuna?: string }[]
     tipoActual?: 'ADELANTO' | 'ATRASO'
     resumen?: {
         totalRegistros: number
@@ -62,6 +62,14 @@ interface Props {
     totalPersonalAsignado?: number
 }
 
+function normalizeSearch(str: string): string {
+    return (str || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim()
+}
+
 export default function AsistenciaAtrasosClient({
     initialData,
     userRbds,
@@ -71,7 +79,12 @@ export default function AsistenciaAtrasosClient({
 }: Props) {
     const [tipoActivo, setTipoActivo] = useState<'ADELANTO' | 'ATRASO'>(initialData.tipoActual || 'ADELANTO')
     const [data, setData] = useState<InitialData>(initialData)
-    const [listaEstablecimientos, setListaEstablecimientos] = useState<{ rbd: number; establecimiento: string }[]>(
+    const [listaEstablecimientos, setListaEstablecimientos] = useState<{
+        rbd: number
+        establecimiento: string
+        sucursal?: string
+        comuna?: string
+    }[]>(
         initialData.establecimientos || []
     )
     const [isPending, startTransition] = useTransition()
@@ -123,14 +136,16 @@ export default function AsistenciaAtrasosClient({
         newSortDir = sortDir,
         newPageSize = pageSize,
         targetTipo = tipoActivo,
-        targetRbd: number | null | undefined = undefined
+        targetRbd: number | null | undefined = undefined,
+        targetSucursal: string = filtroSucursal
     ) => {
         const rbdParaEnviar = targetRbd !== undefined ? (targetRbd || undefined) : (filtroRbd || undefined)
+        const sucursalParaEnviar = targetSucursal !== 'TODAS' ? targetSucursal : undefined
         startTransition(async () => {
             const res = await getAsistenciaAtrasosAction({
                 tipo: targetTipo,
                 search: search.trim() || undefined,
-                sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
+                sucursal: sucursalParaEnviar,
                 supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
                 rbd: rbdParaEnviar,
                 fechaDesde: fechaDesde || undefined,
@@ -156,12 +171,10 @@ export default function AsistenciaAtrasosClient({
                 })
                 if (res.establecimientos && res.establecimientos.length > 0) {
                     setListaEstablecimientos(prev => {
-                        const map = new Map<number, string>()
-                        prev.forEach(e => map.set(e.rbd, e.establecimiento))
-                        res.establecimientos.forEach(e => map.set(e.rbd, e.establecimiento))
-                        return Array.from(map.entries())
-                            .map(([rbd, establecimiento]) => ({ rbd, establecimiento }))
-                            .sort((a, b) => a.rbd - b.rbd)
+                        const map = new Map<number, { rbd: number; establecimiento: string; sucursal?: string; comuna?: string }>()
+                        prev.forEach(e => map.set(e.rbd, e))
+                        res.establecimientos.forEach(e => map.set(e.rbd, e))
+                        return Array.from(map.values()).sort((a, b) => a.rbd - b.rbd)
                     })
                 }
                 setPagina(newPage)
@@ -194,23 +207,38 @@ export default function AsistenciaAtrasosClient({
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         let rbdToUse = filtroRbd
+        let sucursalToUse = filtroSucursal
         const trimmed = busquedaRbdInput.trim()
+        const normTerm = normalizeSearch(trimmed)
+
         if (trimmed) {
             const digits = trimmed.replace(/\D/g, '')
-            if (digits) {
+            if (digits && /^\d+$/.test(trimmed)) {
                 const parsed = parseInt(digits, 10)
                 if (!isNaN(parsed)) {
                     rbdToUse = parsed
                     setFiltroRbd(parsed)
                 }
             } else {
-                const match = listaEstablecimientos.find(e =>
-                    e.establecimiento.toLowerCase().includes(trimmed.toLowerCase())
-                )
-                if (match) {
-                    rbdToUse = match.rbd
-                    setFiltroRbd(match.rbd)
-                    setBusquedaRbdInput(`RBD ${match.rbd} - ${match.establecimiento}`)
+                // Verificar si escribió directamente el nombre de una sucursal (ej: "copiapo", "vallenar", "metro", "coyhaique", "casa matriz")
+                const matchedSucursal = data.sucursales.find(s => normalizeSearch(s).includes(normTerm))
+                if (matchedSucursal && !listaEstablecimientos.some(e => normalizeSearch(e.establecimiento) === normTerm)) {
+                    sucursalToUse = matchedSucursal
+                    setFiltroSucursal(matchedSucursal)
+                    rbdToUse = null
+                    setFiltroRbd(null)
+                    setBusquedaRbdInput('')
+                } else {
+                    const match = listaEstablecimientos.find(e =>
+                        normalizeSearch(e.establecimiento).includes(normTerm) ||
+                        (e.sucursal && normalizeSearch(e.sucursal).includes(normTerm)) ||
+                        (e.comuna && normalizeSearch(e.comuna).includes(normTerm))
+                    )
+                    if (match) {
+                        rbdToUse = match.rbd
+                        setFiltroRbd(match.rbd)
+                        setBusquedaRbdInput(`RBD ${match.rbd} - ${match.establecimiento}`)
+                    }
                 }
             }
         } else if (!trimmed && filtroRbd !== null) {
@@ -218,7 +246,7 @@ export default function AsistenciaAtrasosClient({
             setFiltroRbd(null)
         }
         setIsRbdDropdownOpen(false)
-        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, rbdToUse)
+        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, rbdToUse, sucursalToUse)
     }
 
     const handleClearFilters = () => {
@@ -232,7 +260,7 @@ export default function AsistenciaAtrasosClient({
         setFechaHasta('')
         setFiltroAplica('TODOS')
         setFiltroJustificado('TODOS')
-        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, null)
+        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, null, 'TODAS')
     }
 
     // Toggle rápido de Aplica Descuento (botón deslizante para celular y escritorio)
@@ -394,12 +422,27 @@ export default function AsistenciaAtrasosClient({
         })
     }
 
-    // Establecimientos filtrados para autocompletado
-    const establecimientosFiltrados = listaEstablecimientos.filter(e => {
-        if (!busquedaRbdInput.trim()) return true
-        const term = busquedaRbdInput.toLowerCase()
-        return e.rbd.toString().includes(term) || e.establecimiento.toLowerCase().includes(term)
-    }).slice(0, 25)
+    // Establecimientos filtrados para autocompletado (búsqueda inteligente por RBD, nombre, sucursal y comuna)
+    const establecimientosFiltrados = useMemo(() => {
+        const term = normalizeSearch(busquedaRbdInput)
+        return listaEstablecimientos.filter(e => {
+            if (filtroSucursal !== 'TODAS' && e.sucursal && !normalizeSearch(e.sucursal).includes(normalizeSearch(filtroSucursal))) {
+                if (!term) return false
+            }
+            if (!term) return true
+            const normEst = normalizeSearch(e.establecimiento)
+            const normSuc = normalizeSearch(e.sucursal || '')
+            const normCom = normalizeSearch(e.comuna || '')
+            const rbdStr = e.rbd.toString()
+
+            return (
+                rbdStr.includes(term) ||
+                normEst.includes(term) ||
+                normSuc.includes(term) ||
+                normCom.includes(term)
+            )
+        }).slice(0, 30)
+    }, [listaEstablecimientos, busquedaRbdInput, filtroSucursal])
 
     const totalPages = Math.ceil(data.total / pageSize) || 1
 
@@ -563,7 +606,7 @@ export default function AsistenciaAtrasosClient({
             {/* Barra de Filtros */}
             <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                 <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-                    <div className="sm:col-span-4">
+                    <div className="sm:col-span-3">
                         <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
                             Búsqueda Colaborador / RUT
                         </label>
@@ -577,6 +620,26 @@ export default function AsistenciaAtrasosClient({
                                 className="w-full pl-9 pr-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                             />
                         </div>
+                    </div>
+
+                    <div className="sm:col-span-2">
+                        <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
+                            Sucursal
+                        </label>
+                        <select
+                            value={filtroSucursal}
+                            onChange={e => {
+                                const newSuc = e.target.value
+                                setFiltroSucursal(newSuc)
+                                fetchData(1, sortBy, sortDir, pageSize, tipoActivo, filtroRbd, newSuc)
+                            }}
+                            className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+                        >
+                            <option value="TODAS">Todas las Sucursales</option>
+                            {data.sucursales.map(s => (
+                                <option key={s} value={s}>{s}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="sm:col-span-3 relative">
@@ -606,7 +669,7 @@ export default function AsistenciaAtrasosClient({
                                     }
                                 }}
                                 onFocus={() => setIsRbdDropdownOpen(true)}
-                                placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD o Nombre...'}
+                                placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD, Nombre, Sucursal...'}
                                 className="w-full pl-3 pr-8 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                             />
                             {(busquedaRbdInput || filtroRbd !== null) && (
@@ -626,7 +689,7 @@ export default function AsistenciaAtrasosClient({
                             )}
                         </div>
                         {isRbdDropdownOpen && establecimientosFiltrados.length > 0 && (
-                            <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto divide-y divide-gray-50 text-xs">
+                            <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-56 overflow-y-auto divide-y divide-gray-50 text-xs">
                                 <div
                                     onClick={() => {
                                         setFiltroRbd(null)
@@ -647,10 +710,24 @@ export default function AsistenciaAtrasosClient({
                                             setIsRbdDropdownOpen(false)
                                             fetchData(1, sortBy, sortDir, pageSize, tipoActivo, est.rbd)
                                         }}
-                                        className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700 flex items-center justify-between"
+                                        className="p-2.5 hover:bg-cyan-50 cursor-pointer text-gray-700 flex items-center justify-between transition-colors"
                                     >
-                                        <span className="truncate">{est.establecimiento}</span>
-                                        <strong className="text-gray-900 ml-2 bg-gray-100 px-1.5 py-0.5 rounded text-[11px] whitespace-nowrap">RBD {est.rbd}</strong>
+                                        <div className="flex flex-col min-w-0 pr-2">
+                                            <span className="font-medium text-gray-900 truncate">{est.establecimiento}</span>
+                                            <div className="flex items-center gap-1.5 text-[10px] text-gray-500 mt-0.5">
+                                                {est.sucursal && (
+                                                    <span className="px-1.5 py-0.5 bg-gray-100 text-gray-700 rounded font-semibold">
+                                                        {est.sucursal}
+                                                    </span>
+                                                )}
+                                                {est.comuna && (
+                                                    <span className="text-gray-400">· {est.comuna}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <strong className="text-cyan-800 bg-cyan-100/70 px-2 py-0.5 rounded text-[11px] whitespace-nowrap font-mono">
+                                            RBD {est.rbd}
+                                        </strong>
                                     </div>
                                 ))}
                             </div>
@@ -672,7 +749,7 @@ export default function AsistenciaAtrasosClient({
                         </select>
                     </div>
 
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-2">
                         <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
                             Justificación
                         </label>
