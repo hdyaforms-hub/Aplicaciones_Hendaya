@@ -51928,6 +51928,14 @@ export namespace Prisma {
     horas: number | null
     estado: string | null
     color: string | null
+    tipoBloqueo: string | null
+    alcance: string | null
+    nombreProducto: string | null
+    marcaProducto: string | null
+    fechaElaboracion: string | null
+    fechaVencimiento: string | null
+    lote: string | null
+    historialEstado: string | null
     archivos: string | null
     usuarioCreacion: string | null
     fechaCreacion: Date | null
@@ -51943,6 +51951,14 @@ export namespace Prisma {
     horas: number | null
     estado: string | null
     color: string | null
+    tipoBloqueo: string | null
+    alcance: string | null
+    nombreProducto: string | null
+    marcaProducto: string | null
+    fechaElaboracion: string | null
+    fechaVencimiento: string | null
+    lote: string | null
+    historialEstado: string | null
     archivos: string | null
     usuarioCreacion: string | null
     fechaCreacion: Date | null
@@ -51958,6 +51974,14 @@ export namespace Prisma {
     horas: number
     estado: number
     color: number
+    tipoBloqueo: number
+    alcance: number
+    nombreProducto: number
+    marcaProducto: number
+    fechaElaboracion: number
+    fechaVencimiento: number
+    lote: number
+    historialEstado: number
     archivos: number
     usuarioCreacion: number
     fechaCreacion: number
@@ -51983,6 +52007,14 @@ export namespace Prisma {
     horas?: true
     estado?: true
     color?: true
+    tipoBloqueo?: true
+    alcance?: true
+    nombreProducto?: true
+    marcaProducto?: true
+    fechaElaboracion?: true
+    fechaVencimiento?: true
+    lote?: true
+    historialEstado?: true
     archivos?: true
     usuarioCreacion?: true
     fechaCreacion?: true
@@ -51998,6 +52030,14 @@ export namespace Prisma {
     horas?: true
     estado?: true
     color?: true
+    tipoBloqueo?: true
+    alcance?: true
+    nombreProducto?: true
+    marcaProducto?: true
+    fechaElaboracion?: true
+    fechaVencimiento?: true
+    lote?: true
+    historialEstado?: true
     archivos?: true
     usuarioCreacion?: true
     fechaCreacion?: true
@@ -52013,6 +52053,14 @@ export namespace Prisma {
     horas?: true
     estado?: true
     color?: true
+    tipoBloqueo?: true
+    alcance?: true
+    nombreProducto?: true
+    marcaProducto?: true
+    fechaElaboracion?: true
+    fechaVencimiento?: true
+    lote?: true
+    historialEstado?: true
     archivos?: true
     usuarioCreacion?: true
     fechaCreacion?: true
@@ -52115,6 +52163,14 @@ export namespace Prisma {
     horas: number
     estado: string
     color: string | null
+    tipoBloqueo: string | null
+    alcance: string | null
+    nombreProducto: string | null
+    marcaProducto: string | null
+    fechaElaboracion: string | null
+    fechaVencimiento: string | null
+    lote: string | null
+    historialEstado: string | null
     archivos: string | null
     usuarioCreacion: string
     fechaCreacion: Date
@@ -52149,6 +52205,14 @@ export namespace Prisma {
     horas?: boolean
     estado?: boolean
     color?: boolean
+    tipoBloqueo?: boolean
+    alcance?: boolean
+    nombreProducto?: boolean
+    marcaProducto?: boolean
+    fechaElaboracion?: boolean
+    fechaVencimiento?: boolean
+    lote?: boolean
+    historialEstado?: boolean
     archivos?: boolean
     usuarioCreacion?: boolean
     fechaCreacion?: boolean
@@ -52167,6 +52231,14 @@ export namespace Prisma {
     horas?: boolean
     estado?: boolean
     color?: boolean
+    tipoBloqueo?: boolean
+    alcance?: boolean
+    nombreProducto?: boolean
+    marcaProducto?: boolean
+    fechaElaboracion?: boolean
+    fechaVencimiento?: boolean
+    lote?: boolean
+    historialEstado?: boolean
     archivos?: boolean
     usuarioCreacion?: boolean
     fechaCreacion?: boolean
@@ -52182,6 +52254,14 @@ export namespace Prisma {
     horas?: boolean
     estado?: boolean
     color?: boolean
+    tipoBloqueo?: boolean
+    alcance?: boolean
+    nombreProducto?: boolean
+    marcaProducto?: boolean
+    fechaElaboracion?: boolean
+    fechaVencimiento?: boolean
+    lote?: boolean
+    historialEstado?: boolean
     archivos?: boolean
     usuarioCreacion?: boolean
     fechaCreacion?: boolean
@@ -52210,6 +52290,14 @@ export namespace Prisma {
       horas: number
       estado: string
       color: string | null
+      tipoBloqueo: string | null
+      alcance: string | null
+      nombreProducto: string | null
+      marcaProducto: string | null
+      fechaElaboracion: string | null
+      fechaVencimiento: string | null
+      lote: string | null
+      historialEstado: string | null
       archivos: string | null
       usuarioCreacion: string
       fechaCreacion: Date
@@ -52617,6 +52705,14 @@ export namespace Prisma {
     readonly horas: FieldRef<"RetornoProductosAlerta", 'Int'>
     readonly estado: FieldRef<"RetornoProductosAlerta", 'String'>
     readonly color: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly tipoBloqueo: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly alcance: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly nombreProducto: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly marcaProducto: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly fechaElaboracion: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly fechaVencimiento: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly lote: FieldRef<"RetornoProductosAlerta", 'String'>
+    readonly historialEstado: FieldRef<"RetornoProductosAlerta", 'String'>
     readonly archivos: FieldRef<"RetornoProductosAlerta", 'String'>
     readonly usuarioCreacion: FieldRef<"RetornoProductosAlerta", 'String'>
     readonly fechaCreacion: FieldRef<"RetornoProductosAlerta", 'DateTime'>
@@ -53948,8 +54044,24 @@ export namespace Prisma {
 
   export type AggregateRetornoProductosMovimiento = {
     _count: RetornoProductosMovimientoCountAggregateOutputType | null
+    _avg: RetornoProductosMovimientoAvgAggregateOutputType | null
+    _sum: RetornoProductosMovimientoSumAggregateOutputType | null
     _min: RetornoProductosMovimientoMinAggregateOutputType | null
     _max: RetornoProductosMovimientoMaxAggregateOutputType | null
+  }
+
+  export type RetornoProductosMovimientoAvgAggregateOutputType = {
+    cantidadRecepcionada: number | null
+    stockBodega: number | null
+    cantidadDespachada: number | null
+    cantidadMermada: number | null
+  }
+
+  export type RetornoProductosMovimientoSumAggregateOutputType = {
+    cantidadRecepcionada: number | null
+    stockBodega: number | null
+    cantidadDespachada: number | null
+    cantidadMermada: number | null
   }
 
   export type RetornoProductosMovimientoMinAggregateOutputType = {
@@ -53958,6 +54070,14 @@ export namespace Prisma {
     sucursalId: string | null
     usuarioRegistro: string | null
     comentario: string | null
+    numeroDocumento: string | null
+    codigoProducto: string | null
+    cantidadRecepcionada: number | null
+    loteInterno: string | null
+    stockBodega: number | null
+    ubicacion: string | null
+    cantidadDespachada: number | null
+    cantidadMermada: number | null
     archivos: string | null
     fechaRegistro: Date | null
   }
@@ -53968,6 +54088,14 @@ export namespace Prisma {
     sucursalId: string | null
     usuarioRegistro: string | null
     comentario: string | null
+    numeroDocumento: string | null
+    codigoProducto: string | null
+    cantidadRecepcionada: number | null
+    loteInterno: string | null
+    stockBodega: number | null
+    ubicacion: string | null
+    cantidadDespachada: number | null
+    cantidadMermada: number | null
     archivos: string | null
     fechaRegistro: Date | null
   }
@@ -53978,11 +54106,33 @@ export namespace Prisma {
     sucursalId: number
     usuarioRegistro: number
     comentario: number
+    numeroDocumento: number
+    codigoProducto: number
+    cantidadRecepcionada: number
+    loteInterno: number
+    stockBodega: number
+    ubicacion: number
+    cantidadDespachada: number
+    cantidadMermada: number
     archivos: number
     fechaRegistro: number
     _all: number
   }
 
+
+  export type RetornoProductosMovimientoAvgAggregateInputType = {
+    cantidadRecepcionada?: true
+    stockBodega?: true
+    cantidadDespachada?: true
+    cantidadMermada?: true
+  }
+
+  export type RetornoProductosMovimientoSumAggregateInputType = {
+    cantidadRecepcionada?: true
+    stockBodega?: true
+    cantidadDespachada?: true
+    cantidadMermada?: true
+  }
 
   export type RetornoProductosMovimientoMinAggregateInputType = {
     id?: true
@@ -53990,6 +54140,14 @@ export namespace Prisma {
     sucursalId?: true
     usuarioRegistro?: true
     comentario?: true
+    numeroDocumento?: true
+    codigoProducto?: true
+    cantidadRecepcionada?: true
+    loteInterno?: true
+    stockBodega?: true
+    ubicacion?: true
+    cantidadDespachada?: true
+    cantidadMermada?: true
     archivos?: true
     fechaRegistro?: true
   }
@@ -54000,6 +54158,14 @@ export namespace Prisma {
     sucursalId?: true
     usuarioRegistro?: true
     comentario?: true
+    numeroDocumento?: true
+    codigoProducto?: true
+    cantidadRecepcionada?: true
+    loteInterno?: true
+    stockBodega?: true
+    ubicacion?: true
+    cantidadDespachada?: true
+    cantidadMermada?: true
     archivos?: true
     fechaRegistro?: true
   }
@@ -54010,6 +54176,14 @@ export namespace Prisma {
     sucursalId?: true
     usuarioRegistro?: true
     comentario?: true
+    numeroDocumento?: true
+    codigoProducto?: true
+    cantidadRecepcionada?: true
+    loteInterno?: true
+    stockBodega?: true
+    ubicacion?: true
+    cantidadDespachada?: true
+    cantidadMermada?: true
     archivos?: true
     fechaRegistro?: true
     _all?: true
@@ -54053,6 +54227,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: RetornoProductosMovimientoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RetornoProductosMovimientoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: RetornoProductosMovimientoMinAggregateInputType
@@ -54083,6 +54269,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: RetornoProductosMovimientoCountAggregateInputType | true
+    _avg?: RetornoProductosMovimientoAvgAggregateInputType
+    _sum?: RetornoProductosMovimientoSumAggregateInputType
     _min?: RetornoProductosMovimientoMinAggregateInputType
     _max?: RetornoProductosMovimientoMaxAggregateInputType
   }
@@ -54093,9 +54281,19 @@ export namespace Prisma {
     sucursalId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento: string | null
+    codigoProducto: string | null
+    cantidadRecepcionada: number | null
+    loteInterno: string | null
+    stockBodega: number | null
+    ubicacion: string | null
+    cantidadDespachada: number | null
+    cantidadMermada: number | null
     archivos: string | null
     fechaRegistro: Date
     _count: RetornoProductosMovimientoCountAggregateOutputType | null
+    _avg: RetornoProductosMovimientoAvgAggregateOutputType | null
+    _sum: RetornoProductosMovimientoSumAggregateOutputType | null
     _min: RetornoProductosMovimientoMinAggregateOutputType | null
     _max: RetornoProductosMovimientoMaxAggregateOutputType | null
   }
@@ -54120,6 +54318,14 @@ export namespace Prisma {
     sucursalId?: boolean
     usuarioRegistro?: boolean
     comentario?: boolean
+    numeroDocumento?: boolean
+    codigoProducto?: boolean
+    cantidadRecepcionada?: boolean
+    loteInterno?: boolean
+    stockBodega?: boolean
+    ubicacion?: boolean
+    cantidadDespachada?: boolean
+    cantidadMermada?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
     alerta?: boolean | RetornoProductosAlertaDefaultArgs<ExtArgs>
@@ -54132,6 +54338,14 @@ export namespace Prisma {
     sucursalId?: boolean
     usuarioRegistro?: boolean
     comentario?: boolean
+    numeroDocumento?: boolean
+    codigoProducto?: boolean
+    cantidadRecepcionada?: boolean
+    loteInterno?: boolean
+    stockBodega?: boolean
+    ubicacion?: boolean
+    cantidadDespachada?: boolean
+    cantidadMermada?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
     alerta?: boolean | RetornoProductosAlertaDefaultArgs<ExtArgs>
@@ -54144,6 +54358,14 @@ export namespace Prisma {
     sucursalId?: boolean
     usuarioRegistro?: boolean
     comentario?: boolean
+    numeroDocumento?: boolean
+    codigoProducto?: boolean
+    cantidadRecepcionada?: boolean
+    loteInterno?: boolean
+    stockBodega?: boolean
+    ubicacion?: boolean
+    cantidadDespachada?: boolean
+    cantidadMermada?: boolean
     archivos?: boolean
     fechaRegistro?: boolean
   }
@@ -54169,6 +54391,14 @@ export namespace Prisma {
       sucursalId: string
       usuarioRegistro: string
       comentario: string
+      numeroDocumento: string | null
+      codigoProducto: string | null
+      cantidadRecepcionada: number | null
+      loteInterno: string | null
+      stockBodega: number | null
+      ubicacion: string | null
+      cantidadDespachada: number | null
+      cantidadMermada: number | null
       archivos: string | null
       fechaRegistro: Date
     }, ExtArgs["result"]["retornoProductosMovimiento"]>
@@ -54571,6 +54801,14 @@ export namespace Prisma {
     readonly sucursalId: FieldRef<"RetornoProductosMovimiento", 'String'>
     readonly usuarioRegistro: FieldRef<"RetornoProductosMovimiento", 'String'>
     readonly comentario: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly numeroDocumento: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly codigoProducto: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly cantidadRecepcionada: FieldRef<"RetornoProductosMovimiento", 'Float'>
+    readonly loteInterno: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly stockBodega: FieldRef<"RetornoProductosMovimiento", 'Float'>
+    readonly ubicacion: FieldRef<"RetornoProductosMovimiento", 'String'>
+    readonly cantidadDespachada: FieldRef<"RetornoProductosMovimiento", 'Float'>
+    readonly cantidadMermada: FieldRef<"RetornoProductosMovimiento", 'Float'>
     readonly archivos: FieldRef<"RetornoProductosMovimiento", 'String'>
     readonly fechaRegistro: FieldRef<"RetornoProductosMovimiento", 'DateTime'>
   }
@@ -182604,6 +182842,14 @@ export namespace Prisma {
     horas: 'horas',
     estado: 'estado',
     color: 'color',
+    tipoBloqueo: 'tipoBloqueo',
+    alcance: 'alcance',
+    nombreProducto: 'nombreProducto',
+    marcaProducto: 'marcaProducto',
+    fechaElaboracion: 'fechaElaboracion',
+    fechaVencimiento: 'fechaVencimiento',
+    lote: 'lote',
+    historialEstado: 'historialEstado',
     archivos: 'archivos',
     usuarioCreacion: 'usuarioCreacion',
     fechaCreacion: 'fechaCreacion',
@@ -182633,6 +182879,14 @@ export namespace Prisma {
     sucursalId: 'sucursalId',
     usuarioRegistro: 'usuarioRegistro',
     comentario: 'comentario',
+    numeroDocumento: 'numeroDocumento',
+    codigoProducto: 'codigoProducto',
+    cantidadRecepcionada: 'cantidadRecepcionada',
+    loteInterno: 'loteInterno',
+    stockBodega: 'stockBodega',
+    ubicacion: 'ubicacion',
+    cantidadDespachada: 'cantidadDespachada',
+    cantidadMermada: 'cantidadMermada',
     archivos: 'archivos',
     fechaRegistro: 'fechaRegistro'
   };
@@ -187909,6 +188163,14 @@ export namespace Prisma {
     horas?: IntFilter<"RetornoProductosAlerta"> | number
     estado?: StringFilter<"RetornoProductosAlerta"> | string
     color?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    tipoBloqueo?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    alcance?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    nombreProducto?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    marcaProducto?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    fechaElaboracion?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    fechaVencimiento?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    lote?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    historialEstado?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
     archivos?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
     usuarioCreacion?: StringFilter<"RetornoProductosAlerta"> | string
     fechaCreacion?: DateTimeFilter<"RetornoProductosAlerta"> | Date | string
@@ -187926,6 +188188,14 @@ export namespace Prisma {
     horas?: SortOrder
     estado?: SortOrder
     color?: SortOrderInput | SortOrder
+    tipoBloqueo?: SortOrderInput | SortOrder
+    alcance?: SortOrderInput | SortOrder
+    nombreProducto?: SortOrderInput | SortOrder
+    marcaProducto?: SortOrderInput | SortOrder
+    fechaElaboracion?: SortOrderInput | SortOrder
+    fechaVencimiento?: SortOrderInput | SortOrder
+    lote?: SortOrderInput | SortOrder
+    historialEstado?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     usuarioCreacion?: SortOrder
     fechaCreacion?: SortOrder
@@ -187946,6 +188216,14 @@ export namespace Prisma {
     horas?: IntFilter<"RetornoProductosAlerta"> | number
     estado?: StringFilter<"RetornoProductosAlerta"> | string
     color?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    tipoBloqueo?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    alcance?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    nombreProducto?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    marcaProducto?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    fechaElaboracion?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    fechaVencimiento?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    lote?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
+    historialEstado?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
     archivos?: StringNullableFilter<"RetornoProductosAlerta"> | string | null
     usuarioCreacion?: StringFilter<"RetornoProductosAlerta"> | string
     fechaCreacion?: DateTimeFilter<"RetornoProductosAlerta"> | Date | string
@@ -187963,6 +188241,14 @@ export namespace Prisma {
     horas?: SortOrder
     estado?: SortOrder
     color?: SortOrderInput | SortOrder
+    tipoBloqueo?: SortOrderInput | SortOrder
+    alcance?: SortOrderInput | SortOrder
+    nombreProducto?: SortOrderInput | SortOrder
+    marcaProducto?: SortOrderInput | SortOrder
+    fechaElaboracion?: SortOrderInput | SortOrder
+    fechaVencimiento?: SortOrderInput | SortOrder
+    lote?: SortOrderInput | SortOrder
+    historialEstado?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     usuarioCreacion?: SortOrder
     fechaCreacion?: SortOrder
@@ -187986,6 +188272,14 @@ export namespace Prisma {
     horas?: IntWithAggregatesFilter<"RetornoProductosAlerta"> | number
     estado?: StringWithAggregatesFilter<"RetornoProductosAlerta"> | string
     color?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    tipoBloqueo?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    alcance?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    nombreProducto?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    marcaProducto?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    fechaElaboracion?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    fechaVencimiento?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    lote?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
+    historialEstado?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
     archivos?: StringNullableWithAggregatesFilter<"RetornoProductosAlerta"> | string | null
     usuarioCreacion?: StringWithAggregatesFilter<"RetornoProductosAlerta"> | string
     fechaCreacion?: DateTimeWithAggregatesFilter<"RetornoProductosAlerta"> | Date | string
@@ -188067,6 +188361,14 @@ export namespace Prisma {
     sucursalId?: StringFilter<"RetornoProductosMovimiento"> | string
     usuarioRegistro?: StringFilter<"RetornoProductosMovimiento"> | string
     comentario?: StringFilter<"RetornoProductosMovimiento"> | string
+    numeroDocumento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    codigoProducto?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRecepcionada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    loteInterno?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    stockBodega?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
     alerta?: XOR<RetornoProductosAlertaRelationFilter, RetornoProductosAlertaWhereInput>
@@ -188079,6 +188381,14 @@ export namespace Prisma {
     sucursalId?: SortOrder
     usuarioRegistro?: SortOrder
     comentario?: SortOrder
+    numeroDocumento?: SortOrderInput | SortOrder
+    codigoProducto?: SortOrderInput | SortOrder
+    cantidadRecepcionada?: SortOrderInput | SortOrder
+    loteInterno?: SortOrderInput | SortOrder
+    stockBodega?: SortOrderInput | SortOrder
+    ubicacion?: SortOrderInput | SortOrder
+    cantidadDespachada?: SortOrderInput | SortOrder
+    cantidadMermada?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     fechaRegistro?: SortOrder
     alerta?: RetornoProductosAlertaOrderByWithRelationInput
@@ -188094,6 +188404,14 @@ export namespace Prisma {
     sucursalId?: StringFilter<"RetornoProductosMovimiento"> | string
     usuarioRegistro?: StringFilter<"RetornoProductosMovimiento"> | string
     comentario?: StringFilter<"RetornoProductosMovimiento"> | string
+    numeroDocumento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    codigoProducto?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRecepcionada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    loteInterno?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    stockBodega?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
     alerta?: XOR<RetornoProductosAlertaRelationFilter, RetornoProductosAlertaWhereInput>
@@ -188106,11 +188424,21 @@ export namespace Prisma {
     sucursalId?: SortOrder
     usuarioRegistro?: SortOrder
     comentario?: SortOrder
+    numeroDocumento?: SortOrderInput | SortOrder
+    codigoProducto?: SortOrderInput | SortOrder
+    cantidadRecepcionada?: SortOrderInput | SortOrder
+    loteInterno?: SortOrderInput | SortOrder
+    stockBodega?: SortOrderInput | SortOrder
+    ubicacion?: SortOrderInput | SortOrder
+    cantidadDespachada?: SortOrderInput | SortOrder
+    cantidadMermada?: SortOrderInput | SortOrder
     archivos?: SortOrderInput | SortOrder
     fechaRegistro?: SortOrder
     _count?: RetornoProductosMovimientoCountOrderByAggregateInput
+    _avg?: RetornoProductosMovimientoAvgOrderByAggregateInput
     _max?: RetornoProductosMovimientoMaxOrderByAggregateInput
     _min?: RetornoProductosMovimientoMinOrderByAggregateInput
+    _sum?: RetornoProductosMovimientoSumOrderByAggregateInput
   }
 
   export type RetornoProductosMovimientoScalarWhereWithAggregatesInput = {
@@ -188122,6 +188450,14 @@ export namespace Prisma {
     sucursalId?: StringWithAggregatesFilter<"RetornoProductosMovimiento"> | string
     usuarioRegistro?: StringWithAggregatesFilter<"RetornoProductosMovimiento"> | string
     comentario?: StringWithAggregatesFilter<"RetornoProductosMovimiento"> | string
+    numeroDocumento?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    codigoProducto?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRecepcionada?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
+    loteInterno?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    stockBodega?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
+    ubicacion?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadDespachada?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
+    cantidadMermada?: FloatNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableWithAggregatesFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeWithAggregatesFilter<"RetornoProductosMovimiento"> | Date | string
   }
@@ -202472,6 +202808,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -202489,6 +202833,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -202506,6 +202858,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -202523,6 +202883,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -202540,6 +202908,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -202555,6 +202931,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -202570,6 +202954,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -202643,6 +203035,14 @@ export namespace Prisma {
     id?: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     alerta: RetornoProductosAlertaCreateNestedOneWithoutMovimientosInput
@@ -202655,6 +203055,14 @@ export namespace Prisma {
     sucursalId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -202663,6 +203071,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     alerta?: RetornoProductosAlertaUpdateOneRequiredWithoutMovimientosNestedInput
@@ -202675,6 +203091,14 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -202685,6 +203109,14 @@ export namespace Prisma {
     sucursalId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -202693,6 +203125,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -202703,6 +203143,14 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -217380,6 +217828,14 @@ export namespace Prisma {
     horas?: SortOrder
     estado?: SortOrder
     color?: SortOrder
+    tipoBloqueo?: SortOrder
+    alcance?: SortOrder
+    nombreProducto?: SortOrder
+    marcaProducto?: SortOrder
+    fechaElaboracion?: SortOrder
+    fechaVencimiento?: SortOrder
+    lote?: SortOrder
+    historialEstado?: SortOrder
     archivos?: SortOrder
     usuarioCreacion?: SortOrder
     fechaCreacion?: SortOrder
@@ -217399,6 +217855,14 @@ export namespace Prisma {
     horas?: SortOrder
     estado?: SortOrder
     color?: SortOrder
+    tipoBloqueo?: SortOrder
+    alcance?: SortOrder
+    nombreProducto?: SortOrder
+    marcaProducto?: SortOrder
+    fechaElaboracion?: SortOrder
+    fechaVencimiento?: SortOrder
+    lote?: SortOrder
+    historialEstado?: SortOrder
     archivos?: SortOrder
     usuarioCreacion?: SortOrder
     fechaCreacion?: SortOrder
@@ -217414,6 +217878,14 @@ export namespace Prisma {
     horas?: SortOrder
     estado?: SortOrder
     color?: SortOrder
+    tipoBloqueo?: SortOrder
+    alcance?: SortOrder
+    nombreProducto?: SortOrder
+    marcaProducto?: SortOrder
+    fechaElaboracion?: SortOrder
+    fechaVencimiento?: SortOrder
+    lote?: SortOrder
+    historialEstado?: SortOrder
     archivos?: SortOrder
     usuarioCreacion?: SortOrder
     fechaCreacion?: SortOrder
@@ -217469,8 +217941,23 @@ export namespace Prisma {
     sucursalId?: SortOrder
     usuarioRegistro?: SortOrder
     comentario?: SortOrder
+    numeroDocumento?: SortOrder
+    codigoProducto?: SortOrder
+    cantidadRecepcionada?: SortOrder
+    loteInterno?: SortOrder
+    stockBodega?: SortOrder
+    ubicacion?: SortOrder
+    cantidadDespachada?: SortOrder
+    cantidadMermada?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
+  }
+
+  export type RetornoProductosMovimientoAvgOrderByAggregateInput = {
+    cantidadRecepcionada?: SortOrder
+    stockBodega?: SortOrder
+    cantidadDespachada?: SortOrder
+    cantidadMermada?: SortOrder
   }
 
   export type RetornoProductosMovimientoMaxOrderByAggregateInput = {
@@ -217479,6 +217966,14 @@ export namespace Prisma {
     sucursalId?: SortOrder
     usuarioRegistro?: SortOrder
     comentario?: SortOrder
+    numeroDocumento?: SortOrder
+    codigoProducto?: SortOrder
+    cantidadRecepcionada?: SortOrder
+    loteInterno?: SortOrder
+    stockBodega?: SortOrder
+    ubicacion?: SortOrder
+    cantidadDespachada?: SortOrder
+    cantidadMermada?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
   }
@@ -217489,8 +217984,23 @@ export namespace Prisma {
     sucursalId?: SortOrder
     usuarioRegistro?: SortOrder
     comentario?: SortOrder
+    numeroDocumento?: SortOrder
+    codigoProducto?: SortOrder
+    cantidadRecepcionada?: SortOrder
+    loteInterno?: SortOrder
+    stockBodega?: SortOrder
+    ubicacion?: SortOrder
+    cantidadDespachada?: SortOrder
+    cantidadMermada?: SortOrder
     archivos?: SortOrder
     fechaRegistro?: SortOrder
+  }
+
+  export type RetornoProductosMovimientoSumOrderByAggregateInput = {
+    cantidadRecepcionada?: SortOrder
+    stockBodega?: SortOrder
+    cantidadDespachada?: SortOrder
+    cantidadMermada?: SortOrder
   }
 
   export type RetornoProductosAlertaHistorialEliminadoCountOrderByAggregateInput = {
@@ -232734,6 +233244,14 @@ export namespace Prisma {
     id?: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     alerta: RetornoProductosAlertaCreateNestedOneWithoutMovimientosInput
@@ -232744,6 +233262,14 @@ export namespace Prisma {
     alertaId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -233280,6 +233806,14 @@ export namespace Prisma {
     sucursalId?: StringFilter<"RetornoProductosMovimiento"> | string
     usuarioRegistro?: StringFilter<"RetornoProductosMovimiento"> | string
     comentario?: StringFilter<"RetornoProductosMovimiento"> | string
+    numeroDocumento?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    codigoProducto?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadRecepcionada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    loteInterno?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    stockBodega?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    ubicacion?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
+    cantidadDespachada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
+    cantidadMermada?: FloatNullableFilter<"RetornoProductosMovimiento"> | number | null
     archivos?: StringNullableFilter<"RetornoProductosMovimiento"> | string | null
     fechaRegistro?: DateTimeFilter<"RetornoProductosMovimiento"> | Date | string
   }
@@ -234678,6 +235212,14 @@ export namespace Prisma {
     id?: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
     sucursal: SucursalCreateNestedOneWithoutRetornoProductosMovimientoInput
@@ -234688,6 +235230,14 @@ export namespace Prisma {
     sucursalId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -234767,6 +235317,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -234783,6 +235341,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -234868,6 +235434,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -234884,6 +235458,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -234959,6 +235541,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -234975,6 +235565,14 @@ export namespace Prisma {
     horas: number
     estado?: string
     color?: string | null
+    tipoBloqueo?: string | null
+    alcance?: string | null
+    nombreProducto?: string | null
+    marcaProducto?: string | null
+    fechaElaboracion?: string | null
+    fechaVencimiento?: string | null
+    lote?: string | null
+    historialEstado?: string | null
     archivos?: string | null
     usuarioCreacion: string
     fechaCreacion?: Date | string
@@ -235060,6 +235658,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -235076,6 +235682,14 @@ export namespace Prisma {
     horas?: IntFieldUpdateOperationsInput | number
     estado?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    tipoBloqueo?: NullableStringFieldUpdateOperationsInput | string | null
+    alcance?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    marcaProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaElaboracion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaVencimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    lote?: NullableStringFieldUpdateOperationsInput | string | null
+    historialEstado?: NullableStringFieldUpdateOperationsInput | string | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     usuarioCreacion?: StringFieldUpdateOperationsInput | string
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -247955,6 +248569,14 @@ export namespace Prisma {
     alertaId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -248129,6 +248751,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     alerta?: RetornoProductosAlertaUpdateOneRequiredWithoutMovimientosNestedInput
@@ -248139,6 +248769,14 @@ export namespace Prisma {
     alertaId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -248148,6 +248786,14 @@ export namespace Prisma {
     alertaId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -248962,6 +249608,14 @@ export namespace Prisma {
     sucursalId: string
     usuarioRegistro: string
     comentario: string
+    numeroDocumento?: string | null
+    codigoProducto?: string | null
+    cantidadRecepcionada?: number | null
+    loteInterno?: string | null
+    stockBodega?: number | null
+    ubicacion?: string | null
+    cantidadDespachada?: number | null
+    cantidadMermada?: number | null
     archivos?: string | null
     fechaRegistro?: Date | string
   }
@@ -248978,6 +249632,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursal?: SucursalUpdateOneRequiredWithoutRetornoProductosMovimientoNestedInput
@@ -248988,6 +249650,14 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -248997,6 +249667,14 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
     usuarioRegistro?: StringFieldUpdateOperationsInput | string
     comentario?: StringFieldUpdateOperationsInput | string
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadRecepcionada?: NullableFloatFieldUpdateOperationsInput | number | null
+    loteInterno?: NullableStringFieldUpdateOperationsInput | string | null
+    stockBodega?: NullableFloatFieldUpdateOperationsInput | number | null
+    ubicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidadDespachada?: NullableFloatFieldUpdateOperationsInput | number | null
+    cantidadMermada?: NullableFloatFieldUpdateOperationsInput | number | null
     archivos?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
   }

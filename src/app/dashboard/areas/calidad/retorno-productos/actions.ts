@@ -7,6 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import { sendGenericaNotification } from '@/lib/notifications'
 import { uploadPath } from '@/lib/storage'
+import { ensureRetornoProductosTables } from '@/lib/calidad-retorno-productos-db-init'
 
 // Ensure upload directory exists
 const encodePath = (p: string) => p
@@ -16,6 +17,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 }
 
 export async function getAlertas() {
+    await ensureRetornoProductosTables()
     return prisma.retornoProductosAlerta.findMany({
         orderBy: { fechaCreacion: 'desc' },
         include: {
@@ -32,10 +34,30 @@ export async function getAlertas() {
 
 export async function crearAlerta(formData: FormData, username: string) {
     try {
+        await ensureRetornoProductosTables()
         const titulo = formData.get('titulo') as string
         const observacion = formData.get('observacion') as string
         const horas = parseInt(formData.get('horas') as string, 10)
         const color = formData.get('color') as string || 'yellow'
+        
+        // Nuevos campos
+        const tipoBloqueo = (formData.get('tipoBloqueo') as string) || 'Preventivo'
+        const alcance = (formData.get('alcance') as string) || 'A Hendaya'
+        const nombreProducto = (formData.get('nombreProducto') as string) || ''
+        const marcaProducto = (formData.get('marcaProducto') as string) || ''
+        const fechaElaboracion = (formData.get('fechaElaboracion') as string) || ''
+        const fechaVencimiento = (formData.get('fechaVencimiento') as string) || ''
+        const lote = (formData.get('lote') as string) || ''
+
+        // Historial inicial de estado
+        const historialInicial = [
+            {
+                estado: tipoBloqueo,
+                fecha: new Date().toISOString(),
+                usuario: username,
+                motivo: 'Creación inicial de la alerta'
+            }
+        ]
 
         // Manejo de archivos
         const archivosGuardados: string[] = []
@@ -60,7 +82,15 @@ export async function crearAlerta(formData: FormData, username: string) {
                 color,
                 usuarioCreacion: username,
                 archivos: JSON.stringify(archivosGuardados),
-                estado: 'ABIERTA'
+                estado: 'ABIERTA',
+                tipoBloqueo,
+                alcance,
+                nombreProducto,
+                marcaProducto,
+                fechaElaboracion,
+                fechaVencimiento,
+                lote,
+                historialEstado: JSON.stringify(historialInicial)
             }
         })
 
@@ -83,8 +113,11 @@ export async function crearAlerta(formData: FormData, username: string) {
         // Send Email Notification Automatically
         const bodyHtml = `
             <div style="font-family: sans-serif; background: #fef08a; padding: 20px; border-radius: 10px; border: 1px solid #eab308;">
-                <h2 style="color: #854d0e;">📌 Nueva Alerta de Calidad</h2>
+                <h2 style="color: #854d0e;">📌 Nueva Alerta de Bloqueo y/o Retirada de Productos</h2>
                 <p><strong>Título:</strong> ${titulo}</p>
+                <p><strong>Tipo de Bloqueo:</strong> ${tipoBloqueo} | <strong>Alcance:</strong> ${alcance}</p>
+                <p><strong>Producto:</strong> ${nombreProducto} (Marca: ${marcaProducto || 'N/A'})</p>
+                <p><strong>Lote:</strong> ${lote || 'N/A'} | <strong>F. Elab:</strong> ${fechaElaboracion || 'N/A'} | <strong>F. Venc:</strong> ${fechaVencimiento || 'N/A'}</p>
                 <p><strong>Observación:</strong> <br/>${observacion}</p>
                 <p><strong>Horas de respuesta:</strong> ${horas} hs</p>
                 <hr style="border: none; border-top: 1px dashed #ca8a04; margin: 15px 0;"/>
@@ -94,13 +127,15 @@ export async function crearAlerta(formData: FormData, username: string) {
 
         await sendGenericaNotification({
             codigoPantalla: 'RETORNO_PRODUCTOS', 
-            subject: `[Alerta Calidad] ${titulo}`,
+            subject: `[Bloqueo/Retirada] [${tipoBloqueo}] ${titulo} - ${nombreProducto}`,
             bodyHtml,
             tags: {
                 Titulo: titulo,
                 Observacion: observacion,
                 Horas: horas.toString(),
-                Usuario: username
+                Usuario: username,
+                Producto: nombreProducto,
+                TipoBloqueo: tipoBloqueo
             }
         })
 
@@ -112,10 +147,67 @@ export async function crearAlerta(formData: FormData, username: string) {
     }
 }
 
+export async function cambiarEstadoBloqueoAlerta(alertaId: string, nuevoTipoBloqueo: string, username: string, motivo?: string) {
+    try {
+        await ensureRetornoProductosTables()
+        const alerta = await prisma.retornoProductosAlerta.findUnique({
+            where: { id: alertaId }
+        })
+        if (!alerta) return { error: 'Alerta no encontrada' }
+
+        let historial: any[] = []
+        try {
+            if (alerta.historialEstado) {
+                historial = JSON.parse(alerta.historialEstado)
+            }
+        } catch {
+            historial = []
+        }
+
+        historial.push({
+            estado: nuevoTipoBloqueo,
+            fecha: new Date().toISOString(),
+            usuario: username,
+            motivo: motivo || `Cambio de estado a ${nuevoTipoBloqueo}`
+        })
+
+        await prisma.retornoProductosAlerta.update({
+            where: { id: alertaId },
+            data: {
+                tipoBloqueo: nuevoTipoBloqueo,
+                historialEstado: JSON.stringify(historial)
+            }
+        })
+
+        revalidatePath('/dashboard/areas/calidad/retorno-productos')
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error al cambiar estado de bloqueo:', error)
+        return { error: error.message || 'Error desconocido' }
+    }
+}
+
 export async function registrarMovimiento(formData: FormData, alertaId: string, sucursalId: string, username: string) {
     try {
+        await ensureRetornoProductosTables()
         const comentario = formData.get('comentario') as string
         const finalizar = formData.get('finalizar') === 'true'
+
+        // Nuevos campos de inventario y movimiento
+        const numeroDocumento = (formData.get('numeroDocumento') as string) || null
+        const codigoProducto = (formData.get('codigoProducto') as string) || null
+        const loteInterno = (formData.get('loteInterno') as string) || null
+        const ubicacion = (formData.get('ubicacion') as string) || null
+
+        const rawRecepcionada = formData.get('cantidadRecepcionada') as string
+        const rawStock = formData.get('stockBodega') as string
+        const rawDespachada = formData.get('cantidadDespachada') as string
+        const rawMermada = formData.get('cantidadMermada') as string
+
+        const cantidadRecepcionada = rawRecepcionada ? parseFloat(rawRecepcionada) || 0 : 0
+        const stockBodega = rawStock ? parseFloat(rawStock) || 0 : 0
+        const cantidadDespachada = rawDespachada ? parseFloat(rawDespachada) || 0 : 0
+        const cantidadMermada = rawMermada ? parseFloat(rawMermada) || 0 : 0
 
         // Archivos
         const archivosGuardados: string[] = []
@@ -138,7 +230,15 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
                 sucursalId,
                 usuarioRegistro: username,
                 comentario,
-                archivos: JSON.stringify(archivosGuardados)
+                archivos: JSON.stringify(archivosGuardados),
+                numeroDocumento,
+                codigoProducto,
+                loteInterno,
+                ubicacion,
+                cantidadRecepcionada,
+                stockBodega,
+                cantidadDespachada,
+                cantidadMermada
             },
             include: {
                 alerta: true,
@@ -157,19 +257,19 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
                     fechaCierre: new Date()
                 }
             })
-
-            /* 
-               AUTO-CIERRE DESHABILITADO POR REQUERIMIENTO:
-               El cierre debe ser manual por un usuario de Calidad.
-            */
         }
 
         // Send Notification
         const bodyHtml = `
             <div style="font-family: sans-serif; background: #e0f2fe; padding: 20px; border-radius: 10px; border: 1px solid #7dd3fc;">
                 <h2 style="color: #0369a1;">🔔 Registro de Movimiento - ${movimiento.sucursal.nombre}</h2>
-                <p><strong>Alerta origen:</strong> ${movimiento.alerta.titulo}</p>
+                <p><strong>Alerta:</strong> ${movimiento.alerta.titulo}</p>
                 <p><strong>Comentarios:</strong> <br/>${comentario}</p>
+                <div style="background: #ffffff; padding: 10px; border-radius: 6px; margin: 10px 0; border: 1px solid #bae6fd;">
+                    <p style="margin: 3px 0;"><strong>N° Doc / Guía:</strong> ${numeroDocumento || 'N/A'}</p>
+                    <p style="margin: 3px 0;"><strong>Cant. Recepcionada:</strong> ${cantidadRecepcionada} | <strong>Stock Bodega:</strong> ${stockBodega}</p>
+                    <p style="margin: 3px 0;"><strong>Cant. Despachada:</strong> ${cantidadDespachada} | <strong>Cant. Mermada:</strong> ${cantidadMermada}</p>
+                </div>
                 ${finalizar ? '<p style="color: #15803d; font-weight: bold;">✅ La sucursal ha finalizado su gestión.</p>' : ''}
                 <hr style="border: none; border-top: 1px dashed #38bdf8; margin: 15px 0;"/>
                 <p style="font-size: 12px; color: #0284c7;">Registrado por: ${username} | ${new Date().toLocaleString()}</p>
@@ -178,7 +278,7 @@ export async function registrarMovimiento(formData: FormData, alertaId: string, 
 
         await sendGenericaNotification({
             codigoPantalla: 'RETORNO_PRODUCTOS', 
-            subject: `[Movimiento Calidad] ${movimiento.alerta.titulo} - ${movimiento.sucursal.nombre}`,
+            subject: `[Movimiento Bloqueo/Retirada] ${movimiento.alerta.titulo} - ${movimiento.sucursal.nombre}`,
             bodyHtml,
             tags: {
                 Titulo: movimiento.alerta.titulo,

@@ -128,6 +128,12 @@ export async function getAsistenciaAtrasosAction(filtros?: {
         const queryParams: any[] = [targetTipo]
         let paramIndex = 2
 
+        // Normalizar filtro RBD si viene provisto
+        const rbdFiltro = filtros?.rbd !== undefined && filtros?.rbd !== null && String(filtros.rbd).trim() !== ''
+            ? parseInt(String(filtros.rbd).trim(), 10)
+            : undefined
+        const validRbd = rbdFiltro !== undefined && !isNaN(rbdFiltro) ? rbdFiltro : undefined
+
         // 1. Privilegios por Visualización o RBD:
         // Si el usuario tiene trabajadores asignados en el módulo de visualización, SOLO ve a sus trabajadores asignados.
         // Para el resto de usuarios (supervisores, etc.), se preserva intacta la lógica original de RBD.
@@ -138,29 +144,29 @@ export async function getAsistenciaAtrasosAction(filtros?: {
                 whereConditions.push(`"identificadorHash" = ANY($${paramIndex++}::text[])`)
                 queryParams.push(assignedPersonal.rutHashes)
             }
-            if (filtros?.rbd) {
+            if (validRbd !== undefined) {
                 whereConditions.push(`rbd = $${paramIndex++}`)
-                queryParams.push(filtros.rbd)
+                queryParams.push(validRbd)
             }
         } else if (!isGlobalAdmin) {
-            // Lógica original existente (sin tocar para supervisores y usuarios con RBDs)
-            if (authorizedRbds.length === 0) {
+            const numAuthRbds = (authorizedRbds || []).map(Number)
+            if (numAuthRbds.length === 0) {
                 whereConditions.push(`rbd = -999999`)
-            } else if (filtros?.rbd) {
-                if (authorizedRbds.includes(filtros.rbd)) {
+            } else if (validRbd !== undefined) {
+                if (numAuthRbds.includes(validRbd)) {
                     whereConditions.push(`rbd = $${paramIndex++}`)
-                    queryParams.push(filtros.rbd)
+                    queryParams.push(validRbd)
                 } else {
                     whereConditions.push(`rbd = -999999`)
                 }
             } else {
                 whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
-                queryParams.push(authorizedRbds)
+                queryParams.push(numAuthRbds)
             }
-        } else if (filtros?.rbd) {
+        } else if (validRbd !== undefined) {
             // Administrador / Gerencia / Acceso Global con filtro específico
             whereConditions.push(`rbd = $${paramIndex++}`)
-            queryParams.push(filtros.rbd)
+            queryParams.push(validRbd)
         }
 
         // 2. Filtro por Sucursal
@@ -218,24 +224,48 @@ export async function getAsistenciaAtrasosAction(filtros?: {
 
         const whereSql = `WHERE ${whereConditions.join(' AND ')}`
 
-        // Consultar listas para selects
+        // Consultar listas base para selects independientes de los filtros dinámicos (para no vaciar los dropdowns al filtrar por RBD o fecha)
+        const baseWhereConditions: string[] = [
+            `("estado" IS NULL OR "estado" = 'ABIERTO')`
+        ]
+        const baseQueryParams: any[] = []
+        let baseParamIndex = 1
+
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (assignedPersonal.rutHashes.length === 0) {
+                baseWhereConditions.push(`"identificadorHash" = '__NO_PERSONAL__'`)
+            } else {
+                baseWhereConditions.push(`"identificadorHash" = ANY($${baseParamIndex++}::text[])`)
+                baseQueryParams.push(assignedPersonal.rutHashes)
+            }
+        } else if (!isGlobalAdmin) {
+            const numAuthRbds = (authorizedRbds || []).map(Number)
+            if (numAuthRbds.length === 0) {
+                baseWhereConditions.push(`rbd = -999999`)
+            } else {
+                baseWhereConditions.push(`rbd = ANY($${baseParamIndex++}::int[])`)
+                baseQueryParams.push(numAuthRbds)
+            }
+        }
+        const baseWhereSql = `WHERE ${baseWhereConditions.join(' AND ')}`
+
         const sucursalesResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT sucursal FROM "Pers_Atrasos_Registro"
-            ${whereSql} AND sucursal IS NOT NULL AND sucursal <> ''
+            ${baseWhereSql} AND sucursal IS NOT NULL AND sucursal <> ''
             ORDER BY sucursal ASC;
-        `, ...queryParams)
+        `, ...baseQueryParams)
 
         const supervisoresResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT supervisor FROM "Pers_Atrasos_Registro"
-            ${whereSql} AND supervisor IS NOT NULL AND supervisor <> ''
+            ${baseWhereSql} AND supervisor IS NOT NULL AND supervisor <> ''
             ORDER BY supervisor ASC;
-        `, ...queryParams)
+        `, ...baseQueryParams)
 
         const establecimientosResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT rbd, establecimiento FROM "Pers_Atrasos_Registro"
-            ${whereSql} AND rbd IS NOT NULL
+            ${baseWhereSql} AND rbd IS NOT NULL
             ORDER BY rbd ASC;
-        `, ...queryParams)
+        `, ...baseQueryParams)
 
         // Traer registros coincidentes
         const rawRegistros: any[] = await rawPrisma.$queryRawUnsafe(`
@@ -298,14 +328,19 @@ export async function getAsistenciaAtrasosAction(filtros?: {
             }
         })
 
-        // Búsqueda por texto (nombre, cargo, establecimiento)
+        // Búsqueda por texto (nombre, cargo, establecimiento, RBD)
         if (filtros?.search && filtros.search.trim() && !searchIsRutHash) {
             const term = filtros.search.toLowerCase().trim()
+            const termDigits = term.replace(/\D/g, '')
             dataDesencriptada = dataDesencriptada.filter(r =>
                 r.nombreCompleto.toLowerCase().includes(term) ||
                 r.rut.toLowerCase().includes(term) ||
                 (r.cargo && r.cargo.toLowerCase().includes(term)) ||
-                (r.establecimiento && r.establecimiento.toLowerCase().includes(term))
+                (r.establecimiento && r.establecimiento.toLowerCase().includes(term)) ||
+                (r.rbd !== null && r.rbd !== undefined && (
+                    r.rbd.toString().includes(term) ||
+                    (termDigits !== '' && r.rbd.toString() === termDigits)
+                ))
             )
         }
 

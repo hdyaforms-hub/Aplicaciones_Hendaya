@@ -151,24 +151,31 @@ export async function getAdmAtrasosAction(filtros?: {
         whereConditions.push(`r.tipo = $${paramIndex++}`)
         queryParams.push(tipoActual)
 
+        // Normalizar filtro RBD si viene provisto
+        const rbdFiltro = filtros?.rbd !== undefined && filtros?.rbd !== null && String(filtros.rbd).trim() !== ''
+            ? parseInt(String(filtros.rbd).trim(), 10)
+            : undefined
+        const validRbd = rbdFiltro !== undefined && !isNaN(rbdFiltro) ? rbdFiltro : undefined
+
         // 1. Privilegios por RBD
         if (authorizedRbds !== null) {
-            if (authorizedRbds.length === 0) {
+            const numAuth = authorizedRbds.map(Number)
+            if (numAuth.length === 0) {
                 whereConditions.push(`r.rbd = -999999`)
-            } else if (filtros?.rbd) {
-                if (authorizedRbds.includes(filtros.rbd)) {
+            } else if (validRbd !== undefined) {
+                if (numAuth.includes(validRbd)) {
                     whereConditions.push(`r.rbd = $${paramIndex++}`)
-                    queryParams.push(filtros.rbd)
+                    queryParams.push(validRbd)
                 } else {
                     whereConditions.push(`r.rbd = -999999`)
                 }
             } else {
                 whereConditions.push(`r.rbd = ANY($${paramIndex++}::int[])`)
-                queryParams.push(authorizedRbds)
+                queryParams.push(numAuth)
             }
-        } else if (filtros?.rbd) {
+        } else if (validRbd !== undefined) {
             whereConditions.push(`r.rbd = $${paramIndex++}`)
-            queryParams.push(filtros.rbd)
+            queryParams.push(validRbd)
         }
 
         // Filtro por Rol o Usuario (Trabajadores de Visualización y/o RBDs permitidos según perfil)
@@ -298,11 +305,24 @@ export async function getAdmAtrasosAction(filtros?: {
             ORDER BY r.supervisor ASC;
         `, ...queryParams)
 
+        // Establecimientos base autorizados para selects (sin filtrar por fecha, rbd o estado para mantener el selector siempre utilizable)
+        let baseAdmWhere = `WHERE r.rbd IS NOT NULL`
+        let baseAdmParams: any[] = []
+        if (authorizedRbds !== null) {
+            const numAuth = authorizedRbds.map(Number)
+            if (numAuth.length === 0) {
+                baseAdmWhere = `WHERE r.rbd = -999999`
+            } else {
+                baseAdmWhere = `WHERE r.rbd = ANY($1::int[])`
+                baseAdmParams.push(numAuth)
+            }
+        }
+
         const establecimientosResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT r.rbd, r.establecimiento FROM "Pers_Atrasos_Registro" r
-            ${whereSql ? whereSql + ' AND' : 'WHERE'} r.rbd IS NOT NULL
+            ${baseAdmWhere}
             ORDER BY r.rbd ASC;
-        `, ...queryParams)
+        `, ...baseAdmParams)
 
         // Traer todos los registros coincidentes con institución y comuna de colegios
         const rawRegistros: any[] = await rawPrisma.$queryRawUnsafe(`
@@ -370,14 +390,19 @@ export async function getAdmAtrasosAction(filtros?: {
             }
         })
 
-        // Búsqueda por texto (nombre, cargo, establecimiento)
+        // Búsqueda por texto (nombre, cargo, establecimiento, RBD)
         if (filtros?.search && filtros.search.trim() && !searchIsRutHash) {
             const term = filtros.search.toLowerCase().trim()
+            const termDigits = term.replace(/\D/g, '')
             dataDesencriptada = dataDesencriptada.filter(r =>
                 r.nombreCompleto.toLowerCase().includes(term) ||
                 r.rut.toLowerCase().includes(term) ||
                 (r.cargo && r.cargo.toLowerCase().includes(term)) ||
-                (r.establecimiento && r.establecimiento.toLowerCase().includes(term))
+                (r.establecimiento && r.establecimiento.toLowerCase().includes(term)) ||
+                (r.rbd !== null && r.rbd !== undefined && (
+                    r.rbd.toString().includes(term) ||
+                    (termDigits !== '' && r.rbd.toString() === termDigits)
+                ))
             )
         }
 

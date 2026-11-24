@@ -42,10 +42,10 @@ export default async function RetornoProductosPage() {
                 
                 <div className="relative z-10">
                     <h1 className="text-3xl font-black text-amber-900 tracking-tight flex items-center gap-3">
-                        <span className="text-4xl drop-shadow-md">📌</span> Retirada de productos
+                        <span className="text-4xl drop-shadow-md">📌</span> Bloqueo y/o Retirada de Productos
                     </h1>
                     <p className="text-amber-800/70 mt-2 font-medium max-w-2xl">
-                        Gestiona y monitorea las alertas de calidad en todas las sucursales a través de este tablero interactivo.
+                        Gestiona, bloquea y monitorea las alertas de calidad en todas las sucursales a través de este tablero interactivo.
                     </p>
                 </div>
             </div>

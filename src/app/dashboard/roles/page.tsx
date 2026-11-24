@@ -93,8 +93,8 @@ export default async function RolesPage() {
         { id: 'manage_manipuladoras_masiva', name: 'Gestión y Carga Masiva Manipuladoras', description: 'Permite crear, cargar desde Excel y editar manipuladoras.', category: 'ÁREAS -> MANIPULADORAS' },
 
         { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'ÁREAS -> CALIDAD' },
-        { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },
-        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_retorno_productos', name: 'Bloqueo y/o Retirada de Productos', description: 'Acceso al dashboard de Bloqueo y/o Retirada de Productos.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de bloqueo y/o retirada de productos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_calidad_subir_actas_estandar_pae', name: 'Subir Actas Estándar PAE', description: 'Acceso a la carga masiva y gestión de actas PDF del Estándar PAE.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_verificador_temperaturas', name: 'Verificador de Temperaturas (Ver)', description: 'Acceso al módulo Verificador de Temperaturas de Productos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'manage_verificador_temperaturas', name: 'Verificador de Temperaturas (Gestionar)', description: 'Permite crear, editar y eliminar registros de temperaturas.', category: 'ÁREAS -> CALIDAD' },

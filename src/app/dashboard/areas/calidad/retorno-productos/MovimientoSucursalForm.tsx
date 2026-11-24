@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { registrarMovimiento, cerrarAlertaDefinitiva } from './actions'
+import { registrarMovimiento, cerrarAlertaDefinitiva, cambiarEstadoBloqueoAlerta } from './actions'
 import { useRouter } from 'next/navigation'
 
 export default function MovimientoSucursalForm({ alerta, onClose, user }: { alerta: any, onClose: () => void, user: any }) {
     const [loading, setLoading] = useState(false)
+    const [changingState, setChangingState] = useState(false)
+    const [showHistorialEstados, setShowHistorialEstados] = useState(false)
+    const [activeImageZoom, setActiveImageZoom] = useState<string | null>(null)
     const [files, setFiles] = useState<File[]>([])
     const [conclusion, setConclusion] = useState('')
     const [isClosingModal, setIsClosingModal] = useState(false)
@@ -35,6 +38,9 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
 
     const userAreas = user.areas || []
     const isCalidad = userAreas.some((a: any) => a.nombre.toUpperCase() === 'CALIDAD')
+    const isAdmin = user.role?.name === 'Administrador'
+    const canChangeBloqueo = (isCalidad || isAdmin) && alerta.estado === 'ABIERTA'
+
     const userSucursalesNames = (user.sucursales || []).map((s: any) => s.nombre)
     
     // Filtro de estados por sucursal del usuario (solo sus sucursales asignadas)
@@ -48,6 +54,78 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
 
     const canSubmit = misEstados.length > 0 && alerta.estado === 'ABIERTA'
     const isFinalizado = selectedSucursalId ? misEstados.find((se: any) => se.sucursalId === selectedSucursalId)?.estado === 'FINALIZADO' : false
+
+    // Parse de archivos adjuntos en la alerta de origen
+    let alertaArchivos: string[] = []
+    try {
+        if (alerta.archivos) alertaArchivos = JSON.parse(alerta.archivos)
+    } catch {
+        alertaArchivos = []
+    }
+    const alertaImagenes = alertaArchivos.filter((p: string) => p.match(/\.(jpg|jpeg|png|webp|gif|svg)$/i))
+    const alertaOtrosArchivos = alertaArchivos.filter((p: string) => !p.match(/\.(jpg|jpeg|png|webp|gif|svg)$/i))
+
+    // Parse de historial de estados de bloqueo
+    let historialEstados: any[] = []
+    try {
+        if (alerta.historialEstado) historialEstados = JSON.parse(alerta.historialEstado)
+    } catch {
+        historialEstados = []
+    }
+
+    // Calcular resumen consolidado por sucursal
+    const validSucursales = alerta.sucursalesEstado.filter((s: any) => s.sucursal?.nombre !== 'CASA MATRIZ')
+    const sucursalesResumen = validSucursales.map((se: any) => {
+        const movs = alerta.movimientos.filter((m: any) => m.sucursalId === se.sucursalId)
+        const rec = movs.reduce((acc: number, m: any) => acc + (Number(m.cantidadRecepcionada) || 0), 0)
+        const stk = movs.reduce((acc: number, m: any) => acc + (Number(m.stockBodega) || 0), 0)
+        const desp = movs.reduce((acc: number, m: any) => acc + (Number(m.cantidadDespachada) || 0), 0)
+        const mer = movs.reduce((acc: number, m: any) => acc + (Number(m.cantidadMermada) || 0), 0)
+
+        return {
+            sucursalNombre: se.sucursal.nombre,
+            estado: se.estado,
+            rec,
+            stk,
+            desp,
+            mer,
+            movsCount: movs.length
+        }
+    })
+
+    const totalGeneral = sucursalesResumen.reduce((acc: any, item: any) => ({
+        rec: acc.rec + item.rec,
+        stk: acc.stk + item.stk,
+        desp: acc.desp + item.desp,
+        mer: acc.mer + item.mer
+    }), { rec: 0, stk: 0, desp: 0, mer: 0 })
+
+    const handleCambiarBloqueo = async () => {
+        const nuevoTipo = alerta.tipoBloqueo === 'Permanente' ? 'Preventivo' : 'Permanente'
+        const confirmar = confirm(`¿Deseas cambiar el estado de bloqueo a "${nuevoTipo}"?`)
+        if (!confirmar) return
+
+        setChangingState(true)
+        try {
+            const res = await cambiarEstadoBloqueoAlerta(
+                alerta.id, 
+                nuevoTipo, 
+                user.username || user.name || 'Usuario', 
+                `Transición manual de ${alerta.tipoBloqueo || 'Preventivo'} a ${nuevoTipo}`
+            )
+            if (res.error) {
+                alert('Error: ' + res.error)
+            } else {
+                router.refresh()
+                onClose()
+            }
+        } catch (error) {
+            console.error(error)
+            alert('Error al cambiar estado')
+        } finally {
+            setChangingState(false)
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -94,63 +172,316 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
     }
 
     return (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col md:flex-row">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
+            <div className="bg-white rounded-3xl w-full max-w-5xl max-h-[94vh] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col md:flex-row">
                 
-                {/* Lateral Izquierdo: Info Alerta e Historial */}
-                <div className="w-full md:w-1/2 bg-amber-50 p-6 overflow-y-auto border-r border-amber-200/50">
-                    <div className="flex justify-between items-start mb-4">
-                        <div>
-                            <span className={`text-xs font-bold px-2 py-1 rounded inline-block mb-2 ${alerta.estado === 'CERRADA' ? 'bg-green-200 text-green-800' : 'bg-amber-200 text-amber-800'}`}>
+                {/* Lateral Izquierdo: Info Alerta, Imagen Adjunta, Resumen por Sucursal e Historial */}
+                <div className="w-full md:w-1/2 bg-amber-50/70 p-5 sm:p-6 overflow-y-auto border-r border-amber-200/50 space-y-4">
+                    
+                    {/* Header y Badges de Estado */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-amber-200/60 pb-3">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                            <span className={`text-xs font-bold px-2 py-0.5 rounded shadow-sm ${alerta.estado === 'CERRADA' ? 'bg-green-200 text-green-800' : 'bg-amber-200 text-amber-900'}`}>
                                 {alerta.estado}
                             </span>
-                            <h2 className="text-xl font-bold text-amber-900 leading-tight">{alerta.titulo}</h2>
+                            <span className={`text-xs font-extrabold px-2 py-0.5 rounded shadow-sm text-white ${
+                                alerta.tipoBloqueo === 'Permanente' ? 'bg-red-600' : 'bg-amber-600'
+                            }`}>
+                                {alerta.tipoBloqueo === 'Permanente' ? '🔴 Permanente' : '🟡 Preventivo'}
+                            </span>
+                            {alerta.alcance && (
+                                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">
+                                    {alerta.alcance}
+                                </span>
+                            )}
+                        </div>
+
+                        {canChangeBloqueo && (
+                            <button
+                                type="button"
+                                disabled={changingState}
+                                onClick={handleCambiarBloqueo}
+                                className="text-xs font-bold px-3 py-1 rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 transition-all shadow-sm"
+                                title="Cambiar entre Preventivo y Permanente"
+                            >
+                                {changingState ? 'Cambiando...' : `Pasar a ${alerta.tipoBloqueo === 'Permanente' ? 'Preventivo' : 'Permanente'}`}
+                            </button>
+                        )}
+                    </div>
+
+                    <div>
+                        <h2 className="text-xl font-black text-amber-950 leading-tight">{alerta.titulo}</h2>
+                        <div className="text-xs text-amber-800/80 mt-1">
+                            Creado por <strong>{alerta.usuarioCreacion}</strong> el {new Date(alerta.fechaCreacion).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                         </div>
                     </div>
+
+                    {/* Ficha Técnica del Producto */}
+                    <div className="bg-white p-3.5 rounded-xl border border-amber-200 shadow-sm text-xs space-y-1.5">
+                        <div className="flex items-center justify-between">
+                            <span className="font-bold text-gray-900 text-sm">
+                                📦 {alerta.nombreProducto || 'Sin nombre especificado'}
+                            </span>
+                            {alerta.marcaProducto && (
+                                <span className="text-gray-600 font-medium bg-gray-100 px-2 py-0.5 rounded">
+                                    Marca: {alerta.marcaProducto}
+                                </span>
+                            )}
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 text-gray-700">
+                            <div>
+                                <span className="text-gray-400 block text-[10px] uppercase font-bold">Lote</span>
+                                <span className="font-mono font-bold text-gray-900">{alerta.lote || 'N/A'}</span>
+                            </div>
+                            <div>
+                                <span className="text-gray-400 block text-[10px] uppercase font-bold">Fecha Elab.</span>
+                                <span>{alerta.fechaElaboracion || 'N/A'}</span>
+                            </div>
+                            <div>
+                                <span className="text-gray-400 block text-[10px] uppercase font-bold">Fecha Venc.</span>
+                                <span className="font-semibold text-red-700">{alerta.fechaVencimiento || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Botón / Toggle Historial de Estados */}
+                    {historialEstados.length > 0 && (
+                        <div>
+                            <button
+                                type="button"
+                                onClick={() => setShowHistorialEstados(!showHistorialEstados)}
+                                className="text-xs font-bold text-amber-900 hover:text-amber-950 flex items-center gap-1.5"
+                            >
+                                <span>📜</span> {showHistorialEstados ? 'Ocultar historial de estados' : `Ver historial de estados (${historialEstados.length})`}
+                            </button>
+                            {showHistorialEstados && (
+                                <div className="mt-2 p-3 bg-white/80 rounded-xl border border-amber-200 space-y-2 text-xs">
+                                    {historialEstados.map((h: any, idx: number) => (
+                                        <div key={idx} className="border-b border-amber-100 last:border-0 pb-1.5 last:pb-0">
+                                            <div className="flex justify-between items-center font-bold">
+                                                <span className={h.estado === 'Permanente' ? 'text-red-700' : 'text-amber-800'}>
+                                                    ● {h.estado}
+                                                </span>
+                                                <span className="text-gray-400 text-[10px]">
+                                                    {new Date(h.fecha).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                                                </span>
+                                            </div>
+                                            <div className="text-gray-600 text-[11px] flex justify-between">
+                                                <span>{h.motivo || 'Cambio registrado'}</span>
+                                                <span className="italic text-gray-400">Por: {h.usuario}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
                     
-                    <p className="text-sm text-gray-700 bg-white/60 p-4 rounded-xl border border-amber-200 whitespace-pre-wrap">
-                        {alerta.observacion}
-                    </p>
+                    {/* Observación de la Alerta */}
+                    <div className="bg-white/80 p-3.5 rounded-xl border border-amber-200">
+                        <span className="text-[10px] uppercase tracking-wider font-bold text-amber-800 block mb-1">
+                            Observación Inicial
+                        </span>
+                        <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                            {alerta.observacion}
+                        </p>
+                    </div>
+
+                    {/* IMAGEN ADJUNTA DE LA ALERTA (Rectángulo Rojo - Imagen 1) */}
+                    {alertaImagenes.length > 0 && (
+                        <div className="bg-white p-3 rounded-xl border-2 border-red-300 shadow-sm">
+                            <span className="text-xs font-bold text-red-900 flex items-center gap-1.5 mb-2">
+                                <span>🖼️</span> Imagen Adjunta de la Alerta (Clic para ampliar)
+                            </span>
+                            <div className="flex flex-wrap gap-3">
+                                {alertaImagenes.map((imgPath: string, idx: number) => (
+                                    <div 
+                                        key={idx} 
+                                        onClick={() => setActiveImageZoom(imgPath)}
+                                        className="relative group cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:border-red-500 shadow-sm hover:shadow-md transition-all w-28 h-28 bg-gray-100 flex items-center justify-center"
+                                    >
+                                        <img 
+                                            src={imgPath} 
+                                            alt="Adjunto alerta" 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200" 
+                                        />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold">
+                                            🔍 Ampliar
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {alertaOtrosArchivos.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                            {alertaOtrosArchivos.map((filePath: string, idx: number) => (
+                                <a 
+                                    key={idx}
+                                    href={filePath}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs font-bold text-amber-900 bg-white px-3 py-1.5 rounded-lg border border-amber-200 hover:bg-amber-100 transition-colors flex items-center gap-1.5"
+                                >
+                                    📄 Ver Documento {idx + 1}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* RESUMEN POR SUCURSAL CON SUMATORIA DE CANTIDADES (Rectángulo Azul - Imagen 2) */}
+                    <div className="bg-white p-3.5 rounded-xl border-2 border-sky-300 shadow-sm">
+                        <div className="flex justify-between items-center mb-2">
+                            <h4 className="text-xs font-bold text-sky-950 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>📊</span> Resumen Consolidado por Sucursal
+                            </h4>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-xs text-left">
+                                <thead>
+                                    <tr className="border-b border-sky-100 text-[10px] text-gray-500 uppercase bg-sky-50/50">
+                                        <th className="py-1.5 px-2 font-bold">Sucursal</th>
+                                        <th className="py-1.5 px-1.5 text-right font-bold">Recep.</th>
+                                        <th className="py-1.5 px-1.5 text-right font-bold">Bodega</th>
+                                        <th className="py-1.5 px-1.5 text-right font-bold">Desp.</th>
+                                        <th className="py-1.5 px-1.5 text-right font-bold">Merma</th>
+                                        <th className="py-1.5 px-2 text-center font-bold">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {sucursalesResumen.map((s: any, idx: number) => (
+                                        <tr key={idx} className="border-b border-gray-100 hover:bg-sky-50/30">
+                                            <td className="py-1.5 px-2 font-semibold text-gray-800">
+                                                {s.sucursalNombre}
+                                            </td>
+                                            <td className="py-1.5 px-1.5 text-right font-mono text-gray-700">
+                                                {s.rec.toLocaleString()}
+                                            </td>
+                                            <td className="py-1.5 px-1.5 text-right font-mono font-bold text-sky-900">
+                                                {s.stk.toLocaleString()}
+                                            </td>
+                                            <td className="py-1.5 px-1.5 text-right font-mono text-gray-700">
+                                                {s.desp.toLocaleString()}
+                                            </td>
+                                            <td className="py-1.5 px-1.5 text-right font-mono text-red-600">
+                                                {s.mer.toLocaleString()}
+                                            </td>
+                                            <td className="py-1.5 px-2 text-center">
+                                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${
+                                                    s.estado === 'FINALIZADO'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : 'bg-amber-100 text-amber-800'
+                                                }`}>
+                                                    {s.estado === 'FINALIZADO' ? 'FINALIZADO' : 'PENDIENTE'}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                                <tfoot>
+                                    <tr className="bg-sky-100/70 font-bold text-sky-950 border-t border-sky-300">
+                                        <td className="py-1.5 px-2">TOTAL</td>
+                                        <td className="py-1.5 px-1.5 text-right font-mono">{totalGeneral.rec.toLocaleString()}</td>
+                                        <td className="py-1.5 px-1.5 text-right font-mono">{totalGeneral.stk.toLocaleString()}</td>
+                                        <td className="py-1.5 px-1.5 text-right font-mono">{totalGeneral.desp.toLocaleString()}</td>
+                                        <td className="py-1.5 px-1.5 text-right font-mono text-red-700">{totalGeneral.mer.toLocaleString()}</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
 
                     {alerta.estado === 'CERRADA' && alerta.conclusionFinal && (
-                        <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                            <h4 className="text-emerald-800 font-bold text-sm mb-1 uppercase tracking-wider flex items-center gap-2">
+                        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <h4 className="text-emerald-800 font-bold text-xs uppercase tracking-wider flex items-center gap-2">
                                 <span>🏆</span> Conclusión Final de Cierre
                             </h4>
-                            <p className="text-sm text-emerald-900 italic">"{alerta.conclusionFinal}"</p>
+                            <p className="text-xs text-emerald-900 italic mt-1">"{alerta.conclusionFinal}"</p>
                             <div className="text-[10px] text-emerald-600 mt-2 text-right">
                                 Por: {alerta.usuarioCierre} | {new Date(alerta.fechaCierre!).toLocaleDateString()}
                             </div>
                         </div>
                     )}
 
-                    <div className="mt-6">
-                        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    {/* Historial de Movimientos */}
+                    <div>
+                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2 text-sm">
                             <span>🕒</span> Historial de Movimientos
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                             {alerta.movimientos.map((mov: any) => {
                                 const sucEstado = alerta.sucursalesEstado.find((se: any) => se.sucursalId === mov.sucursalId)
                                 const isFinalizadoSuc = sucEstado?.estado === 'FINALIZADO'
                                 const archivos = mov.archivos ? JSON.parse(mov.archivos) : []
 
                                 return (
-                                    <div key={mov.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative group/card">
-                                        <div className="absolute top-4 right-4 text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded">
+                                    <div key={mov.id} className="bg-white p-3.5 rounded-xl shadow-sm border border-gray-100 relative group/card text-xs">
+                                        <div className="absolute top-3 right-3 text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded">
                                             {new Date(mov.fechaRegistro).toLocaleDateString()} {new Date(mov.fechaRegistro).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                         </div>
-                                        <div className="flex items-center gap-2 mb-1">
+                                        <div className="flex items-center gap-2 mb-1.5">
                                             <div className="text-sm font-bold text-sky-700">{mov.sucursal.nombre}</div>
                                             {isFinalizadoSuc && (
-                                                <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold border border-green-200 shadow-sm">
+                                                <span className="text-[9px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold border border-green-200 shadow-sm">
                                                     FINALIZADO ✓
                                                 </span>
                                             )}
                                         </div>
-                                        <p className="text-gray-600 text-sm whitespace-pre-wrap">{mov.comentario}</p>
+
+                                        {/* Datos del movimiento si existen */}
+                                        {(mov.numeroDocumento || mov.codigoProducto || mov.loteInterno || mov.ubicacion || mov.cantidadRecepcionada > 0 || mov.stockBodega > 0 || mov.cantidadDespachada > 0 || mov.cantidadMermada > 0) && (
+                                            <div className="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100 mb-2 text-[11px]">
+                                                {mov.numeroDocumento && (
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] uppercase font-bold">N° Doc/Guía</span>
+                                                        <span className="font-mono text-gray-800 font-semibold">{mov.numeroDocumento}</span>
+                                                    </div>
+                                                )}
+                                                {mov.codigoProducto && (
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] uppercase font-bold">Cód. Producto</span>
+                                                        <span className="font-mono text-gray-800">{mov.codigoProducto}</span>
+                                                    </div>
+                                                )}
+                                                {mov.loteInterno && (
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] uppercase font-bold">Lote Interno</span>
+                                                        <span className="font-mono text-gray-800">{mov.loteInterno}</span>
+                                                    </div>
+                                                )}
+                                                {mov.ubicacion && (
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] uppercase font-bold">Ubicación</span>
+                                                        <span className="text-gray-800">{mov.ubicacion}</span>
+                                                    </div>
+                                                )}
+                                                <div className="col-span-2 grid grid-cols-4 gap-1 pt-1 border-t border-slate-200/60 font-semibold">
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] font-normal">Recep.</span>
+                                                        <span>{mov.cantidadRecepcionada || 0}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] font-normal">Stock</span>
+                                                        <span className="text-sky-700">{mov.stockBodega || 0}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] font-normal">Desp.</span>
+                                                        <span>{mov.cantidadDespachada || 0}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-gray-400 block text-[9px] font-normal">Merma</span>
+                                                        <span className="text-red-600">{mov.cantidadMermada || 0}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <p className="text-gray-700 whitespace-pre-wrap">{mov.comentario}</p>
                                         
                                         {archivos.length > 0 && (
-                                            <div className="mt-3 flex flex-wrap gap-2">
+                                            <div className="mt-2.5 flex flex-wrap gap-2">
                                                 {archivos.map((path: string, idx: number) => {
                                                     const isImg = path.match(/\.(jpg|jpeg|png|gif|webp)$/i)
                                                     return (
@@ -159,39 +490,39 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                                             href={path} 
                                                             target="_blank" 
                                                             rel="noopener noreferrer"
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-sky-50 text-sky-700 rounded-lg border border-gray-100 hover:border-sky-200 transition-all text-[11px] font-bold shadow-sm"
+                                                            className="flex items-center gap-1 px-2.5 py-1 bg-gray-50 hover:bg-sky-50 text-sky-700 rounded-lg border border-gray-100 hover:border-sky-200 transition-all text-[10px] font-bold shadow-sm"
                                                         >
-                                                            {isImg ? '🖼️' : '📄'} Ver Adjunto {archivos.length > 1 ? idx + 1 : ''}
+                                                            {isImg ? '🖼️' : '📄'} Adjunto {archivos.length > 1 ? idx + 1 : ''}
                                                         </a>
                                                     )
                                                 })}
                                             </div>
                                         )}
                                         
-                                        <div className="text-[10px] text-gray-400 mt-3 flex justify-between items-center">
+                                        <div className="text-[10px] text-gray-400 mt-2 flex justify-between items-center">
                                             <span>Por: {mov.usuarioRegistro}</span>
                                         </div>
                                     </div>
                                 )
                             })}
                             {alerta.movimientos.length === 0 && (
-                                <div className="text-sm text-gray-500 italic">No hay movimientos registrados.</div>
+                                <div className="text-xs text-gray-500 italic">No hay movimientos registrados.</div>
                             )}
                         </div>
                     </div>
                 </div>
 
-                {/* Lateral Derecho: Formulario de Ingreso */}
-                <div className="w-full md:w-1/2 p-6 flex flex-col relative overflow-y-auto">
-                    <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors font-bold">✕</button>
+                {/* Lateral Derecho: Formulario "Registrar Novedad" con nuevos campos */}
+                <div className="w-full md:w-1/2 p-5 sm:p-6 flex flex-col relative overflow-y-auto">
+                    <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors font-bold z-10">✕</button>
                     
-                    <div className="mb-6 flex justify-between items-end pr-8">
+                    <div className="mb-4 flex justify-between items-end pr-8">
                         <div>
                             <h3 className="text-lg font-bold text-gray-900">Registrar Novedad</h3>
-                            <p className="text-sm text-gray-500">Agrega un movimiento para tu sucursal</p>
+                            <p className="text-xs text-gray-500">Agrega un movimiento para tu sucursal</p>
                         </div>
                         {alerta.estado === 'ABIERTA' && (
-                            <div className="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2">
+                            <div className="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5">
                                 <span>⏳</span> {timeLeft}
                             </div>
                         )}
@@ -216,37 +547,130 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                             </div>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="flex-1 flex flex-col mb-6">
-                            {misEstados.length > 1 && (
-                                <div className="mb-4">
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Sucursal a reportar</label>
-                                    <select 
-                                        value={selectedSucursalId}
-                                        onChange={(e) => setSelectedSucursalId(e.target.value)}
-                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none"
-                                    >
-                                        {misEstados.map((se: any) => (
-                                            <option key={se.sucursalId} value={se.sucursalId}>
-                                                {se.sucursal.nombre} {se.estado === 'FINALIZADO' ? '(Finalizado)' : ''}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            )}
+                        <form onSubmit={handleSubmit} className="flex-1 flex flex-col space-y-3.5 mb-4">
+                            {/* Selector de Sucursal */}
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-700 mb-1">Sucursal a reportar</label>
+                                <select 
+                                    value={selectedSucursalId}
+                                    onChange={(e) => setSelectedSucursalId(e.target.value)}
+                                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-sm"
+                                >
+                                    {misEstados.map((se: any) => (
+                                        <option key={se.sucursalId} value={se.sucursalId}>
+                                            {se.sucursal.nombre} {se.estado === 'FINALIZADO' ? '(Finalizado)' : ''}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                            <div className="mb-4">
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Comentario <span className="text-red-500">*</span></label>
+                            {/* NUEVOS CAMPOS SOLICITADOS */}
+                            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
+                                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 block">
+                                    Detalle Operativo del Producto
+                                </span>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <div>
+                                        <label className="block text-[11px] font-semibold text-gray-700 mb-1">N° OC / Guía de Despacho</label>
+                                        <input 
+                                            name="numeroDocumento"
+                                            maxLength={60}
+                                            placeholder="Ej. OC-9842 / GD-1203"
+                                            className="w-full px-3 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[11px] font-semibold text-gray-700 mb-1">Código del Producto</label>
+                                        <input 
+                                            name="codigoProducto"
+                                            maxLength={60}
+                                            placeholder="Ej. PROD-1029"
+                                            className="w-full px-3 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <div>
+                                        <label className="block text-[11px] font-semibold text-gray-700 mb-1">Lote Interno</label>
+                                        <input 
+                                            name="loteInterno"
+                                            maxLength={60}
+                                            placeholder="Ej. LOTE-INT-01"
+                                            className="w-full px-3 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs uppercase"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[11px] font-semibold text-gray-700 mb-1">Ubicación en Bodega</label>
+                                        <input 
+                                            name="ubicacion"
+                                            maxLength={80}
+                                            placeholder="Ej. Rack A-3 / Pasillo 2"
+                                            className="w-full px-3 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 border-t border-slate-200">
+                                    <div>
+                                        <label className="block text-[10px] font-semibold text-gray-600 mb-1">Cant. Recepcionada</label>
+                                        <input 
+                                            type="number"
+                                            step="any"
+                                            name="cantidadRecepcionada"
+                                            placeholder="0"
+                                            className="w-full px-2 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs text-right"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-semibold text-gray-600 mb-1">Stock en Bodega</label>
+                                        <input 
+                                            type="number"
+                                            step="any"
+                                            name="stockBodega"
+                                            placeholder="0"
+                                            className="w-full px-2 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs text-right font-bold text-sky-900"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-semibold text-gray-600 mb-1">Cant. Despachada</label>
+                                        <input 
+                                            type="number"
+                                            step="any"
+                                            name="cantidadDespachada"
+                                            placeholder="0"
+                                            className="w-full px-2 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs text-right"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-semibold text-gray-600 mb-1">Cant. Mermada</label>
+                                        <input 
+                                            type="number"
+                                            step="any"
+                                            name="cantidadMermada"
+                                            placeholder="0"
+                                            className="w-full px-2 py-1.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-sky-500 outline-none text-xs text-right text-red-600"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Comentario */}
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-700 mb-1">Comentario <span className="text-red-500">*</span></label>
                                 <textarea 
                                     name="comentario" 
                                     required 
-                                    rows={4}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all outline-none resize-none"
-                                    placeholder="Ej. Estamos buscando en bodega..."
+                                    rows={3}
+                                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all outline-none resize-none text-xs"
+                                    placeholder="Ej. Se verificó stock en bodega, producto apartado y rotulado..."
                                 />
                             </div>
 
-                            <div className="bg-sky-50/50 p-4 rounded-xl border border-dashed border-sky-200 mb-6">
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Adjuntar Archivos (Opcional)</label>
+                            {/* Adjuntar Archivos */}
+                            <div className="bg-sky-50/50 p-3 rounded-xl border border-dashed border-sky-200">
+                                <label className="block text-xs font-semibold text-gray-700 mb-1">Adjuntar Archivos (Opcional)</label>
                                 <input 
                                     type="file" 
                                     multiple 
@@ -257,27 +681,27 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                             setFiles(selected)
                                         }
                                     }}
-                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 transition-all cursor-pointer"
+                                    className="block w-full text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 transition-all cursor-pointer"
                                 />
                                 {files.length > 0 && (
-                                    <ul className="mt-2 space-y-1">
+                                    <ul className="mt-1.5 space-y-0.5">
                                         {files.map((f, i) => (
-                                            <li key={i} className="text-xs text-sky-700">📄 {f.name}</li>
+                                            <li key={i} className="text-[11px] text-sky-700">📄 {f.name}</li>
                                         ))}
                                     </ul>
                                 )}
                             </div>
 
-                            <div className="mt-auto pt-4 border-t border-gray-100">
-                                <label className="flex items-center gap-3 mb-4 cursor-pointer">
-                                    <input type="checkbox" name="finalizar" value="true" className="w-5 h-5 text-green-600 rounded border-gray-300 focus:ring-green-500" />
-                                    <span className="text-sm font-bold text-gray-700 select-none">Tarea finalizada (No se requerirán más acciones)</span>
+                            <div className="pt-2 border-t border-gray-100">
+                                <label className="flex items-center gap-2.5 mb-3 cursor-pointer">
+                                    <input type="checkbox" name="finalizar" value="true" className="w-4 h-4 text-green-600 rounded border-gray-300 focus:ring-green-500" />
+                                    <span className="text-xs font-bold text-gray-700 select-none">Tarea finalizada (No se requerirán más acciones)</span>
                                 </label>
 
                                 <button 
                                     type="submit" 
                                     disabled={loading}
-                                    className="w-full py-3.5 rounded-xl bg-gray-900 hover:bg-black text-white font-bold shadow-md transition-all disabled:opacity-50"
+                                    className="w-full py-3 rounded-xl bg-gray-900 hover:bg-black text-white font-bold shadow-md transition-all disabled:opacity-50 text-sm"
                                 >
                                     {loading ? 'Guardando...' : 'Guardar Novedad'}
                                 </button>
@@ -287,22 +711,22 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
 
                     {/* Sección de Cierre para Perfil Calidad */}
                     {alerta.estado === 'ABIERTA' && isCalidad && (
-                        <div className="mt-auto pt-6 border-t-2 border-dashed border-gray-100">
+                        <div className="mt-auto pt-4 border-t-2 border-dashed border-gray-100">
                             {(() => {
-                                const validSucursales = alerta.sucursalesEstado.filter((s:any) => s.sucursal?.nombre !== 'CASA MATRIZ')
-                                const todasFinalizadas = validSucursales.length > 0 && validSucursales.every((s: any) => s.estado === 'FINALIZADO')
+                                const validSucursalesParaCierre = alerta.sucursalesEstado.filter((s:any) => s.sucursal?.nombre !== 'CASA MATRIZ')
+                                const todasFinalizadas = validSucursalesParaCierre.length > 0 && validSucursalesParaCierre.every((s: any) => s.estado === 'FINALIZADO')
                                 
                                 if (!todasFinalizadas) {
                                     return (
                                         <div>
                                             <button 
                                                 disabled={true}
-                                                className="w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 bg-gray-200 text-gray-500 cursor-not-allowed"
+                                                className="w-full py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 bg-gray-200 text-gray-500 cursor-not-allowed text-xs"
                                                 title="Debe esperar a que todas las bodegas finalicen."
                                             >
                                                 <span>🏁</span> Realizar Cierre Final del Caso
                                             </button>
-                                            <p className="text-center text-xs text-gray-500 mt-2 font-medium">
+                                            <p className="text-center text-[10px] text-gray-500 mt-1 font-medium">
                                                 * El cierre se habilitará cuando todas las bodegas finalicen sus registros.
                                             </p>
                                         </div>
@@ -312,18 +736,18 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                 return !isClosingModal ? (
                                     <button 
                                         onClick={() => setIsClosingModal(true)}
-                                        className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-lg shadow-emerald-500/30 transition-all flex items-center justify-center gap-2"
+                                        className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-lg shadow-emerald-500/30 transition-all flex items-center justify-center gap-2 text-xs"
                                     >
                                         <span>🏁</span> Realizar Cierre Final del Caso
                                     </button>
                                 ) : (
-                                <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 space-y-4 animate-in slide-in-from-bottom-4">
+                                <div className="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-3 animate-in slide-in-from-bottom-4">
                                     <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-emerald-900">Finalizar Alerta de Calidad</h4>
-                                        <button onClick={() => setIsClosingModal(false)} className="text-emerald-700 hover:text-emerald-900 font-bold text-xs uppercase">Cancelar</button>
+                                        <h4 className="font-bold text-emerald-900 text-xs">Finalizar Alerta de Calidad</h4>
+                                        <button onClick={() => setIsClosingModal(false)} className="text-emerald-700 hover:text-emerald-900 font-bold text-[10px] uppercase">Cancelar</button>
                                     </div>
                                     <textarea 
-                                        className="w-full px-4 py-3 rounded-xl border border-emerald-200 focus:ring-2 focus:ring-emerald-500 outline-none text-sm min-h-[100px]"
+                                        className="w-full px-3 py-2 rounded-xl border border-emerald-200 focus:ring-2 focus:ring-emerald-500 outline-none text-xs min-h-[80px]"
                                         placeholder="Escribe aquí la conclusión final del retiro y cierre del caso..."
                                         value={conclusion}
                                         onChange={(e) => setConclusion(e.target.value)}
@@ -332,7 +756,7 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                     <button 
                                         onClick={handleCerrarAlerta}
                                         disabled={loading}
-                                        className="w-full py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold shadow-md transition-all disabled:opacity-50"
+                                        className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold shadow-md transition-all disabled:opacity-50 text-xs"
                                     >
                                         {loading ? 'Cerrando...' : 'Confirmar Cierre y Enviar Conclusión'}
                                     </button>
@@ -343,6 +767,31 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                     )}
                 </div>
             </div>
+
+            {/* LIGHTBOX / ZOOM DE IMAGEN */}
+            {activeImageZoom && (
+                <div 
+                    className="fixed inset-0 bg-black/85 z-[60] flex items-center justify-center p-4 backdrop-blur-sm cursor-zoom-out"
+                    onClick={() => setActiveImageZoom(null)}
+                >
+                    <div className="relative max-w-4xl max-h-[90vh] flex flex-col items-center">
+                        <button 
+                            className="absolute -top-10 right-0 text-white text-2xl font-bold bg-white/20 hover:bg-white/40 w-8 h-8 rounded-full flex items-center justify-center"
+                            onClick={() => setActiveImageZoom(null)}
+                        >
+                            ✕
+                        </button>
+                        <img 
+                            src={activeImageZoom} 
+                            alt="Imagen ampliada" 
+                            className="max-w-full max-h-[85vh] rounded-xl shadow-2xl object-contain border-2 border-white/20"
+                        />
+                        <div className="text-white/80 text-xs mt-2 bg-black/50 px-3 py-1 rounded-full">
+                            Haz clic fuera de la imagen o en la X para cerrar
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -558,6 +558,14 @@ model RetornoProductosAlerta {
   horas            Int
   estado           String                           @default("ABIERTA")
   color            String?                          @default("yellow")
+  tipoBloqueo      String?                          @default("Preventivo")
+  alcance          String?                          @default("A Hendaya")
+  nombreProducto   String?
+  marcaProducto    String?
+  fechaElaboracion String?
+  fechaVencimiento String?
+  lote             String?
+  historialEstado  String?
   archivos         String?
   usuarioCreacion  String
   fechaCreacion    DateTime                         @default(now())
@@ -582,15 +590,23 @@ model RetornoProductosSucursalEstado {
 }
 
 model RetornoProductosMovimiento {
-  id              String                 @id @default(uuid())
-  alertaId        String
-  sucursalId      String
-  usuarioRegistro String
-  comentario      String
-  archivos        String?
-  fechaRegistro   DateTime               @default(now())
-  alerta          RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
-  sucursal        Sucursal               @relation(fields: [sucursalId], references: [id])
+  id                   String                 @id @default(uuid())
+  alertaId             String
+  sucursalId           String
+  usuarioRegistro      String
+  comentario           String
+  numeroDocumento      String?
+  codigoProducto       String?
+  cantidadRecepcionada Float?                 @default(0)
+  loteInterno          String?
+  stockBodega          Float?                 @default(0)
+  ubicacion            String?
+  cantidadDespachada   Float?                 @default(0)
+  cantidadMermada      Float?                 @default(0)
+  archivos             String?
+  fechaRegistro        DateTime               @default(now())
+  alerta               RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+  sucursal             Sucursal               @relation(fields: [sucursalId], references: [id])
 }
 
 model RetornoProductosAlertaHistorialEliminado {

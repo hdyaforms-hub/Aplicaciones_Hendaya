@@ -80,7 +80,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/operaciones/cargar-pae')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Cargar PaeOnline' }
     if (path.startsWith('/dashboard/areas/manipuladoras')) return { modulo: 'Áreas -> Manipuladoras', detalle: 'Accedió a Cálculo de Gramaje' }
     if (path.startsWith('/dashboard/areas/calidad/resolucion-sanitaria')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Resolución Sanitaria' }
-    if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Retirada de Productos' }
+    if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Bloqueo y/o Retirada de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/verificador-temperaturas')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Verificador de Temperaturas de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/subir-actas-pae')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Subir Actas Estándar PAE' }
     if (path.startsWith('/dashboard/areas/calidad/transporte-higiene')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Registro transportista interno higiene y estado Transporte' }

@@ -265,7 +265,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         requiredPermission: 'view_calidad_resolucion_sanitaria'
                     },
                     { 
-                        name: 'Retirada de Productos', 
+                        name: 'Bloqueo y/o Retirada de Productos', 
                         href: '/dashboard/areas/calidad/retorno-productos', 
                         requiredPermission: 'view_retorno_productos'
                     },

@@ -112,8 +112,24 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                     {/* Post-it pin/tape */}
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-4 bg-white/40 backdrop-blur-sm shadow-sm rotate-2"></div>
                                     
-                                    <div className="flex justify-between items-start mb-3">
-                                        <h3 className="font-bold text-gray-800 text-lg leading-tight uppercase relative z-10 w-full overflow-hidden text-ellipsis whitespace-nowrap" title={alerta.titulo}>
+                                    {/* Badges de Tipo de Bloqueo y Alcance */}
+                                    <div className="flex flex-wrap items-center gap-1.5 mb-2 relative z-10">
+                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-sm border ${
+                                            alerta.tipoBloqueo === 'Permanente'
+                                                ? 'bg-red-600 text-white border-red-700'
+                                                : 'bg-amber-400 text-amber-950 border-amber-500'
+                                        }`}>
+                                            {alerta.tipoBloqueo === 'Permanente' ? '🔴 Permanente' : '🟡 Preventivo'}
+                                        </span>
+                                        {alerta.alcance && (
+                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-black/10 text-gray-800 border border-black/10">
+                                                {alerta.alcance === 'A Hendaya' ? '🏢 A Hendaya' : '🌐 Otras Emp.'}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="font-extrabold text-gray-900 text-base leading-tight uppercase relative z-10 w-full overflow-hidden text-ellipsis whitespace-nowrap" title={alerta.titulo}>
                                             {alerta.titulo}
                                         </h3>
                                         {user.role.name === 'Administrador' && (
@@ -126,10 +142,36 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                             </button>
                                         )}
                                     </div>
+
+                                    {/* Bloque de Información del Producto */}
+                                    <div className="bg-white/50 rounded-lg p-2.5 mb-2.5 border border-black/10 text-xs space-y-1">
+                                        <div className="flex items-center justify-between gap-1">
+                                            <span className="font-bold text-gray-900 truncate">
+                                                📦 {alerta.nombreProducto || 'Producto no especificado'}
+                                            </span>
+                                        </div>
+                                        {alerta.marcaProducto && (
+                                            <div className="text-gray-700 truncate">
+                                                <span className="font-semibold text-gray-800">Marca:</span> {alerta.marcaProducto}
+                                            </div>
+                                        )}
+                                        <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] text-gray-700">
+                                            {alerta.lote && (
+                                                <span className="bg-black/5 px-1.5 py-0.5 rounded font-mono font-bold">
+                                                    Lote: {alerta.lote}
+                                                </span>
+                                            )}
+                                            {(alerta.fechaElaboracion || alerta.fechaVencimiento) && (
+                                                <span className="text-[10px] text-gray-600">
+                                                    {alerta.fechaVencimiento ? `Vence: ${alerta.fechaVencimiento}` : `Elab: ${alerta.fechaElaboracion}`}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
                                     
-                                    <p className="text-gray-700 text-sm mb-4 flex-1 break-words overflow-hidden" 
-                                       style={{display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical'}}>
-                                        {alerta.observacion}
+                                    <p className="text-gray-800 text-xs mb-3 flex-1 break-words overflow-hidden italic" 
+                                       style={{display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical'}}>
+                                        "{alerta.observacion}"
                                     </p>
 
                                     <div className="mt-auto space-y-3">

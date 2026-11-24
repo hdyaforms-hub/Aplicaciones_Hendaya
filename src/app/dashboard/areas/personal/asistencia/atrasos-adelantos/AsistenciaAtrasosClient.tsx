@@ -71,6 +71,9 @@ export default function AsistenciaAtrasosClient({
 }: Props) {
     const [tipoActivo, setTipoActivo] = useState<'ADELANTO' | 'ATRASO'>(initialData.tipoActual || 'ADELANTO')
     const [data, setData] = useState<InitialData>(initialData)
+    const [listaEstablecimientos, setListaEstablecimientos] = useState<{ rbd: number; establecimiento: string }[]>(
+        initialData.establecimientos || []
+    )
     const [isPending, startTransition] = useTransition()
 
     // Filtros
@@ -119,15 +122,17 @@ export default function AsistenciaAtrasosClient({
         newSortBy = sortBy,
         newSortDir = sortDir,
         newPageSize = pageSize,
-        targetTipo = tipoActivo
+        targetTipo = tipoActivo,
+        targetRbd: number | null | undefined = undefined
     ) => {
+        const rbdParaEnviar = targetRbd !== undefined ? (targetRbd || undefined) : (filtroRbd || undefined)
         startTransition(async () => {
             const res = await getAsistenciaAtrasosAction({
                 tipo: targetTipo,
                 search: search.trim() || undefined,
                 sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
                 supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
-                rbd: filtroRbd || undefined,
+                rbd: rbdParaEnviar,
                 fechaDesde: fechaDesde || undefined,
                 fechaHasta: fechaHasta || undefined,
                 aplicaDescuento: filtroAplica !== 'TODOS' ? filtroAplica : undefined,
@@ -149,6 +154,16 @@ export default function AsistenciaAtrasosClient({
                     tipoActual: res.tipoActual || targetTipo,
                     resumen: res.resumen
                 })
+                if (res.establecimientos && res.establecimientos.length > 0) {
+                    setListaEstablecimientos(prev => {
+                        const map = new Map<number, string>()
+                        prev.forEach(e => map.set(e.rbd, e.establecimiento))
+                        res.establecimientos.forEach(e => map.set(e.rbd, e.establecimiento))
+                        return Array.from(map.entries())
+                            .map(([rbd, establecimiento]) => ({ rbd, establecimiento }))
+                            .sort((a, b) => a.rbd - b.rbd)
+                    })
+                }
                 setPagina(newPage)
                 setSortBy(newSortBy)
                 setSortDir(newSortDir)
@@ -178,7 +193,32 @@ export default function AsistenciaAtrasosClient({
 
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        fetchData(1, sortBy, sortDir, pageSize)
+        let rbdToUse = filtroRbd
+        const trimmed = busquedaRbdInput.trim()
+        if (trimmed) {
+            const digits = trimmed.replace(/\D/g, '')
+            if (digits) {
+                const parsed = parseInt(digits, 10)
+                if (!isNaN(parsed)) {
+                    rbdToUse = parsed
+                    setFiltroRbd(parsed)
+                }
+            } else {
+                const match = listaEstablecimientos.find(e =>
+                    e.establecimiento.toLowerCase().includes(trimmed.toLowerCase())
+                )
+                if (match) {
+                    rbdToUse = match.rbd
+                    setFiltroRbd(match.rbd)
+                    setBusquedaRbdInput(`RBD ${match.rbd} - ${match.establecimiento}`)
+                }
+            }
+        } else if (!trimmed && filtroRbd !== null) {
+            rbdToUse = null
+            setFiltroRbd(null)
+        }
+        setIsRbdDropdownOpen(false)
+        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, rbdToUse)
     }
 
     const handleClearFilters = () => {
@@ -187,33 +227,12 @@ export default function AsistenciaAtrasosClient({
         setFiltroSupervisor('TODOS')
         setFiltroRbd(null)
         setBusquedaRbdInput('')
+        setIsRbdDropdownOpen(false)
         setFechaDesde('')
         setFechaHasta('')
         setFiltroAplica('TODOS')
         setFiltroJustificado('TODOS')
-        startTransition(async () => {
-            const res = await getAsistenciaAtrasosAction({
-                tipo: tipoActivo,
-                page: 1,
-                pageSize,
-                sortBy,
-                sortDir
-            })
-            if (res.success) {
-                setData({
-                    data: res.data,
-                    total: res.total,
-                    page: res.page,
-                    pageSize: res.pageSize,
-                    sucursales: res.sucursales,
-                    supervisores: res.supervisores,
-                    establecimientos: res.establecimientos,
-                    tipoActual: res.tipoActual || tipoActivo,
-                    resumen: res.resumen
-                })
-                setPagina(1)
-            }
-        })
+        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, null)
     }
 
     // Toggle rápido de Aplica Descuento (botón deslizante para celular y escritorio)
@@ -376,11 +395,11 @@ export default function AsistenciaAtrasosClient({
     }
 
     // Establecimientos filtrados para autocompletado
-    const establecimientosFiltrados = data.establecimientos.filter(e => {
+    const establecimientosFiltrados = listaEstablecimientos.filter(e => {
         if (!busquedaRbdInput.trim()) return true
         const term = busquedaRbdInput.toLowerCase()
         return e.rbd.toString().includes(term) || e.establecimiento.toLowerCase().includes(term)
-    }).slice(0, 15)
+    }).slice(0, 25)
 
     const totalPages = Math.ceil(data.total / pageSize) || 1
 
@@ -561,21 +580,51 @@ export default function AsistenciaAtrasosClient({
                     </div>
 
                     <div className="sm:col-span-3 relative">
-                        <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
-                            Establecimiento (RBD)
+                        <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1 flex items-center justify-between">
+                            <span>Establecimiento (RBD)</span>
+                            {filtroRbd !== null && (
+                                <span className="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200">
+                                    RBD {filtroRbd}
+                                </span>
+                            )}
                         </label>
-                        <input
-                            type="text"
-                            value={busquedaRbdInput}
-                            onChange={e => {
-                                setBusquedaRbdInput(e.target.value)
-                                setIsRbdDropdownOpen(true)
-                                if (!e.target.value) setFiltroRbd(null)
-                            }}
-                            onFocus={() => setIsRbdDropdownOpen(true)}
-                            placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD o Nombre...'}
-                            className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
-                        />
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={busquedaRbdInput}
+                                onChange={e => {
+                                    const val = e.target.value
+                                    setBusquedaRbdInput(val)
+                                    setIsRbdDropdownOpen(true)
+                                    if (!val) {
+                                        setFiltroRbd(null)
+                                    } else {
+                                        const trimmedVal = val.trim()
+                                        if (/^\d+$/.test(trimmedVal)) {
+                                            setFiltroRbd(parseInt(trimmedVal, 10))
+                                        }
+                                    }
+                                }}
+                                onFocus={() => setIsRbdDropdownOpen(true)}
+                                placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD o Nombre...'}
+                                className="w-full pl-3 pr-8 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+                            />
+                            {(busquedaRbdInput || filtroRbd !== null) && (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setFiltroRbd(null)
+                                        setBusquedaRbdInput('')
+                                        setIsRbdDropdownOpen(false)
+                                        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, null)
+                                    }}
+                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold p-0.5"
+                                    title="Limpiar filtro de RBD"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
                         {isRbdDropdownOpen && establecimientosFiltrados.length > 0 && (
                             <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto divide-y divide-gray-50 text-xs">
                                 <div
@@ -583,6 +632,7 @@ export default function AsistenciaAtrasosClient({
                                         setFiltroRbd(null)
                                         setBusquedaRbdInput('')
                                         setIsRbdDropdownOpen(false)
+                                        fetchData(1, sortBy, sortDir, pageSize, tipoActivo, null)
                                     }}
                                     className="p-2 hover:bg-gray-50 cursor-pointer font-medium text-cyan-600"
                                 >
@@ -595,10 +645,12 @@ export default function AsistenciaAtrasosClient({
                                             setFiltroRbd(est.rbd)
                                             setBusquedaRbdInput(`RBD ${est.rbd} - ${est.establecimiento}`)
                                             setIsRbdDropdownOpen(false)
+                                            fetchData(1, sortBy, sortDir, pageSize, tipoActivo, est.rbd)
                                         }}
-                                        className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700"
+                                        className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700 flex items-center justify-between"
                                     >
-                                        <strong className="text-gray-900">RBD {est.rbd}:</strong> {est.establecimiento}
+                                        <span className="truncate">{est.establecimiento}</span>
+                                        <strong className="text-gray-900 ml-2 bg-gray-100 px-1.5 py-0.5 rounded text-[11px] whitespace-nowrap">RBD {est.rbd}</strong>
                                     </div>
                                 ))}
                             </div>

@@ -433,7 +433,32 @@ export default function AdmAtrasosClient({
 
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        recargarDatos(1, sortField, sortDirection)
+        let rbdToUse = filtroRbd
+        const trimmed = busquedaRbdNombre.trim()
+        if (trimmed) {
+            const digits = trimmed.replace(/\D/g, '')
+            if (digits) {
+                const parsed = parseInt(digits, 10)
+                if (!isNaN(parsed)) {
+                    rbdToUse = parsed
+                    setFiltroRbd(parsed)
+                }
+            } else {
+                const match = initialRegistrosData.establecimientos.find(e =>
+                    e.establecimiento.toLowerCase().includes(trimmed.toLowerCase())
+                )
+                if (match) {
+                    rbdToUse = match.rbd
+                    setFiltroRbd(match.rbd)
+                    setBusquedaRbdNombre(`RBD ${match.rbd} - ${match.establecimiento}`)
+                }
+            }
+        } else if (!trimmed && filtroRbd !== null) {
+            rbdToUse = null
+            setFiltroRbd(null)
+        }
+        setIsRbdDropdownOpen(false)
+        recargarDatos(1, sortField, sortDirection, tipoActivo, { rbd: rbdToUse })
     }
 
     const handleClearFilters = () => {
@@ -1185,21 +1210,51 @@ export default function AdmAtrasosClient({
                             </div>
 
                             <div className="sm:col-span-3 relative">
-                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
-                                    Establecimiento (RBD)
+                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1 flex items-center justify-between">
+                                    <span>Establecimiento (RBD)</span>
+                                    {filtroRbd !== null && (
+                                        <span className="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200">
+                                            RBD {filtroRbd}
+                                        </span>
+                                    )}
                                 </label>
-                                <input
-                                    type="text"
-                                    value={busquedaRbdNombre}
-                                    onChange={e => {
-                                        setBusquedaRbdNombre(e.target.value)
-                                        setIsRbdDropdownOpen(true)
-                                        if (!e.target.value) setFiltroRbd(null)
-                                    }}
-                                    onFocus={() => setIsRbdDropdownOpen(true)}
-                                    placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD o Nombre...'}
-                                    className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        value={busquedaRbdNombre}
+                                        onChange={e => {
+                                            const val = e.target.value
+                                            setBusquedaRbdNombre(val)
+                                            setIsRbdDropdownOpen(true)
+                                            if (!val) {
+                                                setFiltroRbd(null)
+                                            } else {
+                                                const trimmedVal = val.trim()
+                                                if (/^\d+$/.test(trimmedVal)) {
+                                                    setFiltroRbd(parseInt(trimmedVal, 10))
+                                                }
+                                            }
+                                        }}
+                                        onFocus={() => setIsRbdDropdownOpen(true)}
+                                        placeholder={filtroRbd ? `RBD ${filtroRbd} Seleccionado` : 'Buscar por RBD o Nombre...'}
+                                        className="w-full pl-3 pr-8 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+                                    />
+                                    {(busquedaRbdNombre || filtroRbd !== null) && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setFiltroRbd(null)
+                                                setBusquedaRbdNombre('')
+                                                setIsRbdDropdownOpen(false)
+                                                recargarDatos(1, sortField, sortDirection, tipoActivo, { rbd: null })
+                                            }}
+                                            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold p-0.5"
+                                            title="Limpiar filtro de RBD"
+                                        >
+                                            ✕
+                                        </button>
+                                    )}
+                                </div>
                                 {isRbdDropdownOpen && establecimientosFiltrados.length > 0 && (
                                     <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto divide-y divide-gray-50 text-xs">
                                         <div
@@ -1207,6 +1262,7 @@ export default function AdmAtrasosClient({
                                                 setFiltroRbd(null)
                                                 setBusquedaRbdNombre('')
                                                 setIsRbdDropdownOpen(false)
+                                                recargarDatos(1, sortField, sortDirection, tipoActivo, { rbd: null })
                                             }}
                                             className="p-2 hover:bg-gray-50 cursor-pointer font-medium text-cyan-600"
                                         >
@@ -1219,10 +1275,12 @@ export default function AdmAtrasosClient({
                                                     setFiltroRbd(est.rbd)
                                                     setBusquedaRbdNombre(`RBD ${est.rbd} - ${est.establecimiento}`)
                                                     setIsRbdDropdownOpen(false)
+                                                    recargarDatos(1, sortField, sortDirection, tipoActivo, { rbd: est.rbd })
                                                 }}
-                                                className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700"
+                                                className="p-2 hover:bg-gray-50 cursor-pointer text-gray-700 flex items-center justify-between"
                                             >
-                                                <strong className="text-gray-900">RBD {est.rbd}:</strong> {est.establecimiento}
+                                                <span className="truncate">{est.establecimiento}</span>
+                                                <strong className="text-gray-900 ml-2 bg-gray-100 px-1.5 py-0.5 rounded text-[11px] whitespace-nowrap">RBD {est.rbd}</strong>
                                             </div>
                                         ))}
                                     </div>
