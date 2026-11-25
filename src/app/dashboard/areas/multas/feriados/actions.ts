@@ -22,7 +22,12 @@ export interface FeriadoDTO {
 export async function getFeriadosAction(anio?: number): Promise<{ success: boolean; feriados?: FeriadoDTO[]; error?: string }> {
     try {
         const session = await getSession()
-        const { authorized } = await checkMultasPermission(['view_multas_areas', 'manage_ciclo_legal_multas', 'manage_calculos_ee'], session)
+        const { authorized } = await checkMultasPermission([
+            'view_feriados_multas',
+            'manage_feriados_multas',
+            'manage_ciclo_legal_multas',
+            'manage_calculos_ee'
+        ], session)
         if (!authorized) {
             return { success: false, error: 'No tienes permisos para ver el calendario de feriados.' }
         }
@@ -73,7 +78,11 @@ export async function guardarFeriadoAction(data: {
 }): Promise<{ success: boolean; error?: string }> {
     try {
         const session = await getSession()
-        const { authorized } = await checkMultasPermission(['manage_ciclo_legal_multas', 'manage_calculos_ee', 'view_multas_areas'], session)
+        const { authorized } = await checkMultasPermission([
+            'manage_feriados_multas',
+            'manage_ciclo_legal_multas',
+            'manage_calculos_ee'
+        ], session)
         if (!authorized) {
             return { success: false, error: 'No tienes permisos para modificar el calendario de feriados.' }
         }
@@ -113,14 +122,14 @@ export async function guardarFeriadoAction(data: {
             `, idFeriado, fechaTrim, descripcionTrim, anioCalculado, data.tipo, data.activo)
         }
 
-        invalidarCacheFeriados(anioCalculado)
+        invalidarCacheFeriados() // Invalida el caché de todos los años por si se modificó el año del feriado
 
         await logAuditAction({
             username: (session.user.username || session.user.email) as string,
             userId: session.user.id || null,
             action: 'GUARDAR_FERIADO_MULTAS',
-            modulo: 'Multas · Calendario de Feriados',
-            detalle: `Se registró/actualizó el feriado ${fechaTrim} (${descripcionTrim}, Tipo: ${data.tipo}, Activo: ${data.activo}).`
+            modulo: 'Áreas -> Multas',
+            detalle: `Calendario de Feriados: Se registró/actualizó el feriado ${fechaTrim} (${descripcionTrim}, Tipo: ${data.tipo}, Activo: ${data.activo}).`
         })
 
         revalidatePath('/dashboard/areas/multas/feriados')
@@ -137,7 +146,11 @@ export async function guardarFeriadoAction(data: {
 export async function toggleActivoFeriadoAction(id: string, nuevoActivo: boolean): Promise<{ success: boolean; error?: string }> {
     try {
         const session = await getSession()
-        const { authorized } = await checkMultasPermission(['manage_ciclo_legal_multas', 'manage_calculos_ee', 'view_multas_areas'], session)
+        const { authorized } = await checkMultasPermission([
+            'manage_feriados_multas',
+            'manage_ciclo_legal_multas',
+            'manage_calculos_ee'
+        ], session)
         if (!authorized) {
             return { success: false, error: 'No tienes permisos para modificar feriados.' }
         }
@@ -151,10 +164,16 @@ export async function toggleActivoFeriadoAction(id: string, nuevoActivo: boolean
             RETURNING anio, fecha, descripcion;
         `, nuevoActivo, id)
 
+        invalidarCacheFeriados()
+
         if (rows && rows.length > 0) {
-            invalidarCacheFeriados(rows[0].anio)
-        } else {
-            invalidarCacheFeriados()
+            await logAuditAction({
+                username: (session.user.username || session.user.email) as string,
+                userId: session.user.id || null,
+                action: 'TOGGLE_ESTADO_FERIADO_MULTAS',
+                modulo: 'Áreas -> Multas',
+                detalle: `Calendario de Feriados: Se cambió el estado a ${nuevoActivo ? 'ACTIVO' : 'INACTIVO'} para el feriado ${rows[0].fecha} (${rows[0].descripcion}).`
+            })
         }
 
         revalidatePath('/dashboard/areas/multas/feriados')
@@ -168,7 +187,11 @@ export async function toggleActivoFeriadoAction(id: string, nuevoActivo: boolean
 export async function eliminarFeriadoAction(id: string): Promise<{ success: boolean; error?: string }> {
     try {
         const session = await getSession()
-        const { authorized } = await checkMultasPermission(['manage_ciclo_legal_multas', 'manage_calculos_ee', 'view_multas_areas'], session)
+        const { authorized } = await checkMultasPermission([
+            'manage_feriados_multas',
+            'manage_ciclo_legal_multas',
+            'manage_calculos_ee'
+        ], session)
         if (!authorized) {
             return { success: false, error: 'No tienes permisos para eliminar feriados.' }
         }
@@ -181,17 +204,16 @@ export async function eliminarFeriadoAction(id: string): Promise<{ success: bool
             RETURNING anio, fecha, descripcion;
         `, id)
 
+        invalidarCacheFeriados()
+
         if (rows && rows.length > 0) {
-            invalidarCacheFeriados(rows[0].anio)
             await logAuditAction({
                 username: (session.user.username || session.user.email) as string,
                 userId: session.user.id || null,
                 action: 'ELIMINAR_FERIADO_MULTAS',
-                modulo: 'Multas · Calendario de Feriados',
-                detalle: `Se eliminó el feriado ${rows[0].fecha} (${rows[0].descripcion}).`
+                modulo: 'Áreas -> Multas',
+                detalle: `Calendario de Feriados: Se eliminó el feriado ${rows[0].fecha} (${rows[0].descripcion}).`
             })
-        } else {
-            invalidarCacheFeriados()
         }
 
         revalidatePath('/dashboard/areas/multas/feriados')
@@ -205,7 +227,11 @@ export async function eliminarFeriadoAction(id: string): Promise<{ success: bool
 export async function restablecerFeriadosAnioAction(anio: number): Promise<{ success: boolean; creados?: number; error?: string }> {
     try {
         const session = await getSession()
-        const { authorized } = await checkMultasPermission(['manage_ciclo_legal_multas', 'manage_calculos_ee', 'view_multas_areas'], session)
+        const { authorized } = await checkMultasPermission([
+            'manage_feriados_multas',
+            'manage_ciclo_legal_multas',
+            'manage_calculos_ee'
+        ], session)
         if (!authorized) {
             return { success: false, error: 'No tienes permisos para restablecer feriados.' }
         }
@@ -244,8 +270,8 @@ export async function restablecerFeriadosAnioAction(anio: number): Promise<{ suc
             username: (session.user.username || session.user.email) as string,
             userId: session.user.id || null,
             action: 'RESTABLECER_FERIADOS_MULTAS',
-            modulo: 'Multas · Calendario de Feriados',
-            detalle: `Se restablecieron ${agregados} feriados oficiales para el año ${anio}.`
+            modulo: 'Áreas -> Multas',
+            detalle: `Calendario de Feriados: Se restablecieron ${agregados} feriados oficiales para el año ${anio}.`
         })
 
         revalidatePath('/dashboard/areas/multas/feriados')

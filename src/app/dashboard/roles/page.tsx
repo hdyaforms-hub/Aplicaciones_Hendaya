@@ -109,6 +109,11 @@ export default async function RolesPage() {
         { id: 'manage_calidad_higiene_personal', name: 'Higiene Personal (Gestionar)', description: 'Permite registrar y modificar inspecciones de trabajadores en la planilla diaria.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_calidad_higiene_personal', name: 'Higiene Personal (Firma Calidad)', description: 'Permite firmar y cerrar la planilla diaria como Encargado de Calidad.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_bodega_higiene_personal', name: 'Higiene Personal (Firma Jefe de Bodega)', description: 'Permite validar y firmar la planilla diaria como Jefe de Bodega.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_calidad_actas_c8', name: 'Actas C8 (Ver)', description: 'Acceso visual al módulo de Actas C8 en Calidad.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_calidad_actas_c8', name: 'Actas C8 (Gestionar)', description: 'Permite crear, editar y gestionar actas C8.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'import_calidad_actas_c8', name: 'Actas C8 (Carga Masiva Excel)', description: 'Permite importar masivamente actas C8 desde planilla Excel.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_calidad_registros_globales', name: 'Registros Globales Calidad (Ver)', description: 'Acceso visual al mantenedor de Registros Globales de Calidad.', category: 'MANTENEDORES -> CALIDAD' },
+        { id: 'manage_calidad_registros_globales', name: 'Registros Globales Calidad (Gestionar)', description: 'Permite crear y editar motivos C8 y otros registros globales de calidad.', category: 'MANTENEDORES -> CALIDAD' },
 
         { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
@@ -127,6 +132,8 @@ export default async function RolesPage() {
         { id: 'manage_config_ia_multas', name: 'Configuración de IA (Gestionar)', description: 'Permite configurar credenciales de API cifradas, modelos y topes de gasto mensual de IA.', category: 'ÁREAS -> MULTAS' },
         { id: 'view_tablero_multas_consolidado', name: 'Tablero Consolidado de Multas (Ver)', description: 'Permite consultar el tablero ejecutivo consolidado con métricas financieras y operativas de multas.', category: 'ÁREAS -> MULTAS' },
         { id: 'export_multas_consolidado', name: 'Exportar Reporte Maestro (Excel)', description: 'Permite descargar la planilla Excel consolidada de todas las actas, montos y resoluciones.', category: 'ÁREAS -> MULTAS' },
+        { id: 'view_feriados_multas', name: 'Calendario de Feriados (Ver)', description: 'Permite consultar el calendario de feriados oficiales de Chile y plazos administrativos.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_feriados_multas', name: 'Calendario de Feriados (Gestionar)', description: 'Permite agregar, editar, activar/desactivar y restablecer feriados oficiales y leyes especiales.', category: 'ÁREAS -> MULTAS' },
 
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },

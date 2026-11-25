@@ -89,6 +89,11 @@ export async function getSession() {
                 'view_captura_certificacion',
                 'manage_manipuladoras_masiva',
                 'view_calidad',
+                'view_calidad_actas_c8',
+                'manage_calidad_actas_c8',
+                'import_calidad_actas_c8',
+                'view_calidad_registros_globales',
+                'manage_calidad_registros_globales',
                 'view_retorno_productos',
                 'manage_retorno_productos',
                 'view_calidad_subir_actas_estandar_pae',
@@ -104,6 +109,8 @@ export async function getSession() {
                 'manage_notificaciones_junaeb',
                 'view_ciclo_legal_multas',
                 'manage_ciclo_legal_multas',
+                'view_feriados_multas',
+                'manage_feriados_multas',
                 'view_prev_gravedad_preparacion',
                 'manage_prev_gravedad_preparacion',
                 'view_prev_riesgo_minuta',
@@ -212,7 +219,9 @@ export async function getSession() {
                 'view_ia_multas',
                 'manage_config_ia_multas',
                 'view_tablero_multas_consolidado',
-                'export_multas_consolidado'
+                'export_multas_consolidado',
+                'view_feriados_multas',
+                'manage_feriados_multas'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

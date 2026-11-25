@@ -8,7 +8,8 @@ import FeriadosClient from './FeriadosClient'
 export default async function FeriadosPage() {
     const session = await getSession()
     const { authorized } = await checkMultasPermission([
-        'view_multas_areas',
+        'view_feriados_multas',
+        'manage_feriados_multas',
         'manage_ciclo_legal_multas',
         'manage_calculos_ee'
     ], session)
@@ -18,6 +19,7 @@ export default async function FeriadosPage() {
     }
 
     const canEditRes = await checkMultasPermission([
+        'manage_feriados_multas',
         'manage_ciclo_legal_multas',
         'manage_calculos_ee'
     ], session)
@@ -26,8 +28,8 @@ export default async function FeriadosPage() {
         username: (session.user.username || session.user.email) as string,
         userId: session.user.id || null,
         action: 'ACCESO_CALENDARIO_FERIADOS_MULTAS',
-        modulo: 'Multas · Calendario de Feriados',
-        detalle: 'Acceso a la configuración y gestión del calendario de feriados oficiales.'
+        modulo: 'Áreas -> Multas',
+        detalle: 'Calendario de Feriados: Acceso a la configuración y consulta del calendario de feriados oficiales.'
     })
 
     const currentYear = new Date().getFullYear()

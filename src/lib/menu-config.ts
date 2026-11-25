@@ -251,6 +251,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin'
                     const hasCalidad = user.areas?.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
                     const hasPerm = user.role.permissions.includes('view_calidad') || 
+                                   user.role.permissions.includes('view_calidad_actas_c8') ||
                                    user.role.permissions.includes('view_retorno_productos') ||
                                    user.role.permissions.includes('view_verificador_temperaturas') ||
                                    user.role.permissions.includes('view_calidad_transporte_higiene') ||
@@ -259,6 +260,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [
+                    {
+                        name: 'Actas C8',
+                        href: '/dashboard/areas/calidad/actas-c8',
+                        requiredPermission: 'view_calidad_actas_c8'
+                    },
                     {
                         name: 'Resolución Sanitaria',
                         href: '/dashboard/areas/calidad/resolucion-sanitaria',
@@ -343,7 +349,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     {
                         name: 'Calendario de Feriados',
                         href: '/dashboard/areas/multas/feriados',
-                        requiredPermission: ['view_multas_areas', 'manage_ciclo_legal_multas', 'manage_calculos_ee']
+                        requiredPermission: ['view_feriados_multas', 'manage_feriados_multas', 'manage_ciclo_legal_multas', 'manage_calculos_ee']
                     }
                 ]
             },
@@ -509,6 +515,13 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 subItems: [
                     { name: 'Colegios Activos', href: '/dashboard/mantenedor/matriz-riesgo/colegios-activos', requiredPermission: 'manage_colegios_matriz' },
                     { name: 'Nueva Matriz', href: '/dashboard/mantenedor/matriz-riesgo/nueva-matriz', requiredPermission: 'manage_nueva_matriz' }
+                ]
+            },
+            {
+                name: 'Calidad',
+                requiredPermission: ['view_calidad_registros_globales', 'manage_calidad_registros_globales', 'view_calidad'],
+                subItems: [
+                    { name: 'Registros Globales', href: '/dashboard/mantenedor/calidad/registros-globales', requiredPermission: ['view_calidad_registros_globales', 'manage_calidad_registros_globales', 'view_calidad'] }
                 ]
             },
             { name: 'Área', href: '/dashboard/mantenedor/areas', requiredPermission: 'manage_areas' },

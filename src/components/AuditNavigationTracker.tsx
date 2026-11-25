@@ -80,6 +80,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/operaciones/cargar-pae')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Cargar PaeOnline' }
     if (path.startsWith('/dashboard/areas/manipuladoras')) return { modulo: 'Áreas -> Manipuladoras', detalle: 'Accedió a Cálculo de Gramaje' }
     if (path.startsWith('/dashboard/areas/calidad/resolucion-sanitaria')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Resolución Sanitaria' }
+    if (path.startsWith('/dashboard/areas/calidad/actas-c8')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Actas C8' }
     if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Bloqueo y/o Retirada de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/verificador-temperaturas')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Verificador de Temperaturas de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/subir-actas-pae')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Subir Actas Estándar PAE' }
@@ -129,6 +130,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Mantenedores
     if (path.startsWith('/dashboard/mantenedor') || path.startsWith('/dashboard/productos') || path.startsWith('/dashboard/calculadora')) {
+        if (path.includes('/mantenedor/calidad/registros-globales')) return { modulo: 'Mantenedor -> Calidad', detalle: 'Accedió a Registros Globales de Calidad' }
         if (path.includes('/personal/configuracion-visualizacion')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Configuración de Visualización (Asignación Jefatura-Personal)' }
         if (path.includes('/personal/monitoreo')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Mantenedor Monitoreo RRHH (Roles Asignados)' }
         if (path.includes('/personal/criterios-ausencias')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Criterios de Ausencias' }
