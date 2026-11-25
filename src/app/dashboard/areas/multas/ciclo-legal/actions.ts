@@ -348,10 +348,14 @@ export async function getDescargoFormalDetalleAction(id: string): Promise<{
         let estadoActual = d.estado as DescargoFormalDTO['estado']
         if ((d.estado === 'PRESENTADO' || d.estado === 'EN_EVALUACION' || d.estado === 'BORRADOR') && estaPlazoVencido(d.fechaPlazoRespuesta)) {
             estadoActual = 'PLAZO_VENCIDO'
-            prisma.multas_Descargo_Formal.update({
-                where: { id: d.id },
-                data: { estado: 'PLAZO_VENCIDO' }
-            }).catch(e => console.error('Error auto-marcando PLAZO_VENCIDO en detalle:', e))
+            try {
+                await prisma.multas_Descargo_Formal.update({
+                    where: { id: d.id },
+                    data: { estado: 'PLAZO_VENCIDO' }
+                })
+            } catch (e) {
+                console.error('Error auto-marcando PLAZO_VENCIDO en detalle:', e)
+            }
         }
 
         const descargoDto: DescargoFormalDTO = {
@@ -645,16 +649,21 @@ export async function registrarResuelveAction(params: {
 
         const descargo = await prisma.multas_Descargo_Formal.findUnique({
             where: { id: descargoId },
-            select: { id: true, montoImpugnadoUtm: true }
+            include: {
+                resuelves: { select: { montoRebajadoUtm: true } }
+            }
         })
         if (!descargo) {
             return { success: false, error: 'Descargo formal no encontrado.' }
         }
 
-        if (descargo.montoImpugnadoUtm > 0 && montoRebajadoUtm > descargo.montoImpugnadoUtm) {
+        const rebajadoPrevio = descargo.resuelves.reduce((acc, r) => acc + (r.montoRebajadoUtm || 0), 0)
+        const nuevoTotalRebajado = rebajadoPrevio + montoRebajadoUtm
+
+        if (descargo.montoImpugnadoUtm > 0 && nuevoTotalRebajado > descargo.montoImpugnadoUtm) {
             return {
                 success: false,
-                error: `El monto rebajado (${montoRebajadoUtm.toLocaleString('es-CL')} UTM) no puede superar el monto impugnado (${descargo.montoImpugnadoUtm.toLocaleString('es-CL')} UTM).`
+                error: `El total rebajado acumulado (${nuevoTotalRebajado.toLocaleString('es-CL')} UTM: ${rebajadoPrevio.toLocaleString('es-CL')} previas + ${montoRebajadoUtm.toLocaleString('es-CL')} nueva) no puede superar el monto impugnado (${descargo.montoImpugnadoUtm.toLocaleString('es-CL')} UTM).`
             }
         }
 

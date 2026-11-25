@@ -39,16 +39,24 @@ export default async function TableroConsolidadoPage() {
         detalle: 'Acceso al Tablero Ejecutivo Consolidado de Multas.'
     })
 
-    const [metricasRes, licitacionesDb] = await Promise.all([
+    const [metricasRes, licitacionesDb, licitacionesRexDb] = await Promise.all([
         getMetricasTableroConsolidadoAction(),
         prisma.multas_Elementos_Esenciales_Cab.findMany({
             select: { licitacion: true },
             distinct: ['licitacion'],
             where: { licitacion: { not: null } }
-        })
+        }),
+        prisma.multas_Notificacion_REX.findMany({
+            select: { licitacionNombre: true },
+            distinct: ['licitacionNombre'],
+            where: { licitacionNombre: { not: null } }
+        }).catch(() => [])
     ])
 
-    const licitaciones = Array.from(new Set(licitacionesDb.map(l => l.licitacion).filter(Boolean))) as string[]
+    const licitaciones = Array.from(new Set([
+        ...licitacionesDb.map(l => l.licitacion).filter(Boolean),
+        ...licitacionesRexDb.map((l: any) => l.licitacionNombre).filter(Boolean)
+    ])) as string[]
 
     return (
         <div className="w-full py-4 sm:py-6 px-2 sm:px-6 space-y-6">

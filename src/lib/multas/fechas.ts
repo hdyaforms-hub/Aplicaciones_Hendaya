@@ -1,7 +1,15 @@
+import { rawPrisma } from '@/lib/prisma'
+import { ensureFeriadosTables } from './feriados-db-init'
+
 /**
  * Utilidades de cálculo de plazos y días hábiles administrativos en Chile.
- * Considera fines de semana (sábados y domingos) y feriados nacionales oficiales de Chile.
+ * Combina la tabla persistida Multas_Feriado (prioritaria y editable) con el motor
+ * algorítmico oficial de feriados legales de Chile como respaldo.
  */
+
+// Cache en memoria para feriados de BD (por año)
+const feriadosDbCache = new Map<number, { set: Set<string>; loadedAt: number }>()
+const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutos
 
 /**
  * Calcula el Domingo de Resurrección (Pascua) usando el algoritmo de Butcher / Meeus.
@@ -25,9 +33,9 @@ function getPascua(year: number): { month: number; day: number } {
 }
 
 /**
- * Retorna la lista de feriados nacionales en Chile para un año determinado en formato 'YYYY-MM-DD'.
+ * Motor algorítmico oficial de feriados legales en Chile (Leyes 2.977, 19.668, 20.215, 20.983, 21.357).
  */
-export function getFeriadosChile(year: number): Set<string> {
+export function getFeriadosChileFallback(year: number): Set<string> {
     const feriados = new Set<string>()
 
     const pad = (n: number) => n.toString().padStart(2, '0')
@@ -37,7 +45,6 @@ export function getFeriadosChile(year: number): Set<string> {
     addFeriado(1, 1)   // Año Nuevo
     addFeriado(5, 1)   // Día del Trabajador
     addFeriado(5, 21)  // Glorias Navales
-    addFeriado(6, 20)  // Día Nacional de los Pueblos Indígenas (o solsticio aprox 20-21)
     addFeriado(7, 16)  // Virgen del Carmen
     addFeriado(8, 15)  // Asunción de la Virgen
     addFeriado(9, 18)  // Independencia Nacional
@@ -46,13 +53,27 @@ export function getFeriadosChile(year: number): Set<string> {
     addFeriado(12, 8)  // Inmaculada Concepción
     addFeriado(12, 25) // Navidad
 
-    // Fiestas Patrias adicionales según día de la semana (Ley 20.215 / 20.983)
+    // Día Nacional de los Pueblos Indígenas (Ley 21.357: día del solsticio de invierno)
+    // 2024: 20 de junio, 2025: 20 de junio, 2026: 21 de junio, 2027: 21 de junio
+    if (year === 2024 || year === 2025) {
+        addFeriado(6, 20)
+    } else {
+        addFeriado(6, 21)
+    }
+
+    // Fiestas Patrias adicionales según día de la semana:
+    // Ley 20.215:
+    // - Si 18 y 19 caen martes y miércoles -> lunes 17 feriado (dia18 === 2)
+    // - Si 18 y 19 caen miércoles y jueves -> viernes 20 feriado (dia18 === 3)
+    // Ley 20.983:
+    // - Si 18 cae en día sábado (y 19 domingo) -> viernes 17 feriado (dia18 === 6)
+    // (Nota: Si 18 cae viernes como en 2026, el jueves 17 NO es feriado)
     const dia18 = new Date(year, 8, 18).getDay() // 0=Dom, 1=Lun, 2=Mar, 3=Mie, 4=Jue, 5=Vie, 6=Sab
-    if (dia18 === 2) { // Martes 18 y Miércoles 19 -> Lunes 17 feriado
+    if (dia18 === 2) {
         addFeriado(9, 17)
-    } else if (dia18 === 3) { // Miércoles 18 y Jueves 19 -> Viernes 20 feriado
+    } else if (dia18 === 3) {
         addFeriado(9, 20)
-    } else if (dia18 === 5) { // Viernes 18 y Sábado 19 -> Jueves 17 feriado
+    } else if (dia18 === 6) {
         addFeriado(9, 17)
     }
 
@@ -105,14 +126,54 @@ export function getFeriadosChile(year: number): Set<string> {
 }
 
 /**
+ * Carga o refresca feriados desde la base de datos (tabla Multas_Feriado).
+ */
+export async function cargarFeriadosDb(year: number): Promise<Set<string>> {
+    const cached = feriadosDbCache.get(year)
+    if (cached && Date.now() - cached.loadedAt < CACHE_TTL_MS) {
+        return cached.set
+    }
+
+    try {
+        await ensureFeriadosTables()
+        const rows: any[] = await rawPrisma.$queryRawUnsafe(`
+            SELECT fecha FROM "Multas_Feriado"
+            WHERE anio = $1 AND activo = true;
+        `, year)
+
+        if (rows && rows.length > 0) {
+            const set = new Set<string>(rows.map(r => r.fecha))
+            feriadosDbCache.set(year, { set, loadedAt: Date.now() })
+            return set
+        }
+    } catch (e) {
+        console.error(`Error consultando feriados BD año ${year}, usando fallback:`, e)
+    }
+
+    const fallback = getFeriadosChileFallback(year)
+    feriadosDbCache.set(year, { set: fallback, loadedAt: Date.now() })
+    return fallback
+}
+
+/**
+ * Retorna los feriados de un año (usa cache si existe, sino fallback inmediato).
+ */
+export function getFeriadosChile(year: number): Set<string> {
+    const cached = feriadosDbCache.get(year)
+    if (cached) return cached.set
+    cargarFeriadosDb(year).catch(() => {})
+    return getFeriadosChileFallback(year)
+}
+
+/**
  * Comprueba si una fecha es fin de semana o feriado en Chile.
  */
-export function esDiaHabilChile(fecha: Date): boolean {
+export function esDiaHabilChile(fecha: Date, feriadosSet?: Set<string>): boolean {
     const diaSemana = fecha.getDay()
     if (diaSemana === 0 || diaSemana === 6) return false
 
     const year = fecha.getFullYear()
-    const feriados = getFeriadosChile(year)
+    const feriados = feriadosSet || getFeriadosChile(year)
 
     const pad = (n: number) => n.toString().padStart(2, '0')
     const key = `${year}-${pad(fecha.getMonth() + 1)}-${pad(fecha.getDate())}`
@@ -123,13 +184,17 @@ export function esDiaHabilChile(fecha: Date): boolean {
 /**
  * Calcula la fecha de término sumando días hábiles administrativos (Lunes a Viernes excluyendo feriados).
  */
-export function calcularFechaPlazoHabil(fechaInicio: Date | string, diasHabiles: number): Date {
+export function calcularFechaPlazoHabil(
+    fechaInicio: Date | string,
+    diasHabiles: number,
+    feriadosSet?: Set<string>
+): Date {
     const res = new Date(fechaInicio)
     let agregados = 0
 
     while (agregados < diasHabiles) {
         res.setDate(res.getDate() + 1)
-        if (esDiaHabilChile(res)) {
+        if (esDiaHabilChile(res, feriadosSet)) {
             agregados++
         }
     }
@@ -138,15 +203,28 @@ export function calcularFechaPlazoHabil(fechaInicio: Date | string, diasHabiles:
 }
 
 /**
- * Evalúa si una fecha límite ya ha vencido respecto a la fecha actual (medianoche local).
+ * Evalúa si una fecha límite ya ha vencido respecto a la fecha actual oficial en Chile (zona horaria America/Santiago).
+ * Evita cualquier desfase por servidores alojados en UTC (Railway, Docker, etc.).
  */
 export function estaPlazoVencido(fechaPlazo: Date | string | null | undefined): boolean {
     if (!fechaPlazo) return false
-    const limite = new Date(fechaPlazo)
-    if (isNaN(limite.getTime())) return false
 
-    const hoy = new Date()
-    // Fin del día de la fecha límite (23:59:59.999)
-    limite.setHours(23, 59, 59, 999)
-    return hoy > limite
+    let strLimite = ''
+    if (typeof fechaPlazo === 'string') {
+        strLimite = fechaPlazo.split('T')[0]
+    } else if (fechaPlazo instanceof Date && !isNaN(fechaPlazo.getTime())) {
+        strLimite = fechaPlazo.toISOString().split('T')[0]
+    }
+    if (!strLimite || !/^\d{4}-\d{2}-\d{2}$/.test(strLimite)) return false
+
+    // Obtener fecha actual en Chile (zona horaria America/Santiago) en formato YYYY-MM-DD
+    const hoyChile = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Santiago',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date())
+
+    // El plazo vence al culminar el día hábil en Chile (hoyChile > strLimite)
+    return hoyChile > strLimite
 }

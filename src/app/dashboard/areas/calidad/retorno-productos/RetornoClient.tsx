@@ -144,7 +144,7 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                     </div>
 
                                     {/* Bloque de Información del Producto */}
-                                    <div className="bg-white/50 rounded-lg p-2.5 mb-2.5 border border-black/10 text-xs space-y-1">
+                                    <div className="bg-white/50 rounded-lg p-2.5 mb-2.5 border border-black/10 text-xs space-y-1.5">
                                         <div className="flex items-center justify-between gap-1">
                                             <span className="font-bold text-gray-900 truncate">
                                                 📦 {alerta.nombreProducto || 'Producto no especificado'}
@@ -155,27 +155,35 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                                 <span className="font-semibold text-gray-800">Marca:</span> {alerta.marcaProducto}
                                             </div>
                                         )}
-                                        <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] text-gray-700">
-                                            {alerta.lote && (
-                                                <span className="bg-black/5 px-1.5 py-0.5 rounded font-mono font-bold">
+                                        {alerta.lote && (
+                                            <div>
+                                                <span className="bg-black/5 px-1.5 py-0.5 rounded font-mono font-bold text-[11px] text-gray-800 inline-block">
                                                     Lote: {alerta.lote}
                                                 </span>
-                                            )}
-                                            {(alerta.fechaElaboracion || alerta.fechaVencimiento) && (
-                                                <div className="flex flex-col text-[10px] text-gray-700 text-right">
-                                                    {alerta.fechaElaboracion && (
-                                                        <span>
-                                                            <strong className="text-gray-900 font-semibold">Elab:</strong> {alerta.fechaElaboracion}
+                                            </div>
+                                        )}
+                                        {(alerta.fechaElaboracion || alerta.fechaVencimiento) && (
+                                            <div className="grid grid-cols-2 gap-1 text-[10px] pt-1 border-t border-black/5">
+                                                <div>
+                                                    {alerta.fechaElaboracion ? (
+                                                        <span className="text-gray-800">
+                                                            <strong className="text-gray-950">Elab:</strong> {alerta.fechaElaboracion}
                                                         </span>
-                                                    )}
-                                                    {alerta.fechaVencimiento && (
-                                                        <span className="text-red-700 font-semibold">
-                                                            <strong className="text-red-900 font-bold">Vence:</strong> {alerta.fechaVencimiento}
-                                                        </span>
+                                                    ) : (
+                                                        <span className="text-gray-400">Elab: -</span>
                                                     )}
                                                 </div>
-                                            )}
-                                        </div>
+                                                <div className="text-right">
+                                                    {alerta.fechaVencimiento ? (
+                                                        <span className="text-red-700 font-semibold">
+                                                            <strong className="text-red-900">Vence:</strong> {alerta.fechaVencimiento}
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-gray-400">Vence: -</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                     
                                     <p className="text-gray-800 text-xs mb-3 flex-1 break-words overflow-hidden italic" 

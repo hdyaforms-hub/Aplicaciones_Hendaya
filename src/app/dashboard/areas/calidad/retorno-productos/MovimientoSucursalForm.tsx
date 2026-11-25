@@ -97,16 +97,20 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
         historialEstados = []
     }
 
-    // Filtrar colegios por texto de búsqueda
+    // Filtrar colegios por texto de búsqueda con normalización de acentos
     const colegiosFiltrados = colegiosList.filter(c => {
         if (!busquedaColegio.trim()) return true
-        const term = busquedaColegio.toLowerCase()
+        const term = busquedaColegio.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+        const normEst = (c.establecimiento || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        const normCom = (c.comuna || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        const normSuc = (c.sucursal || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         return (
             c.rbd.toString().includes(term) ||
-            c.establecimiento.toLowerCase().includes(term) ||
-            (c.comuna && c.comuna.toLowerCase().includes(term))
+            normEst.includes(term) ||
+            normCom.includes(term) ||
+            normSuc.includes(term)
         )
-    }).slice(0, 20)
+    }).slice(0, 30)
 
     // Calcular resumen consolidado por sucursal
     const validSucursales = alerta.sucursalesEstado.filter((s: any) => s.sucursal?.nombre !== 'CASA MATRIZ')
@@ -380,8 +384,8 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                         </div>
                     )}
 
-                    {/* RESUMEN POR SUCURSAL CON SUMATORIA DE CANTIDADES Y COLUMNA RBD (Rectángulo Verde Imagen 2) */}
-                    <div className="bg-white p-3.5 rounded-xl border-2 border-sky-300 shadow-sm">
+                    {/* RESUMEN POR SUCURSAL CON SUMATORIA DE CANTIDADES Y COLUMNA RBD */}
+                    <div className="bg-white p-3.5 rounded-xl border border-amber-200 shadow-sm">
                         <div className="flex justify-between items-center mb-2">
                             <h4 className="text-xs font-bold text-sky-950 uppercase tracking-wider flex items-center gap-1.5">
                                 <span>📊</span> Resumen Consolidado por Sucursal
@@ -646,10 +650,10 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                 </select>
                             </div>
 
-                            {/* RECUADRO ROJO (IMAGEN 2): Radio buttons Bodega vs Establecimiento */}
-                            <div className="bg-slate-100/80 p-3 rounded-2xl border-2 border-red-300">
-                                <label className="block text-xs font-bold text-gray-800 uppercase tracking-wider mb-2">
-                                    Destino del Registro <span className="text-red-500">*</span>
+                            {/* Selector Bodega vs Establecimiento */}
+                            <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <label className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                    Tipo de Registro
                                 </label>
                                 <div className="flex gap-6">
                                     <label className="flex items-center gap-2 cursor-pointer font-bold text-xs text-gray-800">
@@ -677,7 +681,7 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
                                 </div>
                             </div>
 
-                            {/* RECUADRO AMARILLO (IMAGEN 2): DETALLE OPERATIVO DE BODEGA */}
+                            {/* Detalle Operativo en Bodega */}
                             {tipoDestino === 'BODEGA' ? (
                                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3 animate-in fade-in duration-200">
                                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 block">

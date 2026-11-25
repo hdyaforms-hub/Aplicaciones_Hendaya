@@ -79,6 +79,15 @@ export interface FilaReporteMaestroDTO {
     medidaCorrectiva: string
 }
 
+// Función auxiliar privada para comparar licitación con normalización (sin tildes, mayúsculas/minúsculas y subcadenas)
+function coincideLicitacion(valor: string | null | undefined, filtro: string): boolean {
+    if (!filtro || filtro === 'TODAS') return true
+    if (!valor || !valor.trim()) return false
+    const v = valor.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+    const f = filtro.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+    return v === f || v.includes(f) || f.includes(v)
+}
+
 // Función auxiliar privada para resolver el valor UTM histórico por mes/año de supervisión
 async function getUtmLookup() {
     const utms = await prisma.uTM.findMany({
@@ -151,7 +160,7 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
                 if (new Date(c.fechaSupervision).getFullYear() !== Number(filtros.anio)) return false
             }
             if (filtros?.licitacion && filtros.licitacion !== 'TODAS') {
-                if (c.licitacion !== filtros.licitacion) return false
+                if (!coincideLicitacion(c.licitacion, filtros.licitacion)) return false
             }
             if (filtros?.sucursal && filtros.sucursal !== 'TODAS') {
                 const suc = rbdSucursalMap.get(c.rbd) || 'Central / Matriz'
@@ -297,7 +306,7 @@ export async function getMetricasTableroConsolidadoAction(filtros?: {
                 if (item.notificacion.periodoAnio !== Number(filtros.anio)) return false
             }
             if (filtros?.licitacion && filtros.licitacion !== 'TODAS') {
-                if (item.notificacion?.licitacionNombre && item.notificacion.licitacionNombre !== filtros.licitacion) {
+                if (!coincideLicitacion(item.notificacion?.licitacionNombre, filtros.licitacion)) {
                     return false
                 }
             }
