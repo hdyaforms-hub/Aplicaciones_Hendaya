@@ -79,13 +79,13 @@ export interface FilaReporteMaestroDTO {
     medidaCorrectiva: string
 }
 
-// Función auxiliar privada para comparar licitación con normalización (sin tildes, mayúsculas/minúsculas y subcadenas)
+// Función auxiliar privada para comparar licitación con normalización exacta (sin tildes ni diferencias de mayúsculas/minúsculas)
 function coincideLicitacion(valor: string | null | undefined, filtro: string): boolean {
     if (!filtro || filtro === 'TODAS') return true
     if (!valor || !valor.trim()) return false
     const v = valor.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
     const f = filtro.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
-    return v === f || v.includes(f) || f.includes(v)
+    return v === f
 }
 
 // Función auxiliar privada para resolver el valor UTM histórico por mes/año de supervisión

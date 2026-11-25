@@ -6,7 +6,7 @@ import { ensureSolucionesPlanTables } from '@/lib/multas/soluciones-plan-db-init
 import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
-import { calcularFechaPlazoHabil } from '@/lib/multas/fechas'
+import { calcularFechaPlazoHabil, getFeriadosParaPlazo } from '@/lib/multas/fechas'
 
 export interface PlanAccionDTO {
     id: string
@@ -368,14 +368,16 @@ export async function generarPlanesAccionMasivosAction(): Promise<{
         let creados = 0
         let existentes = 0
 
+        // Plazo compromiso estándar: 5 días hábiles administrativos consultando feriados de BD
+        const fechaBase = new Date()
+        const feriadosCompromiso = await getFeriadosParaPlazo(fechaBase, 5)
+        const compromiso = calcularFechaPlazoHabil(fechaBase, 5, feriadosCompromiso)
+
         for (const [folio, data] of foliosMap.entries()) {
             if (foliosExistentesSet.has(folio)) {
                 existentes++
                 continue
             }
-
-            // Plazo compromiso estándar: 5 días hábiles administrativos (excluyendo fines de semana y feriados oficiales de Chile)
-            const compromiso = calcularFechaPlazoHabil(new Date(), 5)
 
             await prisma.multas_Plan_Accion.create({
                 data: {

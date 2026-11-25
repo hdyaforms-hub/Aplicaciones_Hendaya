@@ -135,6 +135,15 @@ export default function CicloLegalClient({ initialList, initialResumen, notifica
                     {/* Botones de Cabecera */}
                     <div className="flex items-center gap-2.5 flex-wrap">
                         <Link
+                            href="/dashboard/areas/multas/feriados"
+                            className="px-3 py-2 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm"
+                            title="Configurar calendario de feriados oficiales y leyes especiales"
+                        >
+                            <span>📅</span>
+                            <span>Feriados</span>
+                        </Link>
+
+                        <Link
                             href="/dashboard/areas/multas/ciclo-legal/expediente"
                             className="px-3.5 py-2.5 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-700/60 text-cyan-300 text-xs font-bold rounded-xl flex items-center gap-2 transition shadow-sm"
                             title="Consultar expediente digital unificado por folio o resolución"

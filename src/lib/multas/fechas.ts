@@ -54,8 +54,8 @@ export function getFeriadosChileFallback(year: number): Set<string> {
     addFeriado(12, 25) // Navidad
 
     // Día Nacional de los Pueblos Indígenas (Ley 21.357: día del solsticio de invierno)
-    // 2024: 20 de junio, 2025: 20 de junio, 2026: 21 de junio, 2027: 21 de junio
-    if (year === 2024 || year === 2025) {
+    // 2024: 20 de junio, 2025: 20 de junio, 2026: 21 de junio, 2027: 21 de junio, 2028: 20 de junio
+    if (year === 2024 || year === 2025 || year === 2028) {
         addFeriado(6, 20)
     } else {
         addFeriado(6, 21)
@@ -156,13 +156,52 @@ export async function cargarFeriadosDb(year: number): Promise<Set<string>> {
 }
 
 /**
- * Retorna los feriados de un año (usa cache si existe, sino fallback inmediato).
+ * Invalida la memoria caché de feriados en memoria (forzando lectura fresca de la BD).
+ */
+export function invalidarCacheFeriados(year?: number): void {
+    if (typeof year === 'number') {
+        feriadosDbCache.delete(year)
+    } else {
+        feriadosDbCache.clear()
+    }
+}
+
+/**
+ * Retorna los feriados de un año (usa cache si está vigente según TTL, sino refresca asíncronamente o usa fallback).
  */
 export function getFeriadosChile(year: number): Set<string> {
     const cached = feriadosDbCache.get(year)
-    if (cached) return cached.set
+    if (cached && Date.now() - cached.loadedAt < CACHE_TTL_MS) {
+        return cached.set
+    }
     cargarFeriadosDb(year).catch(() => {})
+    if (cached) return cached.set
     return getFeriadosChileFallback(year)
+}
+
+/**
+ * Obtiene el conjunto de feriados oficiales para el cálculo de un plazo administrativo,
+ * cargando de forma asíncrona la tabla Multas_Feriado para el año inicial
+ * y también para el año subsiguiente si el plazo puede cruzar al año siguiente.
+ */
+export async function getFeriadosParaPlazo(fechaInicio: Date | string, diasHabiles: number = 30): Promise<Set<string>> {
+    const inicio = new Date(fechaInicio)
+    const anioInicio = isNaN(inicio.getTime()) ? new Date().getFullYear() : inicio.getFullYear()
+
+    // Cargar feriados de año inicio desde BD
+    const feriadosInicio = await cargarFeriadosDb(anioInicio)
+    const combinados = new Set<string>(feriadosInicio)
+
+    // Si la fecha de inicio es hacia fin de año (octubre a diciembre) o el plazo en días hábiles puede alcanzar el nuevo año
+    const mesInicio = !isNaN(inicio.getTime()) ? inicio.getMonth() : new Date().getMonth()
+    if (mesInicio >= 9 || diasHabiles >= 15) {
+        const feriadosSiguiente = await cargarFeriadosDb(anioInicio + 1)
+        for (const f of feriadosSiguiente) {
+            combinados.add(f)
+        }
+    }
+
+    return combinados
 }
 
 /**

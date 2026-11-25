@@ -339,6 +339,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Tablero Consolidado y Reportes',
                         href: '/dashboard/areas/multas/tablero',
                         requiredPermission: ['view_tablero_multas_consolidado', 'view_tablero_multas_ee', 'manage_calculos_ee', 'manage_descargos', 'view_multas_areas']
+                    },
+                    {
+                        name: 'Calendario de Feriados',
+                        href: '/dashboard/areas/multas/feriados',
+                        requiredPermission: ['view_multas_areas', 'manage_ciclo_legal_multas', 'manage_calculos_ee']
                     }
                 ]
             },

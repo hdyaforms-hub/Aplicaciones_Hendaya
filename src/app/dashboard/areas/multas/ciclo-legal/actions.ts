@@ -6,7 +6,7 @@ import { ensureCicloLegalTables } from '@/lib/multas/ciclo-legal-db-init'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
 import { checkMultasPermission } from '@/lib/multas/permisos'
-import { calcularFechaPlazoHabil, estaPlazoVencido } from '@/lib/multas/fechas'
+import { calcularFechaPlazoHabil, estaPlazoVencido, getFeriadosParaPlazo } from '@/lib/multas/fechas'
 
 export interface DescargoFormalDTO {
     id: string
@@ -532,8 +532,9 @@ export async function crearDescargoFormalAction(formData: FormData): Promise<{ s
         if (!fechaIngresoStr) return { success: false, error: 'La fecha de ingreso es obligatoria.' }
 
         const fechaIngreso = new Date(fechaIngresoStr)
-        // Cálculo del plazo legal en días hábiles administrativos
-        const fechaPlazoRespuesta = calcularFechaPlazoHabil(fechaIngreso, diasPlazoLegal)
+        // Cálculo del plazo legal en días hábiles administrativos consultando feriados persistidos en BD
+        const feriados = await getFeriadosParaPlazo(fechaIngreso, diasPlazoLegal)
+        const fechaPlazoRespuesta = calcularFechaPlazoHabil(fechaIngreso, diasPlazoLegal, feriados)
 
         // Obtener items de la REX notificada para asociar sus folios
         const rexItems = await prisma.multas_Notificacion_Item.findMany({
