@@ -6,22 +6,7 @@ import { ensureCicloLegalTables } from '@/lib/multas/ciclo-legal-db-init'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
 import { checkMultasPermission } from '@/lib/multas/permisos'
-
-/**
- * Calcula la fecha límite sumando días hábiles (excluyendo sábados y domingos)
- */
-function calcularFechaPlazoHabil(fechaInicio: Date, diasHabiles: number): Date {
-    const res = new Date(fechaInicio)
-    let agregados = 0
-    while (agregados < diasHabiles) {
-        res.setDate(res.getDate() + 1)
-        const dia = res.getDay()
-        if (dia !== 0 && dia !== 6) {
-            agregados++
-        }
-    }
-    return res
-}
+import { calcularFechaPlazoHabil, estaPlazoVencido } from '@/lib/multas/fechas'
 
 export interface DescargoFormalDTO {
     id: string
@@ -196,6 +181,7 @@ export async function getDescargosFormalesListAction(): Promise<{
         let proximosVencer = 0
         let totalImpugnadoUtm = 0
         let totalRebajadoUtm = 0
+        const idsVencidos: string[] = []
 
         const dtos: DescargoFormalDTO[] = list.map(d => {
             const rebajadoResuelves = d.resuelves.reduce((acc, r) => acc + r.montoRebajadoUtm, 0)
@@ -208,11 +194,23 @@ export async function getDescargosFormalesListAction(): Promise<{
                 diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
             }
 
-            if (d.estado === 'PRESENTADO' || d.estado === 'EN_EVALUACION' || d.estado === 'RESPONDIDO_PARCIAL') {
+            // Evaluar auto-marcado de PLAZO_VENCIDO si está abierto y expiró su fecha límite
+            let estadoActual = d.estado as DescargoFormalDTO['estado']
+            const estaVencido = (d.estado === 'PRESENTADO' || d.estado === 'EN_EVALUACION' || d.estado === 'BORRADOR') &&
+                estaPlazoVencido(d.fechaPlazoRespuesta)
+
+            if (estaVencido) {
+                estadoActual = 'PLAZO_VENCIDO'
+                plazosVencidos++
+                if (d.estado !== 'PLAZO_VENCIDO') {
+                    idsVencidos.push(d.id)
+                }
+            } else if (d.estado === 'PLAZO_VENCIDO') {
+                plazosVencidos++
+            } else if (d.estado === 'PRESENTADO' || d.estado === 'EN_EVALUACION' || d.estado === 'RESPONDIDO_PARCIAL') {
                 enTramite++
                 if (diasRestantes !== null) {
-                    if (diasRestantes < 0) plazosVencidos++
-                    else if (diasRestantes <= 5) proximosVencer++
+                    if (diasRestantes <= 5) proximosVencer++
                 }
             }
 
@@ -235,7 +233,7 @@ export async function getDescargosFormalesListAction(): Promise<{
                 fechaPlazoRespuesta: d.fechaPlazoRespuesta ? d.fechaPlazoRespuesta.toISOString().split('T')[0] : null,
                 diasPlazoLegal: d.diasPlazoLegal,
                 diasRestantes,
-                estado: d.estado as any,
+                estado: estadoActual,
                 montoImpugnadoUtm: d.montoImpugnadoUtm,
                 montoImpugnadoPesos: d.montoImpugnadoPesos,
                 montoRebajadoUtm,
@@ -250,6 +248,18 @@ export async function getDescargosFormalesListAction(): Promise<{
                 updatedAt: d.updatedAt.toISOString()
             }
         })
+
+        // Sincronizar en base de datos los descargos vencidos detectados
+        if (idsVencidos.length > 0) {
+            try {
+                await prisma.multas_Descargo_Formal.updateMany({
+                    where: { id: { in: idsVencidos } },
+                    data: { estado: 'PLAZO_VENCIDO' }
+                })
+            } catch (errSync) {
+                console.error('Error sincronizando estado PLAZO_VENCIDO en descargos:', errSync)
+            }
+        }
 
         const tasaExitoGlobal = totalImpugnadoUtm > 0
             ? Math.round((totalRebajadoUtm / totalImpugnadoUtm) * 100)
@@ -335,6 +345,15 @@ export async function getDescargoFormalDetalleAction(id: string): Promise<{
             ? Math.round((montoRebajadoUtm / d.montoImpugnadoUtm) * 100)
             : 0
 
+        let estadoActual = d.estado as DescargoFormalDTO['estado']
+        if ((d.estado === 'PRESENTADO' || d.estado === 'EN_EVALUACION' || d.estado === 'BORRADOR') && estaPlazoVencido(d.fechaPlazoRespuesta)) {
+            estadoActual = 'PLAZO_VENCIDO'
+            prisma.multas_Descargo_Formal.update({
+                where: { id: d.id },
+                data: { estado: 'PLAZO_VENCIDO' }
+            }).catch(e => console.error('Error auto-marcando PLAZO_VENCIDO en detalle:', e))
+        }
+
         const descargoDto: DescargoFormalDTO = {
             id: d.id,
             notificacionId: d.notificacionId,
@@ -347,7 +366,7 @@ export async function getDescargoFormalDetalleAction(id: string): Promise<{
             fechaPlazoRespuesta: d.fechaPlazoRespuesta ? d.fechaPlazoRespuesta.toISOString().split('T')[0] : null,
             diasPlazoLegal: d.diasPlazoLegal,
             diasRestantes,
-            estado: d.estado as any,
+            estado: estadoActual,
             montoImpugnadoUtm: d.montoImpugnadoUtm,
             montoImpugnadoPesos: d.montoImpugnadoPesos,
             montoRebajadoUtm,
@@ -622,6 +641,21 @@ export async function registrarResuelveAction(params: {
 
         if (montoRatificadoUtm < 0 || montoRebajadoUtm < 0) {
             return { success: false, error: 'Los montos ratificados o rebajados no pueden ser negativos.' }
+        }
+
+        const descargo = await prisma.multas_Descargo_Formal.findUnique({
+            where: { id: descargoId },
+            select: { id: true, montoImpugnadoUtm: true }
+        })
+        if (!descargo) {
+            return { success: false, error: 'Descargo formal no encontrado.' }
+        }
+
+        if (descargo.montoImpugnadoUtm > 0 && montoRebajadoUtm > descargo.montoImpugnadoUtm) {
+            return {
+                success: false,
+                error: `El monto rebajado (${montoRebajadoUtm.toLocaleString('es-CL')} UTM) no puede superar el monto impugnado (${descargo.montoImpugnadoUtm.toLocaleString('es-CL')} UTM).`
+            }
         }
 
         const totalEvaluado = montoRatificadoUtm + montoRebajadoUtm

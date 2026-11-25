@@ -6,6 +6,7 @@ import { ensureSolucionesPlanTables } from '@/lib/multas/soluciones-plan-db-init
 import { checkMultasPermission, getUserEffectiveRbds } from '@/lib/multas/permisos'
 import { logAuditAction } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
+import { calcularFechaPlazoHabil } from '@/lib/multas/fechas'
 
 export interface PlanAccionDTO {
     id: string
@@ -373,9 +374,8 @@ export async function generarPlanesAccionMasivosAction(): Promise<{
                 continue
             }
 
-            // Plazo compromiso estándar: 5 días hábiles a partir de hoy
-            const compromiso = new Date()
-            compromiso.setDate(compromiso.getDate() + 7)
+            // Plazo compromiso estándar: 5 días hábiles administrativos (excluyendo fines de semana y feriados oficiales de Chile)
+            const compromiso = calcularFechaPlazoHabil(new Date(), 5)
 
             await prisma.multas_Plan_Accion.create({
                 data: {
