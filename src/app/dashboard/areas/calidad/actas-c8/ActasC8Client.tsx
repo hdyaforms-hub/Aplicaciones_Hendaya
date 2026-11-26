@@ -179,13 +179,18 @@ export default function ActasC8Client({
 
     // Valor anual del contrato según licitación y año actual
     const valorContratoAnual = useMemo(() => {
-        if (!formLicitacion || !calcAnio) return 0
-        const found = filtrosData.valoresContrato?.find(c => 
-            (c.licitacion === formLicitacion || c.licitacion === `Licitación ${formLicitacion}`) && 
-            c.anio === calcAnio
-        )
+        if (!formLicitacion) return 0
+        const anio = calcAnio || (formFechaNotif ? new Date(formFechaNotif).getFullYear() : new Date().getFullYear())
+        const cleanLic = formLicitacion.replace(/^licitaci[oó]n\s+/i, '').trim().toLowerCase()
+        const found = filtrosData.valoresContrato?.find(c => {
+            const cLic = (c.licitacion || '').replace(/^licitaci[oó]n\s+/i, '').trim().toLowerCase()
+            return (cLic === cleanLic || c.licitacion === formLicitacion) && (c.anio === anio || !c.anio)
+        }) || filtrosData.valoresContrato?.find(c => {
+            const cLic = (c.licitacion || '').replace(/^licitaci[oó]n\s+/i, '').trim().toLowerCase()
+            return cLic === cleanLic || c.licitacion === formLicitacion
+        })
         return found ? found.montoAnualPesos : 0
-    }, [formLicitacion, calcAnio, filtrosData.valoresContrato])
+    }, [formLicitacion, calcAnio, formFechaNotif, filtrosData.valoresContrato])
 
     // Cálculo automático de Multa UTM y Total en Pesos según Tipo y Check Aprobado por Institución
     const { computedUtm, computedPesos } = useMemo(() => {
@@ -1372,11 +1377,22 @@ export default function ActasC8Client({
                                             required
                                             value={formLicitacion}
                                             onChange={e => {
-                                                setFormLicitacion(e.target.value)
+                                                const newLic = e.target.value
+                                                setFormLicitacion(newLic)
                                                 setFormSucursal('')
                                                 setFormRbd('')
                                                 setFormEstablecimiento('')
                                                 setFormRbdSearch('')
+                                                // Si el motivo actual no corresponde a la nueva licitación, resetearlo
+                                                if (formMotivoGenericoId) {
+                                                    const valid = filtrosData.motivosC8.some(m => 
+                                                        m.id === formMotivoGenericoId && (!m.licitacion || m.licitacion === 'TODAS' || m.licitacion === newLic)
+                                                    )
+                                                    if (!valid) {
+                                                        setFormMotivoGenericoId('')
+                                                        setFormMotivoGenericoTexto('')
+                                                    }
+                                                }
                                             }}
                                             className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                         >
@@ -1547,9 +1563,12 @@ export default function ActasC8Client({
                                             className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                         >
                                             <option value="">Seleccione motivo C8</option>
-                                            {filtrosData.motivosC8.map(m => (
-                                                <option key={m.id} value={m.id}>{m.codigo} - {m.nombre}</option>
-                                            ))}
+                                            {filtrosData.motivosC8
+                                                .filter(m => !m.licitacion || m.licitacion === 'TODAS' || m.licitacion === formLicitacion)
+                                                .map(m => (
+                                                    <option key={m.id} value={m.id}>{m.codigo} - {m.nombre}</option>
+                                                ))
+                                            }
                                         </select>
                                     </div>
 
@@ -1743,6 +1762,31 @@ export default function ActasC8Client({
                                         </div>
                                         <p className="text-[10px] text-slate-500 mt-1">Obtenido de la tabla UTM oficial.</p>
                                     </div>
+
+                                    {/* Información dinámica de Valor Anual del Contrato si es ETA */}
+                                    {formTipoMulta === 'ETA' && (
+                                        <div className={`col-span-1 sm:col-span-2 lg:col-span-4 p-3.5 rounded-xl border text-xs shadow-sm ${
+                                            valorContratoAnual > 0 
+                                                ? 'bg-emerald-50/80 border-emerald-200 text-emerald-900' 
+                                                : 'bg-amber-50/80 border-amber-200 text-amber-900'
+                                        }`}>
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                                <span className="font-bold flex items-center gap-1.5">
+                                                    <span>📊</span>
+                                                    <span>Valor Anual del Contrato ({filtrosData.licitaciones.find(l => l.id === formLicitacion)?.label || `Licitación ${formLicitacion || '-'}`}):</span>
+                                                </span>
+                                                <span className="font-mono font-black text-sm">
+                                                    ${valorContratoAnual.toLocaleString('es-CL')}
+                                                </span>
+                                            </div>
+                                            <p className="text-[11px] mt-1 text-slate-600">
+                                                {valorContratoAnual > 0
+                                                    ? `Multa ETA (1% del contrato): $${Math.round(valorContratoAnual * 0.01).toLocaleString('es-CL')} (se aplicará al marcar 'Aprobado por Institución').`
+                                                    : `⚠️ No se encontró valor anual de contrato registrado para la Licitación "${formLicitacion || '-'}" en el año ${calcAnio || new Date().getFullYear()}. Puedes ingresarlo en Mantenedor -> Calidad -> Registros Globales.`
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
 
                                     {/* Cálculo peso * UTM */}
                                     <div>

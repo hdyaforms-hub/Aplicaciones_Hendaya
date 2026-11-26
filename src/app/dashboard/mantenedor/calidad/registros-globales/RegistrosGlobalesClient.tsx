@@ -30,6 +30,7 @@ export default function RegistrosGlobalesClient({
     const [motivos, setMotivos] = useState<MotivoC8[]>(initialMotivos)
     const [valoresContrato, setValoresContrato] = useState<ValorContratoItem[]>(initialValoresContrato)
     const [search, setSearch] = useState('')
+    const [filterLicitacion, setFilterLicitacion] = useState<string>('TODAS')
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
     const [successMsg, setSuccessMsg] = useState<string | null>(null)
@@ -40,6 +41,7 @@ export default function RegistrosGlobalesClient({
     const [codigoForm, setCodigoForm] = useState('')
     const [nombreForm, setNombreForm] = useState('')
     const [descripcionForm, setDescripcionForm] = useState('')
+    const [motivoLicitacionForm, setMotivoLicitacionForm] = useState<string>('TODAS')
     const [activoForm, setActivoForm] = useState(true)
 
     // Modal state Valor Contrato
@@ -55,15 +57,22 @@ export default function RegistrosGlobalesClient({
 
     // Filtrados
     const motivosFiltrados = motivos.filter(m => {
+        if (filterLicitacion !== 'TODAS' && m.licitacion !== 'TODAS' && m.licitacion !== filterLicitacion) {
+            return false
+        }
         const term = search.toLowerCase()
         return (
             m.codigo.toLowerCase().includes(term) ||
             m.nombre.toLowerCase().includes(term) ||
-            (m.descripcion || '').toLowerCase().includes(term)
+            (m.descripcion || '').toLowerCase().includes(term) ||
+            (m.licitacion || '').toLowerCase().includes(term)
         )
     })
 
     const contratosFiltrados = valoresContrato.filter(c => {
+        if (filterLicitacion !== 'TODAS' && c.licitacion !== filterLicitacion) {
+            return false
+        }
         const term = search.toLowerCase()
         return (
             c.licitacion.toLowerCase().includes(term) ||
@@ -78,6 +87,7 @@ export default function RegistrosGlobalesClient({
         setCodigoForm('')
         setNombreForm('')
         setDescripcionForm('')
+        setMotivoLicitacionForm(filterLicitacion !== 'TODAS' ? filterLicitacion : 'TODAS')
         setActivoForm(true)
         setErrorMsg(null)
         setModalMotivoOpen(true)
@@ -88,6 +98,7 @@ export default function RegistrosGlobalesClient({
         setCodigoForm(item.codigo)
         setNombreForm(item.nombre)
         setDescripcionForm(item.descripcion || '')
+        setMotivoLicitacionForm(item.licitacion || 'TODAS')
         setActivoForm(item.activo)
         setErrorMsg(null)
         setModalMotivoOpen(true)
@@ -108,6 +119,7 @@ export default function RegistrosGlobalesClient({
                 codigo: codigoForm,
                 nombre: nombreForm,
                 descripcion: descripcionForm,
+                licitacion: motivoLicitacionForm,
                 activo: activoForm
             })
 
@@ -122,6 +134,7 @@ export default function RegistrosGlobalesClient({
                         codigo: codigoForm.toUpperCase(),
                         nombre: nombreForm,
                         descripcion: descripcionForm || null,
+                        licitacion: motivoLicitacionForm,
                         activo: activoForm,
                         updatedAt: new Date().toISOString()
                     } : m))
@@ -131,6 +144,7 @@ export default function RegistrosGlobalesClient({
                         codigo: codigoForm.toUpperCase(),
                         nombre: nombreForm,
                         descripcion: descripcionForm || null,
+                        licitacion: motivoLicitacionForm,
                         activo: activoForm,
                         creadoPor: userName,
                         actualizadoPor: null,
@@ -191,7 +205,7 @@ export default function RegistrosGlobalesClient({
     // Handlers Valor Anual Contrato
     const handleOpenNewContrato = () => {
         setEditingContrato(null)
-        setContratoLicitacion(licitaciones[0]?.id || '')
+        setContratoLicitacion(filterLicitacion !== 'TODAS' ? filterLicitacion : (licitaciones[0]?.id || ''))
         setContratoAnio(new Date().getFullYear())
         setContratoMonto(0)
         setContratoDescripcion('')
@@ -402,15 +416,30 @@ export default function RegistrosGlobalesClient({
             {activeTab === 'motivos_c8' && (
                 <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="relative w-full sm:w-80">
-                            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                            <input
-                                type="text"
-                                placeholder="Buscar por código, nombre o descripción..."
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all font-medium"
-                            />
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                            <div className="relative w-full sm:w-72">
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por código, nombre o descripción..."
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all font-medium"
+                                />
+                            </div>
+                            <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Licitación:</span>
+                                <select
+                                    value={filterLicitacion}
+                                    onChange={e => setFilterLicitacion(e.target.value)}
+                                    className="w-full sm:w-60 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
+                                >
+                                    <option value="TODAS">-- Todas las Licitaciones --</option>
+                                    {licitaciones.map(l => (
+                                        <option key={l.id} value={l.id}>{l.label}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <div className="text-xs text-slate-500">
                             Mostrando <span className="font-bold text-slate-800">{motivosFiltrados.length}</span> de <span className="font-bold text-slate-800">{motivos.length}</span> motivos
@@ -423,6 +452,7 @@ export default function RegistrosGlobalesClient({
                                 <tr>
                                     <th className="py-3 px-4">Código</th>
                                     <th className="py-3 px-4">Nombre del Motivo</th>
+                                    <th className="py-3 px-4">Licitación</th>
                                     <th className="py-3 px-4">Descripción</th>
                                     <th className="py-3 px-4 text-center">Estado</th>
                                     {canManage && <th className="py-3 px-4 text-right">Acciones</th>}
@@ -431,7 +461,7 @@ export default function RegistrosGlobalesClient({
                             <tbody className="divide-y divide-slate-100">
                                 {motivosFiltrados.length === 0 ? (
                                     <tr>
-                                        <td colSpan={canManage ? 5 : 4} className="py-8 text-center text-slate-400 text-xs">
+                                        <td colSpan={canManage ? 6 : 5} className="py-8 text-center text-slate-400 text-xs">
                                             No se encontraron motivos C8 coincidentes.
                                         </td>
                                     </tr>
@@ -444,7 +474,18 @@ export default function RegistrosGlobalesClient({
                                             <td className="py-3 px-4 font-semibold text-slate-900">
                                                 {item.nombre}
                                             </td>
-                                            <td className="py-3 px-4 text-slate-500 text-xs max-w-md truncate">
+                                            <td className="py-3 px-4">
+                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold border ${
+                                                    item.licitacion === 'TODAS'
+                                                        ? 'bg-slate-100 text-slate-700 border-slate-200'
+                                                        : 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                                                }`}>
+                                                    {item.licitacion === 'TODAS' 
+                                                        ? 'Todas (Global)' 
+                                                        : (licitaciones.find(l => l.id === item.licitacion)?.label || `Licitación ${item.licitacion}`)}
+                                                </span>
+                                            </td>
+                                            <td className="py-3 px-4 text-slate-500 text-xs max-w-xs truncate">
                                                 {item.descripcion || <span className="text-slate-400 italic">Sin descripción</span>}
                                             </td>
                                             <td className="py-3 px-4 text-center">
@@ -506,18 +547,33 @@ export default function RegistrosGlobalesClient({
             {activeTab === 'valor_contrato' && (
                 <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="relative w-full sm:w-80">
-                            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                            <input
-                                type="text"
-                                placeholder="Buscar por licitación o año..."
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all font-medium"
-                            />
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                            <div className="relative w-full sm:w-72">
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por licitación o año..."
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all font-medium"
+                                />
+                            </div>
+                            <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Licitación:</span>
+                                <select
+                                    value={filterLicitacion}
+                                    onChange={e => setFilterLicitacion(e.target.value)}
+                                    className="w-full sm:w-60 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
+                                >
+                                    <option value="TODAS">-- Todas las Licitaciones --</option>
+                                    {licitaciones.map(l => (
+                                        <option key={l.id} value={l.id}>{l.label}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <div className="text-xs text-slate-500">
-                            Mostrando <span className="font-bold text-slate-800">{contratosFiltrados.length}</span> registros
+                            Mostrando <span className="font-bold text-slate-800">{contratosFiltrados.length}</span> de <span className="font-bold text-slate-800">{valoresContrato.length}</span> registros
                         </div>
                     </div>
 
@@ -661,6 +717,26 @@ export default function RegistrosGlobalesClient({
                                     onChange={e => setNombreForm(e.target.value)}
                                     className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white font-medium"
                                 />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                                    Licitación Asociada *
+                                </label>
+                                <select
+                                    required
+                                    value={motivoLicitacionForm}
+                                    onChange={e => setMotivoLicitacionForm(e.target.value)}
+                                    className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white"
+                                >
+                                    <option value="TODAS">Todas las Licitaciones (Global)</option>
+                                    {licitaciones.map(l => (
+                                        <option key={l.id} value={l.id}>{l.label}</option>
+                                    ))}
+                                </select>
+                                <p className="text-[10px] text-slate-400 mt-1">
+                                    Indica si este motivo C8 aplica a todas las licitaciones o únicamente a una licitación específica.
+                                </p>
                             </div>
 
                             <div>

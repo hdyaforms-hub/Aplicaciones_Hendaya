@@ -38,6 +38,25 @@ export async function ensureCalidadC8Tables(): Promise<void> {
             ON "Calidad_Motivo_C8" ("activo");
         `)
 
+        // Columna licitacion para Calidad_Motivo_C8 (idempotente)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "Calidad_Motivo_C8" ADD COLUMN IF NOT EXISTS "licitacion" VARCHAR(100) DEFAULT 'TODAS';
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            UPDATE "Calidad_Motivo_C8" SET "licitacion" = 'TODAS' WHERE "licitacion" IS NULL;
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "idx_calidad_motivo_c8_licitacion"
+            ON "Calidad_Motivo_C8" ("licitacion");
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "Calidad_Motivo_C8" DROP CONSTRAINT IF EXISTS "Calidad_Motivo_C8_codigo_key";
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE UNIQUE INDEX IF NOT EXISTS "Calidad_Motivo_C8_codigo_lic_idx"
+            ON "Calidad_Motivo_C8" ("codigo", "licitacion");
+        `)
+
         // 2. Tabla de Actas C8
         await rawPrisma.$executeRawUnsafe(`
             CREATE TABLE IF NOT EXISTS "Calidad_Acta_C8" (
@@ -158,9 +177,9 @@ export async function ensureCalidadC8Tables(): Promise<void> {
 
             for (const m of defaultMotivos) {
                 await rawPrisma.$executeRawUnsafe(`
-                    INSERT INTO "Calidad_Motivo_C8" ("id", "codigo", "nombre", "descripcion", "activo", "creadoPor")
-                    VALUES (gen_random_uuid()::text, $1, $2, $3, TRUE, 'SISTEMA')
-                    ON CONFLICT ("codigo") DO NOTHING;
+                    INSERT INTO "Calidad_Motivo_C8" ("id", "codigo", "nombre", "descripcion", "licitacion", "activo", "creadoPor")
+                    VALUES (gen_random_uuid()::text, $1, $2, $3, 'TODAS', TRUE, 'SISTEMA')
+                    ON CONFLICT DO NOTHING;
                 `, m.codigo, m.nombre, m.descripcion)
             }
         }

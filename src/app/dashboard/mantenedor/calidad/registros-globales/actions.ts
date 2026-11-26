@@ -10,6 +10,7 @@ export interface MotivoC8 {
     codigo: string
     nombre: string
     descripcion: string | null
+    licitacion: string
     activo: boolean
     creadoPor: string
     actualizadoPor: string | null
@@ -36,24 +37,31 @@ async function verifyManagePermission(): Promise<{ usuario: string; isAdmin: boo
     return { usuario, isAdmin }
 }
 
-export async function obtenerMotivosC8Action(): Promise<{ success: boolean; data?: MotivoC8[]; error?: string }> {
+export async function obtenerMotivosC8Action(licitacion?: string): Promise<{ success: boolean; data?: MotivoC8[]; error?: string }> {
     try {
         await ensureCalidadC8Tables()
-        const rows = await rawPrisma.$queryRawUnsafe<any[]>(`
+        let query = `
             SELECT 
-                "id", "codigo", "nombre", "descripcion", "activo", 
+                "id", "codigo", "nombre", "descripcion", COALESCE("licitacion", 'TODAS') as "licitacion", "activo", 
                 "creadoPor", "actualizadoPor",
                 "createdAt"::text as "createdAt",
                 "updatedAt"::text as "updatedAt"
             FROM "Calidad_Motivo_C8"
-            ORDER BY "codigo" ASC;
-        `)
+        `
+        const params: any[] = []
+        if (licitacion && licitacion !== 'TODAS') {
+            query += ` WHERE ("licitacion" = $1 OR "licitacion" = 'TODAS') `
+            params.push(licitacion)
+        }
+        query += ` ORDER BY "codigo" ASC;`
+        const rows = await rawPrisma.$queryRawUnsafe<any[]>(query, ...params)
 
         const data: MotivoC8[] = rows.map(r => ({
             id: r.id,
             codigo: r.codigo,
             nombre: r.nombre,
             descripcion: r.descripcion,
+            licitacion: r.licitacion || 'TODAS',
             activo: Boolean(r.activo),
             creadoPor: r.creadoPor,
             actualizadoPor: r.actualizadoPor,
@@ -73,6 +81,7 @@ export async function guardarMotivoC8Action(data: {
     codigo: string
     nombre: string
     descripcion?: string
+    licitacion?: string
     activo?: boolean
 }): Promise<{ success: boolean; error?: string; id?: string }> {
     try {
@@ -82,10 +91,12 @@ export async function guardarMotivoC8Action(data: {
         const codigo = data.codigo.trim().toUpperCase()
         const nombre = data.nombre.trim()
         const descripcion = data.descripcion?.trim() || null
+        const licitacion = (data.licitacion || 'TODAS').trim()
         const activo = data.activo ?? true
 
         if (!codigo) throw new Error('El código del motivo es obligatorio')
         if (!nombre) throw new Error('El nombre del motivo es obligatorio')
+        if (!licitacion) throw new Error('La licitación asociada es obligatoria')
 
         if (data.id) {
             // Edición
@@ -95,17 +106,18 @@ export async function guardarMotivoC8Action(data: {
                     "codigo" = $1,
                     "nombre" = $2,
                     "descripcion" = $3,
-                    "activo" = $4,
-                    "actualizadoPor" = $5,
+                    "licitacion" = $4,
+                    "activo" = $5,
+                    "actualizadoPor" = $6,
                     "updatedAt" = CURRENT_TIMESTAMP
-                WHERE "id" = $6;
-            `, codigo, nombre, descripcion, activo, usuario, data.id)
+                WHERE "id" = $7;
+            `, codigo, nombre, descripcion, licitacion, activo, usuario, data.id)
 
             await logAuditAction({
                 username: usuario,
                 modulo: 'Mantenedor -> Calidad',
                 action: 'EDICION',
-                detalle: `Editó Motivo C8: ${codigo} - ${nombre}`
+                detalle: `Editó Motivo C8: ${codigo} - ${nombre} (Licitación: ${licitacion})`
             })
 
             return { success: true, id: data.id }
@@ -114,15 +126,15 @@ export async function guardarMotivoC8Action(data: {
             const id = crypto.randomUUID()
             await rawPrisma.$executeRawUnsafe(`
                 INSERT INTO "Calidad_Motivo_C8" (
-                    "id", "codigo", "nombre", "descripcion", "activo", "creadoPor"
-                ) VALUES ($1, $2, $3, $4, $5, $6);
-            `, id, codigo, nombre, descripcion, activo, usuario)
+                    "id", "codigo", "nombre", "descripcion", "licitacion", "activo", "creadoPor"
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+            `, id, codigo, nombre, descripcion, licitacion, activo, usuario)
 
             await logAuditAction({
                 username: usuario,
                 modulo: 'Mantenedor -> Calidad',
                 action: 'CREACION',
-                detalle: `Creó Motivo C8: ${codigo} - ${nombre}`
+                detalle: `Creó Motivo C8: ${codigo} - ${nombre} (Licitación: ${licitacion})`
             })
 
             return { success: true, id }
@@ -130,7 +142,7 @@ export async function guardarMotivoC8Action(data: {
     } catch (error: any) {
         console.error('Error al guardar Motivo C8:', error)
         if (error.message?.includes('unique') || error.message?.includes('duplicate key')) {
-            return { success: false, error: 'Ya existe un motivo con ese código' }
+            return { success: false, error: 'Ya existe un motivo con ese código para la licitación seleccionada' }
         }
         return { success: false, error: error.message || 'Error al guardar el motivo' }
     }
@@ -210,18 +222,24 @@ export interface ValorContratoItem {
     updatedAt: string
 }
 
-export async function obtenerValoresContratoAction(): Promise<{ success: boolean; data?: ValorContratoItem[]; error?: string }> {
+export async function obtenerValoresContratoAction(licitacion?: string): Promise<{ success: boolean; data?: ValorContratoItem[]; error?: string }> {
     try {
         await ensureCalidadC8Tables()
-        const rows = await rawPrisma.$queryRawUnsafe<any[]>(`
+        let query = `
             SELECT 
                 "id", "licitacion", "anio", "montoAnualPesos", "descripcion", "activo",
                 "creadoPor", "actualizadoPor",
                 "createdAt"::text as "createdAt",
                 "updatedAt"::text as "updatedAt"
             FROM "Calidad_Valor_Contrato"
-            ORDER BY "anio" DESC, "licitacion" ASC;
-        `)
+        `
+        const params: any[] = []
+        if (licitacion && licitacion !== 'TODAS') {
+            query += ` WHERE "licitacion" = $1 `
+            params.push(licitacion)
+        }
+        query += ` ORDER BY "anio" DESC, "licitacion" ASC;`
+        const rows = await rawPrisma.$queryRawUnsafe<any[]>(query, ...params)
 
         const data: ValorContratoItem[] = rows.map(r => ({
             id: r.id,

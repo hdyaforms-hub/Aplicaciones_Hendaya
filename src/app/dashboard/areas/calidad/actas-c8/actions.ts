@@ -64,7 +64,7 @@ export interface FiltrosData {
     uts: { codUT: number; licId: number; sucursal: string }[]
     colegios: { rbd: number; nombre: string; sucursal: string; ut: number; institucion: string }[]
     instituciones: string[]
-    motivosC8: { id: string; codigo: string; nombre: string }[]
+    motivosC8: { id: string; codigo: string; nombre: string; licitacion?: string }[]
     aniosDisponibles: number[]
     valoresContrato: { licitacion: string; anio: number; montoAnualPesos: number }[]
 }
@@ -207,7 +207,7 @@ export async function obtenerFiltrosActasC8Action(): Promise<{ success: boolean;
 
         // 6. Motivos C8 activos de Registros Globales
         const motivosDb = await rawPrisma.$queryRawUnsafe<any[]>(`
-            SELECT "id", "codigo", "nombre"
+            SELECT "id", "codigo", "nombre", COALESCE("licitacion", 'TODAS') as "licitacion"
             FROM "Calidad_Motivo_C8"
             WHERE "activo" = TRUE
             ORDER BY "codigo" ASC;
@@ -215,7 +215,8 @@ export async function obtenerFiltrosActasC8Action(): Promise<{ success: boolean;
         const motivosC8 = motivosDb.map(m => ({
             id: m.id,
             codigo: m.codigo,
-            nombre: m.nombre
+            nombre: m.nombre,
+            licitacion: m.licitacion || 'TODAS'
         }))
 
         // 7. Años disponibles
