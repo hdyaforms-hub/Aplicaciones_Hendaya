@@ -6,7 +6,7 @@ import { decryptMessage } from '@/lib/crypto'
 
 export interface CollabNotificationItem {
     id: string
-    type: 'MESSAGE' | 'TASK' | 'APPOINTMENT' | 'PROJECT'
+    type: 'MESSAGE' | 'TASK' | 'APPOINTMENT' | 'PROJECT' | 'DIARIO_MURAL'
     title: string
     summary: string
     detail?: string
@@ -135,6 +135,40 @@ export async function getUserCollabNotifications(): Promise<{
             })
         }
 
+        // 4. Nuevas publicaciones no leídas en el Diario Mural
+        try {
+            const activePosts = await rawPrisma.$queryRawUnsafe<any[]>(`
+                SELECT "id", "titulo", "contenido", "autorNombre", "leidoPor", "createdAt"::text as "createdAt"
+                FROM "diario_mural"
+                WHERE "fechaExpiracion" >= NOW()
+                ORDER BY "createdAt" DESC
+                LIMIT 5;
+            `)
+
+            for (const post of activePosts) {
+                let leidos: string[] = []
+                try { leidos = JSON.parse(post.leidoPor || '[]') } catch {}
+
+                if (!leidos.includes(username)) {
+                    notifications.push({
+                        id: `dm-${post.id}`,
+                        type: 'DIARIO_MURAL',
+                        title: `📌 Diario Mural: ${post.titulo}`,
+                        summary: post.contenido ? (post.contenido.slice(0, 95) + (post.contenido.length > 95 ? '...' : '')) : 'Nueva publicación institucional disponible.',
+                        detail: post.contenido,
+                        senderName: post.autorNombre,
+                        senderUsername: post.autorNombre,
+                        date: post.createdAt,
+                        url: '/dashboard/colaboradores/diario-mural',
+                        isRead: false,
+                        meta: { postId: post.id }
+                    })
+                }
+            }
+        } catch (dmErr: any) {
+            // Ignorar si la tabla aún no se ha creado
+        }
+
         // Ordenar por fecha descendente
         notifications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
@@ -172,6 +206,21 @@ export async function markNotificationAsRead(messageIdWithPrefix: string) {
                     })
                 }
             }
+        } else if (messageIdWithPrefix.startsWith('dm-')) {
+            const rawId = messageIdWithPrefix.replace('dm-', '')
+            try {
+                const rows = await rawPrisma.$queryRawUnsafe<any[]>(`SELECT "leidoPor" FROM "diario_mural" WHERE "id" = $1;`, rawId)
+                if (rows.length > 0) {
+                    let leidos: string[] = []
+                    try { leidos = JSON.parse(rows[0].leidoPor || '[]') } catch {}
+                    if (!leidos.includes(username)) {
+                        leidos.push(username)
+                        await rawPrisma.$executeRawUnsafe(`
+                            UPDATE "diario_mural" SET "leidoPor" = $1 WHERE "id" = $2;
+                        `, JSON.stringify(leidos), rawId)
+                    }
+                }
+            } catch {}
         }
         return { success: true }
     } catch (e) {

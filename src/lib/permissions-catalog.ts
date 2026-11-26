@@ -1,0 +1,228 @@
+export interface PermissionDefinition {
+    id: string
+    name: string
+    description: string
+    category: string
+}
+
+export const ALL_PERMISSIONS_CATALOG: PermissionDefinition[] = [
+    // TABLEROS
+    { id: 'view_dashboard_home', name: 'Estadísticas de Inicio', description: 'Acceso visual a estadísticas globales y Estado PMPA en la pantalla de inicio.', category: 'TABLEROS' },
+    { id: 'view_tablero', name: 'Tablero Avance PMPA', description: 'Acceso visual al tablero de reporte gráfico de Avance PMPA.', category: 'TABLEROS' },
+    { id: 'view_tablero_pan', name: 'Tablero Avance Pan', description: 'Acceso detallado al tablero de analítica de pan.', category: 'TABLEROS' },
+    { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'TABLEROS' },
+    { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'TABLEROS' },
+    { id: 'view_tablero_elementos', name: 'Tablero Carga de Elementos Esenciales', description: 'Visualización gráfica de cumplimiento de elementos esenciales.', category: 'TABLEROS' },
+    { id: 'view_tablero_multas_ee', name: 'Tablero Multas EE', description: 'Acceso visual al reporte gráfico de multas de elementos esenciales.', category: 'TABLEROS' },
+    { id: 'view_tablero_organigrama', name: 'Tablero Organigrama por zonas', description: 'Visualización gráfica de la jerarquía operativa (Jefe Zonal -> Jefe de Operaciones -> Supervisor) por sucursal.', category: 'TABLEROS' },
+    { id: 'view_tablero_distancias', name: 'Tablero de Kilometraje', description: 'Visualización detallada de distancias y tiempos de viaje de supervisores por sucursal.', category: 'TABLEROS' },
+    { id: 'view_tablero_actas', name: 'Tablero Actas', description: 'Acceso visual al tablero gerencial y ejecutivo de analítica de actas.', category: 'TABLEROS' },
+    { id: 'view_tablero_verificador_temperaturas', name: 'Tablero Verificador de Temperaturas', description: 'Visualización gráfica de variaciones de temperaturas con límites máximos y mínimos.', category: 'TABLEROS' },
+    { id: 'view_tablero_widgets', name: 'Tablero Widgets Personalizables', description: 'Acceso y personalización de tableros dinámicos con widgets configurables.', category: 'TABLEROS' },
+    { id: 'view_tablero_resolucion_sanitaria', name: 'Tablero Resolución Sanitaria', description: 'Visualización analítica y evolución histórica de resoluciones sanitarias por RBD a lo largo de los años.', category: 'TABLEROS' },
+    { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
+    { id: 'view_tablero_monitoreo_avances', name: 'Tablero Monitoreo de Avances', description: 'Acceso y supervisión al tablero semafórico de avances de matrices y actas por usuario.', category: 'TABLEROS' },
+    { id: 'view_tablero_monitoreo_rrhh', name: 'Tablero Monitoreo RRHH', description: 'Acceso y supervisión al tablero semafórico de avances de RRHH (Ausentismo, Horas Extras, Atrasos, Adelantos) en períodos abiertos.', category: 'TABLEROS' },
+    { id: 'view_tablero_tendencias_pmpa', name: 'Tablero Tendencias y Oscilación PMPA', description: 'Visualización temporal y análisis de oscilación de cargas de raciones PMPA por programa, RBD, servicio y sucursal.', category: 'TABLEROS' },
+    { id: 'view_tablero_indicador_prev_riesgos', name: 'Tablero Indicador Prev. Riesgos', description: 'Acceso visual al tablero de indicadores de prevención de riesgos (frecuencia, accidentabilidad, gravedad, zonas, Top 10 y DS67).', category: 'TABLEROS' },
+    { id: 'view_tablero_control_cargas', name: 'Tablero Control de Cargas Masivas', description: 'Monitoreo y alerta ejecutiva de planillas masivas pendientes y ejecutadas (RRHH, Prevención, Operaciones) para mes actual y próximo mes.', category: 'TABLEROS' },
+    { id: 'view_tablero_firmas_pendientes', name: 'Tablero Firmas Pendientes (RRHH)', description: 'Visualización y analítica ejecutiva de documentos con firma pendiente de personal por sucursal, supervisor, RBD y tipo de documento.', category: 'TABLEROS' },
+    { id: 'manage_tablero_firmas_pendientes', name: 'Carga Masiva Firmas Pendientes (RRHH)', description: 'Permite cargar el archivo Excel oficial de documentos con firma pendiente reemplazando la nómina anterior.', category: 'TABLEROS' },
+    { id: 'view_tablero_supervision_firmas', name: 'Supervisión de Firmas Pendientes', description: 'Acceso al tablero de supervisión de firmas pendientes con ordenamiento configurable de cerámicas y tabla de detalle.', category: 'TABLEROS' },
+
+    // APLICACIONES
+    { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Acceso a la pantalla y registro de raciones diarias servidas por servicio y nivel.', category: 'APLICACIONES' },
+    { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso al módulo de solicitud de pan por RBD.', category: 'APLICACIONES' },
+    { id: 'view_solicitud_gas', name: 'Solicitud de Gas', description: 'Acceso al módulo de solicitud de gas por RBD.', category: 'APLICACIONES' },
+    { id: 'view_retiro_saldos', name: 'Retiro de Saldos', description: 'Acceso al módulo de retiro de saldos por RBD.', category: 'APLICACIONES' },
+
+    // ÁREAS -> OPERACIONES
+    { id: 'view_operaciones', name: 'Ver Módulo Operaciones', description: 'Acceso general al menú y submódulos de Operaciones.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'view_trabajos_preventivos', name: 'Cargar OT (Trabajos Preventivos)', description: 'Acceso al módulo de trabajos preventivos y correctivos.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'manage_presupuesto', name: 'Presupuesto de Mantenimiento', description: 'Permite administrar y configurar el presupuesto asignado por sucursal y mes.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'view_estado_avance_tp', name: 'Estado de Avance Mantenimiento', description: 'Permite consultar el estado de avance, métricas y evolución de OT ejecutadas.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'view_elementos_esenciales', name: 'Carga de Elementos Esenciales', description: 'Permite ingresar la carga y justificación de elementos esenciales por RBD.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'manage_eliminar_elementos_esenciales', name: 'Eliminar Carga Elementos Esenciales', description: 'Permite eliminar registros individuales cargados en Elementos Esenciales.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'manage_eliminar_masivo_elementos_esenciales', name: 'Eliminación Masiva Elementos Esenciales', description: 'Permite eliminar masivamente registros de Elementos Esenciales por filtros seleccionados.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'view_descargas_pae', name: 'Descargas PAE Online', description: 'Acceso al repositorio y visor de descargas de PAE Online.', category: 'ÁREAS -> OPERACIONES' },
+    { id: 'view_cargar_pae', name: 'Cargar PaeOnline', description: 'Permite cargar archivos Excel consolidados de PAE Online al sistema.', category: 'ÁREAS -> OPERACIONES' },
+
+    // ÁREAS -> MANIPULADORAS
+    { id: 'view_calculo_gramaje', name: 'Cálculo de Gramaje', description: 'Acceso al módulo de cálculo de gramaje de manipuladoras.', category: 'ÁREAS -> MANIPULADORAS' },
+
+    // ÁREAS -> CALIDAD
+    { id: 'view_calidad', name: 'Ver Módulo Calidad', description: 'Acceso general al menú y submódulos de Calidad.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_resolucion_sanitaria', name: 'Resolución Sanitaria', description: 'Acceso a la gestión de resolución sanitaria por colegio y cocina.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_retorno_productos', name: 'Bloqueo y/o Retirada de Productos', description: 'Acceso al registro y seguimiento de bloqueo/retirada de productos.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_verificador_temperaturas', name: 'Verificador de Temperaturas de Productos', description: 'Acceso al registro y verificación de temperaturas de productos con captura de fotos de termómetro.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_subir_actas_pae', name: 'Subir Actas Estándar PAE', description: 'Permite adjuntar actas en PDF estándar PAE para los colegios autorizados.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_transporte_higiene', name: 'Registro transportista interno higiene y estado Transporte', description: 'Permite realizar evaluaciones de higiene y estado del transporte.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_higiene_personal', name: 'Registro de Transportista interno Higiene Personal', description: 'Permite realizar evaluaciones de higiene personal de transportistas.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_actas_c8', name: 'Actas C8 (Ver y Gestionar)', description: 'Permite registrar y consultar actas C8 por licitación con control de multas.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'view_calidad_registros_globales', name: 'Registros Globales Calidad (Ver)', description: 'Acceso visual a motivos C8 y configuraciones maestras de Calidad.', category: 'ÁREAS -> CALIDAD' },
+    { id: 'manage_calidad_registros_globales', name: 'Registros Globales Calidad (Gestionar)', description: 'Permite crear, editar y eliminar motivos C8 y valores globales de Calidad.', category: 'ÁREAS -> CALIDAD' },
+
+    // ÁREAS -> MULTAS
+    { id: 'view_multas', name: 'Cálculos de Multas EE (Ver)', description: 'Acceso a la pantalla de cálculos de multas de elementos esenciales.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_calcular', name: 'Ejecutar Cálculo de Multas EE', description: 'Permite ejecutar el motor de cálculo y consolidación de multas.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_exportar', name: 'Exportar Informes de Multas EE', description: 'Permite exportar informes y planillas Excel de multas consolidadas.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_analisis_nc', name: 'Análisis de No Conformidades (NC)', description: 'Acceso y visualización de causas raíces de no conformidades.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_analisis_nc', name: 'Gestionar Análisis de NC', description: 'Permite crear, editar y cerrar análisis de no conformidades.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_notificaciones', name: 'Notificaciones JUNAEB (REX)', description: 'Acceso al módulo de notificaciones de multas JUNAEB y resoluciones REX.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_notificaciones', name: 'Gestionar Notificaciones JUNAEB', description: 'Permite cargar, editar y conciliar resoluciones REX de JUNAEB.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_ciclo_legal', name: 'Ciclo Legal y Expedientes (Ver)', description: 'Acceso a la trazabilidad legal de descargos y estados jurídicos de multas.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_ciclo_legal', name: 'Gestionar Ciclo Legal de Multas', description: 'Permite actualizar estados jurídicos, adjuntar escritos y gestionar expedientes.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_biblioteca', name: 'Biblioteca de Argumentos (Ver)', description: 'Acceso a repositorio de jurisprudencia y argumentos de descargo.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_biblioteca', name: 'Gestionar Biblioteca de Argumentos', description: 'Permite crear, clasificar y evaluar efectividad de argumentos legales.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_soluciones', name: 'Planes de Acción (Soluciones)', description: 'Acceso al registro y monitoreo de soluciones preventivas y correctivas.', category: 'ÁREAS -> MULTAS' },
+    { id: 'manage_multas_soluciones', name: 'Gestionar Planes de Acción', description: 'Permite crear, asignar responsables y verificar eficacia de soluciones.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_analisis_ia', name: 'Asistente y Análisis con IA', description: 'Acceso a predicciones, sugerencias legales y análisis forense asistido por IA.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_tablero', name: 'Tablero Consolidado de Multas', description: 'Acceso al dashboard ejecutivo consolidado de multas y recuperaciones.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_feriados', name: 'Calendario de Feriados', description: 'Acceso y administración del calendario de días inhábiles para plazos legales.', category: 'ÁREAS -> MULTAS' },
+    { id: 'view_multas_descargos', name: 'Descargos de Actas', description: 'Acceso al portal de redacción y seguimiento de descargos de actas.', category: 'ÁREAS -> MULTAS' },
+
+    // ÁREAS -> PREVENCIÓN DE RIESGOS
+    { id: 'manage_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Gestionar)', description: 'Permite asignar y actualizar la gravedad (Leve, Medio, Alto) y sincronizar preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+    { id: 'view_prev_riesgo_minuta', name: 'Riesgo en Minuta (Ver)', description: 'Monitoreo preventivo del nivel de riesgo en minutas diarias cruzadas con gravedad de preparación y colegios.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+    { id: 'manage_prev_riesgos_carga', name: 'Carga Masiva Prev. Riesgos', description: 'Permite cargar planillas Excel con los datos e indicadores del panel de prevención de riesgos.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+
+    // ÁREAS -> LOGÍSTICA
+    { id: 'logistica:tablero:ver', name: 'Tablero de Despacho (Ver)', description: 'Visualizar el tablero en vivo de andenes y flujo de camiones.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:tablero:gestionar', name: 'Gestionar Andenes', description: 'Asignar, reasignar y liberar andenes de despacho.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:ver', name: 'Historial de Rutas (Ver)', description: 'Ver el listado y detalle histórico de rutas y despachos.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:crear', name: 'Crear Rutas', description: 'Crear nuevas rutas de despacho manuales o por importación Excel.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:editar', name: 'Editar Rutas', description: 'Modificar datos de rutas programadas o en preparación.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:cancelar', name: 'Cancelar / Reprogramar Rutas', description: 'Cancelar o reprogramar rutas planificadas.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:forzar_estado', name: 'Forzar Estado de Ruta', description: 'Cambio manual excepcional del estado operativo de una ruta.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:chofer:notificar', name: 'Notificar Chofer (Telegram)', description: 'Reenviar o disparar notificación al chofer vía n8n / Telegram.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:porton:marcar', name: 'Marcar Llegada a Portón', description: 'Registrar la llegada física de un camión al recinto.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:despacho:completar', name: 'Completar Despacho', description: 'Finalizar y cerrar despacho de ruta con sellos y observaciones.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:metricas:ver', name: 'Métricas de Despacho (Ver)', description: 'Visualizar KPIs, rotación de andenes y tiempos de permanencia.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:rutas:exportar', name: 'Exportar Rutas a Excel', description: 'Descargar reportes e informes de rutas en formato Excel.', category: 'ÁREAS -> LOGÍSTICA' },
+    { id: 'logistica:config:ver', name: 'Configuración Logística (Ver)', description: 'Acceso al panel de configuración general de logística.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+    { id: 'logistica:config:bodegas', name: 'Administrar Bodegas y Andenes', description: 'Crear, editar y organizar centros de distribución y andenes.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+    { id: 'logistica:config:choferes', name: 'Administrar Choferes', description: 'Gestionar choferes, teléfonos y vinculación con Telegram.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+    { id: 'logistica:config:camiones', name: 'Administrar Camiones', description: 'Gestionar patentes, tipo de vehículo y capacidad de carga.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+    { id: 'logistica:config:transportistas', name: 'Administrar Transportistas', description: 'Gestionar empresas transportistas externas o flota interna.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+    { id: 'logistica:config:clientes', name: 'Administrar Clientes / Destinos', description: 'Gestionar clientes, direcciones de entrega y comunas.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+
+    // ÁREAS -> RECURSOS HUMANOS
+    { id: 'view_personal_asistencia', name: 'Ausentismo (Ver y Gestionar)', description: 'Permite consultar ausencias por RBD asignado y asociar criterios de ausentismo.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+    { id: 'view_personal_horas_extras', name: 'Hrs Extras (Ver y Gestionar)', description: 'Permite consultar horas extras por RBD asignado e indicar Aplica / No aplica en períodos abiertos.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+    { id: 'view_personal_atrasos', name: 'Atrasos y Adelantos (Ver y Gestionar)', description: 'Permite consultar atrasos y adelantos por RBD asignado e indicar si aplica o no descuento y justificación.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+    { id: 'manage_personal_cambio_rbd', name: 'Cambio de RBD (Ver y Gestionar)', description: 'Permite consultar colaboradores de dotación y registrar cambios de RBD (Anexos de traslado o Comisión de servicio).', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+    { id: 'view_all_personal_asistencia', name: 'Asistencia: Ver Todo el Personal (con o sin RBD)', description: 'Permite consultar y gestionar a todos los trabajadores en Ausentismo, Horas Extras y Atrasos sin restricción de RBD ni sucursal.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+    { id: 'manage_personal_asistencia_admin', name: 'Adm. Ausentismo', description: 'Permite administrar períodos de ausentismo (cerrar/abrir), consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+    { id: 'manage_personal_horas_extras_admin', name: 'Adm. de Hrs Extras', description: 'Permite administrar períodos de Horas Extras (abrir/cerrar), consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+    { id: 'manage_personal_atrasos_admin', name: 'Adm. Atrasos y Adelantos', description: 'Permite administrar períodos de Atrasos y Adelantos (abrir/cerrar), consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+    { id: 'manage_personal_cuentas_admin', name: 'Adm. de cuenta', description: 'Permite visualizar y autorizar cuentas de Recursos Humanos para el cierre y reapertura de períodos.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+    { id: 'manage_personal_asistencia_carga', name: 'Carga Masiva Ausentismo', description: 'Permite subir y actualizar planillas Excel de ausentismo con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
+    { id: 'manage_personal_dotacion_carga', name: 'Carga Masiva Dotación', description: 'Permite cargar, reemplazar y consultar la dotación de personal con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
+    { id: 'manage_personal_horas_extras_carga', name: 'Carga Masiva Horas Extras', description: 'Permite cargar, actualizar y consultar la planilla de horas extras de personal.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
+    { id: 'manage_personal_atrasos_carga', name: 'Carga Masiva Atrasos y Adelantos', description: 'Permite cargar, actualizar y consultar la planilla masiva de atrasos y adelantos.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
+
+    // MATRIZ DE RIESGO
+    { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
+    { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },
+    { id: 'view_detalle_matriz', name: 'Ver Detalle Matriz', description: 'Permite visualizar el listado de respuestas de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'edit_detalle_matriz', name: 'Editar Detalle Matriz', description: 'Permite modificar, eliminar y descargar respuestas de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'view_inf_auditoria_mitigacion', name: 'Inf. Auditoria Mitigación', description: 'Permite visualizar y exportar a PDF el informe de auditoría de mitigación.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'view_hoja_b_estandar_pae', name: 'Hoja B Estandar Pae', description: 'Permite visualizar y exportar a PDF el reporte de Hoja B Estándar PAE.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz 2026', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+    { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+    { id: 'manage_mitigacion', name: 'Cierre de Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'close_matriz_riesgo', name: 'Sol. desviación Matriz', description: 'Mitigar y enviar a supervisión las evaluaciones de matriz de riesgo asignadas.', category: 'MATRIZ DE RIESGO' },
+    { id: 'view_historico_matriz', name: 'Histórico de Matrices', description: 'Consultar la historia completa de matrices de riesgo, trazabilidad cronológica.', category: 'MATRIZ DE RIESGO' },
+    { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+    { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+
+    // MANTENEDORES
+    { id: 'manage_mantenedor_monitoreo', name: 'Mantenedor de Monitoreo', description: 'Permite configurar periodicidades de matrices de riesgo y actas.', category: 'MANTENEDORES' },
+    { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
+    { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
+    { id: 'manage_personal_criterios', name: 'Criterios de Ausencias', description: 'Permite administrar los criterios o motivos de ausentismo del personal.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
+    { id: 'manage_mantenedor_monitoreo_rrhh', name: 'Monitoreo RRHH (Roles Asignados)', description: 'Permite configurar los roles y perfiles sujetos a monitoreo operativo de Recursos Humanos.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
+    { id: 'manage_personal_visualizacion', name: 'Configuración de visualización', description: 'Permite asociar al personal de dotación a una jefatura con control de RBD.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
+    { id: 'manage_prev_riesgos_config', name: 'Configuración Prev. de Riesgos', description: 'Permite configurar los roles a visualizar y filtros de supervisión en Prevención de Riesgos.', category: 'MANTENEDORES -> PREV. DE RIESGOS' },
+    { id: 'manage_actas_supervision', name: 'Crear Acta de Supervisión', description: 'Crear, editar, copiar y administrar plantillas de Actas de Supervisión.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
+    { id: 'manage_user_rbds', name: 'Asociar RBD a usuario', description: 'Permite asociar y gestionar los RBDs autorizados para cada usuario.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
+    { id: 'manage_nueva_matriz', name: 'Nueva Matriz', description: 'Crear, copiar, editar y eliminar plantillas de matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
+    { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
+    { id: 'view_pmpa', name: 'PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_homologacion_programas', name: 'Homologación de Programas', description: 'Permite homologar programas y servicios del PMPA con códigos estandarizados.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'view_colegios', name: 'Colegio', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'view_consumo_gas', name: 'Consumo de Gas x RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_vehiculos', name: 'Vehículos', description: 'Administración de flota de vehículos, tipos de vehículos y patentes.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_zonales', name: 'Zonales', description: 'Administración de Jefes Zonales, licitaciones y sucursales asignadas.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_jefe_operacion', name: 'Jefes de Operación', description: 'Administración de Jefes de Operación y su asignación a Jefes Zonales.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_supervisor', name: 'Supervisores', description: 'Administración de Supervisores, camionetas asociadas y RBDs a auditar.', category: 'MANTENEDORES -> OPERACIONES' },
+    { id: 'manage_sucursales', name: 'Sucursal', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'MANTENEDORES -> OPERACIONES' },
+
+    // MANTENEDORES -> COLABORADORES
+    { id: 'view_mantenedor_colaboradores_configuracion', name: 'Configuración Colaboradores (Ver)', description: 'Acceso visual a la configuración de Colaboradores y noticias.', category: 'MANTENEDORES -> COLABORADORES' },
+    { id: 'manage_mantenedor_colaboradores_configuracion', name: 'Configuración Colaboradores (Gestionar)', description: 'Permite crear, editar, eliminar y sincronizar noticias de alimentación y parámetros de Colaboradores.', category: 'MANTENEDORES -> COLABORADORES' },
+
+    // MANTENEDORES -> MULTAS
+    { id: 'manage_utm', name: 'Gestión de UTM', description: 'Acceso al mantenedor inteligente de UTM con sincronización SII.', category: 'MANTENEDORES -> MULTAS' },
+    { id: 'manage_aspectos_ee', name: 'Fórmulas de Aspecto EE', description: 'Asociar fórmulas de multas a aspectos de elementos esenciales por licitación.', category: 'MANTENEDORES -> MULTAS' },
+    { id: 'manage_multa_servicios', name: 'Servicios Multas', description: 'Mantenedor de códigos de servicio (D, A, O, C, T) para cálculos de multas.', category: 'MANTENEDORES -> MULTAS' },
+    { id: 'manage_multa_privilegios', name: 'Privilegios Multas EE', description: 'Asignar permisos de eliminación individual y masiva en Carga de Elementos Esenciales.', category: 'MANTENEDORES -> MULTAS' },
+    { id: 'manage_multa_instruccion_ee', name: 'Instrucción de Trabajo EE', description: 'Carga, validación y gestión de Instrucciones de Trabajo EE (PDF) por licitación.', category: 'MANTENEDORES -> MULTAS' },
+    { id: 'manage_multa_configuracion', name: 'Configuración de Multas', description: 'Hub de configuración global de multas y parámetros técnicos por licitación.', category: 'MANTENEDORES -> MULTAS' },
+
+    // MANTENEDORES -> CALCULADORA
+    { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'MANTENEDORES -> CALCULADORA' },
+    { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'MANTENEDORES -> CALCULADORA' },
+    { id: 'view_raciones', name: 'Mantenedor de Raciones', description: 'Acceso a mantenedor y carga masiva de Raciones.', category: 'MANTENEDORES -> CALCULADORA' },
+    { id: 'view_codigo_causa', name: 'Mantenedor Código de Causa', description: 'Acceso y mantenedor de códigos de causa de PAE Online.', category: 'MANTENEDORES -> PAE ONLINE' },
+
+    // REPORTES
+    { id: 'view_reports', name: 'Ver Reportes', description: 'Acceso a visualización de datos de negocio.', category: 'REPORTES' },
+    { id: 'view_solicitud_pan_report', name: 'Reporte Solicitud de Pan', description: 'Acceso al informe histórico de solicitudes de pan.', category: 'REPORTES' },
+    { id: 'view_solicitud_gas_report', name: 'Reporte Solicitud de Gas', description: 'Acceso al informe histórico de solicitudes de gas.', category: 'REPORTES' },
+    { id: 'view_retiro_report', name: 'Reporte Retiro de Saldos', description: 'Acceso al informe histórico de retiro de saldos.', category: 'REPORTES' },
+
+    // ADMINISTRACIÓN & CONFIGURACIÓN
+    { id: 'manage_global_config', name: 'Configuración Global', description: 'Permite configurar parámetros globales del sistema como la duración de sesión.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_users', name: 'Gestionar Usuarios', description: 'Crear, editar o eliminar usuarios.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_roles', name: 'Gestionar Roles', description: 'Administrar mantenedor de perfiles y permisos.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_menu_reorder', name: 'Reubicación de Aplicaciones', description: 'Permite reordenar la posición de los ítems de menú dentro de sus opciones padres.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'ADMINISTRACIÓN' },
+    { id: 'view_roles_masivo', name: 'Asignación Masiva de Permisos (Ver)', description: 'Acceso visual al módulo de asignación y desasignación masiva de permisos por roles.', category: 'ADMINISTRACIÓN' },
+    { id: 'manage_roles_masivo', name: 'Asignación Masiva de Permisos (Gestionar)', description: 'Permite incorporar o remover permisos en bloque a múltiples roles simultáneamente.', category: 'ADMINISTRACIÓN' },
+
+    // FORMULARIOS
+    { id: 'view_formularios', name: 'Gestión de Formularios', description: 'Acceso a la activación, edición y configuración de calendarios/privilegios.', category: 'FORMULARIOS' },
+    { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor para diseñar nuevos formularios dinámicos.', category: 'FORMULARIOS' },
+    { id: 'fill_formularios', name: 'Completar Formulario', description: 'Acceso para el llenado y envío de respuestas (incluye modal PDF).', category: 'FORMULARIOS' },
+    { id: 'view_respuestas', name: 'Respuestas de Formularios', description: 'Acceso a la visualización de respuestas históricas y descarga de PDFs.', category: 'FORMULARIOS' },
+
+    // ACTAS
+    { id: 'view_generar_actas', name: 'Generar Acta', description: 'Permite visualizar el listado de actas iniciadas y crear nuevas a partir de plantillas.', category: 'ACTAS' },
+    { id: 'view_descargar_actas', name: 'Descargar Actas', description: 'Acceso a la vista de consulta, descarga individual y descarga masiva de PDFs de actas.', category: 'ACTAS' },
+    { id: 'manage_generar_actas', name: 'Eliminar Actas Generadas', description: 'Otorga el privilegio de eliminar respuestas de actas en progreso.', category: 'ACTAS' },
+
+    // COLABORADORES
+    { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'COLABORADORES' },
+    { id: 'view_sala_reuniones', name: 'Sala de Reuniones (Ver)', description: 'Visualizar el calendario semanal, horarios y disponibilidad de la sala de reuniones.', category: 'COLABORADORES' },
+    { id: 'manage_sala_reuniones', name: 'Sala de Reuniones (Gestionar)', description: 'Crear nuevas reservas, modificar o cancelar reuniones en la sala.', category: 'COLABORADORES' },
+    { id: 'view_diario_mural', name: 'Diario Mural (Ver)', description: 'Visualizar la pizarra interactiva de post-its con avisos y noticias institucionales.', category: 'COLABORADORES' },
+    { id: 'create_diario_mural', name: 'Diario Mural (Publicar)', description: 'Permite fijar nuevas notas o anuncios con vigencia temporal en el Diario Mural.', category: 'COLABORADORES' },
+    { id: 'manage_diario_mural', name: 'Diario Mural (Administrar y Eliminar)', description: 'Permiso exclusivo de administrador para eliminar publicaciones de la pizarra.', category: 'COLABORADORES' },
+    { id: 'view_anonimizador', name: 'Anonimizador de Planillas (Ver)', description: 'Acceso al módulo y visualización de la herramienta de anonimización de datos personales.', category: 'COLABORADORES' },
+    { id: 'manage_anonimizador', name: 'Anonimizador de Planillas (Ejecutar)', description: 'Permite ejecutar el procesamiento, validar datos y descargar planillas anonimizadas.', category: 'COLABORADORES' },
+    { id: 'view_registro_capacitacion', name: 'Registro de Capacitación (Ver)', description: 'Acceso al módulo de capacitaciones y visualización/descarga de reportes oficiales.', category: 'COLABORADORES' },
+    { id: 'manage_registro_capacitacion', name: 'Registro de Capacitación (Gestionar)', description: 'Permite registrar nuevas capacitaciones, capturar firmas digitales de participantes y relator.', category: 'COLABORADORES' },
+
+    // AYUDA
+    { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
+    { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
+
+    // GESTOR DOCUMENTAL
+    { id: 'view_documentos', name: 'Gestor Documental (Vista Usuario)', description: 'Permite explorar, previsualizar y descargar documentos según permisos asignados.', category: 'GESTOR DOCUMENTAL' },
+    { id: 'manage_doc_configuracion', name: 'Configuración OneDrive', description: 'Permite configurar y vincular las credenciales de Microsoft Graph API / Azure.', category: 'GESTOR DOCUMENTAL' },
+    { id: 'manage_doc_carpetas', name: 'Administrar Carpetas y Documentos', description: 'Permite crear carpetas, subir archivos y gestionar la estructura en OneDrive.', category: 'GESTOR DOCUMENTAL' },
+    { id: 'manage_doc_privilegios', name: 'Privilegios de Acceso Documental', description: 'Permite otorgar y revocar permisos de visualización, descarga, subida y administración por carpeta.', category: 'GESTOR DOCUMENTAL' }
+]

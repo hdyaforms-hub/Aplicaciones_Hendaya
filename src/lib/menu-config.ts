@@ -435,7 +435,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'manage_homologacion_programas', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion', 'manage_prev_riesgos_config'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'manage_homologacion_programas', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion', 'manage_prev_riesgos_config', 'view_mantenedor_colaboradores_configuracion', 'manage_mantenedor_colaboradores_configuracion'],
         subItems: [
             { name: 'Monitoreo', href: '/dashboard/mantenedor/monitoreo', requiredPermission: 'manage_mantenedor_monitoreo' },
             {
@@ -524,6 +524,13 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     { name: 'Registros Globales', href: '/dashboard/mantenedor/calidad/registros-globales', requiredPermission: ['view_calidad_registros_globales', 'manage_calidad_registros_globales', 'view_calidad'] }
                 ]
             },
+            {
+                name: 'Colaboradores',
+                requiredPermission: ['view_mantenedor_colaboradores_configuracion', 'manage_mantenedor_colaboradores_configuracion'],
+                subItems: [
+                    { name: 'Configuración', href: '/dashboard/mantenedor/colaboradores/configuracion', requiredPermission: ['view_mantenedor_colaboradores_configuracion', 'manage_mantenedor_colaboradores_configuracion'] }
+                ]
+            },
             { name: 'Área', href: '/dashboard/mantenedor/areas', requiredPermission: 'manage_areas' },
             { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
             {
@@ -559,11 +566,12 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Configuración',
         icon: '🔧',
-        requiredPermission: ['manage_global_config', 'manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles', 'manage_menu_reorder'],
+        requiredPermission: ['manage_global_config', 'manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles', 'manage_menu_reorder', 'manage_roles_masivo', 'view_roles_masivo'],
         subItems: [
             { name: 'Global', href: '/dashboard/configuracion/global', requiredPermission: 'manage_global_config' },
             { name: 'Gestión de Usuarios', href: '/dashboard/users', requiredPermission: 'manage_users' },
             { name: 'Roles y Perfiles', href: '/dashboard/roles', requiredPermission: 'manage_roles' },
+            { name: 'Asignación Masiva de Permisos', href: '/dashboard/configuracion/roles-masivo', requiredPermission: ['manage_roles_masivo', 'manage_roles', 'view_roles_masivo'] },
             { name: 'Reubicación de Aplicaciones', href: '/dashboard/configuracion/reubicacion', requiredPermission: 'manage_menu_reorder' },
             { name: 'Configuración de Correo', href: '/dashboard/configuracion/correo', requiredPermission: 'manage_correo' },
             { name: 'Listas de Distribución', href: '/dashboard/configuracion/listas-correo', requiredPermission: 'manage_listas' },
@@ -573,10 +581,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Colaboradores',
         icon: '👥',
-        requiredPermission: ['view_conversacion', 'view_sala_reuniones', 'view_anonimizador', 'view_registro_capacitacion'],
+        requiredPermission: ['view_conversacion', 'view_sala_reuniones', 'view_anonimizador', 'view_registro_capacitacion', 'view_diario_mural'],
         subItems: [
             { name: 'Conversación', href: '/dashboard/ayuda/conversacion', requiredPermission: 'view_conversacion' },
             { name: 'Reserva Sala Reuniones', href: '/dashboard/colaboradores/sala-reuniones', requiredPermission: 'view_sala_reuniones' },
+            { name: 'Diario Mural', href: '/dashboard/colaboradores/diario-mural', requiredPermission: ['view_diario_mural', 'create_diario_mural', 'manage_diario_mural'] },
             { name: 'Anonimizador', href: '/dashboard/colaboradores/anonimizador', requiredPermission: 'view_anonimizador' },
             { name: 'Registro de Capacitación', href: '/dashboard/colaboradores/registro-capacitacion', requiredPermission: 'view_registro_capacitacion' }
         ]

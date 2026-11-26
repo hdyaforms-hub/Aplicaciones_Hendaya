@@ -130,6 +130,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Mantenedores
     if (path.startsWith('/dashboard/mantenedor') || path.startsWith('/dashboard/productos') || path.startsWith('/dashboard/calculadora')) {
+        if (path.includes('/mantenedor/colaboradores/configuracion')) return { modulo: 'Mantenedor -> Colaboradores', detalle: 'Accedió a Configuración de Colaboradores y Noticias' }
         if (path.includes('/mantenedor/calidad/registros-globales')) return { modulo: 'Mantenedor -> Calidad', detalle: 'Accedió a Registros Globales de Calidad' }
         if (path.includes('/personal/configuracion-visualizacion')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Configuración de Visualización (Asignación Jefatura-Personal)' }
         if (path.includes('/personal/monitoreo')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Mantenedor Monitoreo RRHH (Roles Asignados)' }
@@ -142,6 +143,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/users')) return { modulo: 'Configuración', detalle: 'Accedió a Gestión de Usuarios' }
     if (path.startsWith('/dashboard/roles')) return { modulo: 'Configuración', detalle: 'Accedió a Roles y Perfiles' }
     if (path.startsWith('/dashboard/configuracion')) {
+        if (path.includes('/roles-masivo')) return { modulo: 'Configuración', detalle: 'Accedió a Asignación Masiva de Permisos a Roles' }
         if (path.includes('/global')) return { modulo: 'Configuración', detalle: 'Accedió a Configuración Global del Sistema' }
         if (path.includes('/reubicacion')) return { modulo: 'Configuración', detalle: 'Accedió a Reubicación de Aplicaciones' }
         if (path.includes('/correo')) return { modulo: 'Configuración', detalle: 'Accedió a Configuración de Correo' }
@@ -154,6 +156,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/reports')) return { modulo: 'Reportes', detalle: `Accedió a Reportes (${path.replace('/dashboard/reports/', '')})` }
 
     // Colaboradores
+    if (path.includes('/diario-mural')) return { modulo: 'Colaboradores', detalle: 'Accedió a Diario Mural' }
     if (path.includes('/anonimizador')) return { modulo: 'Colaboradores', detalle: 'Accedió a Anonimizador de Planillas' }
     if (path.includes('/sala-reuniones')) return { modulo: 'Colaboradores', detalle: 'Accedió a Reserva Sala de Reuniones' }
     if (path.includes('/conversacion')) return { modulo: 'Colaboradores', detalle: 'Accedió a Conversación y Colaboración' }

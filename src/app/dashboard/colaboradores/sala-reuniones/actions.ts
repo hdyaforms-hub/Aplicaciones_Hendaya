@@ -518,9 +518,22 @@ async function fetchReservasDB(sucursalId?: string): Promise<ReservaSalaItem[]> 
 export async function getNoticias(): Promise<NoticiaItem[]> {
     try {
         await ensureTablesExist()
+
+        // Eliminar automáticamente noticias con más de 2 meses de antigüedad
+        await rawPrisma.$executeRawUnsafe(`
+            DELETE FROM "noticias_alimentacion"
+            WHERE ("fechaPublicacion" IS NOT NULL AND "fechaPublicacion" < NOW() - INTERVAL '2 months')
+               OR ("fechaPublicacion" IS NULL AND "createdAt" < NOW() - INTERVAL '2 months');
+        `).catch(err => console.warn('[getNoticias] Purga de noticias antiguas omitida:', err.message))
+
         const res = await rawPrisma.$queryRaw<any[]>`
             SELECT id, titulo, fuente, link, orden
             FROM "noticias_alimentacion"
+            WHERE COALESCE("activo", TRUE) = TRUE
+              AND (
+                ("fechaPublicacion" IS NOT NULL AND "fechaPublicacion" >= NOW() - INTERVAL '2 months')
+                OR ("fechaPublicacion" IS NULL AND "createdAt" >= NOW() - INTERVAL '2 months')
+              )
             ORDER BY orden ASC, "createdAt" DESC
         `
         if (res.length === 0) {

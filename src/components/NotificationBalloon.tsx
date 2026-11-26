@@ -78,6 +78,11 @@ export default function NotificationBalloon() {
     const handleBalloonClick = () => {
         setShowPopupBalloon(false)
         if (latestAlert) {
+            if (latestAlert.type === 'DIARIO_MURAL') {
+                markNotificationAsRead(latestAlert.id)
+                router.push(latestAlert.url || '/dashboard/colaboradores/diario-mural')
+                return
+            }
             setSelectedNotification(latestAlert)
         }
         setShowSummaryModal(true)
@@ -109,6 +114,7 @@ export default function NotificationBalloon() {
             case 'TASK': return '📋'
             case 'APPOINTMENT': return '📅'
             case 'PROJECT': return '🚀'
+            case 'DIARIO_MURAL': return '📌'
             default: return '🔔'
         }
     }
@@ -135,7 +141,7 @@ export default function NotificationBalloon() {
                         <div className="flex-1 min-w-0 pr-4">
                             <div className="flex items-center gap-1.5 mb-0.5">
                                 <span className="text-[10px] font-black text-cyan-400 uppercase tracking-wider">
-                                    {latestAlert.type === 'MESSAGE' ? 'Nuevo Mensaje' : latestAlert.type === 'TASK' ? 'Nueva Tarea' : 'Nueva Cita'}
+                                    {latestAlert.type === 'MESSAGE' ? 'Nuevo Mensaje' : latestAlert.type === 'TASK' ? 'Nueva Tarea' : latestAlert.type === 'DIARIO_MURAL' ? 'Diario Mural' : 'Nueva Cita'}
                                 </span>
                                 <span className="text-[9px] text-slate-400">• Hace un momento</span>
                             </div>
@@ -148,11 +154,15 @@ export default function NotificationBalloon() {
                         </div>
 
                         <button
-                            onClick={(e) => {
+                            onClick={async (e) => {
                                 e.stopPropagation()
                                 setShowPopupBalloon(false)
+                                if (latestAlert?.id) {
+                                    await markNotificationAsRead(latestAlert.id)
+                                }
                             }}
                             className="text-slate-400 hover:text-white text-xs p-1"
+                            title="Cerrar notificación"
                         >
                             ✕
                         </button>
