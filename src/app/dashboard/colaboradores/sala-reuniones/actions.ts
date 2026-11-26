@@ -40,6 +40,8 @@ export interface NoticiaItem {
     fuente: string
     link: string
     orden: number
+    fechaPublicacion?: string | null
+    createdAt?: string | null
 }
 
 export interface SalaDataResponse {
@@ -405,6 +407,8 @@ export async function ensureTablesExist() {
                         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 `)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "noticias_alimentacion" ADD COLUMN IF NOT EXISTS "fechaPublicacion" TIMESTAMP(3);`)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "noticias_alimentacion" ADD COLUMN IF NOT EXISTS "activo" BOOLEAN NOT NULL DEFAULT TRUE;`)
                 // Auto-healing para asociar reservas históricas sin sucursal a la primera sucursal activa
                 await rawPrisma.$executeRawUnsafe(`
                     UPDATE "reservas_sala"
@@ -527,7 +531,9 @@ export async function getNoticias(): Promise<NoticiaItem[]> {
         `).catch(err => console.warn('[getNoticias] Purga de noticias antiguas omitida:', err.message))
 
         const res = await rawPrisma.$queryRaw<any[]>`
-            SELECT id, titulo, fuente, link, orden
+            SELECT id, titulo, fuente, link, orden,
+                   "fechaPublicacion"::text as "fechaPublicacion",
+                   "createdAt"::text as "createdAt"
             FROM "noticias_alimentacion"
             WHERE COALESCE("activo", TRUE) = TRUE
               AND (
@@ -549,7 +555,7 @@ export async function getNoticias(): Promise<NoticiaItem[]> {
                     n.orden
                 )
             }
-            return NOTICIAS_DEFAULT.map((n, idx) => ({ ...n, id: `init-${idx}` }))
+            return NOTICIAS_DEFAULT.map((n, idx) => ({ ...n, id: `init-${idx}`, fechaPublicacion: new Date().toISOString() }))
         }
 
         return res.map(n => ({
@@ -557,7 +563,8 @@ export async function getNoticias(): Promise<NoticiaItem[]> {
             titulo: n.titulo,
             fuente: n.fuente,
             link: n.link,
-            orden: n.orden
+            orden: n.orden,
+            fechaPublicacion: n.fechaPublicacion || n.createdAt || null
         }))
     } catch (e) {
         console.error('[SalaReuniones] Error cargando noticias:', e)

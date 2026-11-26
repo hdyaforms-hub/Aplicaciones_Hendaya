@@ -31,6 +31,21 @@ function addDaysISO(isoStr: string, days: number): string {
     return toISO(date)
 }
 
+function formatearFechaNoticia(fechaStr?: string | null): string {
+    if (!fechaStr) return ''
+    try {
+        const d = new Date(fechaStr)
+        if (isNaN(d.getTime())) return ''
+        return d.toLocaleDateString('es-CL', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        })
+    } catch {
+        return ''
+    }
+}
+
 export default function SalaReunionesClient({ initialData }: Props) {
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -1115,10 +1130,19 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                         <div className="text-sm text-gray-800 group-hover:text-cyan-700 leading-snug font-medium transition-colors">
                                             {n.titulo}
                                         </div>
-                                        <div className="text-xs text-gray-400 mt-1 flex items-center gap-2">
-                                            <span className="font-semibold text-gray-600">{n.fuente}</span>
+                                        <div className="text-xs text-gray-400 mt-1 flex items-center gap-2 flex-wrap">
+                                            <span className="font-semibold text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded text-[11px]">{n.fuente}</span>
+                                            {n.fechaPublicacion && (
+                                                <>
+                                                    <span>·</span>
+                                                    <span className="text-gray-500 font-medium text-[11px] flex items-center gap-1">
+                                                        <span>📅</span>
+                                                        <span>{formatearFechaNoticia(n.fechaPublicacion)}</span>
+                                                    </span>
+                                                </>
+                                            )}
                                             <span>·</span>
-                                            <span className="text-cyan-600 group-hover:underline">Leer noticia ↗</span>
+                                            <span className="text-cyan-600 group-hover:underline text-[11px] font-semibold">Leer noticia ↗</span>
                                         </div>
                                     </a>
                                 ))}
