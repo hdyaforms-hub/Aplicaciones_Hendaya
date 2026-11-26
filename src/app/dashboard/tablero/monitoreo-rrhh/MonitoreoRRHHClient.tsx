@@ -1686,10 +1686,13 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                     {/* Badges de Estado Específico (Aplica / No Aplica) */}
                                                     <div className="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
                                                         {mod.tipo === 'AUSENTISMO' ? (
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-emerald-700 font-medium">Gestionados: {mod.gestionados}</span>
-                                                                <span>•</span>
-                                                                <span className="text-slate-600">Pendientes: {mod.pendientes}</span>
+                                                            <div className="flex items-center gap-1.5 flex-wrap">
+                                                                <span className="px-1.5 py-0.2 bg-rose-50 text-rose-700 border border-rose-200 rounded font-semibold">
+                                                                    Aplica Desc: {mod.aplicaCount !== undefined ? mod.aplicaCount : mod.gestionados}
+                                                                </span>
+                                                                <span className="px-1.5 py-0.2 bg-slate-100 text-slate-600 border border-slate-200 rounded font-semibold">
+                                                                    No Aplica: {mod.noAplicaCount !== undefined ? mod.noAplicaCount : mod.pendientes}
+                                                                </span>
                                                             </div>
                                                         ) : mod.tipo === 'HORAS_EXTRAS' ? (
                                                             <div className="flex items-center gap-1.5 flex-wrap">
@@ -2538,10 +2541,13 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
 
                                                             <div className="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
                                                                 {mod.tipo === 'AUSENTISMO' ? (
-                                                                    <div className="flex items-center gap-2">
-                                                                        <span className="text-emerald-700 font-semibold">Gest: {mod.gestionados}</span>
-                                                                        <span>•</span>
-                                                                        <span className="text-slate-600">Pend: {mod.pendientes}</span>
+                                                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                                                        <span className="px-1.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded font-semibold">
+                                                                            Aplica Desc: {mod.aplicaCount !== undefined ? mod.aplicaCount : mod.gestionados}
+                                                                        </span>
+                                                                        <span className="px-1.5 py-0.5 bg-white text-slate-600 border border-slate-200 rounded font-semibold">
+                                                                            No Aplica: {mod.noAplicaCount !== undefined ? mod.noAplicaCount : mod.pendientes}
+                                                                        </span>
                                                                     </div>
                                                                 ) : mod.tipo === 'HORAS_EXTRAS' ? (
                                                                     <div className="flex items-center gap-1.5 flex-wrap">
