@@ -4,7 +4,8 @@ import React, { useState, useTransition } from 'react'
 import {
     DiarioMuralItem,
     publicarNotaDiarioMuralAction,
-    eliminarNotaDiarioMuralAction
+    eliminarNotaDiarioMuralAction,
+    reaccionarNotaDiarioMuralAction
 } from './actions'
 import {
     Plus,
@@ -22,13 +23,20 @@ import {
     Pin,
     Image as ImageIcon,
     Maximize2,
-    Paperclip
+    Paperclip,
+    Building2,
+    Globe
 } from 'lucide-react'
+import { SucursalOption } from './actions'
 
 interface DiarioMuralClientProps {
     initialItems: DiarioMuralItem[]
     esAdmin: boolean
     usuarioActual: string
+    sucursalesUsuario?: SucursalOption[]
+    todasSucursales?: SucursalOption[]
+    sucursalPorDefecto?: string
+    tieneAccesoTodasSucursales?: boolean
 }
 
 const COLOR_CLASSES: Record<DiarioMuralItem['color'], {
@@ -82,15 +90,33 @@ const COLOR_CLASSES: Record<DiarioMuralItem['color'], {
     }
 }
 
+const EMOJIS_POSITIVOS = [
+    { emoji: '👍', label: 'Me gusta' },
+    { emoji: '❤️', label: 'Me encanta' },
+    { emoji: '👏', label: 'Aplausos' },
+    { emoji: '🎉', label: 'Celebrar' },
+    { emoji: '💪', label: 'Fuerza' }
+]
+
 export default function DiarioMuralClient({
     initialItems,
     esAdmin,
-    usuarioActual
+    usuarioActual,
+    sucursalesUsuario = [],
+    todasSucursales = [],
+    sucursalPorDefecto = 'GLOBAL',
+    tieneAccesoTodasSucursales = false
 }: DiarioMuralClientProps) {
     const [items, setItems] = useState<DiarioMuralItem[]>(initialItems)
     const [filtroEstado, setFiltroEstado] = useState<'todas' | 'activas' | 'por_vencer'>('todas')
+    const [filtroSucursal, setFiltroSucursal] = useState<string>('TODAS')
     const [busqueda, setBusqueda] = useState('')
     const [isPending, startTransition] = useTransition()
+
+    // Lista de sucursales disponibles para publicar y filtrar
+    const listaSucursales = tieneAccesoTodasSucursales
+        ? todasSucursales
+        : (sucursalesUsuario.length > 0 ? sucursalesUsuario : todasSucursales)
 
     // Modal Crear
     const [modalCrearOpen, setModalCrearOpen] = useState(false)
@@ -100,8 +126,23 @@ export default function DiarioMuralClient({
     const [nuevoColor, setNuevoColor] = useState<DiarioMuralItem['color']>('yellow')
     const [nuevaDuracion, setNuevaDuracion] = useState<number>(30)
     const [nuevaImagen, setNuevaImagen] = useState<string | null>(null)
+    const [nuevoAlcance, setNuevoAlcance] = useState<'GLOBAL' | 'SUCURSAL'>(
+        sucursalPorDefecto === 'GLOBAL' ? 'GLOBAL' : 'SUCURSAL'
+    )
+    const sucursalInicial = sucursalPorDefecto === 'GLOBAL'
+        ? (listaSucursales[0]?.nombre ? [listaSucursales[0].nombre] : ['Casa Matriz'])
+        : [sucursalPorDefecto]
+    const [nuevasSucursales, setNuevasSucursales] = useState<string[]>(sucursalInicial)
     const [errorModal, setErrorModal] = useState<string | null>(null)
     const [guardando, setGuardando] = useState(false)
+
+    const handleToggleSucursal = (nombre: string) => {
+        setNuevasSucursales(prev =>
+            prev.includes(nombre)
+                ? prev.filter(s => s !== nombre)
+                : [...prev, nombre]
+        )
+    }
 
     // Zoom Lightbox
     const [imagenZoom, setImagenZoom] = useState<{ url: string; titulo: string } | null>(null)
@@ -154,12 +195,21 @@ export default function DiarioMuralClient({
             item.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
             item.contenido.toLowerCase().includes(busqueda.toLowerCase()) ||
             item.autorNombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            item.categoria.toLowerCase().includes(busqueda.toLowerCase())
+            item.categoria.toLowerCase().includes(busqueda.toLowerCase()) ||
+            (item.sucursalNombre && item.sucursalNombre.toLowerCase().includes(busqueda.toLowerCase()))
 
         if (!matchesBusqueda) return false
 
         if (filtroEstado === 'activas') return item.diasRestantes > 3
         if (filtroEstado === 'por_vencer') return item.diasRestantes <= 5
+
+        if (filtroSucursal !== 'TODAS') {
+            if (filtroSucursal === 'GLOBAL') {
+                if (item.alcance !== 'GLOBAL' && item.sucursalNombre !== 'Global') return false
+            } else {
+                if (item.sucursalNombre !== filtroSucursal && !item.sucursalesDestino?.includes(filtroSucursal)) return false
+            }
+        }
 
         return true
     })
@@ -176,16 +226,28 @@ export default function DiarioMuralClient({
             setErrorModal('Debes ingresar el contenido de la publicación.')
             return
         }
+        if (nuevoAlcance === 'SUCURSAL' && nuevasSucursales.length === 0) {
+            setErrorModal('Debes seleccionar al menos una sucursal destino para la publicación.')
+            return
+        }
 
         setGuardando(true)
         try {
+            const sucursalesDestinoFinal = nuevoAlcance === 'GLOBAL' ? ['GLOBAL'] : nuevasSucursales
+            const sucursalFinalNombre = nuevoAlcance === 'GLOBAL'
+                ? 'Global'
+                : nuevasSucursales.join(', ')
+
             const res = await publicarNotaDiarioMuralAction({
                 titulo: nuevoTitulo,
                 contenido: nuevoContenido,
                 categoria: nuevaCategoria,
                 color: nuevoColor,
                 duracionDias: nuevaDuracion,
-                imagenUrl: nuevaImagen
+                imagenUrl: nuevaImagen,
+                alcance: nuevoAlcance,
+                sucursalNombre: sucursalFinalNombre,
+                sucursalesDestino: sucursalesDestinoFinal
             })
 
             if (res.success && res.id) {
@@ -201,6 +263,10 @@ export default function DiarioMuralClient({
                     autorRol: esAdmin ? 'Administrador' : 'Colaborador',
                     diasRestantes: nuevaDuracion,
                     imagenUrl: nuevaImagen,
+                    alcance: nuevoAlcance,
+                    sucursalNombre: sucursalFinalNombre,
+                    sucursalesDestino: sucursalesDestinoFinal,
+                    reacciones: {},
                     createdAt: new Date().toISOString()
                 }
                 setItems(prev => [nuevaNota, ...prev])
@@ -211,6 +277,12 @@ export default function DiarioMuralClient({
                 setNuevoColor('yellow')
                 setNuevaDuracion(30)
                 setNuevaImagen(null)
+                setNuevoAlcance(sucursalPorDefecto === 'GLOBAL' ? 'GLOBAL' : 'SUCURSAL')
+                setNuevasSucursales(
+                    sucursalPorDefecto === 'GLOBAL'
+                        ? (listaSucursales[0]?.nombre ? [listaSucursales[0].nombre] : ['Casa Matriz'])
+                        : [sucursalPorDefecto]
+                )
             } else {
                 setErrorModal(res.error || 'Ocurrió un error al publicar la nota.')
             }
@@ -245,6 +317,38 @@ export default function DiarioMuralClient({
             return d.toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })
         } catch {
             return fechaStr
+        }
+    }
+
+    const handleToggleReaction = async (postId: string, emoji: string) => {
+        // Actualización optimista inmediata en interfaz
+        setItems(prevItems =>
+            prevItems.map(item => {
+                if (item.id !== postId) return item
+                const reacciones = { ...(item.reacciones || {}) }
+                const currentUsers = [...(reacciones[emoji] || [])]
+                const userIdx = currentUsers.indexOf(usuarioActual)
+                if (userIdx >= 0) {
+                    currentUsers.splice(userIdx, 1)
+                } else {
+                    currentUsers.push(usuarioActual)
+                }
+                reacciones[emoji] = currentUsers
+                return { ...item, reacciones }
+            })
+        )
+
+        try {
+            const res = await reaccionarNotaDiarioMuralAction(postId, emoji)
+            if (res.success && res.reacciones) {
+                setItems(prevItems =>
+                    prevItems.map(item =>
+                        item.id === postId ? { ...item, reacciones: res.reacciones! } : item
+                    )
+                )
+            }
+        } catch (err) {
+            console.error('Error al registrar reacción:', err)
         }
     }
 
@@ -308,6 +412,21 @@ export default function DiarioMuralClient({
                     >
                         Por Vencer (≤ 5 días)
                     </button>
+
+                    {/* Filtro por Sucursal / Global */}
+                    <select
+                        value={filtroSucursal}
+                        onChange={e => setFiltroSucursal(e.target.value)}
+                        className="px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 whitespace-nowrap"
+                    >
+                        <option value="TODAS">🏢 Todas las Sucursales / Global</option>
+                        <option value="GLOBAL">🌍 Solo Global</option>
+                        {listaSucursales.map(suc => (
+                            <option key={suc.id} value={suc.nombre}>
+                                🏢 Sucursal: {suc.nombre}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="relative w-full sm:w-72">
@@ -370,11 +489,38 @@ export default function DiarioMuralClient({
                                         {/* Fila superior: Badges y Botón Eliminar (Solo Admin) */}
                                         <div className="flex items-center justify-between gap-1.5 mb-2.5 pt-1">
                                             <div className="flex items-center gap-1.5 flex-wrap">
-                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${configColor.badge}`}>
-                                                    {nota.categoria}
+                                                {/* Badge de Categoría Estilo Oficial Tablero Hendaya */}
+                                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400 text-amber-950 border border-amber-500/40 shadow-xs flex items-center gap-1.5 shrink-0">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-800 shrink-0" />
+                                                    <span>{nota.categoria || 'General'}</span>
                                                 </span>
-                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-white/70 text-slate-700 border border-slate-300/40">
-                                                    Hendaya
+                                                <span
+                                                    title={
+                                                        nota.alcance === 'GLOBAL' || nota.sucursalNombre === 'Global'
+                                                            ? 'Publicación Global (Toda la Empresa)'
+                                                            : (nota.sucursalesDestino && nota.sucursalesDestino.length > 0
+                                                                ? `Sucursales: ${nota.sucursalesDestino.join(', ')}`
+                                                                : `Sucursal: ${nota.sucursalNombre}`)
+                                                    }
+                                                    className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/85 text-slate-800 border border-slate-300/60 flex items-center gap-1 shadow-2xs max-w-[150px]"
+                                                >
+                                                    {nota.alcance === 'GLOBAL' || nota.sucursalNombre === 'Global' ? (
+                                                        <>
+                                                            <Globe className="w-2.5 h-2.5 text-cyan-600 shrink-0" />
+                                                            <span>GLOBAL</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Building2 className="w-2.5 h-2.5 text-amber-700 shrink-0" />
+                                                            <span className="truncate">
+                                                                {nota.sucursalesDestino && nota.sucursalesDestino.length > 1
+                                                                    ? (nota.sucursalesDestino.length <= 2
+                                                                        ? nota.sucursalesDestino.join(', ')
+                                                                        : `${nota.sucursalesDestino.length} Sucursales`)
+                                                                    : (nota.sucursalNombre || 'Sucursal')}
+                                                            </span>
+                                                        </>
+                                                    )}
                                                 </span>
                                             </div>
 
@@ -422,6 +568,39 @@ export default function DiarioMuralClient({
                                                 </div>
                                             </div>
                                         )}
+                                        {/* Barra de Reacciones Positivas (Emojis) */}
+                                        <div className="pt-2 pb-1 border-t border-black/10">
+                                            <div className="flex items-center gap-1 flex-wrap">
+                                                {EMOJIS_POSITIVOS.map(({ emoji, label }) => {
+                                                    const users = nota.reacciones?.[emoji] || []
+                                                    const count = users.length
+                                                    const active = users.includes(usuarioActual)
+                                                    return (
+                                                        <button
+                                                            key={emoji}
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                handleToggleReaction(nota.id, emoji)
+                                                            }}
+                                                            title={`${label}${count > 0 ? ` (${users.join(', ')})` : ' - Reaccionar'}`}
+                                                            className={`px-2 py-0.5 rounded-full text-xs font-semibold flex items-center gap-1 transition-all duration-150 border select-none ${
+                                                                active
+                                                                    ? 'bg-amber-400/95 text-amber-950 border-amber-500 shadow-xs scale-105 font-bold ring-1 ring-amber-400/50'
+                                                                    : 'bg-white/60 hover:bg-white text-slate-700 border-black/10 hover:border-black/20 hover:scale-105'
+                                                            }`}
+                                                        >
+                                                            <span className="text-sm leading-none">{emoji}</span>
+                                                            {count > 0 && (
+                                                                <span className={`text-[10px] font-bold ${active ? 'text-amber-950' : 'text-slate-700'}`}>
+                                                                    {count}
+                                                                </span>
+                                                            )}
+                                                        </button>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* Barra de progreso de vigencia */}
@@ -462,218 +641,336 @@ export default function DiarioMuralClient({
 
             {/* MODAL CREAR NOTA */}
             {modalCrearOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-fadeIn">
-                    <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden animate-scaleUp">
-                        {/* Cabecera Modal */}
-                        <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fadeIn">
+                    <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden animate-scaleUp">
+                        {/* Cabecera Modal (Fija) */}
+                        <div className="px-5 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-2">
-                                <div className="p-2 bg-amber-100 rounded-lg text-amber-700">
+                                <div className="p-1.5 bg-amber-100 rounded-lg text-amber-700">
                                     <Pin className="w-4 h-4" />
                                 </div>
                                 <div>
-                                    <h3 className="text-base font-bold text-slate-900">Nueva Nota en Diario Mural</h3>
-                                    <p className="text-xs text-slate-500">Completa los campos para fijar tu aviso en la pizarra</p>
+                                    <h3 className="text-sm font-bold text-slate-900 leading-tight">Nueva Nota en Diario Mural</h3>
+                                    <p className="text-[11px] text-slate-500">Completa los campos para fijar tu aviso en la pizarra</p>
                                 </div>
                             </div>
                             <button
+                                type="button"
                                 onClick={() => setModalCrearOpen(false)}
                                 className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
                             >
-                                <X className="w-5 h-5" />
+                                <X className="w-4 h-4" />
                             </button>
                         </div>
 
                         {/* Formulario */}
-                        <form onSubmit={handleCrearNota} className="p-6 space-y-4">
-                            {errorModal && (
-                                <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
-                                    <AlertCircle className="w-4 h-4 shrink-0" />
-                                    <span>{errorModal}</span>
-                                </div>
-                            )}
-
-                            {/* Cabecera: Título */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    Cabecera / Título de la Noticia <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={nuevoTitulo}
-                                    onChange={e => setNuevoTitulo(e.target.value)}
-                                    placeholder="Ej: RECORDATORIO CAPACITACIÓN JUNAEB..."
-                                    maxLength={80}
-                                    required
-                                    className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 uppercase font-semibold"
-                                />
-                            </div>
-
-                            {/* Parte Central: Contenido */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    Parte Central / Noticia o Descripción <span className="text-rose-500">*</span>
-                                </label>
-                                <textarea
-                                    value={nuevoContenido}
-                                    onChange={e => setNuevoContenido(e.target.value)}
-                                    placeholder="Escribe aquí el detalle de la noticia o aviso institucional..."
-                                    rows={4}
-                                    maxLength={400}
-                                    required
-                                    className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none"
-                                />
-                                <div className="text-[11px] text-slate-400 text-right mt-0.5">
-                                    {nuevoContenido.length}/400 caracteres
-                                </div>
-                            </div>
-
-                            {/* Adjuntar Imagen (Opcional) */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    Adjuntar Imagen (Opcional)
-                                </label>
-                                {nuevaImagen ? (
-                                    <div className="relative inline-block border border-slate-200 rounded-xl overflow-hidden shadow-xs bg-slate-50 p-1.5">
-                                        <img
-                                            src={nuevaImagen}
-                                            alt="Previsualización adjunta"
-                                            className="h-28 w-44 object-cover rounded-lg"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setNuevaImagen(null)}
-                                            className="absolute top-2.5 right-2.5 p-1 bg-rose-600 hover:bg-rose-700 text-white rounded-full shadow-md transition-colors"
-                                            title="Quitar imagen"
-                                        >
-                                            <X className="w-3.5 h-3.5" />
-                                        </button>
+                        <form onSubmit={handleCrearNota} className="flex-1 flex flex-col min-h-0 overflow-hidden">
+                            {/* Cuerpo con Scroll Interno */}
+                            <div className="flex-1 overflow-y-auto px-5 py-3.5 space-y-3">
+                                {errorModal && (
+                                    <div className="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                                        <AlertCircle className="w-4 h-4 shrink-0" />
+                                        <span>{errorModal}</span>
                                     </div>
-                                ) : (
-                                    <label className="flex items-center gap-2 px-3.5 py-2.5 border border-dashed border-slate-300 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors text-slate-600">
-                                        <Paperclip className="w-4 h-4 text-cyan-600" />
-                                        <span className="text-xs font-medium">Adjuntar fotografía o volante (PNG, JPG, WEBP)</span>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageChange}
-                                            className="hidden"
-                                        />
-                                    </label>
                                 )}
-                            </div>
 
-                            {/* Tiempo de Duración de la Publicación */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    Tiempo de Duración de la Publicación <span className="text-rose-500">*</span>
-                                </label>
-                                <div className="grid grid-cols-4 gap-2">
-                                    {[
-                                        { dias: 10, label: '10 días' },
-                                        { dias: 20, label: '20 días' },
-                                        { dias: 30, label: '1 mes (30d)' },
-                                        { dias: 60, label: '2 meses (60d)' }
-                                    ].map(opt => (
-                                        <button
-                                            type="button"
-                                            key={opt.dias}
-                                            onClick={() => setNuevaDuracion(opt.dias)}
-                                            className={`py-2 px-2 rounded-lg text-xs font-semibold border text-center transition-all ${
-                                                nuevaDuracion === opt.dias
-                                                    ? 'bg-cyan-700 text-white border-cyan-800 shadow-sm ring-2 ring-cyan-500/30'
-                                                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                                            }`}
-                                        >
-                                            {opt.label}
-                                        </button>
-                                    ))}
-                                </div>
-                                <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-                                    <Clock className="w-3 h-3 text-cyan-600" />
-                                    <span>Al cumplirse el plazo, la publicación se eliminará automáticamente de la pizarra.</span>
-                                </p>
-                            </div>
-
-                            {/* Selección de Color del Post-it y Categoría */}
-                            <div className="grid grid-cols-2 gap-4">
+                                {/* Cabecera: Título */}
                                 <div>
                                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                        Color del Post-It
+                                        Cabecera / Título de la Noticia <span className="text-rose-500">*</span>
                                     </label>
-                                    <div className="flex items-center gap-2 pt-1">
-                                        {(['yellow', 'blue', 'purple', 'green', 'pink', 'orange'] as const).map(c => (
+                                    <input
+                                        type="text"
+                                        value={nuevoTitulo}
+                                        onChange={e => setNuevoTitulo(e.target.value)}
+                                        placeholder="Ej: RECORDATORIO CAPACITACIÓN JUNAEB..."
+                                        maxLength={80}
+                                        required
+                                        className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 uppercase font-semibold"
+                                    />
+                                </div>
+
+                                {/* Parte Central: Contenido */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                        Parte Central / Noticia o Descripción <span className="text-rose-500">*</span>
+                                    </label>
+                                    <textarea
+                                        value={nuevoContenido}
+                                        onChange={e => setNuevoContenido(e.target.value)}
+                                        placeholder="Escribe aquí el detalle de la noticia o aviso institucional..."
+                                        rows={3}
+                                        maxLength={400}
+                                        required
+                                        className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none"
+                                    />
+                                    <div className="text-[10px] text-slate-400 text-right mt-0.5">
+                                        {nuevoContenido.length}/400 caracteres
+                                    </div>
+                                </div>
+
+                                {/* Adjuntar Imagen (Opcional) */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                        Adjuntar Imagen (Opcional)
+                                    </label>
+                                    {nuevaImagen ? (
+                                        <div className="relative inline-block border border-slate-200 rounded-xl overflow-hidden shadow-xs bg-slate-50 p-1.5">
+                                            <img
+                                                src={nuevaImagen}
+                                                alt="Previsualización adjunta"
+                                                className="h-20 w-36 object-cover rounded-lg"
+                                            />
                                             <button
                                                 type="button"
-                                                key={c}
-                                                onClick={() => setNuevoColor(c)}
-                                                className={`w-7 h-7 rounded-full border-2 transition-transform ${
-                                                    COLOR_CLASSES[c].bg
-                                                } ${
-                                                    nuevoColor === c
-                                                        ? 'scale-125 border-slate-800 shadow-md ring-2 ring-slate-400'
-                                                        : 'border-slate-300 hover:scale-110'
-                                                }`}
+                                                onClick={() => setNuevaImagen(null)}
+                                                className="absolute top-2 right-2 p-1 bg-rose-600 hover:bg-rose-700 text-white rounded-full shadow-md transition-colors"
+                                                title="Quitar imagen"
+                                            >
+                                                <X className="w-3 h-3" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-slate-300 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors text-slate-600">
+                                            <Paperclip className="w-3.5 h-3.5 text-cyan-600" />
+                                            <span className="text-xs font-medium">Adjuntar fotografía o volante (PNG, JPG, WEBP)</span>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageChange}
+                                                className="hidden"
                                             />
-                                        ))}
-                                    </div>
+                                        </label>
+                                    )}
                                 </div>
 
+                                {/* Alcance de la Publicación (Sucursal / Global) */}
                                 <div>
                                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                        Categoría
+                                        Alcance de la Publicación <span className="text-rose-500">*</span>
                                     </label>
-                                    <select
-                                        value={nuevaCategoria}
-                                        onChange={e => setNuevaCategoria(e.target.value)}
-                                        className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                                    >
-                                        <option value="General">General</option>
-                                        <option value="Preventivo">Preventivo</option>
-                                        <option value="Informativo">Informativo</option>
-                                        <option value="Calidad">Calidad</option>
-                                        <option value="Seguridad">Seguridad</option>
-                                        <option value="Institucional">Institucional</option>
-                                    </select>
+                                    <div className="grid grid-cols-2 gap-2 mb-1.5">
+                                        <button
+                                            type="button"
+                                            onClick={() => setNuevoAlcance('SUCURSAL')}
+                                            className={`py-1.5 px-3 rounded-lg text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all ${
+                                                nuevoAlcance === 'SUCURSAL'
+                                                    ? 'bg-amber-50 text-amber-900 border-amber-400 ring-2 ring-amber-400/30'
+                                                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                                            }`}
+                                        >
+                                            <Building2 className="w-3.5 h-3.5 text-amber-600" />
+                                            <span>Propio de Sucursal</span>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setNuevoAlcance('GLOBAL')}
+                                            className={`py-1.5 px-3 rounded-lg text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all ${
+                                                nuevoAlcance === 'GLOBAL'
+                                                    ? 'bg-cyan-50 text-cyan-900 border-cyan-400 ring-2 ring-cyan-400/30'
+                                                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                                            }`}
+                                        >
+                                            <Globe className="w-3.5 h-3.5 text-cyan-600" />
+                                            <span>Global (Toda la Empresa)</span>
+                                        </button>
+                                    </div>
+
+                                    {nuevoAlcance === 'SUCURSAL' && (
+                                        <div className="p-2.5 bg-amber-50/70 rounded-xl border border-amber-200/90 animate-fadeIn space-y-1.5">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-[11px] font-bold text-amber-950 uppercase flex items-center gap-1.5">
+                                                    <Building2 className="w-3.5 h-3.5 text-amber-700" />
+                                                    <span>Sucursales ({nuevasSucursales.length} elegida{nuevasSucursales.length === 1 ? '' : 's'}):</span>
+                                                </label>
+                                                <div className="flex items-center gap-1 text-[10px]">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setNuevasSucursales(listaSucursales.map(s => s.nombre))}
+                                                        className="font-bold text-amber-800 hover:text-amber-950 hover:underline px-1.5 py-0.5 rounded bg-amber-100/80"
+                                                    >
+                                                        + Todas ({listaSucursales.length})
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setNuevasSucursales([])}
+                                                        className="font-bold text-slate-500 hover:text-slate-800 hover:underline px-1.5 py-0.5 rounded bg-slate-100"
+                                                    >
+                                                        Limpiar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 max-h-32 overflow-y-auto pr-1">
+                                                {listaSucursales.map(suc => {
+                                                    const isSelected = nuevasSucursales.includes(suc.nombre)
+                                                    return (
+                                                        <button
+                                                            type="button"
+                                                            key={suc.id}
+                                                            onClick={() => handleToggleSucursal(suc.nombre)}
+                                                            className={`flex items-center justify-between p-1.5 rounded-lg text-xs font-semibold border transition-all text-left ${
+                                                                isSelected
+                                                                    ? 'bg-amber-100 text-amber-950 border-amber-400 ring-1 ring-amber-400/50 shadow-2xs font-bold'
+                                                                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                                                            }`}
+                                                        >
+                                                            <div className="flex items-center gap-1.5 truncate">
+                                                                <Building2 className={`w-3 h-3 shrink-0 ${isSelected ? 'text-amber-700' : 'text-slate-400'}`} />
+                                                                <span className="truncate text-[11px]">{suc.nombre}</span>
+                                                            </div>
+                                                            {isSelected ? (
+                                                                <CheckCircle2 className="w-3.5 h-3.5 text-amber-700 shrink-0 ml-1" />
+                                                            ) : (
+                                                                <div className="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0 ml-1" />
+                                                            )}
+                                                        </button>
+                                                    )
+                                                })}
+                                            </div>
+
+                                            {nuevasSucursales.length === 0 ? (
+                                                <div className="p-1.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-[10px] font-semibold flex items-center gap-1.5">
+                                                    <AlertCircle className="w-3 h-3 shrink-0" />
+                                                    <span>Debes marcar al menos una sucursal destino.</span>
+                                                </div>
+                                            ) : (
+                                                <div className="p-1.5 bg-white/70 border border-amber-200 rounded-lg text-[10px] text-amber-900 leading-tight">
+                                                    <span>📍 Destinatarios ({nuevasSucursales.length}): </span>
+                                                    <strong className="text-amber-950">{nuevasSucursales.join(', ')}</strong>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                    {nuevoAlcance === 'GLOBAL' && (
+                                        <p className="text-[11px] text-cyan-700 bg-cyan-50/70 p-2 rounded-lg border border-cyan-200 flex items-center gap-1.5 mt-1">
+                                            <Globe className="w-3.5 h-3.5 text-cyan-600 shrink-0" />
+                                            <span>Esta publicación y su globo de alerta se mostrarán a <strong>todos los usuarios de la compañía</strong>.</span>
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Tiempo de Duración de la Publicación */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                        Tiempo de Duración de la Publicación <span className="text-rose-500">*</span>
+                                    </label>
+                                    <div className="grid grid-cols-4 gap-1.5">
+                                        {[
+                                            { dias: 10, label: '10 días' },
+                                            { dias: 20, label: '20 días' },
+                                            { dias: 30, label: '1 mes (30d)' },
+                                            { dias: 60, label: '2 meses (60d)' }
+                                        ].map(opt => (
+                                            <button
+                                                type="button"
+                                                key={opt.dias}
+                                                onClick={() => setNuevaDuracion(opt.dias)}
+                                                className={`py-1.5 px-1 rounded-lg text-[11px] font-semibold border text-center transition-all ${
+                                                    nuevaDuracion === opt.dias
+                                                        ? 'bg-cyan-700 text-white border-cyan-800 shadow-sm ring-2 ring-cyan-500/30'
+                                                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                                                }`}
+                                            >
+                                                {opt.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                                        <Clock className="w-3 h-3 text-cyan-600 shrink-0" />
+                                        <span>Al cumplirse el plazo, se eliminará automáticamente.</span>
+                                    </p>
+                                </div>
+
+                                {/* Selección de Color del Post-it y Categoría */}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                            Color del Post-It
+                                        </label>
+                                        <div className="flex items-center gap-1.5 pt-0.5">
+                                            {(['yellow', 'blue', 'purple', 'green', 'pink', 'orange'] as const).map(c => (
+                                                <button
+                                                    type="button"
+                                                    key={c}
+                                                    onClick={() => setNuevoColor(c)}
+                                                    className={`w-6 h-6 rounded-full border-2 transition-transform ${
+                                                        COLOR_CLASSES[c].bg
+                                                    } ${
+                                                        nuevoColor === c
+                                                            ? 'scale-125 border-slate-800 shadow-md ring-2 ring-slate-400'
+                                                            : 'border-slate-300 hover:scale-110'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                            Categoría
+                                        </label>
+                                        <select
+                                            value={nuevaCategoria}
+                                            onChange={e => setNuevaCategoria(e.target.value)}
+                                            className="w-full px-2.5 py-1 text-xs bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-medium"
+                                        >
+                                            <option value="General">General</option>
+                                            <option value="Preventivo">Preventivo</option>
+                                            <option value="Informativo">Informativo</option>
+                                            <option value="Calidad">Calidad</option>
+                                            <option value="Seguridad">Seguridad</option>
+                                            <option value="Institucional">Institucional</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Pie de Nota informativo */}
-                            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
-                                <span className="flex items-center gap-1.5">
-                                    <User className="w-3.5 h-3.5 text-slate-500" />
-                                    <span>Publicando como: <strong>{usuarioActual}</strong></span>
-                                </span>
-                                <span className="text-[11px] text-slate-500">
-                                    {esAdmin ? 'Rol: Administrador' : 'Rol: Colaborador'}
-                                </span>
-                            </div>
-
-                            {/* Botones de acción */}
-                            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-200">
-                                <button
-                                    type="button"
-                                    onClick={() => setModalCrearOpen(false)}
-                                    className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={guardando}
-                                    className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-md disabled:opacity-50"
-                                >
-                                    {guardando ? (
-                                        <>
-                                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                                            <span>Fijando Nota...</span>
-                                        </>
+                            {/* Footer Modal con Botones Fijos (Siempre Visibles) */}
+                            <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3 shrink-0">
+                                <div className="text-[11px] text-slate-600 font-medium truncate max-w-[200px]">
+                                    {nuevoAlcance === 'GLOBAL' ? (
+                                        <span className="flex items-center gap-1 text-cyan-700">
+                                            <Globe className="w-3.5 h-3.5 shrink-0" />
+                                            <span>Alcance: <strong>Global</strong></span>
+                                        </span>
                                     ) : (
-                                        <>
-                                            <Pin className="w-3.5 h-3.5" />
-                                            <span>Fijar en Diario Mural</span>
-                                        </>
+                                        <span className="flex items-center gap-1 text-amber-900" title={nuevasSucursales.join(', ')}>
+                                            <Building2 className="w-3.5 h-3.5 shrink-0 text-amber-700" />
+                                            <span className="truncate">
+                                                {nuevasSucursales.length > 1 ? `${nuevasSucursales.length} Sucursales` : (nuevasSucursales[0] || 'Ninguna')}
+                                            </span>
+                                        </span>
                                     )}
-                                </button>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setModalCrearOpen(false)}
+                                        className="px-3.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-200/80 rounded-lg transition-colors"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={guardando}
+                                        className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md disabled:opacity-50 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                                    >
+                                        {guardando ? (
+                                            <>
+                                                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                                                <span>Fijando...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Pin className="w-3.5 h-3.5" />
+                                                <span>Fijar en Diario Mural</span>
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>

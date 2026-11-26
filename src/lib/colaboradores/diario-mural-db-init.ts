@@ -33,6 +33,23 @@ export async function ensureDiarioMuralTables() {
         await rawPrisma.$executeRawUnsafe(`
             ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "leidoPor" TEXT DEFAULT '[]';
         `)
+        // Columnas para alcance (Sucursal / Global)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "alcance" VARCHAR(50) DEFAULT 'GLOBAL';
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "sucursalId" VARCHAR(100);
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "sucursalNombre" VARCHAR(255) DEFAULT 'Global';
+        `)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "sucursalesDestino" TEXT DEFAULT '[]';
+        `)
+        // Columna para reacciones positivas de usuarios (emojis)
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "diario_mural" ADD COLUMN IF NOT EXISTS "reacciones" TEXT DEFAULT '{}';
+        `)
 
         // Sembrar avisos iniciales si la tabla está vacía
         const countRows = await rawPrisma.$queryRawUnsafe<any[]>(`SELECT COUNT(*)::int as count FROM "diario_mural";`)

@@ -1,6 +1,6 @@
 'use server'
 
-import { rawPrisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { ensureDiarioMuralTables } from '@/lib/colaboradores/diario-mural-db-init'
@@ -17,7 +17,17 @@ export interface DiarioMuralItem {
     autorRol: string | null
     diasRestantes: number
     imagenUrl?: string | null
+    alcance: 'GLOBAL' | 'SUCURSAL'
+    sucursalId?: string | null
+    sucursalNombre?: string | null
+    sucursalesDestino?: string[]
+    reacciones: Record<string, string[]>
     createdAt: string
+}
+
+export interface SucursalOption {
+    id: string
+    nombre: string
 }
 
 export interface DiarioMuralResponse {
@@ -25,6 +35,10 @@ export interface DiarioMuralResponse {
     items?: DiarioMuralItem[]
     esAdmin?: boolean
     usuarioActual?: string
+    sucursalesUsuario?: SucursalOption[]
+    todasSucursales?: SucursalOption[]
+    sucursalPorDefecto?: string
+    tieneAccesoTodasSucursales?: boolean
     error?: string
 }
 
@@ -50,6 +64,35 @@ export async function obtenerDiarioMuralAction(): Promise<DiarioMuralResponse> {
 
         await ensureDiarioMuralTables()
 
+        // Obtener datos del usuario con sus sucursales autorizadas
+        const dbUser = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            include: {
+                sucursales: { select: { id: true, nombre: true } },
+                role: true
+            }
+        })
+
+        const allSucursalesRows = await prisma.sucursal.findMany({
+            select: { id: true, nombre: true },
+            orderBy: { nombre: 'asc' }
+        })
+
+        const userSucursales: SucursalOption[] = dbUser?.sucursales || []
+        const todasSucursales: SucursalOption[] = allSucursalesRows || []
+        const esAdmin = checkIsAdmin(session)
+        const tieneAccesoTodasSucursales = esAdmin || userSucursales.length === 0 || userSucursales.length >= todasSucursales.length
+
+        // Determinar sucursal por defecto:
+        // Si tiene todas las sucursales -> Casa Matriz (si existe) o la primera; si tiene asignada una específica -> esa
+        let sucursalPorDefecto = 'GLOBAL'
+        if (tieneAccesoTodasSucursales) {
+            const matriz = todasSucursales.find(s => s.nombre.toLowerCase().includes('matriz'))
+            sucursalPorDefecto = matriz ? matriz.nombre : (todasSucursales[0]?.nombre || 'GLOBAL')
+        } else if (userSucursales.length > 0) {
+            sucursalPorDefecto = userSucursales[0].nombre
+        }
+
         // Depurar automáticamente publicaciones vencidas de la pizarra
         await rawPrisma.$executeRawUnsafe(`
             DELETE FROM "diario_mural" WHERE "fechaExpiracion" < NOW();
@@ -59,6 +102,11 @@ export async function obtenerDiarioMuralAction(): Promise<DiarioMuralResponse> {
             SELECT 
                 "id", "titulo", "contenido", "categoria", "color",
                 "duracionDias", "imagenUrl", "leidoPor",
+                COALESCE("alcance", 'GLOBAL') as "alcance",
+                "sucursalId",
+                COALESCE("sucursalNombre", 'Global') as "sucursalNombre",
+                COALESCE("sucursalesDestino", '[]') as "sucursalesDestino",
+                COALESCE("reacciones", '{}') as "reacciones",
                 "fechaExpiracion"::text as "fechaExpiracion",
                 "autorNombre", "autorRol",
                 "createdAt"::text as "createdAt",
@@ -68,13 +116,32 @@ export async function obtenerDiarioMuralAction(): Promise<DiarioMuralResponse> {
             ORDER BY "createdAt" DESC;
         `)
 
-        const esAdmin = checkIsAdmin(session)
+        const userSucursalNamesSet = new Set(userSucursales.map(s => s.nombre.toLowerCase()))
+        const userSucursalIdsSet = new Set(userSucursales.map(s => s.id))
+
+        // Filtrar publicaciones que el usuario tiene permitido ver
+        const visibleRows = rows.filter(r => {
+            if (tieneAccesoTodasSucursales) return true
+            if (r.alcance === 'GLOBAL' || r.sucursalNombre === 'Global') return true
+            if (r.sucursalId && userSucursalIdsSet.has(r.sucursalId)) return true
+            if (r.sucursalNombre && userSucursalNamesSet.has(r.sucursalNombre.toLowerCase())) return true
+
+            try {
+                const dests: string[] = JSON.parse(r.sucursalesDestino || '[]')
+                if (dests.some(d => userSucursalNamesSet.has(d.toLowerCase()) || userSucursalIdsSet.has(d))) {
+                    return true
+                }
+            } catch {}
+
+            return false
+        })
+
         const usuarioActual = session.user.name || session.user.username || 'Usuario'
         const currentUsername = session.user.username || session.user.name || ''
 
-        // Marcar automáticamente todas las noticias activas como leídas por el usuario actual
+        // Marcar automáticamente todas las noticias visibles activas como leídas por el usuario actual
         if (currentUsername) {
-            for (const r of rows) {
+            for (const r of visibleRows) {
                 let leidos: string[] = []
                 try { leidos = JSON.parse(r.leidoPor || '[]') } catch {}
                 if (!leidos.includes(currentUsername)) {
@@ -86,26 +153,43 @@ export async function obtenerDiarioMuralAction(): Promise<DiarioMuralResponse> {
             }
         }
 
-        const items: DiarioMuralItem[] = rows.map(r => ({
-            id: r.id,
-            titulo: r.titulo,
-            contenido: r.contenido,
-            categoria: r.categoria || 'General',
-            color: (r.color || 'yellow') as DiarioMuralItem['color'],
-            duracionDias: Number(r.duracionDias || 30),
-            fechaExpiracion: r.fechaExpiracion,
-            autorNombre: r.autorNombre || 'Anónimo',
-            autorRol: r.autorRol || null,
-            diasRestantes: Math.max(0, Number(r.diasRestantes ?? 0)),
-            imagenUrl: r.imagenUrl || null,
-            createdAt: r.createdAt
-        }))
+        const items: DiarioMuralItem[] = visibleRows.map(r => {
+            let sucursalesDestinoParsed: string[] = []
+            try { sucursalesDestinoParsed = JSON.parse(r.sucursalesDestino || '[]') } catch {}
+
+            let reaccionesParsed: Record<string, string[]> = {}
+            try { reaccionesParsed = JSON.parse(r.reacciones || '{}') } catch {}
+
+            return {
+                id: r.id,
+                titulo: r.titulo,
+                contenido: r.contenido,
+                categoria: r.categoria || 'General',
+                color: (r.color || 'yellow') as DiarioMuralItem['color'],
+                duracionDias: Number(r.duracionDias || 30),
+                fechaExpiracion: r.fechaExpiracion,
+                autorNombre: r.autorNombre || 'Anónimo',
+                autorRol: r.autorRol || null,
+                diasRestantes: Math.max(0, Number(r.diasRestantes ?? 0)),
+                imagenUrl: r.imagenUrl || null,
+                alcance: (r.alcance || 'GLOBAL') as DiarioMuralItem['alcance'],
+                sucursalId: r.sucursalId || null,
+                sucursalNombre: r.sucursalNombre || 'Global',
+                sucursalesDestino: sucursalesDestinoParsed,
+                reacciones: reaccionesParsed,
+                createdAt: r.createdAt
+            }
+        })
 
         return {
             success: true,
             items,
             esAdmin,
-            usuarioActual
+            usuarioActual,
+            sucursalesUsuario: userSucursales,
+            todasSucursales,
+            sucursalPorDefecto,
+            tieneAccesoTodasSucursales
         }
     } catch (error: any) {
         console.error('[obtenerDiarioMuralAction] Error:', error)
@@ -120,6 +204,10 @@ export async function publicarNotaDiarioMuralAction(data: {
     color?: string
     duracionDias: number
     imagenUrl?: string | null
+    alcance: 'GLOBAL' | 'SUCURSAL'
+    sucursalNombre?: string
+    sucursalId?: string
+    sucursalesDestino?: string[]
 }): Promise<{ success: boolean; id?: string; error?: string }> {
     try {
         const session = await getSession()
@@ -134,6 +222,17 @@ export async function publicarNotaDiarioMuralAction(data: {
             ? data.color!
             : 'yellow'
         const imagenUrl = data.imagenUrl || null
+        const alcance = data.alcance === 'SUCURSAL' ? 'SUCURSAL' : 'GLOBAL'
+        const sucursalesDestinoArr = alcance === 'GLOBAL'
+            ? ['GLOBAL']
+            : (data.sucursalesDestino && data.sucursalesDestino.length > 0
+                ? data.sucursalesDestino
+                : [data.sucursalNombre || 'Global'])
+        const sucursalNombre = alcance === 'GLOBAL'
+            ? 'Global'
+            : (data.sucursalNombre || sucursalesDestinoArr.join(', '))
+        const sucursalId = alcance === 'GLOBAL' ? null : (data.sucursalId || null)
+        const sucursalesDestino = JSON.stringify(sucursalesDestinoArr)
 
         // Duración máxima permitida: 60 días (2 meses)
         const duracionValida = [10, 20, 30, 60].includes(data.duracionDias)
@@ -162,15 +261,17 @@ export async function publicarNotaDiarioMuralAction(data: {
             INSERT INTO "diario_mural" (
                 "id", "titulo", "contenido", "categoria", "color",
                 "duracionDias", "fechaExpiracion", "autorId", "autorNombre",
-                "autorEmail", "autorRol", "imagenUrl", "leidoPor", "createdAt", "updatedAt"
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-        `, id, titulo, contenido, categoria, color, duracionValida, fechaExpiracion, autorId, autorNombre, autorEmail, autorRol, imagenUrl, leidoPorInicial)
+                "autorEmail", "autorRol", "imagenUrl", "leidoPor",
+                "alcance", "sucursalId", "sucursalNombre", "sucursalesDestino",
+                "reacciones", "createdAt", "updatedAt"
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, '{}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+        `, id, titulo, contenido, categoria, color, duracionValida, fechaExpiracion, autorId, autorNombre, autorEmail, autorRol, imagenUrl, leidoPorInicial, alcance, sucursalId, sucursalNombre, sucursalesDestino)
 
         await logAuditAction({
             username: autorNombre,
             modulo: 'Colaboradores -> Diario Mural',
             action: 'CREACION',
-            detalle: `Publicó nota en Diario Mural: "${titulo}" (Vigencia: ${duracionValida} días${imagenUrl ? ', con imagen adjunta' : ''})`
+            detalle: `Publicó nota en Diario Mural: "${titulo}" (${alcance === 'GLOBAL' ? 'Alcance Global' : `Sucursal: ${sucursalNombre}`}, Vigencia: ${duracionValida} días)`
         })
 
         return { success: true, id }
@@ -255,5 +356,65 @@ export async function eliminarNotaDiarioMuralAction(id: string): Promise<{ succe
     } catch (error: any) {
         console.error('[eliminarNotaDiarioMuralAction] Error:', error)
         return { success: false, error: error.message || 'Error al eliminar publicación' }
+    }
+}
+
+export async function reaccionarNotaDiarioMuralAction(
+    postId: string,
+    emoji: string
+): Promise<{ success: boolean; reacciones?: Record<string, string[]>; error?: string }> {
+    try {
+        const session = await getSession()
+        if (!session?.user) {
+            return { success: false, error: 'Sesión no iniciada' }
+        }
+
+        const username = session.user.username || session.user.name || ''
+        if (!username) {
+            return { success: false, error: 'Usuario no identificado' }
+        }
+
+        // Lista estricta de emojis permitidos (solo positivos)
+        const EMOJIS_PERMITIDOS = ['👍', '❤️', '👏', '🎉', '💪']
+        if (!EMOJIS_PERMITIDOS.includes(emoji)) {
+            return { success: false, error: 'Emoji no permitido' }
+        }
+
+        await ensureDiarioMuralTables()
+
+        const rows = await rawPrisma.$queryRawUnsafe<any[]>(`SELECT "reacciones" FROM "diario_mural" WHERE "id" = $1;`, postId)
+        if (rows.length === 0) {
+            return { success: false, error: 'Publicación no encontrada' }
+        }
+
+        let reacciones: Record<string, string[]> = {}
+        try {
+            reacciones = JSON.parse(rows[0].reacciones || '{}')
+        } catch {
+            reacciones = {}
+        }
+
+        if (!Array.isArray(reacciones[emoji])) {
+            reacciones[emoji] = []
+        }
+
+        const idx = reacciones[emoji].indexOf(username)
+        if (idx >= 0) {
+            // Quitar reacción (toggle off)
+            reacciones[emoji].splice(idx, 1)
+        } else {
+            // Agregar reacción (toggle on)
+            reacciones[emoji].push(username)
+        }
+
+        const jsonStr = JSON.stringify(reacciones)
+        await rawPrisma.$executeRawUnsafe(`
+            UPDATE "diario_mural" SET "reacciones" = $1 WHERE "id" = $2;
+        `, jsonStr, postId)
+
+        return { success: true, reacciones }
+    } catch (error: any) {
+        console.error('[reaccionarNotaDiarioMuralAction] Error:', error)
+        return { success: false, error: error.message || 'Error al registrar reacción' }
     }
 }

@@ -33,6 +33,10 @@ export default async function DiarioMuralPage() {
                 initialItems={res.items || []}
                 esAdmin={Boolean(res.esAdmin)}
                 usuarioActual={res.usuarioActual || session.user.name || session.user.username || 'Usuario'}
+                sucursalesUsuario={res.sucursalesUsuario || []}
+                todasSucursales={res.todasSucursales || []}
+                sucursalPorDefecto={res.sucursalPorDefecto || 'GLOBAL'}
+                tieneAccesoTodasSucursales={Boolean(res.tieneAccesoTodasSucursales)}
             />
         </div>
     )

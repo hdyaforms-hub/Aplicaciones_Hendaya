@@ -137,19 +137,55 @@ export async function getUserCollabNotifications(): Promise<{
 
         // 4. Nuevas publicaciones no leídas en el Diario Mural
         try {
+            // Obtener sucursales y rol del usuario actual para filtrar avisos por sucursal / global
+            const dbUser = await rawPrisma.user.findUnique({
+                where: { username },
+                include: { sucursales: true, role: true }
+            })
+            const roleName = (dbUser?.role?.name || '').toLowerCase()
+            const isAdmin = roleName.includes('admin')
+            const userSucursalNames = new Set((dbUser?.sucursales || []).map(s => s.nombre.toLowerCase().trim()))
+            const userSucursalIds = new Set((dbUser?.sucursales || []).map(s => s.id))
+            const hasAllSucursales = isAdmin || (dbUser?.sucursales || []).length === 0
+
             const activePosts = await rawPrisma.$queryRawUnsafe<any[]>(`
-                SELECT "id", "titulo", "contenido", "autorNombre", "leidoPor", "createdAt"::text as "createdAt"
+                SELECT 
+                    "id", "titulo", "contenido", "autorNombre", "leidoPor",
+                    COALESCE("alcance", 'GLOBAL') as "alcance",
+                    "sucursalId",
+                    COALESCE("sucursalNombre", 'Global') as "sucursalNombre",
+                    COALESCE("sucursalesDestino", '[]') as "sucursalesDestino",
+                    "createdAt"::text as "createdAt"
                 FROM "diario_mural"
                 WHERE "fechaExpiracion" >= NOW()
                 ORDER BY "createdAt" DESC
-                LIMIT 5;
+                LIMIT 10;
             `)
 
             for (const post of activePosts) {
                 let leidos: string[] = []
                 try { leidos = JSON.parse(post.leidoPor || '[]') } catch {}
 
-                if (!leidos.includes(username)) {
+                if (leidos.includes(username)) continue
+
+                // Verificar alcance (Global vs Sucursal)
+                let esVisibleParaUsuario = false
+                if (hasAllSucursales || post.alcance === 'GLOBAL' || post.sucursalNombre === 'Global') {
+                    esVisibleParaUsuario = true
+                } else if (post.sucursalId && userSucursalIds.has(post.sucursalId)) {
+                    esVisibleParaUsuario = true
+                } else if (post.sucursalNombre && userSucursalNames.has(post.sucursalNombre.toLowerCase().trim())) {
+                    esVisibleParaUsuario = true
+                } else {
+                    try {
+                        const dests: string[] = JSON.parse(post.sucursalesDestino || '[]')
+                        if (dests.some(d => userSucursalNames.has(d.toLowerCase().trim()) || userSucursalIds.has(d))) {
+                            esVisibleParaUsuario = true
+                        }
+                    } catch {}
+                }
+
+                if (esVisibleParaUsuario) {
                     notifications.push({
                         id: `dm-${post.id}`,
                         type: 'DIARIO_MURAL',
@@ -161,7 +197,7 @@ export async function getUserCollabNotifications(): Promise<{
                         date: post.createdAt,
                         url: '/dashboard/colaboradores/diario-mural',
                         isRead: false,
-                        meta: { postId: post.id }
+                        meta: { postId: post.id, sucursal: post.sucursalNombre, alcance: post.alcance }
                     })
                 }
             }
