@@ -150,6 +150,26 @@ export default function AuditoriaPage() {
         loadLogs()
     }, [loadLogs])
 
+    const handleRefresh = async () => {
+        setLoading(true)
+        setError('')
+        try {
+            const [uList, rList, mList] = await Promise.all([
+                fetchAuditUsersAction(),
+                fetchAuditRolesAction(),
+                fetchAuditModulesAction()
+            ])
+            setUsers(uList as UserOption[])
+            setRoles(rList as RoleOption[])
+            if (mList && mList.length > 0) {
+                setModulesList(mList)
+            }
+        } catch (e) {
+            console.error('Error al actualizar metadatos:', e)
+        }
+        await loadLogs()
+    }
+
     const handleFilterSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         setCurrentPage(1)
@@ -345,35 +365,46 @@ export default function AuditoriaPage() {
                         </p>
                     </div>
 
-                    {/* Botones de Descarga */}
-                    {activeTab === 'registro' ? (
-                        <div className="flex flex-wrap items-center gap-3 shrink-0">
-                            <button
-                                onClick={handleExportPDF}
-                                disabled={exporting || totalRecords === 0}
-                                className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-rose-600/30 transition-all flex items-center gap-2 text-sm"
-                            >
-                                <span>{exporting && exportingType === 'pdf' ? '⌛' : '📄'}</span>
-                                {exporting && exportingType === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
-                            </button>
+                    {/* Botones de Descarga y Actualización */}
+                    <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                        <button
+                            type="button"
+                            onClick={handleRefresh}
+                            disabled={loading}
+                            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold border border-slate-700 shadow-md transition-all flex items-center gap-2 text-sm cursor-pointer active:scale-95 disabled:opacity-50"
+                            title="Actualizar registros sin recargar la página"
+                        >
+                            <span className={loading ? 'animate-spin' : ''}>🔄</span>
+                            <span>{loading ? 'Actualizando...' : 'Actualizar'}</span>
+                        </button>
 
-                            <button
-                                onClick={handleExportExcel}
-                                disabled={exporting || totalRecords === 0}
-                                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 text-sm"
-                            >
-                                <span>{exporting && exportingType === 'excel' ? '⌛' : '📊'}</span>
-                                {exporting && exportingType === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-2 shrink-0">
+                        {activeTab === 'registro' ? (
+                            <>
+                                <button
+                                    onClick={handleExportPDF}
+                                    disabled={exporting || totalRecords === 0}
+                                    className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-rose-600/30 transition-all flex items-center gap-2 text-sm cursor-pointer"
+                                >
+                                    <span>{exporting && exportingType === 'pdf' ? '⌛' : '📄'}</span>
+                                    {exporting && exportingType === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
+                                </button>
+
+                                <button
+                                    onClick={handleExportExcel}
+                                    disabled={exporting || totalRecords === 0}
+                                    className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 text-sm cursor-pointer"
+                                >
+                                    <span>{exporting && exportingType === 'excel' ? '⌛' : '📊'}</span>
+                                    {exporting && exportingType === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
+                                </button>
+                            </>
+                        ) : (
                             <span className="px-3.5 py-2 bg-cyan-500/20 text-cyan-200 text-xs font-bold rounded-xl border border-cyan-400/30 flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                                 Analítica de Conexiones y Uso
                             </span>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -554,7 +585,7 @@ export default function AuditoriaPage() {
 
             {/* Tabla de Resultados */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div className="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
                         <h3 className="font-bold text-gray-900 text-lg">Registros de Actividad</h3>
                         <p className="text-xs text-gray-500 mt-0.5">
@@ -566,6 +597,17 @@ export default function AuditoriaPage() {
                             )}
                         </p>
                     </div>
+
+                    <button
+                        type="button"
+                        onClick={handleRefresh}
+                        disabled={loading}
+                        className="px-3.5 py-1.5 bg-slate-100 hover:bg-cyan-50 text-slate-700 hover:text-cyan-800 border border-slate-200 hover:border-cyan-300 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 disabled:opacity-50 cursor-pointer shrink-0"
+                        title="Actualizar tabla de actividad"
+                    >
+                        <span className={loading ? 'animate-spin' : ''}>🔄</span>
+                        <span>{loading ? 'Refrescando...' : 'Refrescar'}</span>
+                    </button>
                 </div>
 
                 <div className="overflow-x-auto">

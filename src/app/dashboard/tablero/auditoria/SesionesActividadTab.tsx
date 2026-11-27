@@ -328,10 +328,20 @@ export default function SesionesActividadTab({ roles, users }: SesionesActividad
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={loadAnalytics}
+                            disabled={loading}
+                            className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                            title="Refrescar métricas y analítica de sesiones"
+                        >
+                            <span className={loading ? 'animate-spin' : ''}>🔄</span>
+                            <span>{loading ? 'Actualizando...' : 'Actualizar'}</span>
+                        </button>
                         {(dateFrom || dateTo || selectedRole !== 'ALL' || selectedUser !== 'ALL' || periodPreset !== 'all') && (
                             <button
                                 onClick={handleResetFilters}
-                                className="px-3 py-1.5 text-xs font-semibold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors"
+                                className="px-3 py-1.5 text-xs font-semibold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors cursor-pointer"
                             >
                                 Restablecer Filtros
                             </button>
@@ -339,7 +349,7 @@ export default function SesionesActividadTab({ roles, users }: SesionesActividad
                         <button
                             onClick={handleExportExcel}
                             disabled={exporting || loading || !analytics}
-                            className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                            className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                         >
                             <span>{exporting ? '⌛' : '📊'}</span>
                             {exporting ? 'Generando...' : 'Exportar Analítica Excel'}
