@@ -56,7 +56,7 @@ export async function fetchAllAuditLogsForExport(params: Omit<AuditFilterParams,
     return result.logs
 }
 
-import { computeAuditSessionAnalytics, AuditSessionFilterParams } from '@/lib/audit-analytics'
+import { computeAuditSessionAnalytics, computeModuleUsageAnalytics, AuditSessionFilterParams } from '@/lib/audit-analytics'
 
 export async function fetchAuditSessionAnalyticsAction(params?: AuditSessionFilterParams) {
     const session = await getSession()
@@ -72,5 +72,21 @@ export async function fetchAuditSessionAnalyticsAction(params?: AuditSessionFilt
     }
 
     return await computeAuditSessionAnalytics(params)
+}
+
+export async function fetchModuleUsageAnalyticsAction(params?: AuditSessionFilterParams) {
+    const session = await getSession()
+    if (!session?.user) {
+        throw new Error('No autorizado')
+    }
+
+    const permissions = session.user.role?.permissions || []
+    const isAdmin = session.user.role?.name === 'admin' || session.user.role?.name === 'Administrador'
+
+    if (!isAdmin && !permissions.includes('view_tablero_auditoria')) {
+        throw new Error('Acceso denegado')
+    }
+
+    return await computeModuleUsageAnalytics(params)
 }
 

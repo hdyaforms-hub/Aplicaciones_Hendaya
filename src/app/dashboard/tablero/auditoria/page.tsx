@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAuditRolesAction, fetchAuditModulesAction, fetchAllAuditLogsForExport } from './actions'
 import SesionesActividadTab from './SesionesActividadTab'
+import ModulosUsoTab from './ModulosUsoTab'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -63,7 +64,7 @@ type RoleOption = {
 }
 
 export default function AuditoriaPage() {
-    const [activeTab, setActiveTab] = useState<'registro' | 'sesiones'>('registro')
+    const [activeTab, setActiveTab] = useState<'registro' | 'sesiones' | 'modulos'>('registro')
     const [logs, setLogs] = useState<AuditLogItem[]>([])
     const [users, setUsers] = useState<UserOption[]>([])
     const [roles, setRoles] = useState<RoleOption[]>([])
@@ -398,10 +399,15 @@ export default function AuditoriaPage() {
                                     {exporting && exportingType === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
                                 </button>
                             </>
+                        ) : activeTab === 'sesiones' ? (
+                            <span className="px-3.5 py-2 bg-cyan-500/20 text-cyan-200 text-xs font-bold rounded-xl border border-cyan-400/30 flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                                Analítica de Conexiones y Sesiones
+                            </span>
                         ) : (
                             <span className="px-3.5 py-2 bg-cyan-500/20 text-cyan-200 text-xs font-bold rounded-xl border border-cyan-400/30 flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                                Analítica de Conexiones y Uso
+                                Analítica de Uso de Módulos
                             </span>
                         )}
                     </div>
@@ -413,7 +419,7 @@ export default function AuditoriaPage() {
                 <button
                     type="button"
                     onClick={() => setActiveTab('registro')}
-                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
                         activeTab === 'registro'
                             ? 'bg-white text-slate-900 shadow-sm shadow-slate-900/10'
                             : 'text-gray-600 hover:text-gray-900'
@@ -428,14 +434,26 @@ export default function AuditoriaPage() {
                 <button
                     type="button"
                     onClick={() => setActiveTab('sesiones')}
-                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
                         activeTab === 'sesiones'
                             ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white shadow-md shadow-cyan-600/30'
                             : 'text-gray-600 hover:text-gray-900'
                     }`}
                 >
                     <span>⏱️</span>
-                    <span>Sesiones y Actividad de Usuarios</span>
+                    <span>Sesiones y Actividad</span>
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('modulos')}
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
+                        activeTab === 'modulos'
+                            ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white shadow-md shadow-cyan-600/30'
+                            : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                >
+                    <span>📊</span>
+                    <span>Uso y Analítica de Módulos</span>
                     <span className="px-2 py-0.5 rounded-full text-[11px] bg-cyan-100 text-cyan-800 font-black">
                         Nuevo
                     </span>
@@ -445,6 +463,8 @@ export default function AuditoriaPage() {
             {/* Contenido según Tab Seleccionado */}
             {activeTab === 'sesiones' ? (
                 <SesionesActividadTab roles={roles} users={users} />
+            ) : activeTab === 'modulos' ? (
+                <ModulosUsoTab roles={roles} users={users} />
             ) : (
                 <>
                     {/* Panel de Filtros */}

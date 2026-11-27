@@ -391,3 +391,337 @@ export async function computeAuditSessionAnalytics(params?: AuditSessionFilterPa
         benchmarkMs: Date.now() - t0
     }
 }
+
+export type ModuleTopUser = {
+    username: string
+    name: string
+    roleName: string
+    count: number
+    percentage: number
+}
+
+export type ModuleUsageStat = {
+    modulo: string
+    mainCategory: string
+    totalVisits: number
+    percentage: number
+    totalMinutes: number
+    totalHours: string
+    avgMinutesPerVisit: number
+    uniqueUsersCount: number
+    topAction: string
+    actionCounts: Record<string, number>
+    adoptionLevel: 'ALTO' | 'MEDIO' | 'BAJO'
+    lastActivity: string | null
+    topUsers: ModuleTopUser[]
+}
+
+export type AreaDistributionItem = {
+    area: string
+    count: number
+    percentage: number
+    totalMinutes: number
+    totalHours: string
+    modulesCount: number
+}
+
+export type ActionDistributionItem = {
+    action: string
+    count: number
+    percentage: number
+}
+
+export type ModuleUsageResult = {
+    summaryCards: {
+        topUsedModule: { modulo: string; count: number; percentage: number }
+        topTimeModule: { modulo: string; hours: string; minutes: number }
+        totalModulesTracked: number
+        activeModulesCount: number
+        totalEvents: number
+        topTransactionalModule: { modulo: string; count: number }
+    }
+    modules: ModuleUsageStat[]
+    areaDistribution: AreaDistributionItem[]
+    actionDistribution: ActionDistributionItem[]
+    benchmarkMs: number
+}
+
+/**
+ * Calcula estadísticas completas de uso de módulos:
+ * accesos, tiempo estimado de permanencia, usuarios únicos, acciones y desglose por áreas.
+ */
+export async function computeModuleUsageAnalytics(params?: AuditSessionFilterParams): Promise<ModuleUsageResult> {
+    const t0 = Date.now()
+
+    // 1. Condiciones de filtro
+    const andConditions: any[] = []
+    if (params?.dateFrom) {
+        const d = new Date(params.dateFrom)
+        d.setHours(0, 0, 0, 0)
+        andConditions.push({ createdAt: { gte: d } })
+    }
+    if (params?.dateTo) {
+        const d = new Date(params.dateTo)
+        d.setHours(23, 59, 59, 999)
+        andConditions.push({ createdAt: { lte: d } })
+    }
+
+    if (params?.roleId && params.roleId !== 'ALL') {
+        const usersInRole = await rawPrisma.user.findMany({
+            where: { roleId: params.roleId, isDeleted: false },
+            select: { username: true }
+        })
+        const usernames = usersInRole.map(u => u.username).filter(Boolean)
+        if (usernames.length === 0) {
+            andConditions.push({ username: '__NONE__' })
+        } else {
+            andConditions.push({ username: { in: usernames } })
+        }
+    }
+
+    if (params?.username && params.username !== 'ALL') {
+        andConditions.push({ username: params.username })
+    }
+
+    const where = andConditions.length > 0 ? { AND: andConditions } : {}
+
+    // 2. Consulta de logs y usuarios
+    const [logs, allUsers] = await Promise.all([
+        rawPrisma.auditLog.findMany({
+            where,
+            orderBy: [{ username: 'asc' }, { createdAt: 'asc' }],
+            select: { id: true, username: true, action: true, modulo: true, createdAt: true }
+        }),
+        rawPrisma.user.findMany({
+            where: { isDeleted: false },
+            select: { id: true, username: true, name: true, roleId: true, role: { select: { id: true, name: true } } }
+        })
+    ])
+
+    const userMetaMap = new Map<string, { name: string; roleName: string }>()
+    for (const u of allUsers) {
+        userMetaMap.set(u.username, {
+            name: u.name || u.username,
+            roleName: u.role?.name || 'Sin Rol'
+        })
+    }
+
+    // Estructuras de acumulación por módulo
+    const moduleVisits = new Map<string, number>()
+    const moduleDurationMs = new Map<string, number>()
+    const moduleUsers = new Map<string, Set<string>>()
+    const moduleUserVisits = new Map<string, Map<string, number>>()
+    const moduleActionCounts = new Map<string, Map<string, number>>()
+    const moduleLastActivity = new Map<string, number>()
+    const globalActionCounts = new Map<string, number>()
+
+    const MAX_GAP_MS = 20 * 60 * 1000 // Si hay más de 20 min de inactividad, se asume término de bloque
+    const DEFAULT_EVENT_DWELL_MS = 90 * 1000 // 1.5 minutos para un evento aislado
+
+    // Agrupar eventos secuenciales por usuario para atribuir tiempos al módulo visitado
+    let currentUsername = ''
+    let prevEvent: typeof logs[0] | null = null
+
+    for (let i = 0; i < logs.length; i++) {
+        const log = logs[i]
+        const mod = (log.modulo || 'Otros').trim()
+        const action = (log.action || 'CONSULTA').trim().toUpperCase()
+        const eventTime = new Date(log.createdAt).getTime()
+
+        // Contadores globales
+        moduleVisits.set(mod, (moduleVisits.get(mod) || 0) + 1)
+        globalActionCounts.set(action, (globalActionCounts.get(action) || 0) + 1)
+
+        // Última actividad
+        const currentLast = moduleLastActivity.get(mod) || 0
+        if (eventTime > currentLast) moduleLastActivity.set(mod, eventTime)
+
+        // Usuarios únicos
+        if (!moduleUsers.has(mod)) moduleUsers.set(mod, new Set())
+        moduleUsers.get(mod)!.add(log.username)
+
+        // Visitas por usuario dentro del módulo
+        if (!moduleUserVisits.has(mod)) moduleUserVisits.set(mod, new Map())
+        const uMap = moduleUserVisits.get(mod)!
+        uMap.set(log.username, (uMap.get(log.username) || 0) + 1)
+
+        // Conteo de acciones dentro del módulo
+        if (!moduleActionCounts.has(mod)) moduleActionCounts.set(mod, new Map())
+        const aMap = moduleActionCounts.get(mod)!
+        aMap.set(action, (aMap.get(action) || 0) + 1)
+
+        // Atribución de tiempo
+        if (log.username === currentUsername && prevEvent) {
+            const prevMod = (prevEvent.modulo || 'Otros').trim()
+            const prevTime = new Date(prevEvent.createdAt).getTime()
+            const delta = eventTime - prevTime
+
+            if (delta > 0 && delta <= MAX_GAP_MS) {
+                // Atribuir delta al módulo previo en el que el usuario estuvo trabajando
+                moduleDurationMs.set(prevMod, (moduleDurationMs.get(prevMod) || 0) + delta)
+            } else {
+                // Evento aislado previo
+                moduleDurationMs.set(prevMod, (moduleDurationMs.get(prevMod) || 0) + DEFAULT_EVENT_DWELL_MS)
+            }
+        }
+
+        currentUsername = log.username
+        prevEvent = log
+
+        // Si es el último evento del usuario o fin de array, atribuir tiempo base al evento actual
+        const isLastOfUser = (i === logs.length - 1) || (logs[i + 1].username !== log.username)
+        if (isLastOfUser) {
+            moduleDurationMs.set(mod, (moduleDurationMs.get(mod) || 0) + DEFAULT_EVENT_DWELL_MS)
+            prevEvent = null
+        }
+    }
+
+    const totalEvents = logs.length
+
+    // Mapear módulos a la lista final
+    const modules: ModuleUsageStat[] = Array.from(moduleVisits.keys()).map((modulo) => {
+        const totalVisits = moduleVisits.get(modulo) || 0
+        const percentage = totalEvents > 0 ? Number(((totalVisits / totalEvents) * 100).toFixed(1)) : 0
+        const totalMs = moduleDurationMs.get(modulo) || 0
+        const totalMinutes = Math.round(totalMs / 60000)
+        const totalHours = (totalMs / 3600000).toFixed(1)
+        const avgMinutesPerVisit = totalVisits > 0 ? Number(((totalMs / totalVisits) / 60000).toFixed(1)) : 0
+        const uniqueUsers = moduleUsers.get(modulo)?.size || 0
+
+        // Acciones del módulo
+        const aMap = moduleActionCounts.get(modulo) || new Map()
+        const actionCounts: Record<string, number> = {}
+        let topAction = 'CONSULTA'
+        let topActionMax = 0
+        for (const [act, count] of aMap.entries()) {
+            actionCounts[act] = count
+            if (count > topActionMax) {
+                topActionMax = count
+                topAction = act
+            }
+        }
+
+        // Nivel de adopción
+        let adoptionLevel: 'ALTO' | 'MEDIO' | 'BAJO' = 'BAJO'
+        if (percentage >= 8 || uniqueUsers >= 5) {
+            adoptionLevel = 'ALTO'
+        } else if (percentage >= 2 || uniqueUsers >= 2) {
+            adoptionLevel = 'MEDIO'
+        }
+
+        // Top 3 usuarios del módulo
+        const uMap = moduleUserVisits.get(modulo) || new Map()
+        const topUsers: ModuleTopUser[] = Array.from(uMap.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([uname, cnt]) => {
+                const meta = userMetaMap.get(uname)
+                return {
+                    username: uname,
+                    name: meta?.name || uname,
+                    roleName: meta?.roleName || 'Sin Rol',
+                    count: cnt,
+                    percentage: totalVisits > 0 ? Math.round((cnt / totalVisits) * 100) : 0
+                }
+            })
+
+        const lastActTime = moduleLastActivity.get(modulo)
+
+        return {
+            modulo,
+            mainCategory: getMainModuleName(modulo),
+            totalVisits,
+            percentage,
+            totalMinutes,
+            totalHours,
+            avgMinutesPerVisit,
+            uniqueUsersCount: uniqueUsers,
+            topAction,
+            actionCounts,
+            adoptionLevel,
+            lastActivity: lastActTime ? new Date(lastActTime).toISOString() : null,
+            topUsers
+        }
+    })
+
+    // Ordenar módulos por defecto de mayor a menor visitas
+    modules.sort((a, b) => b.totalVisits - a.totalVisits)
+
+    // Agrupación por Áreas / Macro-categorías
+    const areaMap = new Map<string, { count: number; totalMs: number; modules: Set<string> }>()
+    for (const mod of modules) {
+        const area = mod.mainCategory
+        const current = areaMap.get(area) || { count: 0, totalMs: 0, modules: new Set() }
+        current.count += mod.totalVisits
+        current.totalMs += (Number(mod.totalHours) * 3600000)
+        current.modules.add(mod.modulo)
+        areaMap.set(area, current)
+    }
+
+    const areaDistribution: AreaDistributionItem[] = Array.from(areaMap.entries()).map(([area, data]) => {
+        const percentage = totalEvents > 0 ? Number(((data.count / totalEvents) * 100).toFixed(1)) : 0
+        const totalMinutes = Math.round(data.totalMs / 60000)
+        const totalHours = (data.totalMs / 3600000).toFixed(1)
+        return {
+            area,
+            count: data.count,
+            percentage,
+            totalMinutes,
+            totalHours,
+            modulesCount: data.modules.size
+        }
+    }).sort((a, b) => b.count - a.count)
+
+    // Distribución por tipos de acción
+    const actionDistribution: ActionDistributionItem[] = Array.from(globalActionCounts.entries()).map(([action, count]) => {
+        const percentage = totalEvents > 0 ? Number(((count / totalEvents) * 100).toFixed(1)) : 0
+        return {
+            action,
+            count,
+            percentage
+        }
+    }).sort((a, b) => b.count - a.count)
+
+    // Identificar módulo con más tiempo y más transacciones
+    let topTimeMod = { modulo: 'N/A', hours: '0.0', minutes: 0 }
+    let topTimeMax = -1
+    let topTransMod = { modulo: 'N/A', count: 0 }
+    let topTransMax = -1
+
+    for (const m of modules) {
+        if (m.totalMinutes > topTimeMax) {
+            topTimeMax = m.totalMinutes
+            topTimeMod = { modulo: m.modulo, hours: m.totalHours, minutes: m.totalMinutes }
+        }
+
+        const transCount = (m.actionCounts['CREACION'] || 0) +
+                           (m.actionCounts['MODIFICACION'] || 0) +
+                           (m.actionCounts['ELIMINACION'] || 0) +
+                           (m.actionCounts['FIRMA'] || 0)
+        if (transCount > topTransMax) {
+            topTransMax = transCount
+            topTransMod = { modulo: m.modulo, count: transCount }
+        }
+    }
+
+    const topUsedMod = modules.length > 0 ? {
+        modulo: modules[0].modulo,
+        count: modules[0].totalVisits,
+        percentage: modules[0].percentage
+    } : { modulo: 'N/A', count: 0, percentage: 0 }
+
+    return {
+        summaryCards: {
+            topUsedModule: topUsedMod,
+            topTimeModule: topTimeMod,
+            totalModulesTracked: modules.length,
+            activeModulesCount: modules.filter(m => m.totalVisits > 0).length,
+            totalEvents,
+            topTransactionalModule: topTransMod
+        },
+        modules,
+        areaDistribution,
+        actionDistribution,
+        benchmarkMs: Date.now() - t0
+    }
+}
