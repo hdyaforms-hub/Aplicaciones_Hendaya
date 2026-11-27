@@ -29,11 +29,11 @@ export default function ListaCorreoWrapper({
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [deletingId, setDeletingId] = useState<string | null>(null)
 
-    // Filtros de búsqueda
+    // Filtros de búsqueda y estado del acordeón
     const [searchTerm, setSearchTerm] = useState('')
     const [sucursalFilter, setSucursalFilter] = useState('ALL')
     const [quickTab, setQuickTab] = useState<'ALL' | 'MULTI' | 'GLOBAL'>('ALL')
-    const [expandedEmailsId, setExpandedEmailsId] = useState<string | null>(null)
+    const [expandedListIds, setExpandedListIds] = useState<Set<string>>(new Set())
 
     const handleOpenCreate = () => {
         setSelectedLista(undefined)
@@ -63,6 +63,23 @@ export default function ListaCorreoWrapper({
             setDeletingId(null)
             router.refresh()
         }
+    }
+
+    const handleExpandAll = () => {
+        setExpandedListIds(new Set(filteredListas.map(l => l.id)))
+    }
+
+    const handleCollapseAll = () => {
+        setExpandedListIds(new Set())
+    }
+
+    const handleToggleExpand = (id: string) => {
+        setExpandedListIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            return next
+        })
     }
 
     // Helper para extraer array de correos
@@ -114,7 +131,6 @@ export default function ListaCorreoWrapper({
             } else if (sucursalFilter === 'GLOBAL') {
                 matchesSucursal = !l.sucursalId && branchIds.length === 0
             } else {
-                // Coincide por sucursal fija o porque la sucursal está configurada en la lista dinámica
                 matchesSucursal = l.sucursalId === sucursalFilter || branchIds.includes(sucursalFilter)
             }
 
@@ -129,7 +145,6 @@ export default function ListaCorreoWrapper({
             const paraList = parseEmails(l.para).join(' ').toLowerCase()
             const ccList = parseEmails(l.cc).join(' ').toLowerCase()
 
-            // Buscar también en nombres de sucursales o correos zonales configurados
             const branchEmails: string[] = []
             const branchNames: string[] = []
             for (const [sId, item] of Object.entries(porSucMap)) {
@@ -141,8 +156,8 @@ export default function ListaCorreoWrapper({
             const matchBranchEmails = branchEmails.join(' ').toLowerCase().includes(q)
 
             return matchNombre || matchDesc || matchSuc || paraList.includes(q) || ccList.includes(q) || matchBranches || matchBranchEmails
-        })
-    }, [listas, searchTerm, sucursalFilter, sucursalesMap])
+        }).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' }))
+    }, [listas, searchTerm, sucursalFilter, sucursalesMap, quickTab])
 
     // Estadísticas
     const totalDestinatarios = useMemo(() => {
@@ -181,13 +196,13 @@ export default function ListaCorreoWrapper({
                 <div className="relative z-10 flex flex-wrap sm:flex-nowrap items-center gap-3 w-full md:w-auto">
                     <button
                         onClick={handleOpenCreate}
-                        className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white font-bold rounded-2xl transition-all shadow-lg shadow-cyan-600/30 active:scale-95 flex justify-center items-center gap-2 text-sm"
+                        className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white font-bold rounded-2xl transition-all shadow-lg shadow-cyan-600/30 active:scale-95 flex justify-center items-center gap-2 text-sm cursor-pointer"
                     >
                         <span>➕</span> Nueva Lista de Correo
                     </button>
                     <button 
                         onClick={() => router.refresh()} 
-                        className="px-4 py-3 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold rounded-2xl transition-all active:scale-95 flex items-center justify-center text-sm"
+                        className="px-4 py-3 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold rounded-2xl transition-all active:scale-95 flex items-center justify-center text-sm cursor-pointer"
                         title="Actualizar listado"
                     >
                         🔄
@@ -249,7 +264,7 @@ export default function ListaCorreoWrapper({
                 </button>
             </div>
 
-            {/* BARRA DE FILTROS, BÚSQUEDA Y ESTADÍSTICAS */}
+            {/* BARRA DE FILTROS, BÚSQUEDA, ESTADÍSTICAS Y CONTROLES DE ACORDEÓN */}
             <div className="bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex-1 w-full flex flex-col sm:flex-row items-center gap-3">
                     {/* BUSCADOR */}
@@ -288,18 +303,41 @@ export default function ListaCorreoWrapper({
                     </div>
                 </div>
 
-                {/* MÉTRICAS RÁPIDAS */}
-                <div className="flex items-center gap-3 text-xs shrink-0 self-end md:self-center">
-                    <span className="px-3 py-1.5 bg-cyan-50 text-cyan-800 font-bold rounded-xl border border-cyan-100">
-                        {filteredListas.length} de {listas.length} listas
-                    </span>
-                    <span className="px-3 py-1.5 bg-slate-100 text-slate-700 font-bold rounded-xl border border-slate-200">
-                        {totalDestinatarios} correos vinculados
-                    </span>
+                {/* MÉTRICAS RÁPIDAS Y CONTROLES DE ACORDEÓN */}
+                <div className="flex flex-wrap items-center gap-3 text-xs shrink-0 self-end md:self-center">
+                    <div className="flex items-center gap-2">
+                        <span className="px-3 py-1.5 bg-cyan-50 text-cyan-800 font-bold rounded-xl border border-cyan-100">
+                            {filteredListas.length} de {listas.length} listas
+                        </span>
+                        <span className="px-3 py-1.5 bg-slate-100 text-slate-700 font-bold rounded-xl border border-slate-200">
+                            {totalDestinatarios} correos vinculados
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 pl-2 border-l border-slate-200">
+                        <button
+                            type="button"
+                            onClick={handleExpandAll}
+                            className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                            title="Desplegar todas las listas"
+                        >
+                            <span>🔽</span>
+                            <span className="hidden sm:inline">Expandir Todo</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleCollapseAll}
+                            className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                            title="Plegar todas las listas"
+                        >
+                            <span>🔼</span>
+                            <span className="hidden sm:inline">Colapsar Todo</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* GRID DE LISTAS */}
+            {/* LISTADO DE LISTAS EN FORMATO ACORDEÓN COMPACTO */}
             {listas.length === 0 ? (
                 <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl py-16 flex flex-col items-center justify-center text-center px-4 shadow-sm">
                     <span className="text-5xl opacity-80 mb-4 block">📭</span>
@@ -309,7 +347,7 @@ export default function ListaCorreoWrapper({
                     </p>
                     <button 
                         onClick={handleOpenCreate} 
-                        className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 text-white font-bold rounded-xl shadow-md transition-all hover:scale-105"
+                        className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 text-white font-bold rounded-xl shadow-md transition-all hover:scale-105 cursor-pointer"
                     >
                         Crear tu primera Lista
                     </button>
@@ -321,20 +359,20 @@ export default function ListaCorreoWrapper({
                     <p className="text-xs text-gray-400 mt-1">Prueba limpiando el buscador o cambiando la sucursal seleccionada.</p>
                     <button 
                         onClick={() => { setSearchTerm(''); setSucursalFilter('ALL'); }}
-                        className="mt-4 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all"
+                        className="mt-4 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all cursor-pointer"
                     >
                         Restablecer Filtros
                     </button>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="space-y-3">
                     {filteredListas.map((l) => {
                         const paraEmails = parseEmails(l.para)
                         const ccEmails = parseEmails(l.cc)
                         const porSucMap = parsePorSucursal(l.porSucursal)
                         const configuredBranchIds = Object.keys(porSucMap)
                         const isMultiSucursal = configuredBranchIds.length > 0
-                        const isExpanded = expandedEmailsId === l.id
+                        const isExpanded = expandedListIds.has(l.id)
 
                         // Calcular correos totales de la lista
                         let zonalEmailCount = 0
@@ -345,78 +383,119 @@ export default function ListaCorreoWrapper({
                         return (
                             <div 
                                 key={l.id} 
-                                className="bg-white rounded-3xl shadow-sm border border-gray-200/80 overflow-hidden flex flex-col hover:shadow-xl hover:border-cyan-300 transition-all group duration-200"
+                                className={`bg-white rounded-2xl border transition-all duration-200 overflow-hidden ${
+                                    isExpanded 
+                                        ? 'border-cyan-400 shadow-md ring-1 ring-cyan-200/50' 
+                                        : 'border-slate-200/90 shadow-2xs hover:shadow-sm hover:border-slate-300'
+                                }`}
                             >
-                                {/* BARRA SUPERIOR DECORATIVA CON GRADIENTE */}
-                                <div className={`h-2.5 w-full bg-gradient-to-r ${
-                                    isMultiSucursal 
-                                        ? 'from-sky-500 via-indigo-500 to-cyan-500' 
-                                        : 'from-cyan-500 via-sky-500 to-cyan-600'
-                                }`} />
+                                {/* CABECERA ACORDEÓN COMPACTA CLICABLE */}
+                                <div 
+                                    onClick={() => handleToggleExpand(l.id)}
+                                    className="p-4 sm:p-5 bg-gradient-to-b from-slate-50/90 to-white flex flex-col lg:flex-row lg:items-center justify-between gap-4 cursor-pointer select-none transition-colors hover:bg-slate-50"
+                                >
+                                    {/* LADO IZQUIERDO: ICONO + NOMBRE + BADGES + DESCRIPCIÓN */}
+                                    <div className="flex items-center gap-3.5 flex-1 min-w-0">
+                                        <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${
+                                            isMultiSucursal ? 'from-cyan-600 to-sky-700' : 'from-slate-700 to-slate-900'
+                                        } flex items-center justify-center text-xl shadow-md text-white shrink-0`}>
+                                            👥
+                                        </div>
 
-                                <div className="p-6 flex-1 flex flex-col justify-between gap-4">
-                                    <div>
-                                        {/* CABECERA DE LA TARJETA: NOMBRE Y SUCURSAL */}
-                                        <div className="flex items-start justify-between gap-2 mb-2">
-                                            <div className="flex-1">
-                                                <h3 className="font-black text-lg text-gray-900 group-hover:text-cyan-900 transition-colors leading-tight">
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
                                                     {l.nombre}
                                                 </h3>
 
-                                                <div className="flex flex-wrap gap-1.5 mt-2">
-                                                    {isMultiSucursal && (
-                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-sky-50 text-sky-800 text-xs font-bold rounded-lg border border-sky-200">
-                                                            <span>🏢</span> Multi-Sucursal ({configuredBranchIds.length} zonas)
-                                                        </span>
-                                                    )}
+                                                {isMultiSucursal ? (
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-sky-50 text-sky-800 text-[10px] font-bold rounded-full border border-sky-200">
+                                                        <span>🏢</span> Multi-Sucursal ({configuredBranchIds.length} zonas)
+                                                    </span>
+                                                ) : l.sucursal ? (
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] font-bold rounded-full border border-indigo-200">
+                                                        <span>📍</span> {l.sucursal.nombre}
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-full border border-slate-200">
+                                                        <span>🌐</span> Global
+                                                    </span>
+                                                )}
 
-                                                    {l.sucursal ? (
-                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-lg border border-indigo-200">
-                                                            <span>📍</span> {l.sucursal.nombre}
-                                                        </span>
-                                                    ) : !isMultiSucursal ? (
-                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg border border-slate-200">
-                                                            <span>🌐</span> Global
-                                                        </span>
-                                                    ) : null}
-                                                </div>
+                                                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                                                    {isMultiSucursal 
+                                                        ? `${zonalEmailCount} zonales • ${paraEmails.length + ccEmails.length} fijos`
+                                                        : `${paraEmails.length} PARA • ${ccEmails.length} CC`
+                                                    }
+                                                </span>
                                             </div>
 
-                                            {/* BOTONES DE ACCIÓN SIEMPRE VISIBLES */}
-                                            <div className="flex items-center gap-1.5 shrink-0">
-                                                <button
-                                                    onClick={() => handleOpenEdit(l)}
-                                                    className="p-2 rounded-xl bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 text-xs font-bold transition-all shadow-xs flex items-center gap-1"
-                                                    title="Editar Lista y Destinatarios"
-                                                >
-                                                    <span>✏️</span>
-                                                    <span className="hidden sm:inline">Editar</span>
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(l.id, l.nombre)}
-                                                    disabled={deletingId === l.id}
-                                                    className={`p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 text-xs font-bold transition-all shadow-xs flex items-center justify-center ${deletingId === l.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                                    title="Eliminar Lista de Distribución"
-                                                >
-                                                    <span>🗑️</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* DESCRIPCIÓN */}
-                                        {l.descripcion ? (
-                                            <p className="text-xs text-gray-600 mt-1 leading-relaxed line-clamp-2">
-                                                {l.descripcion}
+                                            <p className={`text-xs text-slate-500 mt-0.5 leading-relaxed ${isExpanded ? '' : 'line-clamp-1'}`}>
+                                                {l.descripcion || 'Sin descripción adicional.'}
                                             </p>
-                                        ) : (
-                                            <p className="text-xs text-gray-400 italic mt-1">Sin descripción adicional.</p>
-                                        )}
+                                        </div>
                                     </div>
 
-                                    {/* CONTADORES Y PREVISUALIZACIÓN DE CORREOS */}
-                                    <div className="space-y-3 pt-2">
-                                        <div className="grid grid-cols-2 gap-2 text-xs">
-                                            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-100 flex items-center justify-between">
+                                    {/* LADO DERECHO: ACCIONES Y CHEVRON */}
+                                    <div 
+                                        onClick={(e) => e.stopPropagation()} 
+                                        className="flex items-center gap-2 self-end lg:self-auto shrink-0"
+                                    >
+                                        <span className="text-[10px] text-slate-400 font-mono hidden xl:inline pr-2 border-r border-slate-200">
+                                            {new Date(l.updatedAt).toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handleOpenEdit(l)}
+                                            className="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                                            title="Editar Lista y Destinatarios"
+                                        >
+                                            <span>✏️</span>
+                                            <span>Editar</span>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDelete(l.id, l.nombre)}
+                                            disabled={deletingId === l.id}
+                                            className={`p-1.5 px-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-bold transition-all shadow-2xs flex items-center justify-center cursor-pointer ${
+                                                deletingId === l.id ? 'opacity-50 cursor-not-allowed' : ''
+                                            }`}
+                                            title="Eliminar Lista"
+                                        >
+                                            <span>🗑️</span>
+                                        </button>
+
+                                        {/* BOTÓN CHEVRON */}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleToggleExpand(l.id)}
+                                            className={`w-8 h-8 rounded-xl border transition-all flex items-center justify-center cursor-pointer ml-1 ${
+                                                isExpanded 
+                                                    ? 'bg-cyan-50 text-cyan-800 border-cyan-300' 
+                                                    : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
+                                            }`}
+                                            title={isExpanded ? 'Plegar detalles' : 'Desplegar correos y sucursales'}
+                                        >
+                                            <svg 
+                                                className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+                                                fill="none" 
+                                                stroke="currentColor" 
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* DETALLE EXPANDIDO */}
+                                {isExpanded && (
+                                    <div className="p-5 sm:p-6 space-y-4 border-t border-slate-200/80 bg-slate-50/40 animate-in fade-in duration-150">
+                                        {/* MÉTRICAS RÁPIDAS EN EXPANDIDO */}
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                                            <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between">
                                                 <span className="font-bold text-slate-500 uppercase text-[10px] tracking-wider">
                                                     {isMultiSucursal ? 'Correos Zonales' : 'Destinatarios (PARA)'}
                                                 </span>
@@ -425,7 +504,7 @@ export default function ListaCorreoWrapper({
                                                     {isMultiSucursal ? zonalEmailCount : paraEmails.length}
                                                 </span>
                                             </div>
-                                            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-100 flex items-center justify-between">
+                                            <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between">
                                                 <span className="font-bold text-slate-500 uppercase text-[10px] tracking-wider">
                                                     {isMultiSucursal ? 'Globales Fijos' : 'Copia (CC)'}
                                                 </span>
@@ -434,118 +513,117 @@ export default function ListaCorreoWrapper({
                                                     {isMultiSucursal ? paraEmails.length + ccEmails.length : ccEmails.length}
                                                 </span>
                                             </div>
+                                            <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between sm:col-span-2 md:col-span-1">
+                                                <span className="font-bold text-slate-500 uppercase text-[10px] tracking-wider">
+                                                    Última Modificación
+                                                </span>
+                                                <span className="font-semibold text-slate-700 text-xs font-mono">
+                                                    {new Date(l.updatedAt).toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                                </span>
+                                            </div>
                                         </div>
 
-                                        {/* SUCURSALES CONFIGURADAS EN MODO MULTI-SUCURSAL */}
+                                        {/* DESGLOSE POR SUCURSAL PARA LISTAS MULTI-SUCURSAL */}
                                         {isMultiSucursal && (
-                                            <div className="space-y-1.5 bg-sky-50/30 p-2.5 rounded-2xl border border-sky-100/70">
-                                                <div className="flex items-center justify-between text-[11px] text-sky-900 font-bold px-1">
-                                                    <span>Sucursales vinculadas ({configuredBranchIds.length}):</span>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setExpandedEmailsId(isExpanded ? null : l.id)}
-                                                        className="text-cyan-700 hover:underline font-bold text-[10px]"
-                                                    >
-                                                        {isExpanded ? 'Ocultar detalle' : 'Ver detalle'}
-                                                    </button>
+                                            <div className="space-y-3 bg-white p-4 rounded-2xl border border-sky-100 shadow-2xs">
+                                                <div className="flex items-center justify-between text-xs text-sky-950 font-bold border-b border-sky-100 pb-2">
+                                                    <span className="flex items-center gap-1.5">
+                                                        <span>🏢</span> Desglose por Sucursal Vinculada ({configuredBranchIds.length} zonas):
+                                                    </span>
+                                                    <span className="text-[11px] text-sky-700 font-medium">
+                                                        Enrutamiento automático según la sucursal del registro
+                                                    </span>
                                                 </div>
 
-                                                <div className="flex flex-wrap gap-1">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
                                                     {configuredBranchIds.map(bId => {
                                                         const sucName = sucursalesMap[bId] || 'Sucursal'
                                                         const bData = porSucMap[bId]
-                                                        const bTotal = (bData?.para?.length || 0) + (bData?.cc?.length || 0)
                                                         return (
-                                                            <span 
-                                                                key={bId}
-                                                                className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-sky-200 text-sky-900 rounded-md font-semibold text-[10px]"
-                                                            >
-                                                                <span>📍</span>
-                                                                <span>{sucName}</span>
-                                                                <span className="text-[9px] bg-sky-100 text-sky-800 px-1 rounded-sm font-bold">
-                                                                    {bTotal}
-                                                                </span>
-                                                            </span>
+                                                            <div key={bId} className="bg-slate-50/80 p-3 rounded-xl border border-slate-200 text-xs space-y-2">
+                                                                <div className="font-bold text-slate-900 flex items-center justify-between border-b border-slate-200/60 pb-1.5">
+                                                                    <span className="flex items-center gap-1">📍 {sucName}</span>
+                                                                    <span className="text-[10px] bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded font-bold">
+                                                                        {(bData?.para?.length || 0) + (bData?.cc?.length || 0)} correos
+                                                                    </span>
+                                                                </div>
+                                                                {bData.para && bData.para.length > 0 && (
+                                                                    <div className="text-[11px] text-slate-700 font-mono">
+                                                                        <span className="font-bold text-slate-500 font-sans block text-[10px] uppercase">Para:</span>
+                                                                        <div className="flex flex-wrap gap-1 mt-0.5">
+                                                                            {bData.para.map((e, idx) => (
+                                                                                <span key={idx} className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[10px]">
+                                                                                    {e}
+                                                                                </span>
+                                                                            ))}
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                                {bData.cc && bData.cc.length > 0 && (
+                                                                    <div className="text-[11px] text-slate-600 font-mono">
+                                                                        <span className="font-bold text-slate-400 font-sans block text-[10px] uppercase">CC:</span>
+                                                                        <div className="flex flex-wrap gap-1 mt-0.5">
+                                                                            {bData.cc.map((e, idx) => (
+                                                                                <span key={idx} className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[10px] text-slate-500">
+                                                                                    {e}
+                                                                                </span>
+                                                                            ))}
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         )
                                                     })}
                                                 </div>
-
-                                                {/* VISTA EXPANDIDA CON LOS CORREOS POR SUCURSAL */}
-                                                {isExpanded && (
-                                                    <div className="pt-2 border-t border-sky-100 space-y-2 mt-2">
-                                                        {configuredBranchIds.map(bId => {
-                                                            const sucName = sucursalesMap[bId] || 'Sucursal'
-                                                            const bData = porSucMap[bId]
-                                                            return (
-                                                                <div key={bId} className="bg-white p-2 rounded-xl border border-sky-100 text-[11px] space-y-1">
-                                                                    <div className="font-bold text-gray-800 flex items-center justify-between">
-                                                                        <span>📍 {sucName}</span>
-                                                                    </div>
-                                                                    {bData.para && bData.para.length > 0 && (
-                                                                        <div className="text-[10px] text-gray-600 font-mono pl-2">
-                                                                            <span className="font-bold text-gray-500 font-sans">Para: </span>
-                                                                            {bData.para.join(', ')}
-                                                                        </div>
-                                                                    )}
-                                                                    {bData.cc && bData.cc.length > 0 && (
-                                                                        <div className="text-[10px] text-gray-500 font-mono pl-2">
-                                                                            <span className="font-bold text-gray-400 font-sans">CC: </span>
-                                                                            {bData.cc.join(', ')}
-                                                                        </div>
-                                                                    )}
-                                                                </div>
-                                                            )
-                                                        })}
-                                                    </div>
-                                                )}
                                             </div>
                                         )}
 
-                                        {/* CHIPS DE CORREOS GLOBALES DESTINATARIOS */}
-                                        {paraEmails.length > 0 && (
-                                            <div className="space-y-1.5">
-                                                <div className="flex items-center justify-between text-[11px] text-gray-500 font-semibold px-1">
-                                                    <span>{isMultiSucursal ? 'Correos globales adicionales:' : 'Correos incluidos:'}</span>
-                                                    {!isMultiSucursal && (
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => setExpandedEmailsId(isExpanded ? null : l.id)}
-                                                            className="text-cyan-700 hover:underline font-bold text-[10px]"
-                                                        >
-                                                            {isExpanded ? 'Ocultar' : `Ver todos (${paraEmails.length + ccEmails.length})`}
-                                                        </button>
-                                                    )}
-                                                </div>
+                                        {/* CORREOS GLOBALES (PARA / CC) */}
+                                        {(paraEmails.length > 0 || ccEmails.length > 0) && (
+                                            <div className="space-y-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
+                                                <span className="text-xs font-bold text-slate-800 block border-b border-slate-100 pb-2">
+                                                    {isMultiSucursal ? 'Correos Globales Fijos (Reciben siempre):' : 'Destinatarios de la Lista:'}
+                                                </span>
 
-                                                <div className="flex flex-wrap gap-1">
-                                                    {(isExpanded || isMultiSucursal ? paraEmails : paraEmails.slice(0, 2)).map((email, i) => (
-                                                        <span 
-                                                            key={i} 
-                                                            className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 hover:bg-cyan-50 text-gray-700 hover:text-cyan-900 border border-gray-200 rounded-md font-mono text-[11px] truncate max-w-full"
-                                                            title={email}
-                                                        >
-                                                            <span>✉️</span>
-                                                            <span className="truncate">{email}</span>
-                                                        </span>
-                                                    ))}
-                                                    {!isExpanded && !isMultiSucursal && paraEmails.length > 2 && (
-                                                        <span className="px-2 py-0.5 bg-slate-100 text-slate-600 font-bold rounded-md text-[10px]">
-                                                            +{paraEmails.length - 2} más
-                                                        </span>
+                                                <div className="space-y-2">
+                                                    {paraEmails.length > 0 && (
+                                                        <div>
+                                                            <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Destinatarios Principales (PARA):</span>
+                                                            <div className="flex flex-wrap gap-1.5">
+                                                                {paraEmails.map((email, i) => (
+                                                                    <span 
+                                                                        key={i} 
+                                                                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-50/70 text-cyan-900 border border-cyan-200 rounded-lg font-mono text-[11px]"
+                                                                    >
+                                                                        <span>✉️</span>
+                                                                        <span>{email}</span>
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {ccEmails.length > 0 && (
+                                                        <div>
+                                                            <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Copia (CC):</span>
+                                                            <div className="flex flex-wrap gap-1.5">
+                                                                {ccEmails.map((email, i) => (
+                                                                    <span 
+                                                                        key={i} 
+                                                                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-50 text-slate-700 border border-slate-200 rounded-lg font-mono text-[11px]"
+                                                                    >
+                                                                        <span>👁️</span>
+                                                                        <span>{email}</span>
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
                                                     )}
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-                                </div>
-
-                                {/* PIE DE TARJETA CON FECHA DE ACTUALIZACIÓN */}
-                                <div className="bg-slate-50/70 px-6 py-3 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
-                                    <span>Último cambio:</span>
-                                    <span className="font-mono text-gray-600 font-medium">
-                                        {new Date(l.updatedAt).toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                                    </span>
-                                </div>
+                                )}
                             </div>
                         )
                     })}

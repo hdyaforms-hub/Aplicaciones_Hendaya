@@ -276,6 +276,24 @@ export default function NotificacionesClient({
     const [searchHelp, setSearchHelp] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
     const [filterTab, setFilterTab] = useState<'all' | 'active' | 'withRules'>('all')
+    const [expandedScreenIds, setExpandedScreenIds] = useState<Set<string>>(new Set())
+
+    const handleExpandAll = () => {
+        setExpandedScreenIds(new Set(filteredPantallas.map(p => p.id)))
+    }
+
+    const handleCollapseAll = () => {
+        setExpandedScreenIds(new Set())
+    }
+
+    const handleToggleExpand = (id: string) => {
+        setExpandedScreenIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            return next
+        })
+    }
 
     const getScreenKeywords = (pantallaId: string) => {
         const pantalla = PANTALLAS.find(p => p.id === pantallaId)
@@ -364,7 +382,7 @@ export default function NotificacionesClient({
         if (filterTab === 'active') return isActiva
         if (filterTab === 'withRules') return hasRules
         return true
-    })
+    }).sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
 
     return (
         <div className="p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
@@ -418,41 +436,64 @@ export default function NotificacionesClient({
                     )}
                 </div>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto shrink-0">
-                    <button
-                        onClick={() => setFilterTab('all')}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                            filterTab === 'all'
-                                ? 'bg-slate-900 text-white shadow-xs'
-                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                    >
-                        Todos ({PANTALLAS.length})
-                    </button>
-                    <button
-                        onClick={() => setFilterTab('active')}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                            filterTab === 'active'
-                                ? 'bg-cyan-600 text-white shadow-xs'
-                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                    >
-                        Activos ({activeScreensCount})
-                    </button>
-                    <button
-                        onClick={() => setFilterTab('withRules')}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                            filterTab === 'withRules'
-                                ? 'bg-amber-600 text-white shadow-xs'
-                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                        }`}
-                    >
-                        Con Reglas ({rulesScreensCount})
-                    </button>
+                <div className="flex flex-wrap items-center gap-1.5 shrink-0 justify-between md:justify-end">
+                    <div className="flex items-center gap-1.5">
+                        <button
+                            onClick={() => setFilterTab('all')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                                filterTab === 'all'
+                                    ? 'bg-slate-900 text-white shadow-xs'
+                                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                        >
+                            Todos ({PANTALLAS.length})
+                        </button>
+                        <button
+                            onClick={() => setFilterTab('active')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                                filterTab === 'active'
+                                    ? 'bg-cyan-600 text-white shadow-xs'
+                                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                        >
+                            Activos ({activeScreensCount})
+                        </button>
+                        <button
+                            onClick={() => setFilterTab('withRules')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                                filterTab === 'withRules'
+                                    ? 'bg-amber-600 text-white shadow-xs'
+                                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                        >
+                            Con Reglas ({rulesScreensCount})
+                        </button>
+                    </div>
+
+                    <div className="flex items-center gap-1 pl-2 border-l border-slate-200">
+                        <button
+                            type="button"
+                            onClick={handleExpandAll}
+                            className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                            title="Desplegar todas las pantallas"
+                        >
+                            <span>🔽</span>
+                            <span className="hidden sm:inline">Expandir Todo</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleCollapseAll}
+                            className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                            title="Plegar todas las pantallas"
+                        >
+                            <span>🔼</span>
+                            <span className="hidden sm:inline">Colapsar Todo</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* LISTADO DE MÓDULOS EN TARJETAS AMPLIAS */}
+            {/* LISTADO DE MÓDULOS EN FORMATO ACORDEÓN COMPACTO */}
             {filteredPantallas.length === 0 ? (
                 <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-3">
                     <div className="text-4xl">🔍</div>
@@ -460,13 +501,13 @@ export default function NotificacionesClient({
                     <p className="text-xs text-slate-400">Intenta buscar con otros términos o restablece los filtros.</p>
                     <button
                         onClick={() => { setSearchQuery(''); setFilterTab('all'); }}
-                        className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all"
+                        className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all cursor-pointer"
                     >
                         Restablecer Filtros
                     </button>
                 </div>
             ) : (
-                <div className="space-y-6">
+                <div className="space-y-3">
                     {filteredPantallas.map(pantalla => {
                         const configPantalla = configuraciones.filter(c => c.codigoPantalla === pantalla.id)
                         const defaultActiva = configPantalla.length > 0 ? configPantalla[0].activa : true
@@ -482,6 +523,8 @@ export default function NotificacionesClient({
                                 isSaving={loading[pantalla.id] || false}
                                 onEditTemplate={() => openTemplateModal(pantalla.id)}
                                 keywords={getScreenKeywords(pantalla.id)}
+                                isExpanded={expandedScreenIds.has(pantalla.id)}
+                                onToggleExpand={() => handleToggleExpand(pantalla.id)}
                             />
                         )
                     })}
@@ -838,7 +881,9 @@ function ConfigRow({
     onSave, 
     isSaving,
     onEditTemplate,
-    keywords
+    keywords,
+    isExpanded = false,
+    onToggleExpand
 }: {
     pantalla: PantallaInfo
     listasCorreo: ListaCorreoItem[]
@@ -848,6 +893,8 @@ function ConfigRow({
     isSaving: boolean
     onEditTemplate: () => void
     keywords: { tag: string, desc: string }[]
+    isExpanded?: boolean
+    onToggleExpand?: () => void
 }) {
     // Mapa de configuración por cada lista disponible
     const [listasState, setListasState] = useState<Record<string, {
@@ -925,84 +972,121 @@ function ConfigRow({
     }
 
     return (
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300">
-            {/* CABECERA DE LA TARJETA DEL MÓDULO */}
-            <div className="p-5 sm:p-6 bg-gradient-to-b from-slate-50/80 to-white border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${meta.color} flex items-center justify-center text-2xl shadow-md text-white shrink-0`}>
+        <div className={`bg-white rounded-3xl border transition-all duration-200 overflow-hidden ${
+            isExpanded 
+                ? 'border-cyan-400 shadow-md ring-1 ring-cyan-200/50' 
+                : 'border-slate-200/90 shadow-2xs hover:shadow-sm hover:border-slate-300'
+        }`}>
+            {/* CABECERA DE LA TARJETA DEL MÓDULO (ACORDEÓN CLICABLE) */}
+            <div 
+                onClick={onToggleExpand}
+                className="p-4 sm:p-5 bg-gradient-to-b from-slate-50/90 to-white flex flex-col lg:flex-row lg:items-center justify-between gap-4 cursor-pointer select-none transition-colors hover:bg-slate-50"
+            >
+                <div className="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${meta.color} flex items-center justify-center text-xl shadow-md text-white shrink-0`}>
                         {meta.icon}
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="text-base font-black text-slate-900 tracking-tight">
+                            <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
                                 {pantalla.name}
                             </h3>
                             {activa && selectedCount > 0 ? (
-                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
+                                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
                                     Activo
                                 </span>
                             ) : (
-                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
                                     Pausado
                                 </span>
                             )}
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
                                 {selectedCount} {selectedCount === 1 ? 'lista vinculada' : 'listas vinculadas'}
                             </span>
                             {rulesCount > 0 && (
-                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
+                                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
                                     <span>⚙️</span> {rulesCount} {rulesCount === 1 ? 'con regla' : 'con reglas'}
                                 </span>
                             )}
                         </div>
-                        <p className="text-xs text-slate-500 mt-1 max-w-2xl leading-relaxed">
+                        <p className={`text-xs text-slate-500 mt-0.5 leading-relaxed ${isExpanded ? '' : 'line-clamp-1'}`}>
                             {pantalla.description}
                         </p>
                     </div>
                 </div>
 
-                {/* ACCIONES DE CABECERA */}
-                <div className="flex flex-wrap items-center gap-2.5 self-end lg:self-auto shrink-0">
+                {/* ACCIONES DE CABECERA Y BOTÓN DE DESPLIEGUE */}
+                <div 
+                    onClick={(e) => e.stopPropagation()} 
+                    className="flex flex-wrap items-center gap-2 self-end lg:self-auto shrink-0"
+                >
                     <button 
                         type="button" 
                         onClick={onEditTemplate} 
-                        className="px-3.5 py-2 bg-slate-50 hover:bg-cyan-50 text-slate-700 hover:text-cyan-800 rounded-xl border border-slate-200 hover:border-cyan-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs"
+                        className="px-3 py-1.5 bg-slate-50 hover:bg-cyan-50 text-slate-700 hover:text-cyan-800 rounded-xl border border-slate-200 hover:border-cyan-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
                     >
-                        <span>✏️</span> Editar Formato Plantilla
+                        <span>✏️</span> Editar Formato
                     </button>
 
-                    <div className="flex items-center gap-2 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-2 bg-slate-100/80 px-2.5 py-1 rounded-xl border border-slate-200">
                         <button 
+                            type="button"
                             onClick={() => setActiva(!activa)}
                             disabled={selectedCount === 0}
-                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${activa && selectedCount > 0 ? 'bg-cyan-500' : 'bg-gray-300'} ${selectedCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`relative inline-flex h-5 w-10 items-center rounded-full transition-colors cursor-pointer ${activa && selectedCount > 0 ? 'bg-cyan-500' : 'bg-gray-300'} ${selectedCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                             title={selectedCount === 0 ? 'Selecciona al menos una lista para activar' : (activa ? 'Pausar avisos' : 'Activar avisos')}
                         >
-                            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${activa && selectedCount > 0 ? 'translate-x-6' : 'translate-x-1'}`} />
+                            <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${activa && selectedCount > 0 ? 'translate-x-5' : 'translate-x-1'}`} />
                         </button>
-                        <span className="text-[11px] font-bold text-slate-700 select-none">
-                            {selectedCount === 0 ? 'Sin listas' : (activa ? 'Avisos Activos' : 'Pausado')}
+                        <span className="text-[10px] font-bold text-slate-700 select-none">
+                            {selectedCount === 0 ? 'Sin listas' : (activa ? 'Activo' : 'Pausado')}
                         </span>
                     </div>
 
                     <button
+                        type="button"
                         onClick={handleSaveClick}
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-cyan-900 hover:to-slate-900 text-white font-bold rounded-xl shadow-md transition-all disabled:opacity-50 text-xs hover:scale-102 active:scale-98"
+                        className="flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-cyan-900 hover:to-slate-900 text-white font-bold rounded-xl shadow-md transition-all disabled:opacity-50 text-xs hover:scale-102 active:scale-98 cursor-pointer"
                     >
                         {isSaving ? (
-                            <span className="animate-spin text-sm">↻</span>
+                            <span className="animate-spin text-xs">↻</span>
                         ) : (
-                            <span className="text-sm">💾</span>
+                            <span className="text-xs">💾</span>
                         )}
                         <span>{isSaving ? 'Guardando...' : 'Guardar'}</span>
+                    </button>
+
+                    {/* BOTÓN CHEVRON ACORDEÓN */}
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            if (onToggleExpand) onToggleExpand()
+                        }}
+                        className={`w-8 h-8 rounded-xl border transition-all flex items-center justify-center cursor-pointer ml-1 ${
+                            isExpanded 
+                                ? 'bg-cyan-50 text-cyan-800 border-cyan-300' 
+                                : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
+                        }`}
+                        title={isExpanded ? 'Plegar sección' : 'Desplegar listas y reglas'}
+                    >
+                        <svg 
+                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                        </svg>
                     </button>
                 </div>
             </div>
 
-            {/* SECCIÓN AMPLIA DE LISTAS DE DISTRIBUCIÓN */}
-            <div className="p-5 sm:p-6 space-y-4">
+            {/* SECCIÓN EXPANDIBLE DE LISTAS DE DISTRIBUCIÓN */}
+            {isExpanded && (
+                <div className="p-5 sm:p-6 space-y-4 border-t border-slate-200/80 bg-slate-50/40 animate-in fade-in duration-150">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
                     <span className="font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
                         <span>📋</span> Listas de Distribución Disponibles ({selectedCount} de {listasCorreo.length} activadas):
@@ -1018,7 +1102,7 @@ function ConfigRow({
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
-                        {listasCorreo.map(lista => {
+                        {listasCorreo.slice().sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })).map(lista => {
                             const cfg = listasState[lista.id] || { selected: false, condicionTag: '', condicionOperador: 'ALWAYS', condicionValor: '' }
                             const hasCondition = cfg.condicionOperador !== 'ALWAYS' && cfg.condicionTag && cfg.condicionValor
                             const isEditingThis = editingListId === lista.id
@@ -1285,6 +1369,7 @@ function ConfigRow({
                     </div>
                 )}
             </div>
+            )}
         </div>
     )
 }
