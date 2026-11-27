@@ -109,6 +109,8 @@ export default async function RolesPage() {
         { id: 'manage_calidad_higiene_personal', name: 'Higiene Personal (Gestionar)', description: 'Permite registrar y modificar inspecciones de trabajadores en la planilla diaria.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_calidad_higiene_personal', name: 'Higiene Personal (Firma Calidad)', description: 'Permite firmar y cerrar la planilla diaria como Encargado de Calidad.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_bodega_higiene_personal', name: 'Higiene Personal (Firma Jefe de Bodega)', description: 'Permite validar y firmar la planilla diaria como Jefe de Bodega.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_calidad_reclamos_proveedores', name: 'Reclamos a Proveedores (Ver)', description: 'Acceso visual al módulo de Reclamos a Proveedores en Calidad.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_calidad_reclamos_proveedores', name: 'Reclamos a Proveedores (Gestionar)', description: 'Permite crear, editar, dar seguimiento y eliminar reclamos a proveedores.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_calidad_actas_c8', name: 'Actas C8 (Ver)', description: 'Acceso visual al módulo de Actas C8 en Calidad.', category: 'ÁREAS -> CALIDAD' },
         { id: 'manage_calidad_actas_c8', name: 'Actas C8 (Gestionar)', description: 'Permite crear, editar y gestionar actas C8.', category: 'ÁREAS -> CALIDAD' },
         { id: 'import_calidad_actas_c8', name: 'Actas C8 (Carga Masiva Excel)', description: 'Permite importar masivamente actas C8 desde planilla Excel.', category: 'ÁREAS -> CALIDAD' },

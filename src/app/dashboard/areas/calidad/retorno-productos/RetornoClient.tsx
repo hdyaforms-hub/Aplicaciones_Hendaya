@@ -100,6 +100,15 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                             const totalCount = validSucursales.length
                             const progress = totalCount > 0 ? Math.round((cerradasCount/totalCount)*100) : 0
 
+                            // Totales consolidados de cantidades por sucursal
+                            const movsAlert = (alerta.movimientos || []).filter((m: any) => m.sucursal?.nombre !== 'CASA MATRIZ')
+                            const totalRecep = movsAlert.reduce((acc: number, m: any) => acc + (Number(m.cantidadRecepcionada) || 0), 0)
+                            const totalBodega = movsAlert.reduce((acc: number, m: any) => acc + (Number(m.stockBodega) || 0), 0)
+                            const totalDesp = movsAlert.reduce((acc: number, m: any) => acc + (Number(m.cantidadDespachada) || 0), 0)
+                            const totalMerma = movsAlert.reduce((acc: number, m: any) => acc + (Number(m.cantidadMermada) || 0), 0)
+                            const totalRbd = movsAlert.reduce((acc: number, m: any) => acc + (Number(m.cantidadRbd) || 0), 0)
+                            const totalAfectado = totalBodega + totalDesp + totalMerma + totalRbd
+
                             return (
                                 <div 
                                     key={alerta.id}
@@ -184,6 +193,37 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
                                                 </div>
                                             </div>
                                         )}
+                                    </div>
+
+                                    {/* Resumen Consolidado de Cantidades en Post-it */}
+                                    <div className="bg-white/70 backdrop-blur-xs rounded-lg p-2.5 mb-2.5 border border-black/10 shadow-xs space-y-1.5">
+                                        <div className="flex items-center justify-between border-b border-black/10 pb-1">
+                                            <span className="text-[10px] font-black uppercase tracking-wider text-gray-800 flex items-center gap-1">
+                                                <span>📊</span> Resumen Cantidades
+                                            </span>
+                                            <span className="font-mono font-black text-xs text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.2 rounded" title="Total unidades/kilos observados">
+                                                {totalRecep > 0 ? totalRecep.toLocaleString() : totalAfectado.toLocaleString()}
+                                            </span>
+                                        </div>
+
+                                        <div className="grid grid-cols-4 gap-1 text-center font-mono text-[10px]">
+                                            <div className="bg-sky-50/80 rounded p-1 border border-sky-100">
+                                                <div className="text-[9px] text-gray-500 font-sans font-bold">Bodega</div>
+                                                <div className="font-black text-sky-900 truncate">{totalBodega.toLocaleString()}</div>
+                                            </div>
+                                            <div className="bg-amber-50/80 rounded p-1 border border-amber-100">
+                                                <div className="text-[9px] text-gray-500 font-sans font-bold">Desp.</div>
+                                                <div className="font-bold text-gray-800 truncate">{totalDesp.toLocaleString()}</div>
+                                            </div>
+                                            <div className="bg-rose-50/80 rounded p-1 border border-rose-100">
+                                                <div className="text-[9px] text-gray-500 font-sans font-bold">Merma</div>
+                                                <div className="font-black text-rose-700 truncate">{totalMerma.toLocaleString()}</div>
+                                            </div>
+                                            <div className="bg-emerald-50/80 rounded p-1 border border-emerald-100">
+                                                <div className="text-[9px] text-emerald-800 font-sans font-black">RBD</div>
+                                                <div className="font-black text-emerald-800 truncate">{totalRbd.toLocaleString()}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <p className="text-gray-800 text-xs mb-3 flex-1 break-words overflow-hidden italic" 

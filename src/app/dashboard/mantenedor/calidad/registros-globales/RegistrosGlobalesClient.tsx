@@ -3,17 +3,21 @@
 import React, { useState } from 'react'
 import { 
     Tag, Plus, Search, Edit3, Trash2, Power, 
-    CheckCircle2, XCircle, AlertCircle, RefreshCw, Layers, DollarSign, Calculator
+    CheckCircle2, XCircle, AlertCircle, RefreshCw, Layers, DollarSign, Calculator,
+    ShieldAlert, Users, Check, FileText, Calendar, Paperclip, Filter
 } from 'lucide-react'
 import { 
-    MotivoC8, ValorContratoItem,
+    MotivoC8, ValorContratoItem, UsuarioPrivilegioReclamo,
     guardarMotivoC8Action, toggleActivoMotivoC8Action, eliminarMotivoC8Action,
-    guardarValorContratoAction, toggleActivoValorContratoAction, eliminarValorContratoAction
+    guardarValorContratoAction, toggleActivoValorContratoAction, eliminarValorContratoAction,
+    guardarPrivilegioUsuarioReclamoAction
 } from './actions'
 
 interface Props {
     initialMotivos: MotivoC8[]
     initialValoresContrato: ValorContratoItem[]
+    initialUsuariosReclamos: UsuarioPrivilegioReclamo[]
+    rolesDisponibles: { id: string; nombre: string }[]
     licitaciones: { id: string; label: string }[]
     canManage: boolean
     userName: string
@@ -22,18 +26,23 @@ interface Props {
 export default function RegistrosGlobalesClient({
     initialMotivos,
     initialValoresContrato,
+    initialUsuariosReclamos,
+    rolesDisponibles,
     licitaciones,
     canManage,
     userName
 }: Props) {
-    const [activeTab, setActiveTab] = useState<'motivos_c8' | 'valor_contrato'>('motivos_c8')
+    const [activeTab, setActiveTab] = useState<'motivos_c8' | 'valor_contrato' | 'reclamos_proveedores'>('motivos_c8')
     const [motivos, setMotivos] = useState<MotivoC8[]>(initialMotivos)
     const [valoresContrato, setValoresContrato] = useState<ValorContratoItem[]>(initialValoresContrato)
+    const [usuariosReclamos, setUsuariosReclamos] = useState<UsuarioPrivilegioReclamo[]>(initialUsuariosReclamos)
     const [search, setSearch] = useState('')
     const [filterLicitacion, setFilterLicitacion] = useState<string>('TODAS')
+    const [filterRol, setFilterRol] = useState<string>('TODOS')
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
     const [successMsg, setSuccessMsg] = useState<string | null>(null)
+    const [updatingUserId, setUpdatingUserId] = useState<string | null>(null)
 
     // Modal state Motivos C8
     const [modalMotivoOpen, setModalMotivoOpen] = useState(false)
@@ -80,6 +89,76 @@ export default function RegistrosGlobalesClient({
             (c.descripcion || '').toLowerCase().includes(term)
         )
     })
+
+    const usuariosReclamosFiltrados = usuariosReclamos.filter(u => {
+        if (filterRol !== 'TODOS' && u.rolId !== filterRol) {
+            return false
+        }
+        const term = search.toLowerCase()
+        return (
+            u.nombre.toLowerCase().includes(term) ||
+            u.username.toLowerCase().includes(term) ||
+            (u.email || '').toLowerCase().includes(term) ||
+            u.rolNombre.toLowerCase().includes(term)
+        )
+    })
+
+    const handleTogglePrivilegioUsuario = async (
+        userId: string,
+        campo: 'puedeEditar' | 'puedeFechasSeguimiento' | 'puedeAdjuntarRespuesta'
+    ) => {
+        if (!canManage) {
+            setErrorMsg('No tienes privilegios para modificar los permisos de usuarios.')
+            return
+        }
+
+        const usuarioTarget = usuariosReclamos.find(u => u.userId === userId)
+        if (!usuarioTarget) return
+
+        const nuevoValor = !usuarioTarget[campo]
+        const nuevoEstado = {
+            userId,
+            puedeEditar: campo === 'puedeEditar' ? nuevoValor : usuarioTarget.puedeEditar,
+            puedeFechasSeguimiento: campo === 'puedeFechasSeguimiento' ? nuevoValor : usuarioTarget.puedeFechasSeguimiento,
+            puedeAdjuntarRespuesta: campo === 'puedeAdjuntarRespuesta' ? nuevoValor : usuarioTarget.puedeAdjuntarRespuesta,
+        }
+
+        // Optimistic UI update
+        setUsuariosReclamos(prev => prev.map(u => {
+            if (u.userId === userId) {
+                return {
+                    ...u,
+                    [campo]: nuevoValor
+                }
+            }
+            return u
+        }))
+
+        setUpdatingUserId(userId)
+        try {
+            const res = await guardarPrivilegioUsuarioReclamoAction(nuevoEstado)
+            if (!res.success) {
+                // Revert
+                setUsuariosReclamos(prev => prev.map(u => {
+                    if (u.userId === userId) {
+                        return {
+                            ...u,
+                            [campo]: !nuevoValor
+                        }
+                    }
+                    return u
+                }))
+                setErrorMsg(res.error || 'Error al actualizar privilegio del usuario.')
+            } else {
+                setSuccessMsg(`Privilegio de ${usuarioTarget.nombre} actualizado correctamente.`)
+                setTimeout(() => setSuccessMsg(null), 3500)
+            }
+        } catch (err: any) {
+            setErrorMsg(err.message || 'Error inesperado al guardar privilegios.')
+        } finally {
+            setUpdatingUserId(null)
+        }
+    }
 
     // Handlers Motivos C8
     const handleOpenNewMotivo = () => {
@@ -410,6 +489,24 @@ export default function RegistrosGlobalesClient({
                         {valoresContrato.length}
                     </span>
                 </button>
+
+                <button
+                    onClick={() => {
+                        setActiveTab('reclamos_proveedores')
+                        setSearch('')
+                    }}
+                    className={`flex items-center gap-2 px-6 py-3 font-bold text-xs uppercase tracking-wider transition-all border-b-2 rounded-t-xl ${
+                        activeTab === 'reclamos_proveedores'
+                            ? 'border-cyan-600 text-cyan-700 bg-cyan-50/50'
+                            : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                    }`}
+                >
+                    <ShieldAlert className="w-4 h-4" />
+                    Reclamo a Proveedores
+                    <span className="ml-1.5 px-2 py-0.5 text-xs bg-cyan-100 text-cyan-800 rounded-full font-bold">
+                        {usuariosReclamos.length}
+                    </span>
+                </button>
             </div>
 
             {/* TAB 1: Motivos C8 */}
@@ -663,6 +760,190 @@ export default function RegistrosGlobalesClient({
                                                         </div>
                                                     </td>
                                                 )}
+                                            </tr>
+                                        )
+                                    })
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+            {/* TAB 3: Reclamos a Proveedores (Matriz de Usuarios y Privilegios Especiales) */}
+            {activeTab === 'reclamos_proveedores' && (
+                <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                            {/* Buscador de usuario */}
+                            <div className="relative w-full sm:w-80">
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por nombre, usuario o email..."
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all font-medium"
+                                />
+                            </div>
+
+                            {/* Filtro por Rol */}
+                            <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <span className="text-xs font-bold text-slate-500 whitespace-nowrap flex items-center gap-1">
+                                    <Filter className="w-3.5 h-3.5 text-cyan-700" />
+                                    Rol:
+                                </span>
+                                <select
+                                    value={filterRol}
+                                    onChange={e => setFilterRol(e.target.value)}
+                                    className="w-full sm:w-60 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
+                                >
+                                    <option value="TODOS">-- Todos los Roles --</option>
+                                    {rolesDisponibles.map(r => (
+                                        <option key={r.id} value={r.id}>{r.nombre}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="text-xs text-slate-500 font-medium">
+                            Mostrando <strong className="text-slate-800">{usuariosReclamosFiltrados.length}</strong> usuarios
+                        </div>
+                    </div>
+
+                    {/* Banner Explicativo */}
+                    <div className="p-3.5 bg-gradient-to-r from-cyan-50/70 to-sky-50/70 border border-cyan-200/80 rounded-xl flex items-start gap-3">
+                        <ShieldAlert className="w-5 h-5 text-cyan-700 shrink-0 mt-0.5" />
+                        <div className="text-xs text-slate-700 space-y-1 leading-relaxed">
+                            <p className="font-bold text-cyan-950">
+                                Privilegios Especiales para el Módulo de Reclamos a Proveedores
+                            </p>
+                            <p>
+                                Por defecto, los usuarios solo pueden ingresar un reclamo nuevo (Paso 1) y no pueden editar ni eliminar. 
+                                Activa las casillas a continuación para otorgar facultades adicionales por usuario:
+                            </p>
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 pt-1 text-[11px] font-semibold text-slate-600">
+                                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500"></span> <strong>Editar:</strong> Modificar antecedentes y producto del reclamo.</span>
+                                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-cyan-600"></span> <strong>Fechas Seguimiento:</strong> Modificar Fecha Envío a Proveedor (Compras) y Fecha Recepción Respuesta.</span>
+                                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-600"></span> <strong>Adjuntar Respuesta:</strong> Cargar el archivo de respaldo cuando se recepcione la respuesta.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Tabla de Usuarios */}
+                    <div className="border border-slate-200 rounded-xl overflow-hidden shadow-xs">
+                        <table className="w-full text-left text-xs text-slate-600">
+                            <thead className="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-600 font-bold border-b border-slate-200">
+                                <tr>
+                                    <th className="py-3 px-4">Usuario / Colaborador</th>
+                                    <th className="py-3 px-4">Perfil / Rol</th>
+                                    <th className="py-3 px-4 text-center">
+                                        <div className="inline-flex flex-col items-center">
+                                            <span>Editar Reclamos</span>
+                                            <span className="text-[9px] font-normal text-slate-400 lowercase">(paso 1 a 3)</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-3 px-4 text-center">
+                                        <div className="inline-flex flex-col items-center">
+                                            <span>Fechas Seguimiento</span>
+                                            <span className="text-[9px] font-normal text-slate-400 lowercase">(envío / respuesta)</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-3 px-4 text-center">
+                                        <div className="inline-flex flex-col items-center">
+                                            <span>Adjuntar Respuesta</span>
+                                            <span className="text-[9px] font-normal text-slate-400 lowercase">(documento resp.)</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-3 px-4 text-right">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                                {usuariosReclamosFiltrados.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={6} className="py-8 text-center text-slate-400 font-medium">
+                                            No se encontraron usuarios con los filtros seleccionados
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    usuariosReclamosFiltrados.map(user => {
+                                        const isUpdating = updatingUserId === user.userId
+                                        const hasAnyPriv = user.puedeEditar || user.puedeFechasSeguimiento || user.puedeAdjuntarRespuesta
+
+                                        return (
+                                            <tr key={user.userId} className="hover:bg-slate-50/80 transition-colors">
+                                                <td className="py-3 px-4">
+                                                    <div className="font-bold text-slate-900">{user.nombre}</div>
+                                                    <div className="text-[11px] text-slate-500 font-mono flex items-center gap-1.5">
+                                                        <span>@{user.username}</span>
+                                                        {user.email && <span className="text-slate-400">• {user.email}</span>}
+                                                    </div>
+                                                </td>
+                                                <td className="py-3 px-4">
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                                        {user.rolNombre}
+                                                    </span>
+                                                </td>
+                                                
+                                                {/* Switch: Editar Reclamos */}
+                                                <td className="py-3 px-4 text-center">
+                                                    <label className="relative inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={user.puedeEditar}
+                                                            disabled={!canManage || isUpdating}
+                                                            onChange={() => handleTogglePrivilegioUsuario(user.userId, 'puedeEditar')}
+                                                            className="sr-only peer"
+                                                        />
+                                                        <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600 disabled:opacity-50"></div>
+                                                    </label>
+                                                </td>
+
+                                                {/* Switch: Fecha Envío y Recepción */}
+                                                <td className="py-3 px-4 text-center">
+                                                    <label className="relative inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={user.puedeFechasSeguimiento}
+                                                            disabled={!canManage || isUpdating}
+                                                            onChange={() => handleTogglePrivilegioUsuario(user.userId, 'puedeFechasSeguimiento')}
+                                                            className="sr-only peer"
+                                                        />
+                                                        <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-700 disabled:opacity-50"></div>
+                                                    </label>
+                                                </td>
+
+                                                {/* Switch: Adjuntar Respuesta */}
+                                                <td className="py-3 px-4 text-center">
+                                                    <label className="relative inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={user.puedeAdjuntarRespuesta}
+                                                            disabled={!canManage || isUpdating}
+                                                            onChange={() => handleTogglePrivilegioUsuario(user.userId, 'puedeAdjuntarRespuesta')}
+                                                            className="sr-only peer"
+                                                        />
+                                                        <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600 disabled:opacity-50"></div>
+                                                    </label>
+                                                </td>
+
+                                                {/* Resumen Estado */}
+                                                <td className="py-3 px-4 text-right">
+                                                    {isUpdating ? (
+                                                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-700">
+                                                            <RefreshCw className="w-3 h-3 animate-spin" /> Guardando...
+                                                        </span>
+                                                    ) : hasAnyPriv ? (
+                                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                                                            <Check className="w-3 h-3 text-cyan-700" />
+                                                            Con Permisos
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-[10px] text-slate-400 font-semibold italic">
+                                                            Estándar (Paso 1)
+                                                        </span>
+                                                    )}
+                                                </td>
                                             </tr>
                                         )
                                     })

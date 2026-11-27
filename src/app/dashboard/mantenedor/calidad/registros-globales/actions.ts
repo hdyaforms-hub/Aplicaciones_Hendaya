@@ -4,6 +4,7 @@ import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { ensureCalidadC8Tables } from '@/lib/calidad/calidad-c8-db-init'
+import { ensureReclamosProveedoresTables } from '@/lib/calidad/reclamos-proveedores-db-init'
 
 export interface MotivoC8 {
     id: string
@@ -396,3 +397,147 @@ export async function obtenerValorContratoPorLicitacionAction(licitacion: string
         return 0
     }
 }
+
+export interface UsuarioPrivilegioReclamo {
+    userId: string
+    username: string
+    nombre: string
+    email: string | null
+    rolId: string | null
+    rolNombre: string
+    puedeEditar: boolean
+    puedeFechasSeguimiento: boolean
+    puedeAdjuntarRespuesta: boolean
+    actualizadoPor: string | null
+    updatedAt: string | null
+}
+
+export async function obtenerPrivilegiosUsuariosReclamosAction(): Promise<{
+    success: boolean
+    data?: UsuarioPrivilegioReclamo[]
+    roles?: { id: string; nombre: string }[]
+    error?: string
+}> {
+    try {
+        await ensureReclamosProveedoresTables()
+
+        // 1. Obtener todos los usuarios del sistema junto con sus roles
+        const users = await rawPrisma.user.findMany({
+            select: {
+                id: true,
+                username: true,
+                name: true,
+                email: true,
+                roleId: true,
+                role: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            },
+            orderBy: { name: 'asc' }
+        })
+
+        // 2. Obtener los privilegios registrados en la tabla calidad_reclamos_privilegios_usuarios
+        const privRows: any[] = await rawPrisma.$queryRawUnsafe(`
+            SELECT "userId", "puedeEditar", "puedeFechasSeguimiento", "puedeAdjuntarRespuesta", "actualizadoPor", "updatedAt"::text
+            FROM "calidad_reclamos_privilegios_usuarios";
+        `)
+        const privMap = new Map<string, any>()
+        privRows.forEach(p => privMap.set(p.userId, p))
+
+        // 3. Mapear roles únicos
+        const rolesMap = new Map<string, string>()
+        users.forEach(u => {
+            if (u.role?.id && u.role?.name) {
+                rolesMap.set(u.role.id, u.role.name)
+            }
+        })
+        const roles = Array.from(rolesMap.entries()).map(([id, nombre]) => ({ id, nombre })).sort((a, b) => a.nombre.localeCompare(b.nombre))
+
+        // 4. Armar el dataset
+        const data: UsuarioPrivilegioReclamo[] = users.map(u => {
+            const p = privMap.get(u.id)
+            return {
+                userId: u.id,
+                username: u.username || '',
+                nombre: u.name || u.username || 'Sin Nombre',
+                email: u.email || null,
+                rolId: u.role?.id || null,
+                rolNombre: u.role?.name || 'Sin Rol',
+                puedeEditar: Boolean(p?.puedeEditar),
+                puedeFechasSeguimiento: Boolean(p?.puedeFechasSeguimiento),
+                puedeAdjuntarRespuesta: Boolean(p?.puedeAdjuntarRespuesta),
+                actualizadoPor: p?.actualizadoPor || null,
+                updatedAt: p?.updatedAt || null
+            }
+        })
+
+        return { success: true, data, roles }
+    } catch (error: any) {
+        console.error('[obtenerPrivilegiosUsuariosReclamosAction] Error:', error)
+        return { success: false, error: error.message || 'Error al obtener usuarios y privilegios' }
+    }
+}
+
+export async function guardarPrivilegioUsuarioReclamoAction(data: {
+    userId: string
+    puedeEditar: boolean
+    puedeFechasSeguimiento: boolean
+    puedeAdjuntarRespuesta: boolean
+}): Promise<{ success: boolean; error?: string }> {
+    try {
+        const { usuario } = await verifyManagePermission()
+        await ensureReclamosProveedoresTables()
+
+        const user = await rawPrisma.user.findUnique({
+            where: { id: data.userId },
+            select: { id: true, username: true, name: true }
+        })
+
+        if (!user) {
+            return { success: false, error: 'Usuario no encontrado' }
+        }
+
+        await rawPrisma.$executeRawUnsafe(`
+            INSERT INTO "calidad_reclamos_privilegios_usuarios" (
+                "id", "userId", "username", "nombreCompleto",
+                "puedeEditar", "puedeFechasSeguimiento", "puedeAdjuntarRespuesta",
+                "actualizadoPor", "createdAt", "updatedAt"
+            ) VALUES (
+                gen_random_uuid()::text, $1, $2, $3,
+                $4, $5, $6,
+                $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            )
+            ON CONFLICT ("userId")
+            DO UPDATE SET
+                "puedeEditar" = EXCLUDED."puedeEditar",
+                "puedeFechasSeguimiento" = EXCLUDED."puedeFechasSeguimiento",
+                "puedeAdjuntarRespuesta" = EXCLUDED."puedeAdjuntarRespuesta",
+                "actualizadoPor" = EXCLUDED."actualizadoPor",
+                "updatedAt" = CURRENT_TIMESTAMP;
+        `,
+            user.id,
+            user.username || '',
+            user.name || user.username || '',
+            data.puedeEditar,
+            data.puedeFechasSeguimiento,
+            data.puedeAdjuntarRespuesta,
+            usuario
+        )
+
+        await logAuditAction({
+            username: usuario,
+            modulo: 'Calidad -> Registros Globales',
+            action: 'MODIFICACION',
+            detalle: `Actualizó privilegios Reclamos a Proveedores para usuario: ${user.name || user.username} (Editar: ${data.puedeEditar}, Fechas: ${data.puedeFechasSeguimiento}, Adjunto: ${data.puedeAdjuntarRespuesta})`
+        })
+
+        return { success: true }
+    } catch (error: any) {
+        console.error('[guardarPrivilegioUsuarioReclamoAction] Error:', error)
+        return { success: false, error: error.message || 'Error al guardar privilegios' }
+    }
+}
+

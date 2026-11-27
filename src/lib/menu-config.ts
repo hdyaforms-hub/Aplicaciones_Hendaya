@@ -252,6 +252,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     const hasCalidad = user.areas?.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
                     const hasPerm = user.role.permissions.includes('view_calidad') || 
                                    user.role.permissions.includes('view_calidad_actas_c8') ||
+                                   user.role.permissions.includes('view_calidad_reclamos_proveedores') ||
                                    user.role.permissions.includes('view_retorno_productos') ||
                                    user.role.permissions.includes('view_verificador_temperaturas') ||
                                    user.role.permissions.includes('view_calidad_transporte_higiene') ||
@@ -260,6 +261,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [
+                    {
+                        name: 'Reclamos a Proveedores',
+                        href: '/dashboard/areas/calidad/reclamos-proveedores',
+                        requiredPermission: 'view_calidad_reclamos_proveedores'
+                    },
                     {
                         name: 'Actas C8',
                         href: '/dashboard/areas/calidad/actas-c8',

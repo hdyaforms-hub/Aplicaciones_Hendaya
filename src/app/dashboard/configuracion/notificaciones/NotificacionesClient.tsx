@@ -64,6 +64,21 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'cambio-rbd-personal',
         name: 'Cambio de RBD (Personal)',
         description: 'Se envía un aviso al momento de registrar un cambio de RBD de una manipuladora (Anexo de traslado o Comisión de servicio).'
+    },
+    {
+        id: 'calidad-reclamos-paso-1',
+        name: 'Reclamo a Proveedores Paso 1 (Ingreso)',
+        description: 'Se envía un aviso inmediato al registrar y guardar por primera vez un nuevo reclamo a proveedor.'
+    },
+    {
+        id: 'calidad-reclamos-paso-2',
+        name: 'Reclamo a Proveedores Paso 2 (Envío a Compras)',
+        description: 'Se envía un aviso al registrar la Fecha Envío a Proveedor, dirigido a Compras Matriz o Compras Sucursal según selección.'
+    },
+    {
+        id: 'calidad-reclamos-paso-3',
+        name: 'Reclamo a Proveedores Paso 3 (Recepción Respuesta)',
+        description: 'Se envía un aviso al registrar la Fecha Recepción Respuesta con el documento de respaldo adjuntado.'
     }
 ]
 
@@ -163,6 +178,50 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<Usuario>', desc: 'Nombre del auditor/supervisor que completó la matriz.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal del establecimiento.' },
         { tag: '<DetalleDesviaciones>', desc: 'Listado detallado de desviaciones y compromisos del Prestador.' }
+    ],
+    'Reclamo a Proveedores Paso 1 (Ingreso)': [
+        { tag: '<NumeroReclamo>', desc: 'Correlativo oficial del reclamo (Ej: 0001/2026).' },
+        { tag: '<Licitacion>', desc: 'Nombre y código de la licitación.' },
+        { tag: '<Sucursal>', desc: 'Sucursal o zonal de ocurrencia de la desviación.' },
+        { tag: '<Zonal>', desc: 'Zonal o sucursal asociada al reclamo (alias).' },
+        { tag: '<OrigenReclamo>', desc: 'Origen: Reclamo Zonal, Reclamo Cliente o Reclamo cliente por C8.' },
+        { tag: '<TipoReclamo>', desc: 'Tipo: Calidad o Inocuidad.' },
+        { tag: '<FechaDesviacion>', desc: 'Fecha en que ocurrió la desviación (DD/MM/AAAA).' },
+        { tag: '<Lugar>', desc: 'Lugar o establecimiento donde se detectó el problema.' },
+        { tag: '<Producto>', desc: 'Nombre del producto observado.' },
+        { tag: '<Proveedor>', desc: 'Nombre o razón social del proveedor.' },
+        { tag: '<Marca>', desc: 'Marca comercial del producto.' },
+        { tag: '<Lote>', desc: 'Lote del producto.' },
+        { tag: '<Cantidad>', desc: 'Cantidad observada con su unidad/formato.' },
+        { tag: '<FechaElaboracion>', desc: 'Fecha de elaboración del producto.' },
+        { tag: '<FechaVencimiento>', desc: 'Fecha de vencimiento del producto.' },
+        { tag: '<Observacion>', desc: 'Detalle o descripción amplia de la desviación.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario que registró el reclamo en el sistema.' },
+        { tag: '<Estado>', desc: 'Estado operativo del reclamo (Abierto).' }
+    ],
+    'Reclamo a Proveedores Paso 2 (Envío a Compras)': [
+        { tag: '<NumeroReclamo>', desc: 'Correlativo oficial del reclamo (Ej: 0001/2026).' },
+        { tag: '<DestinoCompras>', desc: 'Destino seleccionado: Matriz o Sucursal.' },
+        { tag: '<Licitacion>', desc: 'Nombre de la licitación.' },
+        { tag: '<Sucursal>', desc: 'Sucursal del reclamo (para distribución automática a correos de esa sucursal).' },
+        { tag: '<Zonal>', desc: 'Zonal o sucursal del reclamo (alias).' },
+        { tag: '<Proveedor>', desc: 'Nombre del proveedor.' },
+        { tag: '<Producto>', desc: 'Nombre del producto observado.' },
+        { tag: '<FechaEnvioProveedor>', desc: 'Fecha en que se remitió el reclamo al proveedor / gestión de compras.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario con privilegios que gestionó el envío a compras.' },
+        { tag: '<Estado>', desc: 'Estado del reclamo (Enviado a Proveedor).' }
+    ],
+    'Reclamo a Proveedores Paso 3 (Recepción Respuesta)': [
+        { tag: '<NumeroReclamo>', desc: 'Correlativo oficial del reclamo (Ej: 0001/2026).' },
+        { tag: '<Proveedor>', desc: 'Nombre del proveedor.' },
+        { tag: '<Producto>', desc: 'Nombre del producto.' },
+        { tag: '<Licitacion>', desc: 'Nombre de la licitación.' },
+        { tag: '<Sucursal>', desc: 'Sucursal o zonal del reclamo.' },
+        { tag: '<FechaRecepcionRespuesta>', desc: 'Fecha en que se recepcionó formalmente la respuesta del proveedor.' },
+        { tag: '<FechaEnvioProveedor>', desc: 'Fecha de envío previo al proveedor.' },
+        { tag: '<ArchivoRespuesta>', desc: 'Nombre del documento o carta de respuesta adjuntada.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario que registró la respuesta y adjuntó el documento.' },
+        { tag: '<Estado>', desc: 'Estado final del reclamo (Respondido).' }
     ]
 }
 
@@ -189,6 +248,9 @@ const PANTALLA_META: Record<string, { icon: string, color: string }> = {
     'matriz-prestador': { icon: '🛡️', color: 'from-indigo-500 to-blue-600' },
     'calidad-transporte-higiene': { icon: '🚛', color: 'from-teal-500 to-cyan-600' },
     'calidad-higiene-personal': { icon: '🧼', color: 'from-sky-500 to-cyan-600' },
+    'calidad-reclamos-paso-1': { icon: '📝', color: 'from-amber-500 to-orange-600' },
+    'calidad-reclamos-paso-2': { icon: '📤', color: 'from-cyan-600 to-sky-700' },
+    'calidad-reclamos-paso-3': { icon: '📨', color: 'from-emerald-600 to-teal-700' },
 }
 
 export default function NotificacionesClient({ 

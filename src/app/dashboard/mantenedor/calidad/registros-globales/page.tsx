@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
-import { obtenerMotivosC8Action, obtenerValoresContratoAction } from './actions'
+import { obtenerMotivosC8Action, obtenerValoresContratoAction, obtenerPrivilegiosUsuariosReclamosAction } from './actions'
 import RegistrosGlobalesClient from './RegistrosGlobalesClient'
 
 export const dynamic = 'force-dynamic'
@@ -22,17 +22,21 @@ export default async function RegistrosGlobalesPage() {
         redirect('/dashboard')
     }
 
-    const [motivosRes, contratosRes, licitacionesDb] = await Promise.all([
+    const [motivosRes, contratosRes, licitacionesDb, reclamosPrivsRes] = await Promise.all([
         obtenerMotivosC8Action(),
         obtenerValoresContratoAction(),
         prisma.licitacion.findMany({
             select: { licId: true, licitacionHomologada: true },
             orderBy: { licId: 'asc' }
-        })
+        }),
+        obtenerPrivilegiosUsuariosReclamosAction()
     ])
 
     const motivos = motivosRes.success && motivosRes.data ? motivosRes.data : []
     const valoresContrato = contratosRes.success && contratosRes.data ? contratosRes.data : []
+    const initialUsuariosReclamos = reclamosPrivsRes.success && reclamosPrivsRes.data ? reclamosPrivsRes.data : []
+    const rolesDisponibles = reclamosPrivsRes.success && reclamosPrivsRes.roles ? reclamosPrivsRes.roles : []
+
     const licitaciones = licitacionesDb.map(l => ({
         id: String(l.licId),
         label: l.licitacionHomologada 
@@ -45,6 +49,8 @@ export default async function RegistrosGlobalesPage() {
             <RegistrosGlobalesClient
                 initialMotivos={motivos}
                 initialValoresContrato={valoresContrato}
+                initialUsuariosReclamos={initialUsuariosReclamos}
+                rolesDisponibles={rolesDisponibles}
                 licitaciones={licitaciones}
                 canManage={canManage}
                 userName={session.user.name || session.user.username || 'Usuario'}

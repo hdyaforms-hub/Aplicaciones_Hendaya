@@ -261,6 +261,50 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             FechaHasta: '30/11/2026',
             Supervisor: 'CARLOS VALENZUELA',
             Usuario: 'ELISA CASTILLO'
+        },
+        'calidad-reclamos-paso-1': {
+            NumeroReclamo: '0015/2026',
+            Licitacion: 'Licitación 5323 - 532023',
+            Sucursal: 'CD COPIAPO',
+            Zonal: 'CD COPIAPO',
+            OrigenReclamo: 'Reclamo Zonal',
+            TipoReclamo: 'Calidad',
+            FechaDesviacion: '27/11/2026',
+            Lugar: 'Casino Escuela D-12 Copiapó',
+            Producto: 'Leche fluida descremada con chocolate',
+            Proveedor: 'Soprole S.A.',
+            Marca: 'Soprole',
+            Lote: 'L-24098A',
+            Cantidad: '48.00 Unidad',
+            FechaElaboracion: '10/11/2026',
+            FechaVencimiento: '10/05/2027',
+            Observacion: 'Presencia de grumos y corte al abrir los envases individuales en el casino escolar.',
+            Usuario: 'ELISA CASTILLO',
+            Estado: 'Abierto'
+        },
+        'calidad-reclamos-paso-2': {
+            NumeroReclamo: '0015/2026',
+            DestinoCompras: 'Matriz',
+            Licitacion: 'Licitación 5323 - 532023',
+            Sucursal: 'CD COPIAPO',
+            Zonal: 'CD COPIAPO',
+            Proveedor: 'Soprole S.A.',
+            Producto: 'Leche fluida descremada con chocolate',
+            FechaEnvioProveedor: '28/11/2026',
+            Usuario: 'ADMINISTRADOR CALIDAD',
+            Estado: 'Enviado a Proveedor'
+        },
+        'calidad-reclamos-paso-3': {
+            NumeroReclamo: '0015/2026',
+            Proveedor: 'Soprole S.A.',
+            Producto: 'Leche fluida descremada con chocolate',
+            Licitacion: 'Licitación 5323 - 532023',
+            Sucursal: 'CD COPIAPO',
+            FechaRecepcionRespuesta: '05/12/2026',
+            FechaEnvioProveedor: '28/11/2026',
+            ArchivoRespuesta: 'Carta_Respuesta_Soprole_Reclamo0015.pdf',
+            Usuario: 'ADMINISTRADOR CALIDAD',
+            Estado: 'Respondido'
         }
     }
     return mockData[codigoPantalla] || {}

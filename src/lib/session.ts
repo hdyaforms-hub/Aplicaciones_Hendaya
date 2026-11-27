@@ -89,6 +89,8 @@ export async function getSession() {
                 'view_captura_certificacion',
                 'manage_manipuladoras_masiva',
                 'view_calidad',
+                'view_calidad_reclamos_proveedores',
+                'manage_calidad_reclamos_proveedores',
                 'view_calidad_actas_c8',
                 'manage_calidad_actas_c8',
                 'import_calidad_actas_c8',
